@@ -19,8 +19,10 @@ clone-upstream:
 
 # Generate swagger spec from upstream source
 generate-spec: clone-upstream
-	cd $(UPSTREAM_DIR)/backend && swag init -g cmd/main.go -o ../docs --outputTypes yaml
-	cp $(UPSTREAM_DIR)/docs/swagger.yaml $(SWAGGER_SPEC)
+	mkdir -p $(UPSTREAM_DIR)/docs
+	touch $(UPSTREAM_DIR)/docs/description.md $(UPSTREAM_DIR)/docs/api.md
+	cd $(UPSTREAM_DIR)/backend && swag init -d .,./internal/controller,./internal/dto -g cmd/main.go -ot yaml -o ../ -md ../docs
+	cp $(UPSTREAM_DIR)/swagger.yaml $(SWAGGER_SPEC)
 
 # Generate Go client from swagger spec
 generate-client:
