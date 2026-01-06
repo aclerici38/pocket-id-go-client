@@ -1,0 +1,66 @@
+name: Generate Client
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: "1.23"
+
+      - name: Install tools
+        run: make install-tools
+
+      - name: Generate client
+        run: make generate
+
+      - name: Verify build
+        run: make verify
+
+      - name: Check for changes
+        id: changes
+        run: |
+          if [[ -n $(git status --porcelain) ]]; then
+            echo "has_changes=true" >> $GITHUB_OUTPUT
+          else
+            echo "has_changes=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Get version
+        id: version
+        run: echo "version=$(cat POCKET_ID_VERSION | tr -d '\n')" >> $GITHUB_OUTPUT
+
+      - name: Commit generated code
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main' && steps.changes.outputs.has_changes == 'true'
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add -A
+          git commit -m "chore: regenerate client from Pocket ID ${{ steps.version.outputs.version }}"
+          git push
+
+      - name: Create release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          VERSION="${{ steps.version.outputs.version }}"
+          # Delete existing tag/release if it exists (for regeneration of same version)
+          gh release delete "$VERSION" --yes 2>/dev/null || true
+          git push origin ":refs/tags/$VERSION" 2>/dev/null || true
+          # Create new tag and release
+          git tag -f "$VERSION"
+          git push origin "$VERSION" --force
+          gh release create "$VERSION" \
+            --title "Pocket ID $VERSION" \
+            --notes "Generated from [Pocket ID $VERSION](https://github.com/pocket-id/pocket-id/releases/tag/$VERSION)"

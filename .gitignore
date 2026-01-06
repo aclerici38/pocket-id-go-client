@@ -1,0 +1,7 @@
+# Upstream clone (temporary during generation)
+.upstream/
+
+# IDE
+.idea/
+.vscode/
+*.swp
