@@ -66,5 +66,5 @@ jobs:
           git push origin "refs/tags/${VERSION}" --force
 
           gh release create "$VERSION" \
-            --title "Pocket ID $VERSION" \
+            --title "Client $VERSION" \
             --notes "Generated from [Pocket ID $VERSION](https://github.com/pocket-id/pocket-id/releases/tag/$VERSION)"
