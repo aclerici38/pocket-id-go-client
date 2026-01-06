@@ -51,7 +51,7 @@ jobs:
           git rm -rf --cached .
 
           # Add only the files needed for the Go module
-          git add go.mod go.sum client/ models/ swagger.yaml
+          git add -f go.mod go.sum client/ models/ swagger.yaml
 
           git commit -m "Generated client from Pocket ID ${VERSION}"
 
