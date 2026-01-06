@@ -1,6 +1,12 @@
 # Upstream clone (temporary during generation)
 .upstream/
 
+# Generated files (only committed to release tags, not main)
+client/
+models/
+swagger.yaml
+go.sum
+
 # IDE
 .idea/
 .vscode/

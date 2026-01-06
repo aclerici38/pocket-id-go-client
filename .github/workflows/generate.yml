@@ -3,6 +3,8 @@ name: Generate Client
 on:
   push:
     branches: [main]
+  pull_request:
+    branches: [main]
   workflow_dispatch:
 
 permissions:
@@ -28,39 +30,43 @@ jobs:
       - name: Verify build
         run: make verify
 
-      - name: Check for changes
-        id: changes
-        run: |
-          if [[ -n $(git status --porcelain) ]]; then
-            echo "has_changes=true" >> $GITHUB_OUTPUT
-          else
-            echo "has_changes=false" >> $GITHUB_OUTPUT
-          fi
-
       - name: Get version
         id: version
         run: echo "version=$(cat POCKET_ID_VERSION | tr -d '\n')" >> $GITHUB_OUTPUT
 
-      - name: Commit generated code
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main' && steps.changes.outputs.has_changes == 'true'
-        run: |
-          git config --local user.email "github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
-          git add -A
-          git commit -m "chore: regenerate client from Pocket ID ${{ steps.version.outputs.version }}"
-          git push
-
-      - name: Create release
+      - name: Create release from orphan branch
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           VERSION="${{ steps.version.outputs.version }}"
-          # Delete existing tag/release if it exists (for regeneration of same version)
+
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+
+          # Create orphan branch with only the generated code
+          git checkout --orphan "${VERSION}"
+
+          # Remove everything from index
+          git rm -rf --cached .
+
+          # Add only the files needed for the Go module
+          git add go.mod go.sum client/ models/ swagger.yaml
+
+          git commit -m "Generated client from Pocket ID ${VERSION}"
+
+          # Delete existing tag/release if they exist
           gh release delete "$VERSION" --yes 2>/dev/null || true
           git push origin ":refs/tags/$VERSION" 2>/dev/null || true
-          # Create new tag and release
+
+          # Tag and release
           git tag -f "$VERSION"
           git push origin "$VERSION" --force
+
           gh release create "$VERSION" \
             --title "Pocket ID $VERSION" \
-            --notes "Generated from [Pocket ID $VERSION](https://github.com/pocket-id/pocket-id/releases/tag/$VERSION)"
+            --notes "Generated from [Pocket ID $VERSION](https://github.com/pocket-id/pocket-id/releases/tag/$VERSION)
+
+\`\`\`bash
+go get github.com/aclerici38/pocket-id-go-client@$VERSION
+\`\`\`"
