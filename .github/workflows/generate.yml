@@ -3,8 +3,12 @@ name: Generate Client
 on:
   push:
     branches: [main]
+    paths:
+      - POCKET_ID_VERSION
   pull_request:
     branches: [main]
+    paths:
+      - POCKET_ID_VERSION
   workflow_dispatch:
 
 permissions:
