@@ -9,8 +9,7 @@ all: generate
 
 # Install required tools
 install-tools:
-	go install github.com/go-swagger/go-swagger/cmd/swagger@latest
-	go install github.com/swaggo/swag/cmd/swag@latest
+	go install tool
 
 # Clone upstream at the pinned version
 clone-upstream:
@@ -21,12 +20,12 @@ clone-upstream:
 generate-spec: clone-upstream
 	mkdir -p $(UPSTREAM_DIR)/docs
 	touch $(UPSTREAM_DIR)/docs/description.md $(UPSTREAM_DIR)/docs/api.md
-	cd $(UPSTREAM_DIR)/backend && swag init -d .,./internal/controller,./internal/dto -g cmd/main.go -ot yaml -o ../ -md ../docs
+	go tool swag init -d $(UPSTREAM_DIR)/backend,$(UPSTREAM_DIR)/backend/internal/controller,$(UPSTREAM_DIR)/backend/internal/dto -g cmd/main.go -ot yaml -o $(UPSTREAM_DIR) -md $(UPSTREAM_DIR)/docs
 	cp $(UPSTREAM_DIR)/swagger.yaml $(SWAGGER_SPEC)
 
 # Generate Go client from swagger spec
 generate-client:
-	swagger generate client -f $(SWAGGER_SPEC) -t . --skip-validation
+	go tool swagger generate client -f $(SWAGGER_SPEC) -t . --skip-validation
 
 # Full generation pipeline
 generate: generate-spec generate-client

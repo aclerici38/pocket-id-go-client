@@ -5,7 +5,6 @@
 client/
 models/
 swagger.yaml
-go.sum
 
 # IDE
 .idea/
