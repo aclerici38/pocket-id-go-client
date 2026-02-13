@@ -20,6 +20,10 @@
       "matchDepNames": ["pocket-id/pocket-id"],
       "semanticCommitType": "feat",
       "commitMessageTopic": "Pocket ID"
+    },
+    {
+      "matchDatasources": ["golang-version"],
+      "rangeStrategy": "bump"
     }
   ]
 }
