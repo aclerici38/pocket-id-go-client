@@ -1,8 +1,6 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": [
-    "config:recommended"
-  ],
+  "extends": ["config:recommended"],
   "dependencyDashboard": true,
   "prConcurrentLimit": 0,
   "prHourlyLimit": 0,
@@ -11,28 +9,22 @@
   "customManagers": [
     {
       "customType": "regex",
-      "managerFilePatterns": [
-        "/^POCKET_ID_VERSION$/"
-      ],
-      "matchStrings": [
-        "(?<currentValue>v\\d+\\.\\d+\\.\\d+)"
-      ],
+      "managerFilePatterns": ["/^POCKET_ID_VERSION$/"],
+      "matchStrings": ["(?<currentValue>v\\d+\\.\\d+\\.\\d+)"],
       "datasourceTemplate": "github-releases",
       "depNameTemplate": "pocket-id/pocket-id"
     }
   ],
   "packageRules": [
     {
-      "matchDepNames": [
-        "pocket-id/pocket-id"
-      ],
+      "matchDepNames": ["pocket-id/pocket-id"],
       "semanticCommitType": "feat",
-      "commitMessageTopic": "Pocket ID"
+      "commitMessageTopic": "Pocket ID",
+      "automergeType": "branch",
+      "ignoreTests": true
     },
     {
-      "matchDatasources": [
-        "golang-version"
-      ],
+      "matchDatasources": ["golang-version"],
       "rangeStrategy": "bump"
     }
   ]
