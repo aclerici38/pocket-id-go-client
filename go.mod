@@ -1,6 +1,6 @@
 module github.com/aclerici38/pocket-id-go-client/v2
 
-go 1.26.1
+go 1.26.2
 
 tool (
 	github.com/go-swagger/go-swagger/cmd/swagger
