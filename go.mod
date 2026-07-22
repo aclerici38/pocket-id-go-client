@@ -40,7 +40,7 @@ require (
 	github.com/go-openapi/swag/typeutils v0.27.3 // indirect
 	github.com/go-openapi/swag/yamlutils v0.27.3 // indirect
 	github.com/go-openapi/validate v0.26.1 // indirect
-	github.com/go-swagger/go-swagger v0.35.2 // indirect
+	github.com/go-swagger/go-swagger v0.35.3 // indirect
 	github.com/go-viper/mapstructure/v2 v2.5.0 // indirect
 	github.com/google/uuid v1.6.0 // indirect
 	github.com/gorilla/handlers v1.5.2 // indirect
