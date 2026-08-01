@@ -19,7 +19,7 @@ require (
 	github.com/felixge/httpsnoop v1.1.0 // indirect
 	github.com/fsnotify/fsnotify v1.10.1 // indirect
 	github.com/go-openapi/analysis v0.25.5 // indirect
-	github.com/go-openapi/codescan v0.36.0 // indirect
+	github.com/go-openapi/codescan v0.36.2 // indirect
 	github.com/go-openapi/errors v0.22.8 // indirect
 	github.com/go-openapi/inflect v1.0.0 // indirect
 	github.com/go-openapi/jsonpointer v1.0.0 // indirect
@@ -40,7 +40,7 @@ require (
 	github.com/go-openapi/swag/typeutils v0.28.0 // indirect
 	github.com/go-openapi/swag/yamlutils v0.28.0 // indirect
 	github.com/go-openapi/validate v0.26.1 // indirect
-	github.com/go-swagger/go-swagger v0.36.0 // indirect
+	github.com/go-swagger/go-swagger v0.36.1 // indirect
 	github.com/go-viper/mapstructure/v2 v2.5.0 // indirect
 	github.com/google/uuid v1.6.0 // indirect
 	github.com/gorilla/handlers v1.5.2 // indirect
