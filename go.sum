@@ -77,8 +77,8 @@ github.com/go-openapi/testify/v2 v2.6.1 h1:6CNJhTjMzgaeaH8WhshcsZNPIvRemiOcFpU7s
 github.com/go-openapi/testify/v2 v2.6.1/go.mod h1:SgsVHtfooshd0tublTtJ50FPKhujf47YRqauXXOUxfw=
 github.com/go-openapi/validate v0.26.3 h1:OkfZgLvLDnGP2hrRGD+42WBiPWWkoHomTJ+IVI+KaDc=
 github.com/go-openapi/validate v0.26.3/go.mod h1:7DOOa4raU6NRe7A8VQSKbm3VcuUIioREYHFt+er9Sk8=
-github.com/go-swagger/go-swagger v0.36.3 h1:0pChIYFJxDId+NEiAGFu28Kc4VDDkee5SJ1AQytrK6Q=
-github.com/go-swagger/go-swagger v0.36.3/go.mod h1:ONc/lne3VwSFdVlTbIt3DVKkGIXxI531ajhtbz40Ck4=
+github.com/go-swagger/go-swagger v0.36.4 h1:na61LCMHmwwP1RvzHUZ50FLkiJkholoJMvn8MyVzRVk=
+github.com/go-swagger/go-swagger v0.36.4/go.mod h1:ONc/lne3VwSFdVlTbIt3DVKkGIXxI531ajhtbz40Ck4=
 github.com/go-viper/mapstructure/v2 v2.5.0 h1:vM5IJoUAy3d7zRSVtIwQgBj7BiWtMPfmPEgAXnvj1Ro=
 github.com/go-viper/mapstructure/v2 v2.5.0/go.mod h1:oJDH3BJKyqBA2TXFhDsKDGDTlndYOZ6rGS0BRZIxGhM=
 github.com/google/go-cmp v0.7.0 h1:wk8382ETsv4JYUZwIsn6YpYiWiBsYLSJiTsyBybVuN8=
