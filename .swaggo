@@ -1,2 +1,0 @@
-// swag cannot resolve json.RawMessage
-replace json.RawMessage object
