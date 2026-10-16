@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+#MISE description="Full pipeline: clone upstream, generate the spec and client, tidy the module"
+set -euo pipefail
+
+# generate-client reads the spec generate-spec writes, so run them in order
+# rather than as parallel deps.
+mise run generate-spec
+mise run generate-client
+
+go mod tidy
+rm -rf "$UPSTREAM_DIR"

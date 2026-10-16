@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+#MISE description="Generate the swagger spec from the upstream source"
+#MISE depends=["clone-upstream"]
+set -euo pipefail
+
+# swag requires the markdown description files referenced by upstream's annotations.
+mkdir -p "$UPSTREAM_DIR/docs"
+touch "$UPSTREAM_DIR/docs/description.md" "$UPSTREAM_DIR/docs/api.md"
+
+swag init \
+  -d "$UPSTREAM_DIR/backend,$UPSTREAM_DIR/backend/internal/controller,$UPSTREAM_DIR/backend/internal/dto" \
+  -g cmd/main.go \
+  -ot yaml \
+  -o "$UPSTREAM_DIR" \
+  -md "$UPSTREAM_DIR/docs"
+
+cp "$UPSTREAM_DIR/swagger.yaml" "$SWAGGER_SPEC"

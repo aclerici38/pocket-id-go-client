@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+#MISE description="Remove the upstream clone and all generated files"
+set -euo pipefail
+
+rm -rf "$UPSTREAM_DIR" client models "$SWAGGER_SPEC"

@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+#MISE description="Shallow-clone upstream Pocket ID at the version pinned in POCKET_ID_VERSION"
+set -euo pipefail
+
+version="$(tr -d '\n' < POCKET_ID_VERSION)"
+
+rm -rf "$UPSTREAM_DIR"
+git clone --depth 1 --branch "$version" "$UPSTREAM_REPO" "$UPSTREAM_DIR"

@@ -1,32 +1,64 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["config:recommended"],
+  "extends": [
+    "config:recommended"
+  ],
   "dependencyDashboard": true,
   "prConcurrentLimit": 0,
   "prHourlyLimit": 0,
   "automerge": true,
   "platformAutomerge": true,
-  "postUpdateOptions": ["gomodTidy", "gomodUpdateImportPaths"],
+  "postUpdateOptions": [
+    "gomodTidy",
+    "gomodUpdateImportPaths"
+  ],
   "customManagers": [
     {
       "customType": "regex",
-      "managerFilePatterns": ["/^POCKET_ID_VERSION$/"],
-      "matchStrings": ["(?<currentValue>v\\d+\\.\\d+\\.\\d+)"],
+      "managerFilePatterns": [
+        "/^POCKET_ID_VERSION$/"
+      ],
+      "matchStrings": [
+        "(?<currentValue>v\\d+\\.\\d+\\.\\d+)"
+      ],
       "datasourceTemplate": "github-releases",
       "depNameTemplate": "pocket-id/pocket-id"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/\\.ya?ml$/"
+      ],
+      "matchStrings": [
+        "# renovate: datasource=(?<datasource>.*?) depName=(?<depName>.*?)( versioning=(?<versioning>.*?))?\\n.*?[\"']?(?<currentValue>v?\\d+\\.\\d+\\.\\d+[^\"'\\s]*)[\"']?"
+      ],
+      "versioningTemplate": "{{#if versioning}}{{{versioning}}}{{else}}semver{{/if}}"
     }
   ],
   "packageRules": [
     {
-      "matchDepNames": ["pocket-id/pocket-id"],
+      "matchDepNames": [
+        "pocket-id/pocket-id"
+      ],
       "semanticCommitType": "feat",
       "commitMessageTopic": "Pocket ID",
       "automergeType": "branch",
       "ignoreTests": true
     },
     {
-      "matchDatasources": ["golang-version"],
+      "matchDatasources": [
+        "golang-version"
+      ],
       "rangeStrategy": "bump"
+    },
+    {
+      "description": "Go version across go.mod and mise",
+      "matchPackageNames": [
+        "go",
+        "golang/go"
+      ],
+      "groupName": "golang",
+      "separateMinorPatch": true
     }
   ]
 }

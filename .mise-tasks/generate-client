@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+#MISE description="Generate the Go client from the swagger spec"
+set -euo pipefail
+
+swagger generate client -f "$SWAGGER_SPEC" -t . --skip-validation
