@@ -1,0 +1,130 @@
+name: Upstream API canary
+
+# Hourly: generates the client from upstream pocket-id `main` and compares its
+# API against the latest release of this repo. Only runs when upstream `main`
+# or the latest release changed since the last tested run. Results land on a
+# locked dashboard issue.
+
+on:
+  schedule:
+    - cron: "23 * * * *"
+  workflow_dispatch:
+    inputs:
+      force:
+        description: Run even if upstream and the latest release are unchanged.
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: upstream-canary
+  cancel-in-progress: false
+
+env:
+  CANARY_LABEL: upstream-api-canary
+  CANARY_ASSIGNEE: aclerici38
+
+jobs:
+  canary:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Resolve upstream and baseline
+        id: resolve
+        env:
+          GH_TOKEN: ${{ github.token }}
+          FORCE: ${{ inputs.force }}
+        run: |
+          sha=$(gh api repos/pocket-id/pocket-id/commits/main --jq .sha)
+          baseline=$(gh release view --json tagName --jq .tagName)
+          last=$(gh issue list --label "$CANARY_LABEL" --state all --limit 1 --json body \
+            --jq '.[0].body // "" | capture("state:tested=(?<t>\\S+)").t // ""')
+
+          changed=true
+          if [ "$FORCE" != true ] && [ "$last" = "$sha@$baseline" ]; then changed=false; fi
+
+          printf 'sha=%s\nbaseline=%s\nchanged=%s\n' "$sha" "$baseline" "$changed" >> "$GITHUB_OUTPUT"
+          echo "::notice title=Upstream canary::changed=$changed upstream=$sha baseline=$baseline last=${last:-none}"
+
+      - name: Heartbeat
+        if: steps.resolve.outputs.changed == 'false'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          num=$(gh issue list --label "$CANARY_LABEL" --state all --limit 1 --json number --jq '.[0].number')
+          gh issue view "$num" --json body --jq .body \
+            | sed "s/^| last checked |.*/| last checked | $(date -u +%Y-%m-%dT%H:%M:%SZ) |/" \
+            | gh issue edit "$num" --body-file -
+
+      - name: Setup mise
+        if: steps.resolve.outputs.changed == 'true'
+        uses: jdx/mise-action@9b200bcecbfd6303e69a4a261b2e09e3757440a7 # v5.2.0
+        with:
+          install_args: go swag go-swagger github:oasdiff/oasdiff
+
+      - name: Generate client from upstream main
+        id: build
+        if: steps.resolve.outputs.changed == 'true'
+        continue-on-error: true
+        env:
+          UPSTREAM_REF: ${{ steps.resolve.outputs.sha }}
+        run: mise run generate && mise run verify
+
+      - name: Compare with latest release
+        id: compare
+        if: steps.build.outcome == 'success'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          BASELINE: ${{ steps.resolve.outputs.baseline }}
+        run: |
+          dir="$RUNNER_TEMP/api"
+          mkdir -p "$dir"
+          gh api "repos/$GITHUB_REPOSITORY/contents/swagger.yaml?ref=$BASELINE" \
+            -H "Accept: application/vnd.github.raw" > "$dir/$BASELINE.yaml"
+          cp swagger.yaml "$dir/main.yaml"
+          cd "$dir"
+
+          git diff --no-index "$BASELINE.yaml" main.yaml > api.diff || true
+          if oasdiff breaking --fail-on ERR --color never "$BASELINE.yaml" main.yaml > breaking.txt; then
+            breaking=false
+          else
+            breaking=true
+          fi
+          printf 'dir=%s\nbreaking=%s\n' "$dir" "$breaking" >> "$GITHUB_OUTPUT"
+
+      - name: Upload API diff
+        id: upload
+        if: steps.compare.outcome == 'success'
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: api-diff
+          path: ${{ steps.compare.outputs.dir }}
+
+      - name: Update canary issue
+        if: ${{ !cancelled() && steps.resolve.outputs.changed == 'true' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+          UPSTREAM_SHA: ${{ steps.resolve.outputs.sha }}
+          BASELINE: ${{ steps.resolve.outputs.baseline }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          API_DIR: ${{ steps.compare.outputs.dir }}
+          ARTIFACT_URL: ${{ steps.upload.outputs.artifact-url }}
+          BUILD: ${{ steps.build.outcome }}
+          BREAKING: ${{ steps.compare.outputs.breaking }}
+        run: |
+          if [ "$BUILD" != success ] || [ "$BREAKING" = true ]; then STATUS=failing
+          elif [ -s "$API_DIR/api.diff" ]; then STATUS=changed
+          else STATUS=unchanged
+          fi
+          STATUS=$STATUS ./.github/scripts/update-canary-issue.sh
+
+          # Surface failures on the run itself too.
+          [ "$STATUS" != failing ]
