@@ -1,0 +1,22 @@
+# Install everything with `mise install`. Run `mise tasks` to list tasks,
+# `mise run <task>` to run one. Tasks live in ./.mise-tasks.
+
+[settings]
+lockfile = true
+lockfile_platforms = ["linux-x64", "linux-arm64", "macos-arm64"]
+
+[tools]
+go = "1.27.2"
+
+# Swagger spec generation from upstream source
+swag = "1.16.6"
+# Go client generation from the swagger spec
+go-swagger = "0.36.6"
+
+# Workflow linting
+zizmor = "1.31.1"
+
+[env]
+UPSTREAM_REPO = "https://github.com/pocket-id/pocket-id.git"
+UPSTREAM_DIR = ".upstream"
+SWAGGER_SPEC = "swagger.yaml"

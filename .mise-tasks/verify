@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+#MISE description="Verify the generated code compiles"
+set -euo pipefail
+
+go build ./...
