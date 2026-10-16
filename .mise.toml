@@ -13,6 +13,9 @@ swag = "1.16.6"
 # Go client generation from the swagger spec
 go-swagger = "0.36.6"
 
+# Breaking-change detection for the upstream API canary
+"github:oasdiff/oasdiff" = "1.33.0"
+
 # Workflow linting
 zizmor = "1.31.1"
 

@@ -23,7 +23,7 @@ jobs:
       - name: Setup mise
         uses: jdx/mise-action@9b200bcecbfd6303e69a4a261b2e09e3757440a7 # v5.2.0
         with:
-          install_args: go swag go-swagger
+          install_args: go swag go-swagger github:oasdiff/oasdiff
 
       - name: Generate client
         run: mise run generate
@@ -35,29 +35,44 @@ jobs:
         id: version
         run: echo "version=$(cat POCKET_ID_VERSION | tr -d '\n')" >> $GITHUB_OUTPUT
 
+      - name: API changelog
+        id: changelog
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          # Most recent release other than this one (skipping it handles re-runs).
+          prev=$(gh release list --json tagName --jq 'map(.tagName | select(. != env.VERSION))[0]')
+          git fetch --no-tags --depth=1 origin tag "$prev"
+
+          # Run from RUNNER_TEMP so oasdiff reports the files by version, not by path.
+          git show "$prev:swagger.yaml" > "$RUNNER_TEMP/$prev.yaml"
+          cp swagger.yaml "$RUNNER_TEMP/$VERSION.yaml"
+          (cd "$RUNNER_TEMP" && oasdiff changelog --color never "$prev.yaml" "$VERSION.yaml") > "$RUNNER_TEMP/changelog.txt"
+
+          echo "prev=$prev" >> "$GITHUB_OUTPUT"
+
       - name: Create release
         if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
         env:
           GH_TOKEN: ${{ github.token }}
           VERSION: ${{ steps.version.outputs.version }}
+          PREV: ${{ steps.changelog.outputs.prev }}
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           # Checkout doesn't persist credentials; authenticate git via GH_TOKEN for this step only.
           gh auth setup-git
 
-          # Most recent release other than this one (skipping it handles re-runs).
-          prev=$(gh release list --json tagName --jq 'map(.tagName | select(. != env.VERSION))[0]')
-          git fetch --no-tags --depth=1 origin tag "$prev"
-
           # Build a commit holding only the files needed for the Go module.
           export GIT_INDEX_FILE="$RUNNER_TEMP/release-index"
           git add -f LICENSE go.mod go.sum client/ models/ swagger.yaml
           tree=$(git write-tree)
           unset GIT_INDEX_FILE
-          commit=$(git commit-tree "$tree" -p "$prev" -m "Generated client from Pocket ID ${VERSION}")
+          commit=$(git commit-tree "$tree" -p "$PREV" -m "Generated client from Pocket ID ${VERSION}")
 
-          git diff "$prev" "$commit" -- swagger.yaml > api-changes.diff
+          git diff "$PREV" "$commit" -- swagger.yaml > api-changes.diff
 
           # Delete existing tag/release if they exist
           gh release delete "$VERSION" --yes 2>/dev/null || true
@@ -67,7 +82,23 @@ jobs:
           git tag -f "$VERSION" "$commit"
           git push origin "refs/tags/${VERSION}" --force
 
-          release_args=("$VERSION" --title "Client $VERSION" --notes "Generated from [Pocket ID $VERSION](https://github.com/pocket-id/pocket-id/releases/tag/$VERSION)")
+          # Release bodies max out at 125000 characters; the full diff is attached either way.
+          changelog="$RUNNER_TEMP/changelog.txt"
+          {
+            echo "Generated from [Pocket ID $VERSION](https://github.com/pocket-id/pocket-id/releases/tag/$VERSION)"
+            echo
+            echo "### API changes since $PREV"
+            echo '```'
+            if [ "$(wc -c < "$changelog")" -le 100000 ]; then
+              cat "$changelog"
+            else
+              head -c 100000 "$changelog" | sed '$d'
+              echo "... truncated, see api-changes.diff"
+            fi
+            echo '```'
+          } > "$RUNNER_TEMP/notes.md"
+
+          release_args=("$VERSION" --title "Client $VERSION" --notes-file "$RUNNER_TEMP/notes.md")
           if [ -f api-changes.diff ] && [ -s api-changes.diff ]; then
             release_args+=(api-changes.diff)
           fi
