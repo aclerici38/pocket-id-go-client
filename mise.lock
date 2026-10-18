@@ -3,24 +3,24 @@
 lockfile_version = 3
 
 [[tools."github:oasdiff/oasdiff"]]
-version = "1.33.0"
+version = "1.34.0"
 backend = "github:oasdiff/oasdiff"
-specifiers = ["1.33.0"]
+specifiers = ["v1.34.0"]
 
 [tools."github:oasdiff/oasdiff"."platforms.linux-arm64"]
-checksum = "sha256:4ae3c362d6074d919aada2dea82d0ee84366591600384455d0bdc658ddf8f7ae"
-url = "https://github.com/oasdiff/oasdiff/releases/download/v1.33.0/oasdiff_1.33.0_linux_arm64.tar.gz"
-url_api = "https://api.github.com/repos/oasdiff/oasdiff/releases/assets/603658994"
+checksum = "sha256:76118aef6887042f5147db537ee6670d3003f185e6aa128f7a04171cecc8baef"
+url = "https://github.com/oasdiff/oasdiff/releases/download/v1.34.0/oasdiff_1.34.0_linux_arm64.tar.gz"
+url_api = "https://api.github.com/repos/oasdiff/oasdiff/releases/assets/654585127"
 
 [tools."github:oasdiff/oasdiff"."platforms.linux-x64"]
-checksum = "sha256:43a4e328e2d13ba1552d760aa68d2485c75c5621f309f6ff64ae895188345247"
-url = "https://github.com/oasdiff/oasdiff/releases/download/v1.33.0/oasdiff_1.33.0_linux_amd64.tar.gz"
-url_api = "https://api.github.com/repos/oasdiff/oasdiff/releases/assets/603658995"
+checksum = "sha256:7c88e09fd500b231af2819eb21f6fdfc7bcdfe2741d2c1937c59e7b72c8a575a"
+url = "https://github.com/oasdiff/oasdiff/releases/download/v1.34.0/oasdiff_1.34.0_linux_amd64.tar.gz"
+url_api = "https://api.github.com/repos/oasdiff/oasdiff/releases/assets/654585163"
 
 [tools."github:oasdiff/oasdiff"."platforms.macos-arm64"]
-checksum = "sha256:2a479337c15afdcbf0b1e89c0b4d0cf0176472dbc11483358fed1f831d1e46c5"
-url = "https://github.com/oasdiff/oasdiff/releases/download/v1.33.0/oasdiff_1.33.0_darwin_all.tar.gz"
-url_api = "https://api.github.com/repos/oasdiff/oasdiff/releases/assets/603659023"
+checksum = "sha256:34f5713d9d4761d96f9ece0abccc27ba1514ea3640f024f95cf3db63da2d7952"
+url = "https://github.com/oasdiff/oasdiff/releases/download/v1.34.0/oasdiff_1.34.0_darwin_all.tar.gz"
+url_api = "https://api.github.com/repos/oasdiff/oasdiff/releases/assets/654585131"
 
 [[tools.go]]
 version = "1.27.2"
