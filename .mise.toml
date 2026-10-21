@@ -14,7 +14,7 @@ swag = "1.16.6"
 go-swagger = "0.36.6"
 
 # Breaking-change detection for the upstream API canary
-"github:oasdiff/oasdiff" = "v1.34.0"
+"github:oasdiff/oasdiff" = "v1.34.1"
 
 # Workflow linting
 zizmor = "1.31.1"
