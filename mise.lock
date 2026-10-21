@@ -3,24 +3,24 @@
 lockfile_version = 3
 
 [[tools."github:oasdiff/oasdiff"]]
-version = "1.34.0"
+version = "1.34.1"
 backend = "github:oasdiff/oasdiff"
-specifiers = ["v1.34.0"]
+specifiers = ["v1.34.1"]
 
 [tools."github:oasdiff/oasdiff"."platforms.linux-arm64"]
-checksum = "sha256:76118aef6887042f5147db537ee6670d3003f185e6aa128f7a04171cecc8baef"
-url = "https://github.com/oasdiff/oasdiff/releases/download/v1.34.0/oasdiff_1.34.0_linux_arm64.tar.gz"
-url_api = "https://api.github.com/repos/oasdiff/oasdiff/releases/assets/654585127"
+checksum = "sha256:e8f99bbf102a4b7f235104da72d0b9d67702e78622d1d4d37169e698ee90a249"
+url = "https://github.com/oasdiff/oasdiff/releases/download/v1.34.1/oasdiff_1.34.1_linux_arm64.tar.gz"
+url_api = "https://api.github.com/repos/oasdiff/oasdiff/releases/assets/662966765"
 
 [tools."github:oasdiff/oasdiff"."platforms.linux-x64"]
-checksum = "sha256:7c88e09fd500b231af2819eb21f6fdfc7bcdfe2741d2c1937c59e7b72c8a575a"
-url = "https://github.com/oasdiff/oasdiff/releases/download/v1.34.0/oasdiff_1.34.0_linux_amd64.tar.gz"
-url_api = "https://api.github.com/repos/oasdiff/oasdiff/releases/assets/654585163"
+checksum = "sha256:75775f65b0adebd26a8e013af51a799342dfdc6262d89efa9e3b7bdf89657d90"
+url = "https://github.com/oasdiff/oasdiff/releases/download/v1.34.1/oasdiff_1.34.1_linux_amd64.tar.gz"
+url_api = "https://api.github.com/repos/oasdiff/oasdiff/releases/assets/662966767"
 
 [tools."github:oasdiff/oasdiff"."platforms.macos-arm64"]
-checksum = "sha256:34f5713d9d4761d96f9ece0abccc27ba1514ea3640f024f95cf3db63da2d7952"
-url = "https://github.com/oasdiff/oasdiff/releases/download/v1.34.0/oasdiff_1.34.0_darwin_all.tar.gz"
-url_api = "https://api.github.com/repos/oasdiff/oasdiff/releases/assets/654585131"
+checksum = "sha256:64948ba30c5555d3d15b95a7f3eda22fa83c15cf37fd4dad1720c0deb0a07cb5"
+url = "https://github.com/oasdiff/oasdiff/releases/download/v1.34.1/oasdiff_1.34.1_darwin_all.tar.gz"
+url_api = "https://api.github.com/repos/oasdiff/oasdiff/releases/assets/662966834"
 
 [[tools.go]]
 version = "1.27.3"
