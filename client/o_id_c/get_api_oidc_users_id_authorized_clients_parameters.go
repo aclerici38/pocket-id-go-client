@@ -87,9 +87,14 @@ type GetAPIOidcUsersIDAuthorizedClientsParams struct {
 	// Default: 1
 	PaginationPage *int64
 
+	// Search.
+	//
+	// Search term to filter clients by name
+	Search *string
+
 	// SortColumn.
 	//
-	// Column to sort by
+	// Column to sort by (name or lastUsedAt)
 	SortColumn *string
 
 	// SortDirection.
@@ -217,6 +222,17 @@ func (o *GetAPIOidcUsersIDAuthorizedClientsParams) SetPaginationPage(paginationP
 	o.PaginationPage = paginationPage
 }
 
+// WithSearch adds the search to the get API oidc users ID authorized clients params.
+func (o *GetAPIOidcUsersIDAuthorizedClientsParams) WithSearch(search *string) *GetAPIOidcUsersIDAuthorizedClientsParams {
+	o.SetSearch(search)
+	return o
+}
+
+// SetSearch adds the search to the get API oidc users ID authorized clients params.
+func (o *GetAPIOidcUsersIDAuthorizedClientsParams) SetSearch(search *string) {
+	o.Search = search
+}
+
 // WithSortColumn adds the sortColumn to the get API oidc users ID authorized clients params.
 func (o *GetAPIOidcUsersIDAuthorizedClientsParams) WithSortColumn(sortColumn *string) *GetAPIOidcUsersIDAuthorizedClientsParams {
 	o.SetSortColumn(sortColumn)
@@ -297,6 +313,23 @@ func (o *GetAPIOidcUsersIDAuthorizedClientsParams) WriteToRequest(r runtime.Clie
 		if qPaginationPage != "" {
 
 			if err := r.SetQueryParam("pagination[page]", qPaginationPage); err != nil {
+				return err
+			}
+		}
+	}
+
+	if o.Search != nil {
+
+		// query param search
+		var qrSearch string
+
+		if o.Search != nil {
+			qrSearch = *o.Search
+		}
+		qSearch := qrSearch
+		if qSearch != "" {
+
+			if err := r.SetQueryParam("search", qSearch); err != nil {
 				return err
 			}
 		}

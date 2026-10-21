@@ -48,7 +48,7 @@ func NewGetAPIAuditLogsOK() *GetAPIAuditLogsOK {
 //
 // OK
 type GetAPIAuditLogsOK struct {
-	Payload *models.GithubComPocketIDPocketIDBackendInternalDtoPaginatedGithubComPocketIDPocketIDBackendInternalDtoAuditLogDto
+	Payload *models.GithubComPocketIDPocketIDBackendInternalDtoPaginatedAuditlogsAuditLogDto
 }
 
 // IsSuccess returns true when this get Api audit logs o k response has a 2xx status code
@@ -91,13 +91,13 @@ func (o *GetAPIAuditLogsOK) String() string {
 	return fmt.Sprintf("[GET /api/audit-logs][%d] getApiAuditLogsOK %s", 200, payload)
 }
 
-func (o *GetAPIAuditLogsOK) GetPayload() *models.GithubComPocketIDPocketIDBackendInternalDtoPaginatedGithubComPocketIDPocketIDBackendInternalDtoAuditLogDto {
+func (o *GetAPIAuditLogsOK) GetPayload() *models.GithubComPocketIDPocketIDBackendInternalDtoPaginatedAuditlogsAuditLogDto {
 	return o.Payload
 }
 
 func (o *GetAPIAuditLogsOK) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
 
-	o.Payload = new(models.GithubComPocketIDPocketIDBackendInternalDtoPaginatedGithubComPocketIDPocketIDBackendInternalDtoAuditLogDto)
+	o.Payload = new(models.GithubComPocketIDPocketIDBackendInternalDtoPaginatedAuditlogsAuditLogDto)
 
 	// response payload
 	if err := consumer.Consume(response.Body(), o.Payload); err != nil && !stderrors.Is(err, io.EOF) {

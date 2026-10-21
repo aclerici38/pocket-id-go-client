@@ -9,10 +9,10 @@ import (
 	"github.com/go-openapi/swag/jsonutils"
 )
 
-// GithubComPocketIDPocketIDBackendInternalDtoAuditLogDto github com pocket id pocket id backend internal dto audit log dto
+// AuditlogsAuditLogDto auditlogs audit log dto
 //
-// swagger:model github_com_pocket-id_pocket-id_backend_internal_dto.AuditLogDto
-type GithubComPocketIDPocketIDBackendInternalDtoAuditLogDto struct {
+// swagger:model auditlogs.auditLogDto
+type AuditlogsAuditLogDto struct {
 
 	// actor username
 	ActorUsername string `json:"actorUsername,omitempty"`
@@ -48,18 +48,18 @@ type GithubComPocketIDPocketIDBackendInternalDtoAuditLogDto struct {
 	Username string `json:"username,omitempty"`
 }
 
-// Validate validates this github com pocket id pocket id backend internal dto audit log dto
-func (m *GithubComPocketIDPocketIDBackendInternalDtoAuditLogDto) Validate(_ strfmt.Registry) error {
+// Validate validates this auditlogs audit log dto
+func (m *AuditlogsAuditLogDto) Validate(_ strfmt.Registry) error {
 	return nil
 }
 
-// ContextValidate validates this github com pocket id pocket id backend internal dto audit log dto based on context it is used
-func (m *GithubComPocketIDPocketIDBackendInternalDtoAuditLogDto) ContextValidate(_ context.Context, _ strfmt.Registry) error {
+// ContextValidate validates this auditlogs audit log dto based on context it is used
+func (m *AuditlogsAuditLogDto) ContextValidate(_ context.Context, _ strfmt.Registry) error {
 	return nil
 }
 
 // MarshalBinary interface implementation
-func (m *GithubComPocketIDPocketIDBackendInternalDtoAuditLogDto) MarshalBinary() ([]byte, error) {
+func (m *AuditlogsAuditLogDto) MarshalBinary() ([]byte, error) {
 	if m == nil {
 		return nil, nil
 	}
@@ -67,8 +67,8 @@ func (m *GithubComPocketIDPocketIDBackendInternalDtoAuditLogDto) MarshalBinary()
 }
 
 // UnmarshalBinary interface implementation
-func (m *GithubComPocketIDPocketIDBackendInternalDtoAuditLogDto) UnmarshalBinary(b []byte) error {
-	var res GithubComPocketIDPocketIDBackendInternalDtoAuditLogDto
+func (m *AuditlogsAuditLogDto) UnmarshalBinary(b []byte) error {
+	var res AuditlogsAuditLogDto
 	if err := jsonutils.ReadJSON(b, &res); err != nil {
 		return err
 	}

@@ -30,6 +30,9 @@ type GithubComPocketIDPocketIDBackendInternalDtoUserDto struct {
 	// email
 	Email string `json:"email,omitempty"`
 
+	// email verification deadline
+	EmailVerificationDeadline string `json:"emailVerificationDeadline,omitempty"`
+
 	// email verified
 	EmailVerified bool `json:"emailVerified,omitempty"`
 

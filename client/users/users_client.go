@@ -125,6 +125,12 @@ type ClientService interface {
 	// DeleteAPIUsersIDWebauthnCredentialsCredentialIDContext delete user passkey.
 	DeleteAPIUsersIDWebauthnCredentialsCredentialIDContext(ctx context.Context, params *DeleteAPIUsersIDWebauthnCredentialsCredentialIDParams, opts ...ClientOption) (*DeleteAPIUsersIDWebauthnCredentialsCredentialIDNoContent, error)
 
+	// DeleteAPIUsersMeEmailChange cancel pending email change.
+	DeleteAPIUsersMeEmailChange(params *DeleteAPIUsersMeEmailChangeParams, opts ...ClientOption) (*DeleteAPIUsersMeEmailChangeNoContent, error)
+
+	// DeleteAPIUsersMeEmailChangeContext cancel pending email change.
+	DeleteAPIUsersMeEmailChangeContext(ctx context.Context, params *DeleteAPIUsersMeEmailChangeParams, opts ...ClientOption) (*DeleteAPIUsersMeEmailChangeNoContent, error)
+
 	// DeleteAPIUsersMeProfilePicture reset current user s profile picture.
 	DeleteAPIUsersMeProfilePicture(params *DeleteAPIUsersMeProfilePictureParams, opts ...ClientOption) (*DeleteAPIUsersMeProfilePictureNoContent, error)
 
@@ -172,6 +178,12 @@ type ClientService interface {
 
 	// GetAPIUsersMeContext get current user.
 	GetAPIUsersMeContext(ctx context.Context, params *GetAPIUsersMeParams, opts ...ClientOption) (*GetAPIUsersMeOK, error)
+
+	// GetAPIUsersMeEmailChange get pending email change.
+	GetAPIUsersMeEmailChange(params *GetAPIUsersMeEmailChangeParams, opts ...ClientOption) (*GetAPIUsersMeEmailChangeOK, *GetAPIUsersMeEmailChangeNoContent, error)
+
+	// GetAPIUsersMeEmailChangeContext get pending email change.
+	GetAPIUsersMeEmailChangeContext(ctx context.Context, params *GetAPIUsersMeEmailChangeParams, opts ...ClientOption) (*GetAPIUsersMeEmailChangeOK, *GetAPIUsersMeEmailChangeNoContent, error)
 
 	// PostAPIOneTimeAccessEmail request one time access email.
 	PostAPIOneTimeAccessEmail(params *PostAPIOneTimeAccessEmailParams, opts ...ClientOption) (*PostAPIOneTimeAccessEmailNoContent, error)
@@ -525,6 +537,72 @@ func (a *Client) DeleteAPIUsersIDWebauthnCredentialsCredentialIDContext(ctx cont
 	unexpectedSuccess := result.(*DeleteAPIUsersIDWebauthnCredentialsCredentialIDDefault)
 
 	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+// DeleteAPIUsersMeEmailChange cancels pending email change.
+//
+// Cancel the pending email change of the currently authenticated user, so its verification link stops working.
+//
+// This method does not support injected context.
+// However, timeout and opentracing contexts are honored whenever enabled.
+//
+// If you need to pass a specific context, use [Client.DeleteAPIUsersMeEmailChangeContext] instead.
+func (a *Client) DeleteAPIUsersMeEmailChange(params *DeleteAPIUsersMeEmailChangeParams, opts ...ClientOption) (*DeleteAPIUsersMeEmailChangeNoContent, error) {
+	var ctx context.Context
+	if params != nil && params.inner.ctx != nil {
+		ctx = params.inner.ctx
+	} else {
+		ctx = context.Background()
+	}
+
+	return a.DeleteAPIUsersMeEmailChangeContext(ctx, params, opts...)
+}
+
+// DeleteAPIUsersMeEmailChangeContext cancels pending email change.
+//
+// Cancel the pending email change of the currently authenticated user, so its verification link stops working.
+//
+// Do not use the deprecated [DeleteAPIUsersMeEmailChangeParams.Context] with this method: it would be ignored.
+func (a *Client) DeleteAPIUsersMeEmailChangeContext(ctx context.Context, params *DeleteAPIUsersMeEmailChangeParams, opts ...ClientOption) (*DeleteAPIUsersMeEmailChangeNoContent, error) {
+	// NOTE: parameters are not validated before sending
+	if params == nil {
+		params = NewDeleteAPIUsersMeEmailChangeParams()
+	}
+
+	op := &runtime.ClientOperation{
+		ID:                 "DeleteAPIUsersMeEmailChange",
+		Method:             "DELETE",
+		PathPattern:        "/api/users/me/email-change",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http"},
+		Params:             params,
+		Reader:             &DeleteAPIUsersMeEmailChangeReader{formats: a.formats},
+		Client:             params.HTTPClient,
+	}
+
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.SubmitContext(ctx, op)
+	if err != nil {
+		return nil, err
+	}
+
+	// only one success response has to be checked
+	success, ok := result.(*DeleteAPIUsersMeEmailChangeNoContent)
+	if ok {
+		return success, nil
+	}
+
+	// unexpected success response.
+
+	// no default response is defined.
+	//
+	// safeguard: normally, in the absence of a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for DeleteAPIUsersMeEmailChange: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 // DeleteAPIUsersMeProfilePicture resets current user s profile picture.
@@ -1046,6 +1124,72 @@ func (a *Client) GetAPIUsersMeContext(ctx context.Context, params *GetAPIUsersMe
 	unexpectedSuccess := result.(*GetAPIUsersMeDefault)
 
 	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+// GetAPIUsersMeEmailChange gets pending email change.
+//
+// Get the email change of the currently authenticated user that still has to be confirmed through the emailed link.
+//
+// This method does not support injected context.
+// However, timeout and opentracing contexts are honored whenever enabled.
+//
+// If you need to pass a specific context, use [Client.GetAPIUsersMeEmailChangeContext] instead.
+func (a *Client) GetAPIUsersMeEmailChange(params *GetAPIUsersMeEmailChangeParams, opts ...ClientOption) (*GetAPIUsersMeEmailChangeOK, *GetAPIUsersMeEmailChangeNoContent, error) {
+	var ctx context.Context
+	if params != nil && params.inner.ctx != nil {
+		ctx = params.inner.ctx
+	} else {
+		ctx = context.Background()
+	}
+
+	return a.GetAPIUsersMeEmailChangeContext(ctx, params, opts...)
+}
+
+// GetAPIUsersMeEmailChangeContext gets pending email change.
+//
+// Get the email change of the currently authenticated user that still has to be confirmed through the emailed link.
+//
+// Do not use the deprecated [GetAPIUsersMeEmailChangeParams.Context] with this method: it would be ignored.
+func (a *Client) GetAPIUsersMeEmailChangeContext(ctx context.Context, params *GetAPIUsersMeEmailChangeParams, opts ...ClientOption) (*GetAPIUsersMeEmailChangeOK, *GetAPIUsersMeEmailChangeNoContent, error) {
+	// NOTE: parameters are not validated before sending
+	if params == nil {
+		params = NewGetAPIUsersMeEmailChangeParams()
+	}
+
+	op := &runtime.ClientOperation{
+		ID:                 "GetAPIUsersMeEmailChange",
+		Method:             "GET",
+		PathPattern:        "/api/users/me/email-change",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http"},
+		Params:             params,
+		Reader:             &GetAPIUsersMeEmailChangeReader{formats: a.formats},
+		Client:             params.HTTPClient,
+	}
+
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.SubmitContext(ctx, op)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	// several success responses have to be checked
+	switch value := result.(type) {
+	case *GetAPIUsersMeEmailChangeOK:
+		return value, nil, nil
+	case *GetAPIUsersMeEmailChangeNoContent:
+		return nil, value, nil
+	}
+
+	// no default response is defined.
+	//
+	// safeguard: normally, in the absence of a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for users: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
 }
 
 // PostAPIOneTimeAccessEmail requests one time access email.

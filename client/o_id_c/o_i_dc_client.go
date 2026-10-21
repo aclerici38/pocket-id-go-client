@@ -153,12 +153,6 @@ type ClientService interface {
 	// GetAPIOidcClientsIDLogoContext get client logo.
 	GetAPIOidcClientsIDLogoContext(ctx context.Context, params *GetAPIOidcClientsIDLogoParams, writer io.Writer, opts ...ClientOption) (*GetAPIOidcClientsIDLogoOK, error)
 
-	// GetAPIOidcClientsIDMeta get client metadata.
-	GetAPIOidcClientsIDMeta(params *GetAPIOidcClientsIDMetaParams, opts ...ClientOption) (*GetAPIOidcClientsIDMetaOK, error)
-
-	// GetAPIOidcClientsIDMetaContext get client metadata.
-	GetAPIOidcClientsIDMetaContext(ctx context.Context, params *GetAPIOidcClientsIDMetaParams, opts ...ClientOption) (*GetAPIOidcClientsIDMetaOK, error)
-
 	// GetAPIOidcClientsIDPreviewUserID preview o ID c client data for user.
 	GetAPIOidcClientsIDPreviewUserID(params *GetAPIOidcClientsIDPreviewUserIDParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetAPIOidcClientsIDPreviewUserIDOK, error)
 
@@ -709,71 +703,6 @@ func (a *Client) GetAPIOidcClientsIDLogoContext(ctx context.Context, params *Get
 	//
 	// a default response is provided: fill this and return an error
 	unexpectedSuccess := result.(*GetAPIOidcClientsIDLogoDefault)
-
-	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
-}
-
-// GetAPIOidcClientsIDMeta gets client metadata.
-//
-// Get OIDC client metadata for discovery and configuration.
-//
-// This method does not support injected context.
-// However, timeout and opentracing contexts are honored whenever enabled.
-//
-// If you need to pass a specific context, use [Client.GetAPIOidcClientsIDMetaContext] instead.
-func (a *Client) GetAPIOidcClientsIDMeta(params *GetAPIOidcClientsIDMetaParams, opts ...ClientOption) (*GetAPIOidcClientsIDMetaOK, error) {
-	var ctx context.Context
-	if params != nil && params.inner.ctx != nil {
-		ctx = params.inner.ctx
-	} else {
-		ctx = context.Background()
-	}
-
-	return a.GetAPIOidcClientsIDMetaContext(ctx, params, opts...)
-}
-
-// GetAPIOidcClientsIDMetaContext gets client metadata.
-//
-// Get OIDC client metadata for discovery and configuration.
-//
-// Do not use the deprecated [GetAPIOidcClientsIDMetaParams.Context] with this method: it would be ignored.
-func (a *Client) GetAPIOidcClientsIDMetaContext(ctx context.Context, params *GetAPIOidcClientsIDMetaParams, opts ...ClientOption) (*GetAPIOidcClientsIDMetaOK, error) {
-	// NOTE: parameters are not validated before sending
-	if params == nil {
-		params = NewGetAPIOidcClientsIDMetaParams()
-	}
-
-	op := &runtime.ClientOperation{
-		ID:                 "GetAPIOidcClientsIDMeta",
-		Method:             "GET",
-		PathPattern:        "/api/oidc/clients/{id}/meta",
-		ProducesMediaTypes: []string{"application/json"},
-		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http"},
-		Params:             params,
-		Reader:             &GetAPIOidcClientsIDMetaReader{formats: a.formats},
-		Client:             params.HTTPClient,
-	}
-
-	for _, opt := range opts {
-		opt(op)
-	}
-
-	result, err := a.transport.SubmitContext(ctx, op)
-	if err != nil {
-		return nil, err
-	}
-
-	// only one success response has to be checked
-	success, ok := result.(*GetAPIOidcClientsIDMetaOK)
-	if ok {
-		return success, nil
-	}
-
-	// unexpected success response.
-	//
-	// a default response is provided: fill this and return an error
-	unexpectedSuccess := result.(*GetAPIOidcClientsIDMetaDefault)
 
 	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }

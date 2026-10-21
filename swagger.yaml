@@ -243,6 +243,8 @@ definitions:
     - device_login_expired
     - reauthentication_required
     - invalid_email_verification_token
+    - email_verification_required
+    - email_change_not_started
     - setup_not_available
     - setup_already_completed
     - token_invalid_or_expired
@@ -303,6 +305,8 @@ definitions:
     - CodeDeviceLoginExpired
     - CodeReauthenticationRequired
     - CodeEmailVerificationTokenInvalid
+    - CodeEmailVerificationRequired
+    - CodeEmailChangeNotStarted
     - CodeSetupNotAvailable
     - CodeSetupAlreadyCompleted
     - CodeTokenInvalidOrExpired
@@ -338,6 +342,33 @@ definitions:
     - CodeLogoPresetsDisabled
     - CodeLogoPresetsUnavailable
     - CodeOidcPARRequired
+  auditlogs.auditLogDto:
+    properties:
+      actorUsername:
+        type: string
+      city:
+        type: string
+      country:
+        type: string
+      createdAt:
+        type: string
+      data:
+        additionalProperties:
+          type: string
+        type: object
+      device:
+        type: string
+      event:
+        type: string
+      id:
+        type: string
+      ipAddress:
+        type: string
+      userID:
+        type: string
+      username:
+        type: string
+    type: object
   devicelogin.decisionDto:
     properties:
       code:
@@ -388,6 +419,13 @@ definitions:
       userCode:
         type: string
     type: object
+  emailverification.emailChangeDto:
+    properties:
+      email:
+        type: string
+      expiresAt:
+        type: string
+    type: object
   github_com_pocket-id_pocket-id_backend_internal_dto.AccessibleOidcClientDto:
     properties:
       clientType:
@@ -433,13 +471,22 @@ definitions:
         type: string
       emailApiKeyExpirationEnabled:
         type: string
-      emailLoginNotificationEnabled:
+      emailLoginNotificationMode:
+        enum:
+        - disabled
+        - always
+        - ipAndUserAgent
+        - browserRecognition
         type: string
       emailOneTimeAccessAsAdminEnabled:
         type: string
       emailOneTimeAccessAsUnauthenticatedEnabled:
         type: string
-      emailVerificationEnabled:
+      emailVerification:
+        enum:
+        - disabled
+        - optional
+        - required
         type: string
       emailsVerified:
         type: string
@@ -531,10 +578,10 @@ definitions:
     - autoCreateOidcClientSecret
     - disableAnimations
     - emailApiKeyExpirationEnabled
-    - emailLoginNotificationEnabled
+    - emailLoginNotificationMode
     - emailOneTimeAccessAsAdminEnabled
     - emailOneTimeAccessAsUnauthenticatedEnabled
-    - emailVerificationEnabled
+    - emailVerification
     - emailsVerified
     - homePageUrl
     - ldapEnabled
@@ -557,33 +604,6 @@ definitions:
       type:
         type: string
       value:
-        type: string
-    type: object
-  github_com_pocket-id_pocket-id_backend_internal_dto.AuditLogDto:
-    properties:
-      actorUsername:
-        type: string
-      city:
-        type: string
-      country:
-        type: string
-      createdAt:
-        type: string
-      data:
-        additionalProperties:
-          type: string
-        type: object
-      device:
-        type: string
-      event:
-        type: string
-      id:
-        type: string
-      ipAddress:
-        type: string
-      userID:
-        type: string
-      username:
         type: string
     type: object
   github_com_pocket-id_pocket-id_backend_internal_dto.AuthorizedOidcClientDto:
@@ -1085,20 +1105,20 @@ definitions:
       pagination:
         $ref: '#/definitions/github_com_pocket-id_pocket-id_backend_internal_dto.Pagination'
     type: object
+  github_com_pocket-id_pocket-id_backend_internal_dto.Paginated-auditlogs_auditLogDto:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/auditlogs.auditLogDto'
+        type: array
+      pagination:
+        $ref: '#/definitions/github_com_pocket-id_pocket-id_backend_internal_dto.Pagination'
+    type: object
   ? github_com_pocket-id_pocket-id_backend_internal_dto.Paginated-github_com_pocket-id_pocket-id_backend_internal_dto_AccessibleOidcClientDto
   : properties:
       data:
         items:
           $ref: '#/definitions/github_com_pocket-id_pocket-id_backend_internal_dto.AccessibleOidcClientDto'
-        type: array
-      pagination:
-        $ref: '#/definitions/github_com_pocket-id_pocket-id_backend_internal_dto.Pagination'
-    type: object
-  github_com_pocket-id_pocket-id_backend_internal_dto.Paginated-github_com_pocket-id_pocket-id_backend_internal_dto_AuditLogDto:
-    properties:
-      data:
-        items:
-          $ref: '#/definitions/github_com_pocket-id_pocket-id_backend_internal_dto.AuditLogDto'
         type: array
       pagination:
         $ref: '#/definitions/github_com_pocket-id_pocket-id_backend_internal_dto.Pagination'
@@ -1213,6 +1233,8 @@ definitions:
       displayName:
         type: string
       email:
+        type: string
+      emailVerificationDeadline:
         type: string
       emailVerified:
         type: boolean
@@ -2329,7 +2351,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/github_com_pocket-id_pocket-id_backend_internal_dto.Paginated-github_com_pocket-id_pocket-id_backend_internal_dto_AuditLogDto'
+            $ref: '#/definitions/github_com_pocket-id_pocket-id_backend_internal_dto.Paginated-auditlogs_auditLogDto'
         default:
           description: Error
           schema:
@@ -2364,7 +2386,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/github_com_pocket-id_pocket-id_backend_internal_dto.Paginated-github_com_pocket-id_pocket-id_backend_internal_dto_AuditLogDto'
+            $ref: '#/definitions/github_com_pocket-id_pocket-id_backend_internal_dto.Paginated-auditlogs_auditLogDto'
         default:
           description: Error
           schema:
@@ -2819,29 +2841,6 @@ paths:
       summary: Update client logo
       tags:
       - OIDC
-  /api/oidc/clients/{id}/meta:
-    get:
-      description: Get OIDC client metadata for discovery and configuration
-      parameters:
-      - description: Client ID
-        in: path
-        name: id
-        required: true
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: Client metadata
-          schema:
-            $ref: '#/definitions/github_com_pocket-id_pocket-id_backend_internal_dto.OidcClientMetaDataDto'
-        default:
-          description: Error
-          schema:
-            $ref: '#/definitions/github_com_pocket-id_pocket-id_backend_internal_dto.ErrorDto'
-      summary: Get client metadata
-      tags:
-      - OIDC
   /api/oidc/clients/{id}/preview/{userId}:
     get:
       description: Get a preview of the OIDC data (ID token, access token, userinfo)
@@ -3074,6 +3073,10 @@ paths:
         name: id
         required: true
         type: string
+      - description: Search term to filter clients by name
+        in: query
+        name: search
+        type: string
       - default: 1
         description: Page number for pagination
         in: query
@@ -3084,7 +3087,7 @@ paths:
         in: query
         name: pagination[limit]
         type: integer
-      - description: Column to sort by
+      - description: Column to sort by (name or lastUsedAt)
         in: query
         name: sort[column]
         type: string
@@ -3114,6 +3117,10 @@ paths:
       description: Get a paginated list of OIDC clients that the current user has
         authorized
       parameters:
+      - description: Search term to filter clients by name
+        in: query
+        name: search
+        type: string
       - default: 1
         description: Page number for pagination
         in: query
@@ -3124,7 +3131,7 @@ paths:
         in: query
         name: pagination[limit]
         type: integer
-      - description: Column to sort by
+      - description: Column to sort by (name or lastUsedAt)
         in: query
         name: sort[column]
         type: string
@@ -3173,6 +3180,10 @@ paths:
     get:
       description: Get a list of OIDC clients that the current user can access
       parameters:
+      - description: Search term to filter clients by name
+        in: query
+        name: search
+        type: string
       - default: 1
         description: Page number for pagination
         in: query
@@ -3183,7 +3194,7 @@ paths:
         in: query
         name: pagination[limit]
         type: integer
-      - description: Column to sort by
+      - description: Column to sort by (name or lastUsedAt)
         in: query
         name: sort[column]
         type: string
@@ -4050,6 +4061,31 @@ paths:
           schema:
             $ref: '#/definitions/github_com_pocket-id_pocket-id_backend_internal_dto.ErrorDto'
       summary: Update current user
+      tags:
+      - Users
+  /api/users/me/email-change:
+    delete:
+      description: Cancel the pending email change of the currently authenticated
+        user, so its verification link stops working
+      responses:
+        "204":
+          description: No Content
+      summary: Cancel pending email change
+      tags:
+      - Users
+    get:
+      description: Get the email change of the currently authenticated user that still
+        has to be confirmed through the emailed link
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/emailverification.emailChangeDto'
+        "204":
+          description: No pending email change
+      summary: Get pending email change
       tags:
       - Users
   /api/users/me/profile-picture:

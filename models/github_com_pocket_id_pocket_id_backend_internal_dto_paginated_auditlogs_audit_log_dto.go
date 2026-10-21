@@ -13,20 +13,20 @@ import (
 	"github.com/go-openapi/swag/typeutils"
 )
 
-// GithubComPocketIDPocketIDBackendInternalDtoPaginatedGithubComPocketIDPocketIDBackendInternalDtoAuditLogDto github com pocket id pocket id backend internal dto paginated github com pocket id pocket id backend internal dto audit log dto
+// GithubComPocketIDPocketIDBackendInternalDtoPaginatedAuditlogsAuditLogDto github com pocket id pocket id backend internal dto paginated auditlogs audit log dto
 //
-// swagger:model github_com_pocket-id_pocket-id_backend_internal_dto.Paginated-github_com_pocket-id_pocket-id_backend_internal_dto_AuditLogDto
-type GithubComPocketIDPocketIDBackendInternalDtoPaginatedGithubComPocketIDPocketIDBackendInternalDtoAuditLogDto struct {
+// swagger:model github_com_pocket-id_pocket-id_backend_internal_dto.Paginated-auditlogs_auditLogDto
+type GithubComPocketIDPocketIDBackendInternalDtoPaginatedAuditlogsAuditLogDto struct {
 
 	// data
-	Data []*GithubComPocketIDPocketIDBackendInternalDtoAuditLogDto `json:"data"`
+	Data []*AuditlogsAuditLogDto `json:"data"`
 
 	// pagination
 	Pagination *GithubComPocketIDPocketIDBackendInternalDtoPagination `json:"pagination,omitempty"`
 }
 
-// Validate validates this github com pocket id pocket id backend internal dto paginated github com pocket id pocket id backend internal dto audit log dto
-func (m *GithubComPocketIDPocketIDBackendInternalDtoPaginatedGithubComPocketIDPocketIDBackendInternalDtoAuditLogDto) Validate(formats strfmt.Registry) error {
+// Validate validates this github com pocket id pocket id backend internal dto paginated auditlogs audit log dto
+func (m *GithubComPocketIDPocketIDBackendInternalDtoPaginatedAuditlogsAuditLogDto) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.validateData(formats); err != nil {
@@ -43,7 +43,7 @@ func (m *GithubComPocketIDPocketIDBackendInternalDtoPaginatedGithubComPocketIDPo
 	return nil
 }
 
-func (m *GithubComPocketIDPocketIDBackendInternalDtoPaginatedGithubComPocketIDPocketIDBackendInternalDtoAuditLogDto) validateData(formats strfmt.Registry) error {
+func (m *GithubComPocketIDPocketIDBackendInternalDtoPaginatedAuditlogsAuditLogDto) validateData(formats strfmt.Registry) error {
 	if typeutils.IsZero(m.Data) { // not required
 		return nil
 	}
@@ -73,7 +73,7 @@ func (m *GithubComPocketIDPocketIDBackendInternalDtoPaginatedGithubComPocketIDPo
 	return nil
 }
 
-func (m *GithubComPocketIDPocketIDBackendInternalDtoPaginatedGithubComPocketIDPocketIDBackendInternalDtoAuditLogDto) validatePagination(formats strfmt.Registry) error {
+func (m *GithubComPocketIDPocketIDBackendInternalDtoPaginatedAuditlogsAuditLogDto) validatePagination(formats strfmt.Registry) error {
 	if typeutils.IsZero(m.Pagination) { // not required
 		return nil
 	}
@@ -96,8 +96,8 @@ func (m *GithubComPocketIDPocketIDBackendInternalDtoPaginatedGithubComPocketIDPo
 	return nil
 }
 
-// ContextValidate validate this github com pocket id pocket id backend internal dto paginated github com pocket id pocket id backend internal dto audit log dto based on the context it is used
-func (m *GithubComPocketIDPocketIDBackendInternalDtoPaginatedGithubComPocketIDPocketIDBackendInternalDtoAuditLogDto) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+// ContextValidate validate this github com pocket id pocket id backend internal dto paginated auditlogs audit log dto based on the context it is used
+func (m *GithubComPocketIDPocketIDBackendInternalDtoPaginatedAuditlogsAuditLogDto) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.contextValidateData(ctx, formats); err != nil {
@@ -114,7 +114,7 @@ func (m *GithubComPocketIDPocketIDBackendInternalDtoPaginatedGithubComPocketIDPo
 	return nil
 }
 
-func (m *GithubComPocketIDPocketIDBackendInternalDtoPaginatedGithubComPocketIDPocketIDBackendInternalDtoAuditLogDto) contextValidateData(ctx context.Context, formats strfmt.Registry) error {
+func (m *GithubComPocketIDPocketIDBackendInternalDtoPaginatedAuditlogsAuditLogDto) contextValidateData(ctx context.Context, formats strfmt.Registry) error {
 
 	for i := 0; i < len(m.Data); i++ {
 
@@ -143,7 +143,7 @@ func (m *GithubComPocketIDPocketIDBackendInternalDtoPaginatedGithubComPocketIDPo
 	return nil
 }
 
-func (m *GithubComPocketIDPocketIDBackendInternalDtoPaginatedGithubComPocketIDPocketIDBackendInternalDtoAuditLogDto) contextValidatePagination(ctx context.Context, formats strfmt.Registry) error {
+func (m *GithubComPocketIDPocketIDBackendInternalDtoPaginatedAuditlogsAuditLogDto) contextValidatePagination(ctx context.Context, formats strfmt.Registry) error {
 
 	if m.Pagination != nil {
 
@@ -169,7 +169,7 @@ func (m *GithubComPocketIDPocketIDBackendInternalDtoPaginatedGithubComPocketIDPo
 }
 
 // MarshalBinary interface implementation
-func (m *GithubComPocketIDPocketIDBackendInternalDtoPaginatedGithubComPocketIDPocketIDBackendInternalDtoAuditLogDto) MarshalBinary() ([]byte, error) {
+func (m *GithubComPocketIDPocketIDBackendInternalDtoPaginatedAuditlogsAuditLogDto) MarshalBinary() ([]byte, error) {
 	if m == nil {
 		return nil, nil
 	}
@@ -177,8 +177,8 @@ func (m *GithubComPocketIDPocketIDBackendInternalDtoPaginatedGithubComPocketIDPo
 }
 
 // UnmarshalBinary interface implementation
-func (m *GithubComPocketIDPocketIDBackendInternalDtoPaginatedGithubComPocketIDPocketIDBackendInternalDtoAuditLogDto) UnmarshalBinary(b []byte) error {
-	var res GithubComPocketIDPocketIDBackendInternalDtoPaginatedGithubComPocketIDPocketIDBackendInternalDtoAuditLogDto
+func (m *GithubComPocketIDPocketIDBackendInternalDtoPaginatedAuditlogsAuditLogDto) UnmarshalBinary(b []byte) error {
+	var res GithubComPocketIDPocketIDBackendInternalDtoPaginatedAuditlogsAuditLogDto
 	if err := jsonutils.ReadJSON(b, &res); err != nil {
 		return err
 	}

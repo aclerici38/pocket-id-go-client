@@ -96,6 +96,12 @@ const (
 	// ApperrorCodeInvalidEmailVerificationToken captures enum value "invalid_email_verification_token"
 	ApperrorCodeInvalidEmailVerificationToken ApperrorCode = "invalid_email_verification_token"
 
+	// ApperrorCodeEmailVerificationRequired captures enum value "email_verification_required"
+	ApperrorCodeEmailVerificationRequired ApperrorCode = "email_verification_required"
+
+	// ApperrorCodeEmailChangeNotStarted captures enum value "email_change_not_started"
+	ApperrorCodeEmailChangeNotStarted ApperrorCode = "email_change_not_started"
+
 	// ApperrorCodeSetupNotAvailable captures enum value "setup_not_available"
 	ApperrorCodeSetupNotAvailable ApperrorCode = "setup_not_available"
 
@@ -207,7 +213,7 @@ var apperrorCodeEnum []any
 
 func init() {
 	var res []ApperrorCode
-	if err := json.Unmarshal([]byte(`["internal_error","validation_failed","invalid_request_body","request_timeout","not_found","already_in_use","forbidden","invalid_token","rate_limited","file_too_large","invalid_image","invalid_webauthn_response","webauthn_authentication_failed","passkey_user_verification_required","synced_passkey_not_allowed","invalid_webauthn_session","user_not_found","user_disabled","api_key_not_found","invalid_api_key","device_login_expired","reauthentication_required","invalid_email_verification_token","setup_not_available","setup_already_completed","token_invalid_or_expired","device_code_invalid","oidc_missing_authorization","oidc_invalid_callback_url","file_type_not_supported","not_signed_in","missing_session_id","reserved_claim","duplicate_claim","ldap_disabled","ldap_user_update","ldap_user_group_update","oidc_access_denied","oidc_client_id_not_matching","ui_config_disabled","one_time_access_disabled","device_login_denied","no_api_key_provided","api_key_not_expired","invalid_api_key_expiration","api_key_auth_not_allowed","oidc_device_code_expired","oidc_invalid_device_code","open_signup_disabled","client_id_already_exists","user_email_not_set","image_not_found","logo_download_failed","logo_type_not_supported","logo_too_large","logo_presets_disabled","logo_presets_unavailable","oidc_par_required"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["internal_error","validation_failed","invalid_request_body","request_timeout","not_found","already_in_use","forbidden","invalid_token","rate_limited","file_too_large","invalid_image","invalid_webauthn_response","webauthn_authentication_failed","passkey_user_verification_required","synced_passkey_not_allowed","invalid_webauthn_session","user_not_found","user_disabled","api_key_not_found","invalid_api_key","device_login_expired","reauthentication_required","invalid_email_verification_token","email_verification_required","email_change_not_started","setup_not_available","setup_already_completed","token_invalid_or_expired","device_code_invalid","oidc_missing_authorization","oidc_invalid_callback_url","file_type_not_supported","not_signed_in","missing_session_id","reserved_claim","duplicate_claim","ldap_disabled","ldap_user_update","ldap_user_group_update","oidc_access_denied","oidc_client_id_not_matching","ui_config_disabled","one_time_access_disabled","device_login_denied","no_api_key_provided","api_key_not_expired","invalid_api_key_expiration","api_key_auth_not_allowed","oidc_device_code_expired","oidc_invalid_device_code","open_signup_disabled","client_id_already_exists","user_email_not_set","image_not_found","logo_download_failed","logo_type_not_supported","logo_too_large","logo_presets_disabled","logo_presets_unavailable","oidc_par_required"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {

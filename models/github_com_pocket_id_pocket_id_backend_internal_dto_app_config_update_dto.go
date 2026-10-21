@@ -50,9 +50,10 @@ type GithubComPocketIDPocketIDBackendInternalDtoAppConfigUpdateDto struct {
 	// Required: true
 	EmailAPIKeyExpirationEnabled *string `json:"emailApiKeyExpirationEnabled"`
 
-	// email login notification enabled
+	// email login notification mode
 	// Required: true
-	EmailLoginNotificationEnabled *string `json:"emailLoginNotificationEnabled"`
+	// Enum: ["disabled","always","ipAndUserAgent","browserRecognition"]
+	EmailLoginNotificationMode *string `json:"emailLoginNotificationMode"`
 
 	// email one time access as admin enabled
 	// Required: true
@@ -62,9 +63,10 @@ type GithubComPocketIDPocketIDBackendInternalDtoAppConfigUpdateDto struct {
 	// Required: true
 	EmailOneTimeAccessAsUnauthenticatedEnabled *string `json:"emailOneTimeAccessAsUnauthenticatedEnabled"`
 
-	// email verification enabled
+	// email verification
 	// Required: true
-	EmailVerificationEnabled *string `json:"emailVerificationEnabled"`
+	// Enum: ["disabled","optional","required"]
+	EmailVerification *string `json:"emailVerification"`
 
 	// emails verified
 	// Required: true
@@ -218,7 +220,7 @@ func (m *GithubComPocketIDPocketIDBackendInternalDtoAppConfigUpdateDto) Validate
 		res = append(res, err)
 	}
 
-	if err := m.validateEmailLoginNotificationEnabled(formats); err != nil {
+	if err := m.validateEmailLoginNotificationMode(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -230,7 +232,7 @@ func (m *GithubComPocketIDPocketIDBackendInternalDtoAppConfigUpdateDto) Validate
 		res = append(res, err)
 	}
 
-	if err := m.validateEmailVerificationEnabled(formats); err != nil {
+	if err := m.validateEmailVerification(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -387,9 +389,49 @@ func (m *GithubComPocketIDPocketIDBackendInternalDtoAppConfigUpdateDto) validate
 	return nil
 }
 
-func (m *GithubComPocketIDPocketIDBackendInternalDtoAppConfigUpdateDto) validateEmailLoginNotificationEnabled(formats strfmt.Registry) error {
+var githubComPocketIdPocketIdBackendInternalDtoAppConfigUpdateDtoTypeEmailLoginNotificationModePropEnum []any
 
-	if err := validate.Required("emailLoginNotificationEnabled", "body", m.EmailLoginNotificationEnabled); err != nil {
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["disabled","always","ipAndUserAgent","browserRecognition"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		githubComPocketIdPocketIdBackendInternalDtoAppConfigUpdateDtoTypeEmailLoginNotificationModePropEnum = append(githubComPocketIdPocketIdBackendInternalDtoAppConfigUpdateDtoTypeEmailLoginNotificationModePropEnum, v)
+	}
+}
+
+const (
+
+	// GithubComPocketIDPocketIDBackendInternalDtoAppConfigUpdateDtoEmailLoginNotificationModeDisabled captures enum value "disabled"
+	GithubComPocketIDPocketIDBackendInternalDtoAppConfigUpdateDtoEmailLoginNotificationModeDisabled string = "disabled"
+
+	// GithubComPocketIDPocketIDBackendInternalDtoAppConfigUpdateDtoEmailLoginNotificationModeAlways captures enum value "always"
+	GithubComPocketIDPocketIDBackendInternalDtoAppConfigUpdateDtoEmailLoginNotificationModeAlways string = "always"
+
+	// GithubComPocketIDPocketIDBackendInternalDtoAppConfigUpdateDtoEmailLoginNotificationModeIPAndUserAgent captures enum value "ipAndUserAgent"
+	GithubComPocketIDPocketIDBackendInternalDtoAppConfigUpdateDtoEmailLoginNotificationModeIPAndUserAgent string = "ipAndUserAgent"
+
+	// GithubComPocketIDPocketIDBackendInternalDtoAppConfigUpdateDtoEmailLoginNotificationModeBrowserRecognition captures enum value "browserRecognition"
+	GithubComPocketIDPocketIDBackendInternalDtoAppConfigUpdateDtoEmailLoginNotificationModeBrowserRecognition string = "browserRecognition"
+)
+
+// prop value enum
+func (m *GithubComPocketIDPocketIDBackendInternalDtoAppConfigUpdateDto) validateEmailLoginNotificationModeEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, githubComPocketIdPocketIdBackendInternalDtoAppConfigUpdateDtoTypeEmailLoginNotificationModePropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (m *GithubComPocketIDPocketIDBackendInternalDtoAppConfigUpdateDto) validateEmailLoginNotificationMode(formats strfmt.Registry) error {
+
+	if err := validate.Required("emailLoginNotificationMode", "body", m.EmailLoginNotificationMode); err != nil {
+		return err
+	}
+
+	// value enum
+	if err := m.validateEmailLoginNotificationModeEnum("emailLoginNotificationMode", "body", *m.EmailLoginNotificationMode); err != nil {
 		return err
 	}
 
@@ -414,9 +456,46 @@ func (m *GithubComPocketIDPocketIDBackendInternalDtoAppConfigUpdateDto) validate
 	return nil
 }
 
-func (m *GithubComPocketIDPocketIDBackendInternalDtoAppConfigUpdateDto) validateEmailVerificationEnabled(formats strfmt.Registry) error {
+var githubComPocketIdPocketIdBackendInternalDtoAppConfigUpdateDtoTypeEmailVerificationPropEnum []any
 
-	if err := validate.Required("emailVerificationEnabled", "body", m.EmailVerificationEnabled); err != nil {
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["disabled","optional","required"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		githubComPocketIdPocketIdBackendInternalDtoAppConfigUpdateDtoTypeEmailVerificationPropEnum = append(githubComPocketIdPocketIdBackendInternalDtoAppConfigUpdateDtoTypeEmailVerificationPropEnum, v)
+	}
+}
+
+const (
+
+	// GithubComPocketIDPocketIDBackendInternalDtoAppConfigUpdateDtoEmailVerificationDisabled captures enum value "disabled"
+	GithubComPocketIDPocketIDBackendInternalDtoAppConfigUpdateDtoEmailVerificationDisabled string = "disabled"
+
+	// GithubComPocketIDPocketIDBackendInternalDtoAppConfigUpdateDtoEmailVerificationOptional captures enum value "optional"
+	GithubComPocketIDPocketIDBackendInternalDtoAppConfigUpdateDtoEmailVerificationOptional string = "optional"
+
+	// GithubComPocketIDPocketIDBackendInternalDtoAppConfigUpdateDtoEmailVerificationRequired captures enum value "required"
+	GithubComPocketIDPocketIDBackendInternalDtoAppConfigUpdateDtoEmailVerificationRequired string = "required"
+)
+
+// prop value enum
+func (m *GithubComPocketIDPocketIDBackendInternalDtoAppConfigUpdateDto) validateEmailVerificationEnum(path, location string, value string) error {
+	if err := validate.EnumCase(path, location, value, githubComPocketIdPocketIdBackendInternalDtoAppConfigUpdateDtoTypeEmailVerificationPropEnum, true); err != nil {
+		return err
+	}
+	return nil
+}
+
+func (m *GithubComPocketIDPocketIDBackendInternalDtoAppConfigUpdateDto) validateEmailVerification(formats strfmt.Registry) error {
+
+	if err := validate.Required("emailVerification", "body", m.EmailVerification); err != nil {
+		return err
+	}
+
+	// value enum
+	if err := m.validateEmailVerificationEnum("emailVerification", "body", *m.EmailVerification); err != nil {
 		return err
 	}
 
