@@ -11,7 +11,7 @@ go = "1.27.3"
 # Swagger spec generation from upstream source
 swag = "1.16.6"
 # Go client generation from the swagger spec
-go-swagger = "0.36.6"
+go-swagger = "0.36.7"
 
 # Breaking-change detection for the upstream API canary
 "github:oasdiff/oasdiff" = "v1.35.0"
