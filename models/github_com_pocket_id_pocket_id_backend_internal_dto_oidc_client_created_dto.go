@@ -212,7 +212,7 @@ func (m *GithubComPocketIDPocketIDBackendInternalDtoOidcClientCreatedDto) contex
 		if m.AllowedUserGroups[i] != nil {
 
 			if typeutils.IsZero(m.AllowedUserGroups[i]) { // not required
-				return nil
+				continue
 			}
 
 			if err := m.AllowedUserGroups[i].ContextValidate(ctx, formats); err != nil {

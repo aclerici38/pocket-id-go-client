@@ -128,7 +128,7 @@ func (m *GithubComPocketIDPocketIDBackendInternalDtoOidcClientCredentialsDto) co
 		if m.FederatedIdentities[i] != nil {
 
 			if typeutils.IsZero(m.FederatedIdentities[i]) { // not required
-				return nil
+				continue
 			}
 
 			if err := m.FederatedIdentities[i].ContextValidate(ctx, formats); err != nil {
@@ -157,7 +157,7 @@ func (m *GithubComPocketIDPocketIDBackendInternalDtoOidcClientCredentialsDto) co
 		if m.Secrets[i] != nil {
 
 			if typeutils.IsZero(m.Secrets[i]) { // not required
-				return nil
+				continue
 			}
 
 			if err := m.Secrets[i].ContextValidate(ctx, formats); err != nil {

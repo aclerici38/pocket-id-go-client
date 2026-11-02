@@ -121,7 +121,7 @@ func (m *GithubComPocketIDPocketIDBackendInternalDtoPaginatedAPIAPIClientAccessD
 		if m.Data[i] != nil {
 
 			if typeutils.IsZero(m.Data[i]) { // not required
-				return nil
+				continue
 			}
 
 			if err := m.Data[i].ContextValidate(ctx, formats); err != nil {

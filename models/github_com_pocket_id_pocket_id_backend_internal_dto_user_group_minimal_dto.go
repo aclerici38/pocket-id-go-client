@@ -105,7 +105,7 @@ func (m *GithubComPocketIDPocketIDBackendInternalDtoUserGroupMinimalDto) context
 		if m.CustomClaims[i] != nil {
 
 			if typeutils.IsZero(m.CustomClaims[i]) { // not required
-				return nil
+				continue
 			}
 
 			if err := m.CustomClaims[i].ContextValidate(ctx, formats); err != nil {

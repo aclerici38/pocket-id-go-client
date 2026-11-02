@@ -164,7 +164,7 @@ func (m *GithubComPocketIDPocketIDBackendInternalDtoUserDto) contextValidateCust
 		if m.CustomClaims[i] != nil {
 
 			if typeutils.IsZero(m.CustomClaims[i]) { // not required
-				return nil
+				continue
 			}
 
 			if err := m.CustomClaims[i].ContextValidate(ctx, formats); err != nil {
@@ -193,7 +193,7 @@ func (m *GithubComPocketIDPocketIDBackendInternalDtoUserDto) contextValidateUser
 		if m.UserGroups[i] != nil {
 
 			if typeutils.IsZero(m.UserGroups[i]) { // not required
-				return nil
+				continue
 			}
 
 			if err := m.UserGroups[i].ContextValidate(ctx, formats); err != nil {

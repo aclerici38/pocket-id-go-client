@@ -184,7 +184,7 @@ func (m *GithubComPocketIDPocketIDBackendInternalDtoUserGroupDto) contextValidat
 		if m.AllowedOidcClients[i] != nil {
 
 			if typeutils.IsZero(m.AllowedOidcClients[i]) { // not required
-				return nil
+				continue
 			}
 
 			if err := m.AllowedOidcClients[i].ContextValidate(ctx, formats); err != nil {
@@ -213,7 +213,7 @@ func (m *GithubComPocketIDPocketIDBackendInternalDtoUserGroupDto) contextValidat
 		if m.CustomClaims[i] != nil {
 
 			if typeutils.IsZero(m.CustomClaims[i]) { // not required
-				return nil
+				continue
 			}
 
 			if err := m.CustomClaims[i].ContextValidate(ctx, formats); err != nil {
@@ -242,7 +242,7 @@ func (m *GithubComPocketIDPocketIDBackendInternalDtoUserGroupDto) contextValidat
 		if m.Users[i] != nil {
 
 			if typeutils.IsZero(m.Users[i]) { // not required
-				return nil
+				continue
 			}
 
 			if err := m.Users[i].ContextValidate(ctx, formats); err != nil {

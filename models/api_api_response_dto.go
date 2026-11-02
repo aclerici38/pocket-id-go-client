@@ -102,7 +102,7 @@ func (m *APIAPIResponseDto) contextValidatePermissions(ctx context.Context, form
 		if m.Permissions[i] != nil {
 
 			if typeutils.IsZero(m.Permissions[i]) { // not required
-				return nil
+				continue
 			}
 
 			if err := m.Permissions[i].ContextValidate(ctx, formats); err != nil {

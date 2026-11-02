@@ -105,7 +105,7 @@ func (m *UsersignupSignupTokenDto) contextValidateUserGroups(ctx context.Context
 		if m.UserGroups[i] != nil {
 
 			if typeutils.IsZero(m.UserGroups[i]) { // not required
-				return nil
+				continue
 			}
 
 			if err := m.UserGroups[i].ContextValidate(ctx, formats); err != nil {
