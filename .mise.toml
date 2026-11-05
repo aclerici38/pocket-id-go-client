@@ -17,7 +17,7 @@ go-swagger = "0.36.7"
 "github:oasdiff/oasdiff" = "v1.35.0"
 
 # Workflow linting
-zizmor = "1.31.1"
+zizmor = "1.32.0"
 
 [env]
 UPSTREAM_REPO = "https://github.com/pocket-id/pocket-id.git"
