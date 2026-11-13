@@ -23,7 +23,7 @@ jobs:
       - name: Setup mise
         uses: jdx/mise-action@d5574b52816a478f9d4e6529a3f6ff17a8a36785 # v5.2.8
         with:
-          install_args: go swag go-swagger github:oasdiff/oasdiff
+          install_args: go oapi-codegen github:oasdiff/oasdiff
 
       - name: Generate client
         run: mise run generate
@@ -47,9 +47,10 @@ jobs:
           git fetch --no-tags --depth=1 origin tag "$prev"
 
           # Run from RUNNER_TEMP so oasdiff reports the files by version, not by path.
-          git show "$prev:swagger.yaml" > "$RUNNER_TEMP/$prev.yaml"
-          cp swagger.yaml "$RUNNER_TEMP/$VERSION.yaml"
-          (cd "$RUNNER_TEMP" && oasdiff changelog --color never "$prev.yaml" "$VERSION.yaml") > "$RUNNER_TEMP/changelog.txt"
+          # An empty spec reports every endpoint as added; the release before v3 shipped swagger.yaml.
+          git show "$prev:openapi.json" > "$RUNNER_TEMP/$prev.json" 2>/dev/null || echo '{"openapi":"3.1.0","info":{"title":"","version":""},"paths":{}}' > "$RUNNER_TEMP/$prev.json"
+          cp openapi.json "$RUNNER_TEMP/$VERSION.json"
+          (cd "$RUNNER_TEMP" && oasdiff changelog --color never "$prev.json" "$VERSION.json") > "$RUNNER_TEMP/changelog.txt"
 
           echo "prev=$prev" >> "$GITHUB_OUTPUT"
 
@@ -67,12 +68,12 @@ jobs:
 
           # Build a commit holding only the files needed for the Go module.
           export GIT_INDEX_FILE="$RUNNER_TEMP/release-index"
-          git add -f LICENSE go.mod go.sum client/ models/ swagger.yaml
+          git add -f LICENSE go.mod go.sum client/ openapi.json
           tree=$(git write-tree)
           unset GIT_INDEX_FILE
           commit=$(git commit-tree "$tree" -p "$PREV" -m "Generated client from Pocket ID ${VERSION}")
 
-          git diff "$PREV" "$commit" -- swagger.yaml > api-changes.diff
+          git diff "$PREV" "$commit" -- openapi.json > api-changes.diff
 
           # Delete existing tag/release if they exist
           gh release delete "$VERSION" --yes 2>/dev/null || true

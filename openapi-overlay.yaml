@@ -1,0 +1,18 @@
+# Applied by oapi-codegen to the upstream spec before generating; the published
+# openapi.json is left as upstream emits it.
+overlay: 1.0.0
+x-speakeasy-jsonpath: rfc9535
+info:
+  title: Pocket ID spec adjustments for oapi-codegen
+  version: 1.0.0
+actions:
+  # oapi-codegen can't map a multi-type `type: [string, number]` (e.g. the `ttl`
+  # fields) to a Go type. The equivalent oneOf becomes a union with
+  # As/From/Merge helpers for each member.
+  - target: $..[?(@.type[0] == 'string' && @.type[1] == 'number' && length(@.type) == 2)]
+    update:
+      oneOf:
+        - type: string
+        - type: number
+  - target: $..[?(@.oneOf && @.type[0] == 'string' && @.type[1] == 'number')].type
+    remove: true

@@ -42,48 +42,10 @@ url = "https://dl.google.com/go/go1.27.4.linux-amd64.tar.gz"
 checksum = "sha256:91a44a2b8a716600ad94a4f143e156116620db8828086a6e3602291be9bd0bb4"
 url = "https://dl.google.com/go/go1.27.4.darwin-arm64.tar.gz"
 
-[[tools.go-swagger]]
-version = "0.36.7"
-backend = "aqua:go-swagger/go-swagger"
-specifiers = ["0.36.7"]
-
-[tools.go-swagger."platforms.linux-arm64"]
-checksum = "sha256:f842ecdef842c716cc48f2c9b435da921855e96a98d4107f056279abc7f1b1e6"
-checksum_source = "mise-versions"
-url = "https://github.com/go-swagger/go-swagger/releases/download/v0.36.7/swagger_0.36.7_Linux_arm64.tar.gz"
-url_api = "https://api.github.com/repos/go-swagger/go-swagger/releases/assets/696050695"
-
-[tools.go-swagger."platforms.linux-x64"]
-checksum = "sha256:7d3704481cd8b82c1738550ae19a86cb59f9446ac5a2ec535b63d6120c85798c"
-checksum_source = "mise-versions"
-url = "https://github.com/go-swagger/go-swagger/releases/download/v0.36.7/swagger_0.36.7_Linux_x86_64.tar.gz"
-url_api = "https://api.github.com/repos/go-swagger/go-swagger/releases/assets/696050691"
-
-[tools.go-swagger."platforms.macos-arm64"]
-checksum = "sha256:a5f55b6cc7a7431979a75a827e1c9f2578f71ca34a652b187f52ca697079e244"
-checksum_source = "mise-versions"
-url = "https://github.com/go-swagger/go-swagger/releases/download/v0.36.7/swagger_0.36.7_Darwin_arm64.tar.gz"
-url_api = "https://api.github.com/repos/go-swagger/go-swagger/releases/assets/696050832"
-
-[[tools.swag]]
-version = "1.16.6"
-backend = "aqua:swaggo/swag"
-specifiers = ["1.16.6"]
-
-[tools.swag."platforms.linux-arm64"]
-checksum = "sha256:0a2890b2ab31f37da92a45d27b4cc78501bb74720b1df0932d59377527c366e9"
-url = "https://github.com/swaggo/swag/releases/download/v1.16.6/swag_1.16.6_Linux_arm64.tar.gz"
-url_api = "https://api.github.com/repos/swaggo/swag/releases/assets/277315823"
-
-[tools.swag."platforms.linux-x64"]
-checksum = "sha256:90bdf19e817001b17f5f91a1eefb2d2dd9631b88a85712f195f44b220848c8bb"
-url = "https://github.com/swaggo/swag/releases/download/v1.16.6/swag_1.16.6_Linux_x86_64.tar.gz"
-url_api = "https://api.github.com/repos/swaggo/swag/releases/assets/277315962"
-
-[tools.swag."platforms.macos-arm64"]
-checksum = "sha256:b8a96c65827da71be18bf47ea212b14df17f6cd6726651834a08749e78cad2ad"
-url = "https://github.com/swaggo/swag/releases/download/v1.16.6/swag_1.16.6_Darwin_arm64.tar.gz"
-url_api = "https://api.github.com/repos/swaggo/swag/releases/assets/277315776"
+[[tools.oapi-codegen]]
+version = "2.8.2"
+backend = "go:github.com/oapi-codegen/oapi-codegen/v2/cmd/oapi-codegen"
+specifiers = ["2.8.2"]
 
 [[tools.zizmor]]
 version = "1.32.0"

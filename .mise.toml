@@ -8,12 +8,10 @@ lockfile_platforms = ["linux-x64", "linux-arm64", "macos-arm64"]
 [tools]
 go = "1.27.4"
 
-# Swagger spec generation from upstream source
-swag = "1.16.6"
-# Go client generation from the swagger spec
-go-swagger = "0.36.7"
+# Go client generation from the OpenAPI spec (config: oapi-codegen.yaml)
+oapi-codegen = "2.8.2"
 
-# Breaking-change detection for the upstream API canary
+# API changelogs for releases and breaking-change detection for the upstream API canary
 "github:oasdiff/oasdiff" = "v1.38.0"
 
 # Workflow linting
@@ -22,4 +20,4 @@ zizmor = "1.32.0"
 [env]
 UPSTREAM_REPO = "https://github.com/pocket-id/pocket-id.git"
 UPSTREAM_DIR = ".upstream"
-SWAGGER_SPEC = "swagger.yaml"
+OPENAPI_SPEC = "openapi.json"

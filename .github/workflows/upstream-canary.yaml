@@ -68,7 +68,7 @@ jobs:
         if: steps.resolve.outputs.changed == 'true'
         uses: jdx/mise-action@d5574b52816a478f9d4e6529a3f6ff17a8a36785 # v5.2.8
         with:
-          install_args: go swag go-swagger github:oasdiff/oasdiff
+          install_args: go oapi-codegen github:oasdiff/oasdiff
 
       - name: Generate client from upstream main
         id: build
@@ -87,13 +87,13 @@ jobs:
         run: |
           dir="$RUNNER_TEMP/api"
           mkdir -p "$dir"
-          gh api "repos/$GITHUB_REPOSITORY/contents/swagger.yaml?ref=$BASELINE" \
-            -H "Accept: application/vnd.github.raw" > "$dir/$BASELINE.yaml"
-          cp swagger.yaml "$dir/main.yaml"
+          gh api "repos/$GITHUB_REPOSITORY/contents/openapi.json?ref=$BASELINE" \
+            -H "Accept: application/vnd.github.raw" > "$dir/$BASELINE.json"
+          cp openapi.json "$dir/main.json"
           cd "$dir"
 
-          git diff --no-index "$BASELINE.yaml" main.yaml > api.diff || true
-          if oasdiff breaking --fail-on ERR --color never "$BASELINE.yaml" main.yaml > breaking.txt; then
+          git diff --no-index "$BASELINE.json" main.json > api.diff || true
+          if oasdiff breaking --fail-on ERR --color never "$BASELINE.json" main.json > breaking.txt; then
             breaking=false
           else
             breaking=true

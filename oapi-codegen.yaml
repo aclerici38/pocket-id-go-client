@@ -1,0 +1,26 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/oapi-codegen/oapi-codegen/HEAD/configuration-schema.json
+# Paths are relative to the repo root, where `mise run generate-client` runs oapi-codegen.
+package: client
+output: client/client.gen.go
+generate:
+  models: true
+  client: true
+compatibility:
+  # Prefix every enum constant with its type, not only on clashes, so names stay
+  # stable as upstream adds enums.
+  always-prefix-enum-values: true
+output-options:
+  # nullable.Nullable[T] for `type: [T, "null"]`, so a merge-patch body can tell a
+  # field that is unset (omitted) apart from one explicitly cleared (null).
+  nullable-type: true
+  name-normalizer: ToCamelCaseWithInitialisms
+  additional-initialisms: [OIDC, SCIM, CIMD, LDAP, JWKS, PKCE]
+  type-mapping:
+    # oapi-codegen defaults to float32, which can't hold every whole number of seconds exactly.
+    number:
+      default:
+        type: float64
+  overlay:
+    path: openapi-overlay.yaml
+    # The overlay targets whatever unions the spec has, which may be none.
+    strict: false
