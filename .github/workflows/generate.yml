@@ -14,7 +14,13 @@ permissions:
 
 jobs:
   generate:
+    # Builds the pinned POCKET_ID_VERSION (which releases) and upstream main, as the canary does.
+    name: generate (${{ matrix.upstream-ref || 'POCKET_ID_VERSION' }})
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        upstream-ref: ["", main]
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -26,6 +32,8 @@ jobs:
           install_args: go oapi-codegen github:oasdiff/oasdiff
 
       - name: Generate client
+        env:
+          UPSTREAM_REF: ${{ matrix.upstream-ref }}
         run: mise run generate
 
       - name: Verify build
@@ -37,7 +45,7 @@ jobs:
 
       - name: API changelog
         id: changelog
-        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+        if: matrix.upstream-ref == '' && github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
         env:
           GH_TOKEN: ${{ github.token }}
           VERSION: ${{ steps.version.outputs.version }}
@@ -55,7 +63,7 @@ jobs:
           echo "prev=$prev" >> "$GITHUB_OUTPUT"
 
       - name: Create release
-        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+        if: matrix.upstream-ref == '' && github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
         env:
           GH_TOKEN: ${{ github.token }}
           VERSION: ${{ steps.version.outputs.version }}
