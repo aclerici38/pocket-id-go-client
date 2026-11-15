@@ -1,68 +1,75 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Renders the upstream API canary dashboard issue from a canary run's results,
-# creating it (locked) on first run. The hourly heartbeat for unchanged runs
-# only touches the "last checked" row and is done inline in the workflow.
+# Renders the upstream API canary dashboard issue (created locked on first run) with the
+# API diff of upstream main against the latest release. The issue is assigned to
+# CANARY_ASSIGNEE while the client fails to build or the diff has breaking changes.
 #
-# Required env: GH_TOKEN, CANARY_LABEL, CANARY_ASSIGNEE, STATUS (unchanged|changed|failing),
-#               UPSTREAM_SHA, BASELINE, RUN_URL
-# Optional env: API_DIR (holds breaking.txt and api.diff; absent if generation failed),
-#               ARTIFACT_URL
+# Required env: GH_TOKEN, CANARY_LABEL, CANARY_ASSIGNEE, UPSTREAM_SHA, BUILD (the
+#               generate step's outcome), RUN_URL; reads openapi.json from the working directory.
 
-: "${CANARY_LABEL:?}" "${CANARY_ASSIGNEE:?}" "${STATUS:?}" "${UPSTREAM_SHA:?}" "${BASELINE:?}" "${RUN_URL:?}"
+: "${CANARY_LABEL:?}" "${CANARY_ASSIGNEE:?}" "${UPSTREAM_SHA:?}" "${BUILD:?}" "${RUN_URL:?}"
 
-NOW="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
 FENCE='```'
+BASELINE="$(gh release view --json tagName --jq .tagName)"
 
 # Issue bodies max out at 65536 characters; keep the inline diff well under that.
 cap() { # file limit
   if [ "$(wc -c < "$1")" -le "$2" ]; then cat "$1"; return; fi
   head -c "$2" "$1" | sed '$d'
-  echo "... truncated, full diff in the run artifact"
+  echo "... truncated"
 }
 
-case "$STATUS" in
-  unchanged) BADGE="✅ **UNCHANGED**: matches \`${BASELINE}\`" ;;
-  changed)   BADGE="⚠️ **CHANGED**: differs from \`${BASELINE}\`, no breaking changes" ;;
-  failing)   BADGE="❌ **FAILING**: breaking changes or generation/build failed" ;;
-esac
+if [ "$BUILD" != success ]; then
+  FAILING=true
+  RESULTS="❌ **Generating or building the client failed**, see the [run](${RUN_URL})."
+else
+  dir="$(mktemp -d)"
+  gh api "repos/${GITHUB_REPOSITORY}/contents/openapi.json?ref=${BASELINE}" \
+    -H "Accept: application/vnd.github.raw" > "$dir/$BASELINE.json"
+  cp openapi.json "$dir/main.json"
+  cd "$dir"
 
-if [ -f "${API_DIR:-}/api.diff" ]; then
-  RESULTS="### Breaking changes
+  git diff --no-index "$BASELINE.json" main.json > api.diff || true
+  if oasdiff breaking --fail-on ERR --color never "$BASELINE.json" main.json > breaking.txt; then
+    FAILING=false
+  else
+    FAILING=true
+  fi
+
+  if [ ! -s api.diff ]; then
+    RESULTS="✅ **No API changes** since \`${BASELINE}\`."
+  else
+    if [ "$FAILING" = true ]; then HEADING="❌ **Breaking changes** since \`${BASELINE}\`"
+    else HEADING="⚠️ **API changes** since \`${BASELINE}\`, none breaking"
+    fi
+    RESULTS="${HEADING}
 ${FENCE}
-$(cat "$API_DIR/breaking.txt")
+$(cat breaking.txt)
 ${FENCE}
 
-<details><summary>API diff vs <code>${BASELINE}</code>${ARTIFACT_URL:+ (<a href=\"${ARTIFACT_URL}\">full artifact</a>)}</summary>
+<details><summary>API diff</summary>
 
 ${FENCE}diff
-$(cap "$API_DIR/api.diff" 50000)
+$(cap api.diff 50000)
 ${FENCE}
 </details>"
-else
-  RESULTS="Client generation or build failed, so there is nothing to compare. See the [run](${RUN_URL})."
+  fi
 fi
 
 BODY="## Upstream API canary
 
-<!-- state:tested=${UPSTREAM_SHA}@${BASELINE} state:status=${STATUS} -->
-
-${BADGE}
-
-|              |   |
-| ------------ | - |
-| upstream     | [\`pocket-id@${UPSTREAM_SHA:0:7}\`](https://github.com/pocket-id/pocket-id/commit/${UPSTREAM_SHA}) (\`main\`) |
-| baseline     | [\`${BASELINE}\`](https://github.com/${GITHUB_REPOSITORY}/releases/tag/${BASELINE}) |
-| last tested  | ${NOW} ([run](${RUN_URL})) |
-| last checked | ${NOW} |
+|          |   |
+| -------- | - |
+| upstream | [\`pocket-id@${UPSTREAM_SHA:0:7}\`](https://github.com/pocket-id/pocket-id/commit/${UPSTREAM_SHA}) (\`main\`) |
+| baseline | [\`${BASELINE}\`](https://github.com/${GITHUB_REPOSITORY}/releases/tag/${BASELINE}) |
+| last run | $(date -u +%Y-%m-%dT%H:%M:%SZ) ([run](${RUN_URL})) |
 
 ${RESULTS}
 
 ---
 _Automated hourly by \`.github/workflows/upstream-canary.yaml\`; this issue is locked, do not edit._
-_Runs only when upstream \`main\` or the latest release changes; \`last checked\` updates every hour regardless._
-_While failing, @${CANARY_ASSIGNEE} is assigned; the assignment clears on the next run that isn't failing._"
+_While the client fails to build or has breaking changes, @${CANARY_ASSIGNEE} is assigned._"
 
 NUM="$(gh issue list --label "$CANARY_LABEL" --state all --limit 1 --json number --jq '.[0].number // empty')"
 if [ -z "$NUM" ]; then
@@ -74,7 +81,7 @@ else
   gh issue reopen "$NUM" 2>/dev/null || true
 fi
 
-if [ "$STATUS" = failing ]; then
+if [ "$FAILING" = true ]; then
   gh issue edit "$NUM" --add-assignee "$CANARY_ASSIGNEE"
 else
   gh issue edit "$NUM" --remove-assignee "$CANARY_ASSIGNEE"

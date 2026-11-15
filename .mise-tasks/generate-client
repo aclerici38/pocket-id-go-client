@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-#MISE description="Generate the Go client from the swagger spec"
+#MISE description="Generate the Go client from the OpenAPI spec"
 set -euo pipefail
 
-swagger generate client -f "$SWAGGER_SPEC" -t . --skip-validation
+mkdir -p client
+oapi-codegen -config oapi-codegen.yaml "$OPENAPI_SPEC"
