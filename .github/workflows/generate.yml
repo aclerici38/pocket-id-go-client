@@ -12,6 +12,10 @@ on:
 permissions:
   contents: write
 
+env:
+  # Only the tools in mise-action's install_args; `mise run` must not install the rest.
+  MISE_TASK_RUN_AUTO_INSTALL: false
+
 jobs:
   generate:
     # Builds the pinned POCKET_ID_VERSION (which releases) and upstream main, as the canary does.

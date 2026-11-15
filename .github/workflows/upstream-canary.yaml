@@ -25,6 +25,8 @@ concurrency:
 env:
   CANARY_LABEL: upstream-api-canary
   CANARY_ASSIGNEE: aclerici38
+  # Only the tools in mise-action's install_args; `mise run` must not install the rest.
+  MISE_TASK_RUN_AUTO_INSTALL: false
 
 jobs:
   canary:
