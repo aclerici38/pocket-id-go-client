@@ -20,24 +20,25 @@ cap() { # file limit
   echo "... truncated"
 }
 
+FAILING=false
 if [ "$BUILD" != success ]; then
   FAILING=true
   RESULTS="❌ **Generating or building the client failed**, see the [run](${RUN_URL})."
+elif ! err="$(gh api "repos/${GITHUB_REPOSITORY}/contents/openapi.json?ref=${BASELINE}" \
+    -H "Accept: application/vnd.github.raw" 2>&1 > "$RUNNER_TEMP/baseline.json")"; then
+  # Releases cut before the oapi-codegen switch ship swagger.yaml, not openapi.json.
+  [[ $err == *"HTTP 404"* ]] || { echo "$err" >&2; exit 1; }
+  RESULTS="✅ **The client builds.** \`${BASELINE}\` has no \`openapi.json\` to diff against, so the API diff starts with the next release."
 else
   dir="$(mktemp -d)"
-  gh api "repos/${GITHUB_REPOSITORY}/contents/openapi.json?ref=${BASELINE}" \
-    -H "Accept: application/vnd.github.raw" > "$dir/$BASELINE.json"
+  mv "$RUNNER_TEMP/baseline.json" "$dir/$BASELINE.json"
   cp openapi.json "$dir/main.json"
-  cd "$dir"
 
-  git diff --no-index "$BASELINE.json" main.json > api.diff || true
-  if oasdiff breaking --fail-on ERR --color never "$BASELINE.json" main.json > breaking.txt; then
-    FAILING=false
-  else
-    FAILING=true
-  fi
+  # In a subshell so the diff header shows bare file names and gh keeps the checkout's repo.
+  (cd "$dir" && git diff --no-index "$BASELINE.json" main.json) > "$dir/api.diff" || true
+  oasdiff breaking --fail-on ERR --color never "$dir/$BASELINE.json" "$dir/main.json" > "$dir/breaking.txt" || FAILING=true
 
-  if [ ! -s api.diff ]; then
+  if [ ! -s "$dir/api.diff" ]; then
     RESULTS="✅ **No API changes** since \`${BASELINE}\`."
   else
     if [ "$FAILING" = true ]; then HEADING="❌ **Breaking changes** since \`${BASELINE}\`"
@@ -45,13 +46,13 @@ else
     fi
     RESULTS="${HEADING}
 ${FENCE}
-$(cat breaking.txt)
+$(cat "$dir/breaking.txt")
 ${FENCE}
 
 <details><summary>API diff</summary>
 
 ${FENCE}diff
-$(cap api.diff 50000)
+$(cap "$dir/api.diff" 50000)
 ${FENCE}
 </details>"
   fi
