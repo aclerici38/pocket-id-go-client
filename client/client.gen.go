@@ -568,159 +568,6 @@ func (e PatchApplicationConfigurationsJSONBodyWebauthnUserVerification) Valid() 
 	}
 }
 
-// Defines values for PatchApplicationConfigurationsApplicationMergePatchPlusJSONBodyAllowUserSignups.
-const (
-	PatchApplicationConfigurationsApplicationMergePatchPlusJSONBodyAllowUserSignupsDisabled  PatchApplicationConfigurationsApplicationMergePatchPlusJSONBodyAllowUserSignups = "disabled"
-	PatchApplicationConfigurationsApplicationMergePatchPlusJSONBodyAllowUserSignupsOpen      PatchApplicationConfigurationsApplicationMergePatchPlusJSONBodyAllowUserSignups = "open"
-	PatchApplicationConfigurationsApplicationMergePatchPlusJSONBodyAllowUserSignupsWithToken PatchApplicationConfigurationsApplicationMergePatchPlusJSONBodyAllowUserSignups = "withToken"
-)
-
-// Valid indicates whether the value is a known member of the PatchApplicationConfigurationsApplicationMergePatchPlusJSONBodyAllowUserSignups enum.
-func (e PatchApplicationConfigurationsApplicationMergePatchPlusJSONBodyAllowUserSignups) Valid() bool {
-	switch e {
-	case PatchApplicationConfigurationsApplicationMergePatchPlusJSONBodyAllowUserSignupsDisabled:
-		return true
-	case PatchApplicationConfigurationsApplicationMergePatchPlusJSONBodyAllowUserSignupsOpen:
-		return true
-	case PatchApplicationConfigurationsApplicationMergePatchPlusJSONBodyAllowUserSignupsWithToken:
-		return true
-	default:
-		return false
-	}
-}
-
-// Defines values for PatchApplicationConfigurationsApplicationMergePatchPlusJSONBodyEmailLoginNotificationMode.
-const (
-	PatchApplicationConfigurationsApplicationMergePatchPlusJSONBodyEmailLoginNotificationModeAlways             PatchApplicationConfigurationsApplicationMergePatchPlusJSONBodyEmailLoginNotificationMode = "always"
-	PatchApplicationConfigurationsApplicationMergePatchPlusJSONBodyEmailLoginNotificationModeBrowserRecognition PatchApplicationConfigurationsApplicationMergePatchPlusJSONBodyEmailLoginNotificationMode = "browserRecognition"
-	PatchApplicationConfigurationsApplicationMergePatchPlusJSONBodyEmailLoginNotificationModeDisabled           PatchApplicationConfigurationsApplicationMergePatchPlusJSONBodyEmailLoginNotificationMode = "disabled"
-	PatchApplicationConfigurationsApplicationMergePatchPlusJSONBodyEmailLoginNotificationModeIPAndUserAgent     PatchApplicationConfigurationsApplicationMergePatchPlusJSONBodyEmailLoginNotificationMode = "ipAndUserAgent"
-)
-
-// Valid indicates whether the value is a known member of the PatchApplicationConfigurationsApplicationMergePatchPlusJSONBodyEmailLoginNotificationMode enum.
-func (e PatchApplicationConfigurationsApplicationMergePatchPlusJSONBodyEmailLoginNotificationMode) Valid() bool {
-	switch e {
-	case PatchApplicationConfigurationsApplicationMergePatchPlusJSONBodyEmailLoginNotificationModeAlways:
-		return true
-	case PatchApplicationConfigurationsApplicationMergePatchPlusJSONBodyEmailLoginNotificationModeBrowserRecognition:
-		return true
-	case PatchApplicationConfigurationsApplicationMergePatchPlusJSONBodyEmailLoginNotificationModeDisabled:
-		return true
-	case PatchApplicationConfigurationsApplicationMergePatchPlusJSONBodyEmailLoginNotificationModeIPAndUserAgent:
-		return true
-	default:
-		return false
-	}
-}
-
-// Defines values for PatchApplicationConfigurationsApplicationMergePatchPlusJSONBodyEmailVerification.
-const (
-	PatchApplicationConfigurationsApplicationMergePatchPlusJSONBodyEmailVerificationDisabled PatchApplicationConfigurationsApplicationMergePatchPlusJSONBodyEmailVerification = "disabled"
-	PatchApplicationConfigurationsApplicationMergePatchPlusJSONBodyEmailVerificationOptional PatchApplicationConfigurationsApplicationMergePatchPlusJSONBodyEmailVerification = "optional"
-	PatchApplicationConfigurationsApplicationMergePatchPlusJSONBodyEmailVerificationRequired PatchApplicationConfigurationsApplicationMergePatchPlusJSONBodyEmailVerification = "required"
-)
-
-// Valid indicates whether the value is a known member of the PatchApplicationConfigurationsApplicationMergePatchPlusJSONBodyEmailVerification enum.
-func (e PatchApplicationConfigurationsApplicationMergePatchPlusJSONBodyEmailVerification) Valid() bool {
-	switch e {
-	case PatchApplicationConfigurationsApplicationMergePatchPlusJSONBodyEmailVerificationDisabled:
-		return true
-	case PatchApplicationConfigurationsApplicationMergePatchPlusJSONBodyEmailVerificationOptional:
-		return true
-	case PatchApplicationConfigurationsApplicationMergePatchPlusJSONBodyEmailVerificationRequired:
-		return true
-	default:
-		return false
-	}
-}
-
-// Defines values for PatchApplicationConfigurationsApplicationMergePatchPlusJSONBodySMTPTLS.
-const (
-	PatchApplicationConfigurationsApplicationMergePatchPlusJSONBodySMTPTLSNone     PatchApplicationConfigurationsApplicationMergePatchPlusJSONBodySMTPTLS = "none"
-	PatchApplicationConfigurationsApplicationMergePatchPlusJSONBodySMTPTLSStarttls PatchApplicationConfigurationsApplicationMergePatchPlusJSONBodySMTPTLS = "starttls"
-	PatchApplicationConfigurationsApplicationMergePatchPlusJSONBodySMTPTLSTLS      PatchApplicationConfigurationsApplicationMergePatchPlusJSONBodySMTPTLS = "tls"
-)
-
-// Valid indicates whether the value is a known member of the PatchApplicationConfigurationsApplicationMergePatchPlusJSONBodySMTPTLS enum.
-func (e PatchApplicationConfigurationsApplicationMergePatchPlusJSONBodySMTPTLS) Valid() bool {
-	switch e {
-	case PatchApplicationConfigurationsApplicationMergePatchPlusJSONBodySMTPTLSNone:
-		return true
-	case PatchApplicationConfigurationsApplicationMergePatchPlusJSONBodySMTPTLSStarttls:
-		return true
-	case PatchApplicationConfigurationsApplicationMergePatchPlusJSONBodySMTPTLSTLS:
-		return true
-	default:
-		return false
-	}
-}
-
-// Defines values for PatchApplicationConfigurationsApplicationMergePatchPlusJSONBodyWebauthnAttestation.
-const (
-	PatchApplicationConfigurationsApplicationMergePatchPlusJSONBodyWebauthnAttestationL1       PatchApplicationConfigurationsApplicationMergePatchPlusJSONBodyWebauthnAttestation = "l1"
-	PatchApplicationConfigurationsApplicationMergePatchPlusJSONBodyWebauthnAttestationL2       PatchApplicationConfigurationsApplicationMergePatchPlusJSONBodyWebauthnAttestation = "l2"
-	PatchApplicationConfigurationsApplicationMergePatchPlusJSONBodyWebauthnAttestationL3       PatchApplicationConfigurationsApplicationMergePatchPlusJSONBodyWebauthnAttestation = "l3"
-	PatchApplicationConfigurationsApplicationMergePatchPlusJSONBodyWebauthnAttestationNone     PatchApplicationConfigurationsApplicationMergePatchPlusJSONBodyWebauthnAttestation = "none"
-	PatchApplicationConfigurationsApplicationMergePatchPlusJSONBodyWebauthnAttestationVerified PatchApplicationConfigurationsApplicationMergePatchPlusJSONBodyWebauthnAttestation = "verified"
-)
-
-// Valid indicates whether the value is a known member of the PatchApplicationConfigurationsApplicationMergePatchPlusJSONBodyWebauthnAttestation enum.
-func (e PatchApplicationConfigurationsApplicationMergePatchPlusJSONBodyWebauthnAttestation) Valid() bool {
-	switch e {
-	case PatchApplicationConfigurationsApplicationMergePatchPlusJSONBodyWebauthnAttestationL1:
-		return true
-	case PatchApplicationConfigurationsApplicationMergePatchPlusJSONBodyWebauthnAttestationL2:
-		return true
-	case PatchApplicationConfigurationsApplicationMergePatchPlusJSONBodyWebauthnAttestationL3:
-		return true
-	case PatchApplicationConfigurationsApplicationMergePatchPlusJSONBodyWebauthnAttestationNone:
-		return true
-	case PatchApplicationConfigurationsApplicationMergePatchPlusJSONBodyWebauthnAttestationVerified:
-		return true
-	default:
-		return false
-	}
-}
-
-// Defines values for PatchApplicationConfigurationsApplicationMergePatchPlusJSONBodyWebauthnAuthenticatorAttachment.
-const (
-	PatchApplicationConfigurationsApplicationMergePatchPlusJSONBodyWebauthnAuthenticatorAttachmentAny           PatchApplicationConfigurationsApplicationMergePatchPlusJSONBodyWebauthnAuthenticatorAttachment = "any"
-	PatchApplicationConfigurationsApplicationMergePatchPlusJSONBodyWebauthnAuthenticatorAttachmentCrossPlatform PatchApplicationConfigurationsApplicationMergePatchPlusJSONBodyWebauthnAuthenticatorAttachment = "cross-platform"
-	PatchApplicationConfigurationsApplicationMergePatchPlusJSONBodyWebauthnAuthenticatorAttachmentPlatform      PatchApplicationConfigurationsApplicationMergePatchPlusJSONBodyWebauthnAuthenticatorAttachment = "platform"
-)
-
-// Valid indicates whether the value is a known member of the PatchApplicationConfigurationsApplicationMergePatchPlusJSONBodyWebauthnAuthenticatorAttachment enum.
-func (e PatchApplicationConfigurationsApplicationMergePatchPlusJSONBodyWebauthnAuthenticatorAttachment) Valid() bool {
-	switch e {
-	case PatchApplicationConfigurationsApplicationMergePatchPlusJSONBodyWebauthnAuthenticatorAttachmentAny:
-		return true
-	case PatchApplicationConfigurationsApplicationMergePatchPlusJSONBodyWebauthnAuthenticatorAttachmentCrossPlatform:
-		return true
-	case PatchApplicationConfigurationsApplicationMergePatchPlusJSONBodyWebauthnAuthenticatorAttachmentPlatform:
-		return true
-	default:
-		return false
-	}
-}
-
-// Defines values for PatchApplicationConfigurationsApplicationMergePatchPlusJSONBodyWebauthnUserVerification.
-const (
-	PatchApplicationConfigurationsApplicationMergePatchPlusJSONBodyWebauthnUserVerificationPreferred PatchApplicationConfigurationsApplicationMergePatchPlusJSONBodyWebauthnUserVerification = "preferred"
-	PatchApplicationConfigurationsApplicationMergePatchPlusJSONBodyWebauthnUserVerificationRequired  PatchApplicationConfigurationsApplicationMergePatchPlusJSONBodyWebauthnUserVerification = "required"
-)
-
-// Valid indicates whether the value is a known member of the PatchApplicationConfigurationsApplicationMergePatchPlusJSONBodyWebauthnUserVerification enum.
-func (e PatchApplicationConfigurationsApplicationMergePatchPlusJSONBodyWebauthnUserVerification) Valid() bool {
-	switch e {
-	case PatchApplicationConfigurationsApplicationMergePatchPlusJSONBodyWebauthnUserVerificationPreferred:
-		return true
-	case PatchApplicationConfigurationsApplicationMergePatchPlusJSONBodyWebauthnUserVerificationRequired:
-		return true
-	default:
-		return false
-	}
-}
-
 // Defines values for ListAllAuditLogsParamsSortColumn.
 const (
 	ListAllAuditLogsParamsSortColumnCity      ListAllAuditLogsParamsSortColumn = "city"
@@ -2416,11 +2263,6 @@ type PatchAPIJSONBody struct {
 	Name *string `json:"name,omitempty"`
 }
 
-// PatchAPIApplicationMergePatchPlusJSONBody defines parameters for PatchAPI.
-type PatchAPIApplicationMergePatchPlusJSONBody struct {
-	Name *string `json:"name,omitempty"`
-}
-
 // ListClientsThatCanStillBeGrantedAccessToAPIParams defines parameters for ListClientsThatCanStillBeGrantedAccessToAPI.
 type ListClientsThatCanStillBeGrantedAccessToAPIParams struct {
 	// Search Search term to filter clients by name
@@ -2625,60 +2467,6 @@ type PatchApplicationConfigurationsJSONBody struct {
 	WebauthnUserVerification                   *PatchApplicationConfigurationsJSONBodyWebauthnUserVerification        `json:"webauthnUserVerification,omitempty"`
 }
 
-// PatchApplicationConfigurationsApplicationMergePatchPlusJSONBody defines parameters for PatchApplicationConfigurations.
-type PatchApplicationConfigurationsApplicationMergePatchPlusJSONBody struct {
-	AllowOwnAccountEdit                        *string                                                                                         `json:"allowOwnAccountEdit,omitempty"`
-	AllowUserSignups                           *PatchApplicationConfigurationsApplicationMergePatchPlusJSONBodyAllowUserSignups                `json:"allowUserSignups,omitempty"`
-	AppName                                    *string                                                                                         `json:"appName,omitempty"`
-	Appearance                                 *string                                                                                         `json:"appearance,omitempty"`
-	AutoCreateOIDCClientSecret                 *string                                                                                         `json:"autoCreateOidcClientSecret,omitempty"`
-	CIMDURLAllowlist                           *string                                                                                         `json:"cimdUrlAllowlist,omitempty"`
-	EmailAPIKeyExpirationEnabled               *string                                                                                         `json:"emailApiKeyExpirationEnabled,omitempty"`
-	EmailLoginNotificationMode                 *PatchApplicationConfigurationsApplicationMergePatchPlusJSONBodyEmailLoginNotificationMode      `json:"emailLoginNotificationMode,omitempty"`
-	EmailOneTimeAccessAsAdminEnabled           *string                                                                                         `json:"emailOneTimeAccessAsAdminEnabled,omitempty"`
-	EmailOneTimeAccessAsUnauthenticatedEnabled *string                                                                                         `json:"emailOneTimeAccessAsUnauthenticatedEnabled,omitempty"`
-	EmailVerification                          *PatchApplicationConfigurationsApplicationMergePatchPlusJSONBodyEmailVerification               `json:"emailVerification,omitempty"`
-	EmailsVerified                             *string                                                                                         `json:"emailsVerified,omitempty"`
-	EnabledFeatures                            *string                                                                                         `json:"enabledFeatures,omitempty"`
-	HomePageURL                                *string                                                                                         `json:"homePageUrl,omitempty"`
-	LDAPAdminGroupName                         *string                                                                                         `json:"ldapAdminGroupName,omitempty"`
-	LDAPAttributeGroupMember                   *string                                                                                         `json:"ldapAttributeGroupMember,omitempty"`
-	LDAPAttributeGroupName                     *string                                                                                         `json:"ldapAttributeGroupName,omitempty"`
-	LDAPAttributeGroupUniqueIdentifier         *string                                                                                         `json:"ldapAttributeGroupUniqueIdentifier,omitempty"`
-	LDAPAttributeUserDisplayName               *string                                                                                         `json:"ldapAttributeUserDisplayName,omitempty"`
-	LDAPAttributeUserEmail                     *string                                                                                         `json:"ldapAttributeUserEmail,omitempty"`
-	LDAPAttributeUserFirstName                 *string                                                                                         `json:"ldapAttributeUserFirstName,omitempty"`
-	LDAPAttributeUserLanguage                  *string                                                                                         `json:"ldapAttributeUserLanguage,omitempty"`
-	LDAPAttributeUserLastName                  *string                                                                                         `json:"ldapAttributeUserLastName,omitempty"`
-	LDAPAttributeUserProfilePicture            *string                                                                                         `json:"ldapAttributeUserProfilePicture,omitempty"`
-	LDAPAttributeUserUniqueIdentifier          *string                                                                                         `json:"ldapAttributeUserUniqueIdentifier,omitempty"`
-	LDAPAttributeUserUsername                  *string                                                                                         `json:"ldapAttributeUserUsername,omitempty"`
-	LDAPBase                                   *string                                                                                         `json:"ldapBase,omitempty"`
-	LDAPBindDn                                 *string                                                                                         `json:"ldapBindDn,omitempty"`
-	LDAPBindPassword                           *string                                                                                         `json:"ldapBindPassword,omitempty"`
-	LDAPEnabled                                *string                                                                                         `json:"ldapEnabled,omitempty"`
-	LDAPSkipCertVerify                         *string                                                                                         `json:"ldapSkipCertVerify,omitempty"`
-	LDAPSoftDeleteUsers                        *string                                                                                         `json:"ldapSoftDeleteUsers,omitempty"`
-	LDAPURL                                    *string                                                                                         `json:"ldapUrl,omitempty"`
-	LDAPUserGroupSearchFilter                  *string                                                                                         `json:"ldapUserGroupSearchFilter,omitempty"`
-	LDAPUserSearchFilter                       *string                                                                                         `json:"ldapUserSearchFilter,omitempty"`
-	RequireUserEmail                           *string                                                                                         `json:"requireUserEmail,omitempty"`
-	SessionDuration                            *string                                                                                         `json:"sessionDuration,omitempty"`
-	SignupDefaultCustomClaims                  *string                                                                                         `json:"signupDefaultCustomClaims,omitempty"`
-	SignupDefaultUserGroupIDs                  *string                                                                                         `json:"signupDefaultUserGroupIDs,omitempty"`
-	SMTPFrom                                   *string                                                                                         `json:"smtpFrom,omitempty"`
-	SMTPHost                                   *string                                                                                         `json:"smtpHost,omitempty"`
-	SMTPPassword                               *string                                                                                         `json:"smtpPassword,omitempty"`
-	SMTPPort                                   *string                                                                                         `json:"smtpPort,omitempty"`
-	SMTPSkipCertVerify                         *string                                                                                         `json:"smtpSkipCertVerify,omitempty"`
-	SMTPTLS                                    *PatchApplicationConfigurationsApplicationMergePatchPlusJSONBodySMTPTLS                         `json:"smtpTls,omitempty"`
-	SMTPUser                                   *string                                                                                         `json:"smtpUser,omitempty"`
-	WebauthnAllowSyncedPasskeys                *string                                                                                         `json:"webauthnAllowSyncedPasskeys,omitempty"`
-	WebauthnAttestation                        *PatchApplicationConfigurationsApplicationMergePatchPlusJSONBodyWebauthnAttestation             `json:"webauthnAttestation,omitempty"`
-	WebauthnAuthenticatorAttachment            *PatchApplicationConfigurationsApplicationMergePatchPlusJSONBodyWebauthnAuthenticatorAttachment `json:"webauthnAuthenticatorAttachment,omitempty"`
-	WebauthnUserVerification                   *PatchApplicationConfigurationsApplicationMergePatchPlusJSONBodyWebauthnUserVerification        `json:"webauthnUserVerification,omitempty"`
-}
-
 // PatchApplicationConfigurationsJSONBodyAllowUserSignups defines parameters for PatchApplicationConfigurations.
 type PatchApplicationConfigurationsJSONBodyAllowUserSignups string
 
@@ -2699,27 +2487,6 @@ type PatchApplicationConfigurationsJSONBodyWebauthnAuthenticatorAttachment strin
 
 // PatchApplicationConfigurationsJSONBodyWebauthnUserVerification defines parameters for PatchApplicationConfigurations.
 type PatchApplicationConfigurationsJSONBodyWebauthnUserVerification string
-
-// PatchApplicationConfigurationsApplicationMergePatchPlusJSONBodyAllowUserSignups defines parameters for PatchApplicationConfigurations.
-type PatchApplicationConfigurationsApplicationMergePatchPlusJSONBodyAllowUserSignups string
-
-// PatchApplicationConfigurationsApplicationMergePatchPlusJSONBodyEmailLoginNotificationMode defines parameters for PatchApplicationConfigurations.
-type PatchApplicationConfigurationsApplicationMergePatchPlusJSONBodyEmailLoginNotificationMode string
-
-// PatchApplicationConfigurationsApplicationMergePatchPlusJSONBodyEmailVerification defines parameters for PatchApplicationConfigurations.
-type PatchApplicationConfigurationsApplicationMergePatchPlusJSONBodyEmailVerification string
-
-// PatchApplicationConfigurationsApplicationMergePatchPlusJSONBodySMTPTLS defines parameters for PatchApplicationConfigurations.
-type PatchApplicationConfigurationsApplicationMergePatchPlusJSONBodySMTPTLS string
-
-// PatchApplicationConfigurationsApplicationMergePatchPlusJSONBodyWebauthnAttestation defines parameters for PatchApplicationConfigurations.
-type PatchApplicationConfigurationsApplicationMergePatchPlusJSONBodyWebauthnAttestation string
-
-// PatchApplicationConfigurationsApplicationMergePatchPlusJSONBodyWebauthnAuthenticatorAttachment defines parameters for PatchApplicationConfigurations.
-type PatchApplicationConfigurationsApplicationMergePatchPlusJSONBodyWebauthnAuthenticatorAttachment string
-
-// PatchApplicationConfigurationsApplicationMergePatchPlusJSONBodyWebauthnUserVerification defines parameters for PatchApplicationConfigurations.
-type PatchApplicationConfigurationsApplicationMergePatchPlusJSONBodyWebauthnUserVerification string
 
 // ListAllAuditLogsParams defines parameters for ListAllAuditLogs.
 type ListAllAuditLogsParams struct {
@@ -2792,17 +2559,6 @@ type ListOIDCClaimMappingPoliciesParamsSortDirection string
 
 // PatchOIDCClaimMappingPolicyJSONBody defines parameters for PatchOIDCClaimMappingPolicy.
 type PatchOIDCClaimMappingPolicyJSONBody struct {
-	ClaimCount    *int                                     `json:"claimCount,omitempty"`
-	ClaimMappings nullable.Nullable[[]OIDCClaimMappingDto] `json:"claimMappings,omitempty"`
-	ClientCount   *int64                                   `json:"clientCount,omitempty"`
-	CreatedAt     *time.Time                               `json:"createdAt,omitempty"`
-	ID            *string                                  `json:"id,omitempty"`
-	IsDefault     *bool                                    `json:"isDefault,omitempty"`
-	Name          *string                                  `json:"name,omitempty"`
-}
-
-// PatchOIDCClaimMappingPolicyApplicationMergePatchPlusJSONBody defines parameters for PatchOIDCClaimMappingPolicy.
-type PatchOIDCClaimMappingPolicyApplicationMergePatchPlusJSONBody struct {
 	ClaimCount    *int                                     `json:"claimCount,omitempty"`
 	ClaimMappings nullable.Nullable[[]OIDCClaimMappingDto] `json:"claimMappings,omitempty"`
 	ClientCount   *int64                                   `json:"clientCount,omitempty"`
@@ -2981,31 +2737,6 @@ type PatchOIDCClientJSONBody struct {
 	SkipConsent                         *bool                       `json:"skipConsent,omitempty"`
 }
 
-// PatchOIDCClientApplicationMergePatchPlusJSONBody defines parameters for PatchOIDCClient.
-type PatchOIDCClientApplicationMergePatchPlusJSONBody struct {
-	AccessTokenDurationMinutes          *int64                      `json:"accessTokenDurationMinutes,omitempty"`
-	BackchannelLogoutURL                *string                     `json:"backchannelLogoutURL,omitempty"`
-	CallbackURLs                        nullable.Nullable[[]string] `json:"callbackURLs,omitempty"`
-	ClaimMappingPolicyID                *string                     `json:"claimMappingPolicyId,omitempty"`
-	Credentials                         *OIDCClientCredentialsDto   `json:"credentials,omitempty"`
-	DarkLogoURL                         nullable.Nullable[string]   `json:"darkLogoUrl,omitempty"`
-	Disabled                            *bool                       `json:"disabled,omitempty"`
-	HasDarkLogo                         *bool                       `json:"hasDarkLogo,omitempty"`
-	HasLogo                             *bool                       `json:"hasLogo,omitempty"`
-	IsGroupRestricted                   *bool                       `json:"isGroupRestricted,omitempty"`
-	IsPublic                            *bool                       `json:"isPublic,omitempty"`
-	LaunchURL                           nullable.Nullable[string]   `json:"launchURL,omitempty"`
-	LogoURL                             nullable.Nullable[string]   `json:"logoUrl,omitempty"`
-	LogoutCallbackURLs                  nullable.Nullable[[]string] `json:"logoutCallbackURLs,omitempty"`
-	Name                                *string                     `json:"name,omitempty"`
-	Notes                               *string                     `json:"notes,omitempty"`
-	PKCEEnabled                         *bool                       `json:"pkceEnabled,omitempty"`
-	RefreshTokenDurationMinutes         *int64                      `json:"refreshTokenDurationMinutes,omitempty"`
-	RequiresPushedAuthorizationRequests *bool                       `json:"requiresPushedAuthorizationRequests,omitempty"`
-	RequiresReauthentication            *bool                       `json:"requiresReauthentication,omitempty"`
-	SkipConsent                         *bool                       `json:"skipConsent,omitempty"`
-}
-
 // DeleteClientLogoParams defines parameters for DeleteClientLogo.
 type DeleteClientLogoParams struct {
 	// Light Light mode logo (true) or dark mode logo (false)
@@ -3064,16 +2795,6 @@ type PatchCustomOIDCScopeJSONBody struct {
 	Policies    nullable.Nullable[[]string] `json:"policies,omitempty"`
 }
 
-// PatchCustomOIDCScopeApplicationMergePatchPlusJSONBody defines parameters for PatchCustomOIDCScope.
-type PatchCustomOIDCScopeApplicationMergePatchPlusJSONBody struct {
-	CreatedAt   *time.Time                  `json:"createdAt,omitempty"`
-	Description *string                     `json:"description,omitempty"`
-	ID          *string                     `json:"id,omitempty"`
-	Key         *string                     `json:"key,omitempty"`
-	Name        *string                     `json:"name,omitempty"`
-	Policies    nullable.Nullable[[]string] `json:"policies,omitempty"`
-}
-
 // SearchLogoPresetsParams defines parameters for SearchLogoPresets.
 type SearchLogoPresetsParams struct {
 	// Search Search term matched against the icon name
@@ -3109,13 +2830,6 @@ type ListAuthorizedClientsForUserParamsSortDirection string
 
 // PatchSCIMServiceProviderJSONBody defines parameters for PatchSCIMServiceProvider.
 type PatchSCIMServiceProviderJSONBody struct {
-	Endpoint     *string                   `json:"endpoint,omitempty"`
-	OIDCClientID *string                   `json:"oidcClientId,omitempty"`
-	Token        nullable.Nullable[string] `json:"token,omitempty"`
-}
-
-// PatchSCIMServiceProviderApplicationMergePatchPlusJSONBody defines parameters for PatchSCIMServiceProvider.
-type PatchSCIMServiceProviderApplicationMergePatchPlusJSONBody struct {
 	Endpoint     *string                   `json:"endpoint,omitempty"`
 	OIDCClientID *string                   `json:"oidcClientId,omitempty"`
 	Token        nullable.Nullable[string] `json:"token,omitempty"`
@@ -3173,13 +2887,6 @@ type PatchUserGroupJSONBody struct {
 	Notes        *string `json:"notes,omitempty"`
 }
 
-// PatchUserGroupApplicationMergePatchPlusJSONBody defines parameters for PatchUserGroup.
-type PatchUserGroupApplicationMergePatchPlusJSONBody struct {
-	FriendlyName *string `json:"friendlyName,omitempty"`
-	Name         *string `json:"name,omitempty"`
-	Notes        *string `json:"notes,omitempty"`
-}
-
 // ListUsersParams defines parameters for ListUsers.
 type ListUsersParams struct {
 	// Search Search term to filter users
@@ -3228,21 +2935,6 @@ type PatchUserJSONBody struct {
 	Username      *string                     `json:"username,omitempty"`
 }
 
-// PatchUserApplicationMergePatchPlusJSONBody defines parameters for PatchUser.
-type PatchUserApplicationMergePatchPlusJSONBody struct {
-	Disabled      *bool                       `json:"disabled,omitempty"`
-	DisplayName   *string                     `json:"displayName,omitempty"`
-	Email         nullable.Nullable[string]   `json:"email,omitempty"`
-	EmailVerified *bool                       `json:"emailVerified,omitempty"`
-	FirstName     *string                     `json:"firstName,omitempty"`
-	ID            *string                     `json:"id,omitempty"`
-	IsAdmin       *bool                       `json:"isAdmin,omitempty"`
-	LastName      *string                     `json:"lastName,omitempty"`
-	Locale        nullable.Nullable[string]   `json:"locale,omitempty"`
-	UserGroupIDs  nullable.Nullable[[]string] `json:"userGroupIds,omitempty"`
-	Username      *string                     `json:"username,omitempty"`
-}
-
 // UpdateUserProfilePictureMultipartBody defines parameters for UpdateUserProfilePicture.
 type UpdateUserProfilePictureMultipartBody struct {
 	// File Profile picture image file (PNG, JPG, or JPEG)
@@ -3272,13 +2964,6 @@ type ListAPIKeysParamsSortDirection string
 
 // PatchAPIKeyJSONBody defines parameters for PatchAPIKey.
 type PatchAPIKeyJSONBody struct {
-	Description nullable.Nullable[string] `json:"description,omitempty"`
-	Name        *string                   `json:"name,omitempty"`
-	Scopes      *[]string                 `json:"scopes,omitempty"`
-}
-
-// PatchAPIKeyApplicationMergePatchPlusJSONBody defines parameters for PatchAPIKey.
-type PatchAPIKeyApplicationMergePatchPlusJSONBody struct {
 	Description nullable.Nullable[string] `json:"description,omitempty"`
 	Name        *string                   `json:"name,omitempty"`
 	Scopes      *[]string                 `json:"scopes,omitempty"`
@@ -3458,21 +3143,6 @@ type PatchCurrentUserJSONBody struct {
 	Username      *string                     `json:"username,omitempty"`
 }
 
-// PatchCurrentUserApplicationMergePatchPlusJSONBody defines parameters for PatchCurrentUser.
-type PatchCurrentUserApplicationMergePatchPlusJSONBody struct {
-	Disabled      *bool                       `json:"disabled,omitempty"`
-	DisplayName   *string                     `json:"displayName,omitempty"`
-	Email         nullable.Nullable[string]   `json:"email,omitempty"`
-	EmailVerified *bool                       `json:"emailVerified,omitempty"`
-	FirstName     *string                     `json:"firstName,omitempty"`
-	ID            *string                     `json:"id,omitempty"`
-	IsAdmin       *bool                       `json:"isAdmin,omitempty"`
-	LastName      *string                     `json:"lastName,omitempty"`
-	Locale        nullable.Nullable[string]   `json:"locale,omitempty"`
-	UserGroupIDs  nullable.Nullable[[]string] `json:"userGroupIds,omitempty"`
-	Username      *string                     `json:"username,omitempty"`
-}
-
 // UpdateCurrentUserProfilePictureMultipartBody defines parameters for UpdateCurrentUserProfilePicture.
 type UpdateCurrentUserProfilePictureMultipartBody struct {
 	// File Profile picture image file (PNG, JPG, or JPEG)
@@ -3484,9 +3154,6 @@ type CreateAPIJSONRequestBody = APICreateDto
 
 // PatchAPIJSONRequestBody defines body for PatchAPI for application/json ContentType.
 type PatchAPIJSONRequestBody PatchAPIJSONBody
-
-// PatchAPIApplicationMergePatchPlusJSONRequestBody defines body for PatchAPI for application/merge-patch+json ContentType.
-type PatchAPIApplicationMergePatchPlusJSONRequestBody PatchAPIApplicationMergePatchPlusJSONBody
 
 // UpdateAPIJSONRequestBody defines body for UpdateAPI for application/json ContentType.
 type UpdateAPIJSONRequestBody = APIUpdateDto
@@ -3521,9 +3188,6 @@ type UpdateLogoMultipartRequestBody UpdateLogoMultipartBody
 // PatchApplicationConfigurationsJSONRequestBody defines body for PatchApplicationConfigurations for application/json ContentType.
 type PatchApplicationConfigurationsJSONRequestBody PatchApplicationConfigurationsJSONBody
 
-// PatchApplicationConfigurationsApplicationMergePatchPlusJSONRequestBody defines body for PatchApplicationConfigurations for application/merge-patch+json ContentType.
-type PatchApplicationConfigurationsApplicationMergePatchPlusJSONRequestBody PatchApplicationConfigurationsApplicationMergePatchPlusJSONBody
-
 // UpdateApplicationConfigurationsJSONRequestBody defines body for UpdateApplicationConfigurations for application/json ContentType.
 type UpdateApplicationConfigurationsJSONRequestBody = AppConfigUpdateDto
 
@@ -3542,9 +3206,6 @@ type PreviewClaimMappingsJSONRequestBody = ClaimMappingsPreviewInput
 // PatchOIDCClaimMappingPolicyJSONRequestBody defines body for PatchOIDCClaimMappingPolicy for application/json ContentType.
 type PatchOIDCClaimMappingPolicyJSONRequestBody PatchOIDCClaimMappingPolicyJSONBody
 
-// PatchOIDCClaimMappingPolicyApplicationMergePatchPlusJSONRequestBody defines body for PatchOIDCClaimMappingPolicy for application/merge-patch+json ContentType.
-type PatchOIDCClaimMappingPolicyApplicationMergePatchPlusJSONRequestBody PatchOIDCClaimMappingPolicyApplicationMergePatchPlusJSONBody
-
 // UpdateOIDCClaimMappingPolicyJSONRequestBody defines body for UpdateOIDCClaimMappingPolicy for application/json ContentType.
 type UpdateOIDCClaimMappingPolicyJSONRequestBody = OIDCClaimMappingPolicyDto
 
@@ -3553,9 +3214,6 @@ type CreateOIDCClientJSONRequestBody = OIDCClientCreateDto
 
 // PatchOIDCClientJSONRequestBody defines body for PatchOIDCClient for application/json ContentType.
 type PatchOIDCClientJSONRequestBody PatchOIDCClientJSONBody
-
-// PatchOIDCClientApplicationMergePatchPlusJSONRequestBody defines body for PatchOIDCClient for application/merge-patch+json ContentType.
-type PatchOIDCClientApplicationMergePatchPlusJSONRequestBody PatchOIDCClientApplicationMergePatchPlusJSONBody
 
 // UpdateOIDCClientJSONRequestBody defines body for UpdateOIDCClient for application/json ContentType.
 type UpdateOIDCClientJSONRequestBody = OIDCClientUpdateDto
@@ -3575,9 +3233,6 @@ type CreateCustomOIDCScopeJSONRequestBody = CustomScopeDto
 // PatchCustomOIDCScopeJSONRequestBody defines body for PatchCustomOIDCScope for application/json ContentType.
 type PatchCustomOIDCScopeJSONRequestBody PatchCustomOIDCScopeJSONBody
 
-// PatchCustomOIDCScopeApplicationMergePatchPlusJSONRequestBody defines body for PatchCustomOIDCScope for application/merge-patch+json ContentType.
-type PatchCustomOIDCScopeApplicationMergePatchPlusJSONRequestBody PatchCustomOIDCScopeApplicationMergePatchPlusJSONBody
-
 // UpdateCustomOIDCScopeJSONRequestBody defines body for UpdateCustomOIDCScope for application/json ContentType.
 type UpdateCustomOIDCScopeJSONRequestBody = CustomScopeDto
 
@@ -3586,9 +3241,6 @@ type CreateSCIMServiceProviderJSONRequestBody = SCIMServiceProviderCreateDTO
 
 // PatchSCIMServiceProviderJSONRequestBody defines body for PatchSCIMServiceProvider for application/json ContentType.
 type PatchSCIMServiceProviderJSONRequestBody PatchSCIMServiceProviderJSONBody
-
-// PatchSCIMServiceProviderApplicationMergePatchPlusJSONRequestBody defines body for PatchSCIMServiceProvider for application/merge-patch+json ContentType.
-type PatchSCIMServiceProviderApplicationMergePatchPlusJSONRequestBody PatchSCIMServiceProviderApplicationMergePatchPlusJSONBody
 
 // UpdateSCIMServiceProviderJSONRequestBody defines body for UpdateSCIMServiceProvider for application/json ContentType.
 type UpdateSCIMServiceProviderJSONRequestBody = SCIMServiceProviderCreateDTO
@@ -3601,9 +3253,6 @@ type CreateUserGroupJSONRequestBody = UserGroupCreateDto
 
 // PatchUserGroupJSONRequestBody defines body for PatchUserGroup for application/json ContentType.
 type PatchUserGroupJSONRequestBody PatchUserGroupJSONBody
-
-// PatchUserGroupApplicationMergePatchPlusJSONRequestBody defines body for PatchUserGroup for application/merge-patch+json ContentType.
-type PatchUserGroupApplicationMergePatchPlusJSONRequestBody PatchUserGroupApplicationMergePatchPlusJSONBody
 
 // UpdateUserGroupJSONRequestBody defines body for UpdateUserGroup for application/json ContentType.
 type UpdateUserGroupJSONRequestBody = UserGroupCreateDto
@@ -3619,9 +3268,6 @@ type CreateUserJSONRequestBody = UserCreateDto
 
 // PatchUserJSONRequestBody defines body for PatchUser for application/json ContentType.
 type PatchUserJSONRequestBody PatchUserJSONBody
-
-// PatchUserApplicationMergePatchPlusJSONRequestBody defines body for PatchUser for application/merge-patch+json ContentType.
-type PatchUserApplicationMergePatchPlusJSONRequestBody PatchUserApplicationMergePatchPlusJSONBody
 
 // UpdateUserJSONRequestBody defines body for UpdateUser for application/json ContentType.
 type UpdateUserJSONRequestBody = UserCreateDto
@@ -3643,9 +3289,6 @@ type CreateAPIKeyJSONRequestBody = APIKeyCreateDto
 
 // PatchAPIKeyJSONRequestBody defines body for PatchAPIKey for application/json ContentType.
 type PatchAPIKeyJSONRequestBody PatchAPIKeyJSONBody
-
-// PatchAPIKeyApplicationMergePatchPlusJSONRequestBody defines body for PatchAPIKey for application/merge-patch+json ContentType.
-type PatchAPIKeyApplicationMergePatchPlusJSONRequestBody PatchAPIKeyApplicationMergePatchPlusJSONBody
 
 // UpdateAPIKeyJSONRequestBody defines body for UpdateAPIKey for application/json ContentType.
 type UpdateAPIKeyJSONRequestBody = APIKeyUpdateDto
@@ -3676,9 +3319,6 @@ type SignUpInitialAdminUserJSONRequestBody = SignUpDto
 
 // PatchCurrentUserJSONRequestBody defines body for PatchCurrentUser for application/json ContentType.
 type PatchCurrentUserJSONRequestBody PatchCurrentUserJSONBody
-
-// PatchCurrentUserApplicationMergePatchPlusJSONRequestBody defines body for PatchCurrentUser for application/merge-patch+json ContentType.
-type PatchCurrentUserApplicationMergePatchPlusJSONRequestBody PatchCurrentUserApplicationMergePatchPlusJSONBody
 
 // UpdateCurrentUserJSONRequestBody defines body for UpdateCurrentUser for application/json ContentType.
 type UpdateCurrentUserJSONRequestBody = UserCreateDto
@@ -4048,15 +3688,6 @@ type ClientInterface interface {
 	// Corresponds with PATCH /api/admin/apis/{id} (the `PatchAPI` operationId).
 	PatchAPI(ctx context.Context, id string, body PatchAPIJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// PatchAPIWithApplicationMergePatchPlusJSONBody Update API
-	//
-	// Update an existing API by ID, where PATCH changes only the fields in the body
-	//
-	// Takes a body of the `application/merge-patch+json` content type.
-	//
-	// Corresponds with PATCH /api/admin/apis/{id} (the `PatchAPI` operationId).
-	PatchAPIWithApplicationMergePatchPlusJSONBody(ctx context.Context, id string, body PatchAPIApplicationMergePatchPlusJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
-
 	// UpdateAPIWithBody Update API
 	//
 	// Update an existing API by ID, where PATCH changes only the fields in the body
@@ -4264,15 +3895,6 @@ type ClientInterface interface {
 	// Corresponds with PATCH /api/admin/application-configuration (the `PatchApplicationConfigurations` operationId).
 	PatchApplicationConfigurations(ctx context.Context, body PatchApplicationConfigurationsJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// PatchApplicationConfigurationsWithApplicationMergePatchPlusJSONBody Update application configurations
-	//
-	// Update application configuration settings, where PATCH changes only the fields in the body
-	//
-	// Takes a body of the `application/merge-patch+json` content type.
-	//
-	// Corresponds with PATCH /api/admin/application-configuration (the `PatchApplicationConfigurations` operationId).
-	PatchApplicationConfigurationsWithApplicationMergePatchPlusJSONBody(ctx context.Context, body PatchApplicationConfigurationsApplicationMergePatchPlusJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
-
 	// UpdateApplicationConfigurationsWithBody Update application configurations
 	//
 	// Update application configuration settings, where PATCH changes only the fields in the body
@@ -4444,15 +4066,6 @@ type ClientInterface interface {
 	// Corresponds with PATCH /api/admin/oidc/claim-mapping-policies/{id} (the `PatchOIDCClaimMappingPolicy` operationId).
 	PatchOIDCClaimMappingPolicy(ctx context.Context, id string, body PatchOIDCClaimMappingPolicyJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// PatchOIDCClaimMappingPolicyWithApplicationMergePatchPlusJSONBody Update an OIDC claim mapping policy
-	//
-	// Update an existing OIDC claim mapping policy, where PATCH changes only the fields in the body
-	//
-	// Takes a body of the `application/merge-patch+json` content type.
-	//
-	// Corresponds with PATCH /api/admin/oidc/claim-mapping-policies/{id} (the `PatchOIDCClaimMappingPolicy` operationId).
-	PatchOIDCClaimMappingPolicyWithApplicationMergePatchPlusJSONBody(ctx context.Context, id string, body PatchOIDCClaimMappingPolicyApplicationMergePatchPlusJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
-
 	// UpdateOIDCClaimMappingPolicyWithBody Update an OIDC claim mapping policy
 	//
 	// Update an existing OIDC claim mapping policy, where PATCH changes only the fields in the body
@@ -4555,15 +4168,6 @@ type ClientInterface interface {
 	//
 	// Corresponds with PATCH /api/admin/oidc/clients/{id} (the `PatchOIDCClient` operationId).
 	PatchOIDCClient(ctx context.Context, id string, body PatchOIDCClientJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// PatchOIDCClientWithApplicationMergePatchPlusJSONBody Update OIDC client
-	//
-	// Update an existing OIDC client, where PATCH changes only the fields in the body
-	//
-	// Takes a body of the `application/merge-patch+json` content type.
-	//
-	// Corresponds with PATCH /api/admin/oidc/clients/{id} (the `PatchOIDCClient` operationId).
-	PatchOIDCClientWithApplicationMergePatchPlusJSONBody(ctx context.Context, id string, body PatchOIDCClientApplicationMergePatchPlusJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// UpdateOIDCClientWithBody Update OIDC client
 	//
@@ -4727,15 +4331,6 @@ type ClientInterface interface {
 	// Corresponds with PATCH /api/admin/oidc/custom-scopes/{id} (the `PatchCustomOIDCScope` operationId).
 	PatchCustomOIDCScope(ctx context.Context, id string, body PatchCustomOIDCScopeJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// PatchCustomOIDCScopeWithApplicationMergePatchPlusJSONBody Update a custom OIDC scope
-	//
-	// Update the name and description of a custom OIDC scope, whose key can't change, where PATCH changes only the fields in the body
-	//
-	// Takes a body of the `application/merge-patch+json` content type.
-	//
-	// Corresponds with PATCH /api/admin/oidc/custom-scopes/{id} (the `PatchCustomOIDCScope` operationId).
-	PatchCustomOIDCScopeWithApplicationMergePatchPlusJSONBody(ctx context.Context, id string, body PatchCustomOIDCScopeApplicationMergePatchPlusJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
-
 	// UpdateCustomOIDCScopeWithBody Update a custom OIDC scope
 	//
 	// Update the name and description of a custom OIDC scope, whose key can't change, where PATCH changes only the fields in the body
@@ -4810,15 +4405,6 @@ type ClientInterface interface {
 	//
 	// Corresponds with PATCH /api/admin/scim/service-provider/{id} (the `PatchSCIMServiceProvider` operationId).
 	PatchSCIMServiceProvider(ctx context.Context, id string, body PatchSCIMServiceProviderJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// PatchSCIMServiceProviderWithApplicationMergePatchPlusJSONBody Update SCIM service provider
-	//
-	// Update an existing SCIM service provider, where PATCH changes only the fields in the body, an omitted token keeps the stored one, an empty token removes it and a changed endpoint requires the token
-	//
-	// Takes a body of the `application/merge-patch+json` content type.
-	//
-	// Corresponds with PATCH /api/admin/scim/service-provider/{id} (the `PatchSCIMServiceProvider` operationId).
-	PatchSCIMServiceProviderWithApplicationMergePatchPlusJSONBody(ctx context.Context, id string, body PatchSCIMServiceProviderApplicationMergePatchPlusJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// UpdateSCIMServiceProviderWithBody Update SCIM service provider
 	//
@@ -4934,15 +4520,6 @@ type ClientInterface interface {
 	// Corresponds with PATCH /api/admin/user-groups/{id} (the `PatchUserGroup` operationId).
 	PatchUserGroup(ctx context.Context, id string, body PatchUserGroupJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// PatchUserGroupWithApplicationMergePatchPlusJSONBody Update user group
-	//
-	// Update an existing user group by ID, where PATCH changes only the fields in the body
-	//
-	// Takes a body of the `application/merge-patch+json` content type.
-	//
-	// Corresponds with PATCH /api/admin/user-groups/{id} (the `PatchUserGroup` operationId).
-	PatchUserGroupWithApplicationMergePatchPlusJSONBody(ctx context.Context, id string, body PatchUserGroupApplicationMergePatchPlusJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
-
 	// UpdateUserGroupWithBody Update user group
 	//
 	// Update an existing user group by ID, where PATCH changes only the fields in the body
@@ -5053,15 +4630,6 @@ type ClientInterface interface {
 	//
 	// Corresponds with PATCH /api/admin/users/{id} (the `PatchUser` operationId).
 	PatchUser(ctx context.Context, id string, body PatchUserJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// PatchUserWithApplicationMergePatchPlusJSONBody Update user
-	//
-	// Update an existing user by ID, where PATCH changes only the fields in the body
-	//
-	// Takes a body of the `application/merge-patch+json` content type.
-	//
-	// Corresponds with PATCH /api/admin/users/{id} (the `PatchUser` operationId).
-	PatchUserWithApplicationMergePatchPlusJSONBody(ctx context.Context, id string, body PatchUserApplicationMergePatchPlusJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// UpdateUserWithBody Update user
 	//
@@ -5242,15 +4810,6 @@ type ClientInterface interface {
 	//
 	// Corresponds with PATCH /api/api-keys/{id} (the `PatchAPIKey` operationId).
 	PatchAPIKey(ctx context.Context, id string, body PatchAPIKeyJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// PatchAPIKeyWithApplicationMergePatchPlusJSONBody Update API key
-	//
-	// Change the name, description and scopes of an existing API key, where PATCH changes only the fields in the body; its token stays the same
-	//
-	// Takes a body of the `application/merge-patch+json` content type.
-	//
-	// Corresponds with PATCH /api/api-keys/{id} (the `PatchAPIKey` operationId).
-	PatchAPIKeyWithApplicationMergePatchPlusJSONBody(ctx context.Context, id string, body PatchAPIKeyApplicationMergePatchPlusJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// UpdateAPIKeyWithBody Update API key
 	//
@@ -5586,15 +5145,6 @@ type ClientInterface interface {
 	// Corresponds with PATCH /api/users/me (the `PatchCurrentUser` operationId).
 	PatchCurrentUser(ctx context.Context, body PatchCurrentUserJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// PatchCurrentUserWithApplicationMergePatchPlusJSONBody Update current user
-	//
-	// Update the currently authenticated user's information, where PATCH changes only the fields in the body
-	//
-	// Takes a body of the `application/merge-patch+json` content type.
-	//
-	// Corresponds with PATCH /api/users/me (the `PatchCurrentUser` operationId).
-	PatchCurrentUserWithApplicationMergePatchPlusJSONBody(ctx context.Context, body PatchCurrentUserApplicationMergePatchPlusJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
-
 	// UpdateCurrentUserWithBody Update current user
 	//
 	// Update the currently authenticated user's information, where PATCH changes only the fields in the body
@@ -5912,25 +5462,6 @@ func (c *Client) PatchAPIWithBody(ctx context.Context, id string, contentType st
 // Corresponds with PATCH /api/admin/apis/{id} (the `PatchAPI` operationId).
 func (c *Client) PatchAPI(ctx context.Context, id string, body PatchAPIJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewPatchAPIRequest(c.Server, id, body)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-// PatchAPIWithApplicationMergePatchPlusJSONBody Update API
-//
-// # Update an existing API by ID, where PATCH changes only the fields in the body
-//
-// Takes a body of the `application/merge-patch+json` content type.
-//
-// Corresponds with PATCH /api/admin/apis/{id} (the `PatchAPI` operationId).
-func (c *Client) PatchAPIWithApplicationMergePatchPlusJSONBody(ctx context.Context, id string, body PatchAPIApplicationMergePatchPlusJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewPatchAPIRequestWithApplicationMergePatchPlusJSONBody(c.Server, id, body)
 	if err != nil {
 		return nil, err
 	}
@@ -6398,25 +5929,6 @@ func (c *Client) PatchApplicationConfigurations(ctx context.Context, body PatchA
 	return c.Client.Do(req)
 }
 
-// PatchApplicationConfigurationsWithApplicationMergePatchPlusJSONBody Update application configurations
-//
-// # Update application configuration settings, where PATCH changes only the fields in the body
-//
-// Takes a body of the `application/merge-patch+json` content type.
-//
-// Corresponds with PATCH /api/admin/application-configuration (the `PatchApplicationConfigurations` operationId).
-func (c *Client) PatchApplicationConfigurationsWithApplicationMergePatchPlusJSONBody(ctx context.Context, body PatchApplicationConfigurationsApplicationMergePatchPlusJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewPatchApplicationConfigurationsRequestWithApplicationMergePatchPlusJSONBody(c.Server, body)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
 // UpdateApplicationConfigurationsWithBody Update application configurations
 //
 // # Update application configuration settings, where PATCH changes only the fields in the body
@@ -6798,25 +6310,6 @@ func (c *Client) PatchOIDCClaimMappingPolicy(ctx context.Context, id string, bod
 	return c.Client.Do(req)
 }
 
-// PatchOIDCClaimMappingPolicyWithApplicationMergePatchPlusJSONBody Update an OIDC claim mapping policy
-//
-// # Update an existing OIDC claim mapping policy, where PATCH changes only the fields in the body
-//
-// Takes a body of the `application/merge-patch+json` content type.
-//
-// Corresponds with PATCH /api/admin/oidc/claim-mapping-policies/{id} (the `PatchOIDCClaimMappingPolicy` operationId).
-func (c *Client) PatchOIDCClaimMappingPolicyWithApplicationMergePatchPlusJSONBody(ctx context.Context, id string, body PatchOIDCClaimMappingPolicyApplicationMergePatchPlusJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewPatchOIDCClaimMappingPolicyRequestWithApplicationMergePatchPlusJSONBody(c.Server, id, body)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
 // UpdateOIDCClaimMappingPolicyWithBody Update an OIDC claim mapping policy
 //
 // # Update an existing OIDC claim mapping policy, where PATCH changes only the fields in the body
@@ -7040,25 +6533,6 @@ func (c *Client) PatchOIDCClientWithBody(ctx context.Context, id string, content
 // Corresponds with PATCH /api/admin/oidc/clients/{id} (the `PatchOIDCClient` operationId).
 func (c *Client) PatchOIDCClient(ctx context.Context, id string, body PatchOIDCClientJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewPatchOIDCClientRequest(c.Server, id, body)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-// PatchOIDCClientWithApplicationMergePatchPlusJSONBody Update OIDC client
-//
-// # Update an existing OIDC client, where PATCH changes only the fields in the body
-//
-// Takes a body of the `application/merge-patch+json` content type.
-//
-// Corresponds with PATCH /api/admin/oidc/clients/{id} (the `PatchOIDCClient` operationId).
-func (c *Client) PatchOIDCClientWithApplicationMergePatchPlusJSONBody(ctx context.Context, id string, body PatchOIDCClientApplicationMergePatchPlusJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewPatchOIDCClientRequestWithApplicationMergePatchPlusJSONBody(c.Server, id, body)
 	if err != nil {
 		return nil, err
 	}
@@ -7431,25 +6905,6 @@ func (c *Client) PatchCustomOIDCScope(ctx context.Context, id string, body Patch
 	return c.Client.Do(req)
 }
 
-// PatchCustomOIDCScopeWithApplicationMergePatchPlusJSONBody Update a custom OIDC scope
-//
-// Update the name and description of a custom OIDC scope, whose key can't change, where PATCH changes only the fields in the body
-//
-// Takes a body of the `application/merge-patch+json` content type.
-//
-// Corresponds with PATCH /api/admin/oidc/custom-scopes/{id} (the `PatchCustomOIDCScope` operationId).
-func (c *Client) PatchCustomOIDCScopeWithApplicationMergePatchPlusJSONBody(ctx context.Context, id string, body PatchCustomOIDCScopeApplicationMergePatchPlusJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewPatchCustomOIDCScopeRequestWithApplicationMergePatchPlusJSONBody(c.Server, id, body)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
 // UpdateCustomOIDCScopeWithBody Update a custom OIDC scope
 //
 // Update the name and description of a custom OIDC scope, whose key can't change, where PATCH changes only the fields in the body
@@ -7605,25 +7060,6 @@ func (c *Client) PatchSCIMServiceProviderWithBody(ctx context.Context, id string
 // Corresponds with PATCH /api/admin/scim/service-provider/{id} (the `PatchSCIMServiceProvider` operationId).
 func (c *Client) PatchSCIMServiceProvider(ctx context.Context, id string, body PatchSCIMServiceProviderJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewPatchSCIMServiceProviderRequest(c.Server, id, body)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-// PatchSCIMServiceProviderWithApplicationMergePatchPlusJSONBody Update SCIM service provider
-//
-// # Update an existing SCIM service provider, where PATCH changes only the fields in the body, an omitted token keeps the stored one, an empty token removes it and a changed endpoint requires the token
-//
-// Takes a body of the `application/merge-patch+json` content type.
-//
-// Corresponds with PATCH /api/admin/scim/service-provider/{id} (the `PatchSCIMServiceProvider` operationId).
-func (c *Client) PatchSCIMServiceProviderWithApplicationMergePatchPlusJSONBody(ctx context.Context, id string, body PatchSCIMServiceProviderApplicationMergePatchPlusJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewPatchSCIMServiceProviderRequestWithApplicationMergePatchPlusJSONBody(c.Server, id, body)
 	if err != nil {
 		return nil, err
 	}
@@ -7888,25 +7324,6 @@ func (c *Client) PatchUserGroup(ctx context.Context, id string, body PatchUserGr
 	return c.Client.Do(req)
 }
 
-// PatchUserGroupWithApplicationMergePatchPlusJSONBody Update user group
-//
-// # Update an existing user group by ID, where PATCH changes only the fields in the body
-//
-// Takes a body of the `application/merge-patch+json` content type.
-//
-// Corresponds with PATCH /api/admin/user-groups/{id} (the `PatchUserGroup` operationId).
-func (c *Client) PatchUserGroupWithApplicationMergePatchPlusJSONBody(ctx context.Context, id string, body PatchUserGroupApplicationMergePatchPlusJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewPatchUserGroupRequestWithApplicationMergePatchPlusJSONBody(c.Server, id, body)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
 // UpdateUserGroupWithBody Update user group
 //
 // # Update an existing user group by ID, where PATCH changes only the fields in the body
@@ -8138,25 +7555,6 @@ func (c *Client) PatchUserWithBody(ctx context.Context, id string, contentType s
 // Corresponds with PATCH /api/admin/users/{id} (the `PatchUser` operationId).
 func (c *Client) PatchUser(ctx context.Context, id string, body PatchUserJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewPatchUserRequest(c.Server, id, body)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-// PatchUserWithApplicationMergePatchPlusJSONBody Update user
-//
-// # Update an existing user by ID, where PATCH changes only the fields in the body
-//
-// Takes a body of the `application/merge-patch+json` content type.
-//
-// Corresponds with PATCH /api/admin/users/{id} (the `PatchUser` operationId).
-func (c *Client) PatchUserWithApplicationMergePatchPlusJSONBody(ctx context.Context, id string, body PatchUserApplicationMergePatchPlusJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewPatchUserRequestWithApplicationMergePatchPlusJSONBody(c.Server, id, body)
 	if err != nil {
 		return nil, err
 	}
@@ -8557,25 +7955,6 @@ func (c *Client) PatchAPIKeyWithBody(ctx context.Context, id string, contentType
 // Corresponds with PATCH /api/api-keys/{id} (the `PatchAPIKey` operationId).
 func (c *Client) PatchAPIKey(ctx context.Context, id string, body PatchAPIKeyJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewPatchAPIKeyRequest(c.Server, id, body)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-// PatchAPIKeyWithApplicationMergePatchPlusJSONBody Update API key
-//
-// Change the name, description and scopes of an existing API key, where PATCH changes only the fields in the body; its token stays the same
-//
-// Takes a body of the `application/merge-patch+json` content type.
-//
-// Corresponds with PATCH /api/api-keys/{id} (the `PatchAPIKey` operationId).
-func (c *Client) PatchAPIKeyWithApplicationMergePatchPlusJSONBody(ctx context.Context, id string, body PatchAPIKeyApplicationMergePatchPlusJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewPatchAPIKeyRequestWithApplicationMergePatchPlusJSONBody(c.Server, id, body)
 	if err != nil {
 		return nil, err
 	}
@@ -9340,25 +8719,6 @@ func (c *Client) PatchCurrentUser(ctx context.Context, body PatchCurrentUserJSON
 	return c.Client.Do(req)
 }
 
-// PatchCurrentUserWithApplicationMergePatchPlusJSONBody Update current user
-//
-// # Update the currently authenticated user's information, where PATCH changes only the fields in the body
-//
-// Takes a body of the `application/merge-patch+json` content type.
-//
-// Corresponds with PATCH /api/users/me (the `PatchCurrentUser` operationId).
-func (c *Client) PatchCurrentUserWithApplicationMergePatchPlusJSONBody(ctx context.Context, body PatchCurrentUserApplicationMergePatchPlusJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewPatchCurrentUserRequestWithApplicationMergePatchPlusJSONBody(c.Server, body)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
 // UpdateCurrentUserWithBody Update current user
 //
 // # Update the currently authenticated user's information, where PATCH changes only the fields in the body
@@ -10056,17 +9416,6 @@ func NewPatchAPIRequest(server string, id string, body PatchAPIJSONRequestBody) 
 	}
 	bodyReader = bytes.NewReader(buf)
 	return NewPatchAPIRequestWithBody(server, id, "application/json", bodyReader)
-}
-
-// NewPatchAPIRequestWithApplicationMergePatchPlusJSONBody calls the generic PatchAPI builder with application/merge-patch+json body
-func NewPatchAPIRequestWithApplicationMergePatchPlusJSONBody(server string, id string, body PatchAPIApplicationMergePatchPlusJSONRequestBody) (*http.Request, error) {
-	var bodyReader io.Reader
-	buf, err := json.Marshal(body)
-	if err != nil {
-		return nil, err
-	}
-	bodyReader = bytes.NewReader(buf)
-	return NewPatchAPIRequestWithBody(server, id, "application/merge-patch+json", bodyReader)
 }
 
 // NewPatchAPIRequestWithBody constructs an http.Request for the PatchAPI method, with any body, and a specified content type
@@ -11179,17 +10528,6 @@ func NewPatchApplicationConfigurationsRequest(server string, body PatchApplicati
 	return NewPatchApplicationConfigurationsRequestWithBody(server, "application/json", bodyReader)
 }
 
-// NewPatchApplicationConfigurationsRequestWithApplicationMergePatchPlusJSONBody calls the generic PatchApplicationConfigurations builder with application/merge-patch+json body
-func NewPatchApplicationConfigurationsRequestWithApplicationMergePatchPlusJSONBody(server string, body PatchApplicationConfigurationsApplicationMergePatchPlusJSONRequestBody) (*http.Request, error) {
-	var bodyReader io.Reader
-	buf, err := json.Marshal(body)
-	if err != nil {
-		return nil, err
-	}
-	bodyReader = bytes.NewReader(buf)
-	return NewPatchApplicationConfigurationsRequestWithBody(server, "application/merge-patch+json", bodyReader)
-}
-
 // NewPatchApplicationConfigurationsRequestWithBody constructs an http.Request for the PatchApplicationConfigurations method, with any body, and a specified content type
 func NewPatchApplicationConfigurationsRequestWithBody(server string, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
@@ -11909,17 +11247,6 @@ func NewPatchOIDCClaimMappingPolicyRequest(server string, id string, body PatchO
 	}
 	bodyReader = bytes.NewReader(buf)
 	return NewPatchOIDCClaimMappingPolicyRequestWithBody(server, id, "application/json", bodyReader)
-}
-
-// NewPatchOIDCClaimMappingPolicyRequestWithApplicationMergePatchPlusJSONBody calls the generic PatchOIDCClaimMappingPolicy builder with application/merge-patch+json body
-func NewPatchOIDCClaimMappingPolicyRequestWithApplicationMergePatchPlusJSONBody(server string, id string, body PatchOIDCClaimMappingPolicyApplicationMergePatchPlusJSONRequestBody) (*http.Request, error) {
-	var bodyReader io.Reader
-	buf, err := json.Marshal(body)
-	if err != nil {
-		return nil, err
-	}
-	bodyReader = bytes.NewReader(buf)
-	return NewPatchOIDCClaimMappingPolicyRequestWithBody(server, id, "application/merge-patch+json", bodyReader)
 }
 
 // NewPatchOIDCClaimMappingPolicyRequestWithBody constructs an http.Request for the PatchOIDCClaimMappingPolicy method, with any body, and a specified content type
@@ -12814,17 +12141,6 @@ func NewPatchOIDCClientRequest(server string, id string, body PatchOIDCClientJSO
 	return NewPatchOIDCClientRequestWithBody(server, id, "application/json", bodyReader)
 }
 
-// NewPatchOIDCClientRequestWithApplicationMergePatchPlusJSONBody calls the generic PatchOIDCClient builder with application/merge-patch+json body
-func NewPatchOIDCClientRequestWithApplicationMergePatchPlusJSONBody(server string, id string, body PatchOIDCClientApplicationMergePatchPlusJSONRequestBody) (*http.Request, error) {
-	var bodyReader io.Reader
-	buf, err := json.Marshal(body)
-	if err != nil {
-		return nil, err
-	}
-	bodyReader = bytes.NewReader(buf)
-	return NewPatchOIDCClientRequestWithBody(server, id, "application/merge-patch+json", bodyReader)
-}
-
 // NewPatchOIDCClientRequestWithBody constructs an http.Request for the PatchOIDCClient method, with any body, and a specified content type
 func NewPatchOIDCClientRequestWithBody(server string, id string, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
@@ -13551,17 +12867,6 @@ func NewPatchCustomOIDCScopeRequest(server string, id string, body PatchCustomOI
 	return NewPatchCustomOIDCScopeRequestWithBody(server, id, "application/json", bodyReader)
 }
 
-// NewPatchCustomOIDCScopeRequestWithApplicationMergePatchPlusJSONBody calls the generic PatchCustomOIDCScope builder with application/merge-patch+json body
-func NewPatchCustomOIDCScopeRequestWithApplicationMergePatchPlusJSONBody(server string, id string, body PatchCustomOIDCScopeApplicationMergePatchPlusJSONRequestBody) (*http.Request, error) {
-	var bodyReader io.Reader
-	buf, err := json.Marshal(body)
-	if err != nil {
-		return nil, err
-	}
-	bodyReader = bytes.NewReader(buf)
-	return NewPatchCustomOIDCScopeRequestWithBody(server, id, "application/merge-patch+json", bodyReader)
-}
-
 // NewPatchCustomOIDCScopeRequestWithBody constructs an http.Request for the PatchCustomOIDCScope method, with any body, and a specified content type
 func NewPatchCustomOIDCScopeRequestWithBody(server string, id string, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
@@ -13903,17 +13208,6 @@ func NewPatchSCIMServiceProviderRequest(server string, id string, body PatchSCIM
 	}
 	bodyReader = bytes.NewReader(buf)
 	return NewPatchSCIMServiceProviderRequestWithBody(server, id, "application/json", bodyReader)
-}
-
-// NewPatchSCIMServiceProviderRequestWithApplicationMergePatchPlusJSONBody calls the generic PatchSCIMServiceProvider builder with application/merge-patch+json body
-func NewPatchSCIMServiceProviderRequestWithApplicationMergePatchPlusJSONBody(server string, id string, body PatchSCIMServiceProviderApplicationMergePatchPlusJSONRequestBody) (*http.Request, error) {
-	var bodyReader io.Reader
-	buf, err := json.Marshal(body)
-	if err != nil {
-		return nil, err
-	}
-	bodyReader = bytes.NewReader(buf)
-	return NewPatchSCIMServiceProviderRequestWithBody(server, id, "application/merge-patch+json", bodyReader)
 }
 
 // NewPatchSCIMServiceProviderRequestWithBody constructs an http.Request for the PatchSCIMServiceProvider method, with any body, and a specified content type
@@ -14418,17 +13712,6 @@ func NewPatchUserGroupRequest(server string, id string, body PatchUserGroupJSONR
 	return NewPatchUserGroupRequestWithBody(server, id, "application/json", bodyReader)
 }
 
-// NewPatchUserGroupRequestWithApplicationMergePatchPlusJSONBody calls the generic PatchUserGroup builder with application/merge-patch+json body
-func NewPatchUserGroupRequestWithApplicationMergePatchPlusJSONBody(server string, id string, body PatchUserGroupApplicationMergePatchPlusJSONRequestBody) (*http.Request, error) {
-	var bodyReader io.Reader
-	buf, err := json.Marshal(body)
-	if err != nil {
-		return nil, err
-	}
-	bodyReader = bytes.NewReader(buf)
-	return NewPatchUserGroupRequestWithBody(server, id, "application/merge-patch+json", bodyReader)
-}
-
 // NewPatchUserGroupRequestWithBody constructs an http.Request for the PatchUserGroup method, with any body, and a specified content type
 func NewPatchUserGroupRequestWithBody(server string, id string, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
@@ -14861,17 +14144,6 @@ func NewPatchUserRequest(server string, id string, body PatchUserJSONRequestBody
 	}
 	bodyReader = bytes.NewReader(buf)
 	return NewPatchUserRequestWithBody(server, id, "application/json", bodyReader)
-}
-
-// NewPatchUserRequestWithApplicationMergePatchPlusJSONBody calls the generic PatchUser builder with application/merge-patch+json body
-func NewPatchUserRequestWithApplicationMergePatchPlusJSONBody(server string, id string, body PatchUserApplicationMergePatchPlusJSONRequestBody) (*http.Request, error) {
-	var bodyReader io.Reader
-	buf, err := json.Marshal(body)
-	if err != nil {
-		return nil, err
-	}
-	bodyReader = bytes.NewReader(buf)
-	return NewPatchUserRequestWithBody(server, id, "application/merge-patch+json", bodyReader)
 }
 
 // NewPatchUserRequestWithBody constructs an http.Request for the PatchUser method, with any body, and a specified content type
@@ -15559,17 +14831,6 @@ func NewPatchAPIKeyRequest(server string, id string, body PatchAPIKeyJSONRequest
 	}
 	bodyReader = bytes.NewReader(buf)
 	return NewPatchAPIKeyRequestWithBody(server, id, "application/json", bodyReader)
-}
-
-// NewPatchAPIKeyRequestWithApplicationMergePatchPlusJSONBody calls the generic PatchAPIKey builder with application/merge-patch+json body
-func NewPatchAPIKeyRequestWithApplicationMergePatchPlusJSONBody(server string, id string, body PatchAPIKeyApplicationMergePatchPlusJSONRequestBody) (*http.Request, error) {
-	var bodyReader io.Reader
-	buf, err := json.Marshal(body)
-	if err != nil {
-		return nil, err
-	}
-	bodyReader = bytes.NewReader(buf)
-	return NewPatchAPIKeyRequestWithBody(server, id, "application/merge-patch+json", bodyReader)
 }
 
 // NewPatchAPIKeyRequestWithBody constructs an http.Request for the PatchAPIKey method, with any body, and a specified content type
@@ -17212,17 +16473,6 @@ func NewPatchCurrentUserRequest(server string, body PatchCurrentUserJSONRequestB
 	return NewPatchCurrentUserRequestWithBody(server, "application/json", bodyReader)
 }
 
-// NewPatchCurrentUserRequestWithApplicationMergePatchPlusJSONBody calls the generic PatchCurrentUser builder with application/merge-patch+json body
-func NewPatchCurrentUserRequestWithApplicationMergePatchPlusJSONBody(server string, body PatchCurrentUserApplicationMergePatchPlusJSONRequestBody) (*http.Request, error) {
-	var bodyReader io.Reader
-	buf, err := json.Marshal(body)
-	if err != nil {
-		return nil, err
-	}
-	bodyReader = bytes.NewReader(buf)
-	return NewPatchCurrentUserRequestWithBody(server, "application/merge-patch+json", bodyReader)
-}
-
 // NewPatchCurrentUserRequestWithBody constructs an http.Request for the PatchCurrentUser method, with any body, and a specified content type
 func NewPatchCurrentUserRequestWithBody(server string, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
@@ -17745,15 +16995,6 @@ type ClientWithResponsesInterface interface {
 	// Corresponds with PATCH /api/admin/apis/{id} (the `PatchAPI` operationId).
 	PatchAPIWithResponse(ctx context.Context, id string, body PatchAPIJSONRequestBody, reqEditors ...RequestEditorFn) (*PatchAPIResponse, error)
 
-	// PatchAPIWithApplicationMergePatchPlusJSONBodyWithResponse Update API
-	//
-	// Update an existing API by ID, where PATCH changes only the fields in the body
-	//
-	// Takes a body of the `application/merge-patch+json` content type, and returns a wrapper object for the known response body format(s).
-	//
-	// Corresponds with PATCH /api/admin/apis/{id} (the `PatchAPI` operationId).
-	PatchAPIWithApplicationMergePatchPlusJSONBodyWithResponse(ctx context.Context, id string, body PatchAPIApplicationMergePatchPlusJSONRequestBody, reqEditors ...RequestEditorFn) (*PatchAPIResponse, error)
-
 	// UpdateAPIWithBodyWithResponse Update API
 	//
 	// Update an existing API by ID, where PATCH changes only the fields in the body
@@ -17979,15 +17220,6 @@ type ClientWithResponsesInterface interface {
 	// Corresponds with PATCH /api/admin/application-configuration (the `PatchApplicationConfigurations` operationId).
 	PatchApplicationConfigurationsWithResponse(ctx context.Context, body PatchApplicationConfigurationsJSONRequestBody, reqEditors ...RequestEditorFn) (*PatchApplicationConfigurationsResponse, error)
 
-	// PatchApplicationConfigurationsWithApplicationMergePatchPlusJSONBodyWithResponse Update application configurations
-	//
-	// Update application configuration settings, where PATCH changes only the fields in the body
-	//
-	// Takes a body of the `application/merge-patch+json` content type, and returns a wrapper object for the known response body format(s).
-	//
-	// Corresponds with PATCH /api/admin/application-configuration (the `PatchApplicationConfigurations` operationId).
-	PatchApplicationConfigurationsWithApplicationMergePatchPlusJSONBodyWithResponse(ctx context.Context, body PatchApplicationConfigurationsApplicationMergePatchPlusJSONRequestBody, reqEditors ...RequestEditorFn) (*PatchApplicationConfigurationsResponse, error)
-
 	// UpdateApplicationConfigurationsWithBodyWithResponse Update application configurations
 	//
 	// Update application configuration settings, where PATCH changes only the fields in the body
@@ -18177,15 +17409,6 @@ type ClientWithResponsesInterface interface {
 	// Corresponds with PATCH /api/admin/oidc/claim-mapping-policies/{id} (the `PatchOIDCClaimMappingPolicy` operationId).
 	PatchOIDCClaimMappingPolicyWithResponse(ctx context.Context, id string, body PatchOIDCClaimMappingPolicyJSONRequestBody, reqEditors ...RequestEditorFn) (*PatchOIDCClaimMappingPolicyResponse, error)
 
-	// PatchOIDCClaimMappingPolicyWithApplicationMergePatchPlusJSONBodyWithResponse Update an OIDC claim mapping policy
-	//
-	// Update an existing OIDC claim mapping policy, where PATCH changes only the fields in the body
-	//
-	// Takes a body of the `application/merge-patch+json` content type, and returns a wrapper object for the known response body format(s).
-	//
-	// Corresponds with PATCH /api/admin/oidc/claim-mapping-policies/{id} (the `PatchOIDCClaimMappingPolicy` operationId).
-	PatchOIDCClaimMappingPolicyWithApplicationMergePatchPlusJSONBodyWithResponse(ctx context.Context, id string, body PatchOIDCClaimMappingPolicyApplicationMergePatchPlusJSONRequestBody, reqEditors ...RequestEditorFn) (*PatchOIDCClaimMappingPolicyResponse, error)
-
 	// UpdateOIDCClaimMappingPolicyWithBodyWithResponse Update an OIDC claim mapping policy
 	//
 	// Update an existing OIDC claim mapping policy, where PATCH changes only the fields in the body
@@ -18302,15 +17525,6 @@ type ClientWithResponsesInterface interface {
 	//
 	// Corresponds with PATCH /api/admin/oidc/clients/{id} (the `PatchOIDCClient` operationId).
 	PatchOIDCClientWithResponse(ctx context.Context, id string, body PatchOIDCClientJSONRequestBody, reqEditors ...RequestEditorFn) (*PatchOIDCClientResponse, error)
-
-	// PatchOIDCClientWithApplicationMergePatchPlusJSONBodyWithResponse Update OIDC client
-	//
-	// Update an existing OIDC client, where PATCH changes only the fields in the body
-	//
-	// Takes a body of the `application/merge-patch+json` content type, and returns a wrapper object for the known response body format(s).
-	//
-	// Corresponds with PATCH /api/admin/oidc/clients/{id} (the `PatchOIDCClient` operationId).
-	PatchOIDCClientWithApplicationMergePatchPlusJSONBodyWithResponse(ctx context.Context, id string, body PatchOIDCClientApplicationMergePatchPlusJSONRequestBody, reqEditors ...RequestEditorFn) (*PatchOIDCClientResponse, error)
 
 	// UpdateOIDCClientWithBodyWithResponse Update OIDC client
 	//
@@ -18492,15 +17706,6 @@ type ClientWithResponsesInterface interface {
 	// Corresponds with PATCH /api/admin/oidc/custom-scopes/{id} (the `PatchCustomOIDCScope` operationId).
 	PatchCustomOIDCScopeWithResponse(ctx context.Context, id string, body PatchCustomOIDCScopeJSONRequestBody, reqEditors ...RequestEditorFn) (*PatchCustomOIDCScopeResponse, error)
 
-	// PatchCustomOIDCScopeWithApplicationMergePatchPlusJSONBodyWithResponse Update a custom OIDC scope
-	//
-	// Update the name and description of a custom OIDC scope, whose key can't change, where PATCH changes only the fields in the body
-	//
-	// Takes a body of the `application/merge-patch+json` content type, and returns a wrapper object for the known response body format(s).
-	//
-	// Corresponds with PATCH /api/admin/oidc/custom-scopes/{id} (the `PatchCustomOIDCScope` operationId).
-	PatchCustomOIDCScopeWithApplicationMergePatchPlusJSONBodyWithResponse(ctx context.Context, id string, body PatchCustomOIDCScopeApplicationMergePatchPlusJSONRequestBody, reqEditors ...RequestEditorFn) (*PatchCustomOIDCScopeResponse, error)
-
 	// UpdateCustomOIDCScopeWithBodyWithResponse Update a custom OIDC scope
 	//
 	// Update the name and description of a custom OIDC scope, whose key can't change, where PATCH changes only the fields in the body
@@ -18581,15 +17786,6 @@ type ClientWithResponsesInterface interface {
 	//
 	// Corresponds with PATCH /api/admin/scim/service-provider/{id} (the `PatchSCIMServiceProvider` operationId).
 	PatchSCIMServiceProviderWithResponse(ctx context.Context, id string, body PatchSCIMServiceProviderJSONRequestBody, reqEditors ...RequestEditorFn) (*PatchSCIMServiceProviderResponse, error)
-
-	// PatchSCIMServiceProviderWithApplicationMergePatchPlusJSONBodyWithResponse Update SCIM service provider
-	//
-	// Update an existing SCIM service provider, where PATCH changes only the fields in the body, an omitted token keeps the stored one, an empty token removes it and a changed endpoint requires the token
-	//
-	// Takes a body of the `application/merge-patch+json` content type, and returns a wrapper object for the known response body format(s).
-	//
-	// Corresponds with PATCH /api/admin/scim/service-provider/{id} (the `PatchSCIMServiceProvider` operationId).
-	PatchSCIMServiceProviderWithApplicationMergePatchPlusJSONBodyWithResponse(ctx context.Context, id string, body PatchSCIMServiceProviderApplicationMergePatchPlusJSONRequestBody, reqEditors ...RequestEditorFn) (*PatchSCIMServiceProviderResponse, error)
 
 	// UpdateSCIMServiceProviderWithBodyWithResponse Update SCIM service provider
 	//
@@ -18717,15 +17913,6 @@ type ClientWithResponsesInterface interface {
 	// Corresponds with PATCH /api/admin/user-groups/{id} (the `PatchUserGroup` operationId).
 	PatchUserGroupWithResponse(ctx context.Context, id string, body PatchUserGroupJSONRequestBody, reqEditors ...RequestEditorFn) (*PatchUserGroupResponse, error)
 
-	// PatchUserGroupWithApplicationMergePatchPlusJSONBodyWithResponse Update user group
-	//
-	// Update an existing user group by ID, where PATCH changes only the fields in the body
-	//
-	// Takes a body of the `application/merge-patch+json` content type, and returns a wrapper object for the known response body format(s).
-	//
-	// Corresponds with PATCH /api/admin/user-groups/{id} (the `PatchUserGroup` operationId).
-	PatchUserGroupWithApplicationMergePatchPlusJSONBodyWithResponse(ctx context.Context, id string, body PatchUserGroupApplicationMergePatchPlusJSONRequestBody, reqEditors ...RequestEditorFn) (*PatchUserGroupResponse, error)
-
 	// UpdateUserGroupWithBodyWithResponse Update user group
 	//
 	// Update an existing user group by ID, where PATCH changes only the fields in the body
@@ -18842,15 +18029,6 @@ type ClientWithResponsesInterface interface {
 	//
 	// Corresponds with PATCH /api/admin/users/{id} (the `PatchUser` operationId).
 	PatchUserWithResponse(ctx context.Context, id string, body PatchUserJSONRequestBody, reqEditors ...RequestEditorFn) (*PatchUserResponse, error)
-
-	// PatchUserWithApplicationMergePatchPlusJSONBodyWithResponse Update user
-	//
-	// Update an existing user by ID, where PATCH changes only the fields in the body
-	//
-	// Takes a body of the `application/merge-patch+json` content type, and returns a wrapper object for the known response body format(s).
-	//
-	// Corresponds with PATCH /api/admin/users/{id} (the `PatchUser` operationId).
-	PatchUserWithApplicationMergePatchPlusJSONBodyWithResponse(ctx context.Context, id string, body PatchUserApplicationMergePatchPlusJSONRequestBody, reqEditors ...RequestEditorFn) (*PatchUserResponse, error)
 
 	// UpdateUserWithBodyWithResponse Update user
 	//
@@ -19049,15 +18227,6 @@ type ClientWithResponsesInterface interface {
 	//
 	// Corresponds with PATCH /api/api-keys/{id} (the `PatchAPIKey` operationId).
 	PatchAPIKeyWithResponse(ctx context.Context, id string, body PatchAPIKeyJSONRequestBody, reqEditors ...RequestEditorFn) (*PatchAPIKeyResponse, error)
-
-	// PatchAPIKeyWithApplicationMergePatchPlusJSONBodyWithResponse Update API key
-	//
-	// Change the name, description and scopes of an existing API key, where PATCH changes only the fields in the body; its token stays the same
-	//
-	// Takes a body of the `application/merge-patch+json` content type, and returns a wrapper object for the known response body format(s).
-	//
-	// Corresponds with PATCH /api/api-keys/{id} (the `PatchAPIKey` operationId).
-	PatchAPIKeyWithApplicationMergePatchPlusJSONBodyWithResponse(ctx context.Context, id string, body PatchAPIKeyApplicationMergePatchPlusJSONRequestBody, reqEditors ...RequestEditorFn) (*PatchAPIKeyResponse, error)
 
 	// UpdateAPIKeyWithBodyWithResponse Update API key
 	//
@@ -19436,15 +18605,6 @@ type ClientWithResponsesInterface interface {
 	//
 	// Corresponds with PATCH /api/users/me (the `PatchCurrentUser` operationId).
 	PatchCurrentUserWithResponse(ctx context.Context, body PatchCurrentUserJSONRequestBody, reqEditors ...RequestEditorFn) (*PatchCurrentUserResponse, error)
-
-	// PatchCurrentUserWithApplicationMergePatchPlusJSONBodyWithResponse Update current user
-	//
-	// Update the currently authenticated user's information, where PATCH changes only the fields in the body
-	//
-	// Takes a body of the `application/merge-patch+json` content type, and returns a wrapper object for the known response body format(s).
-	//
-	// Corresponds with PATCH /api/users/me (the `PatchCurrentUser` operationId).
-	PatchCurrentUserWithApplicationMergePatchPlusJSONBodyWithResponse(ctx context.Context, body PatchCurrentUserApplicationMergePatchPlusJSONRequestBody, reqEditors ...RequestEditorFn) (*PatchCurrentUserResponse, error)
 
 	// UpdateCurrentUserWithBodyWithResponse Update current user
 	//
@@ -26762,21 +25922,6 @@ func (c *ClientWithResponses) PatchAPIWithResponse(ctx context.Context, id strin
 	return ParsePatchAPIResponse(rsp)
 }
 
-// PatchAPIWithApplicationMergePatchPlusJSONBodyWithResponse Update API
-//
-// # Update an existing API by ID, where PATCH changes only the fields in the body
-//
-// Takes a body of the `application/merge-patch+json` content type, and returns a wrapper object for the known response body format(s).
-//
-// Corresponds with PATCH /api/admin/apis/{id} (the `PatchAPI` operationId).
-func (c *ClientWithResponses) PatchAPIWithApplicationMergePatchPlusJSONBodyWithResponse(ctx context.Context, id string, body PatchAPIApplicationMergePatchPlusJSONRequestBody, reqEditors ...RequestEditorFn) (*PatchAPIResponse, error) {
-	rsp, err := c.PatchAPIWithApplicationMergePatchPlusJSONBody(ctx, id, body, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParsePatchAPIResponse(rsp)
-}
-
 // UpdateAPIWithBodyWithResponse Update API
 //
 // # Update an existing API by ID, where PATCH changes only the fields in the body
@@ -27152,21 +26297,6 @@ func (c *ClientWithResponses) PatchApplicationConfigurationsWithResponse(ctx con
 	return ParsePatchApplicationConfigurationsResponse(rsp)
 }
 
-// PatchApplicationConfigurationsWithApplicationMergePatchPlusJSONBodyWithResponse Update application configurations
-//
-// # Update application configuration settings, where PATCH changes only the fields in the body
-//
-// Takes a body of the `application/merge-patch+json` content type, and returns a wrapper object for the known response body format(s).
-//
-// Corresponds with PATCH /api/admin/application-configuration (the `PatchApplicationConfigurations` operationId).
-func (c *ClientWithResponses) PatchApplicationConfigurationsWithApplicationMergePatchPlusJSONBodyWithResponse(ctx context.Context, body PatchApplicationConfigurationsApplicationMergePatchPlusJSONRequestBody, reqEditors ...RequestEditorFn) (*PatchApplicationConfigurationsResponse, error) {
-	rsp, err := c.PatchApplicationConfigurationsWithApplicationMergePatchPlusJSONBody(ctx, body, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParsePatchApplicationConfigurationsResponse(rsp)
-}
-
 // UpdateApplicationConfigurationsWithBodyWithResponse Update application configurations
 //
 // # Update application configuration settings, where PATCH changes only the fields in the body
@@ -27482,21 +26612,6 @@ func (c *ClientWithResponses) PatchOIDCClaimMappingPolicyWithResponse(ctx contex
 	return ParsePatchOIDCClaimMappingPolicyResponse(rsp)
 }
 
-// PatchOIDCClaimMappingPolicyWithApplicationMergePatchPlusJSONBodyWithResponse Update an OIDC claim mapping policy
-//
-// # Update an existing OIDC claim mapping policy, where PATCH changes only the fields in the body
-//
-// Takes a body of the `application/merge-patch+json` content type, and returns a wrapper object for the known response body format(s).
-//
-// Corresponds with PATCH /api/admin/oidc/claim-mapping-policies/{id} (the `PatchOIDCClaimMappingPolicy` operationId).
-func (c *ClientWithResponses) PatchOIDCClaimMappingPolicyWithApplicationMergePatchPlusJSONBodyWithResponse(ctx context.Context, id string, body PatchOIDCClaimMappingPolicyApplicationMergePatchPlusJSONRequestBody, reqEditors ...RequestEditorFn) (*PatchOIDCClaimMappingPolicyResponse, error) {
-	rsp, err := c.PatchOIDCClaimMappingPolicyWithApplicationMergePatchPlusJSONBody(ctx, id, body, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParsePatchOIDCClaimMappingPolicyResponse(rsp)
-}
-
 // UpdateOIDCClaimMappingPolicyWithBodyWithResponse Update an OIDC claim mapping policy
 //
 // # Update an existing OIDC claim mapping policy, where PATCH changes only the fields in the body
@@ -27686,21 +26801,6 @@ func (c *ClientWithResponses) PatchOIDCClientWithBodyWithResponse(ctx context.Co
 // Corresponds with PATCH /api/admin/oidc/clients/{id} (the `PatchOIDCClient` operationId).
 func (c *ClientWithResponses) PatchOIDCClientWithResponse(ctx context.Context, id string, body PatchOIDCClientJSONRequestBody, reqEditors ...RequestEditorFn) (*PatchOIDCClientResponse, error) {
 	rsp, err := c.PatchOIDCClient(ctx, id, body, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParsePatchOIDCClientResponse(rsp)
-}
-
-// PatchOIDCClientWithApplicationMergePatchPlusJSONBodyWithResponse Update OIDC client
-//
-// # Update an existing OIDC client, where PATCH changes only the fields in the body
-//
-// Takes a body of the `application/merge-patch+json` content type, and returns a wrapper object for the known response body format(s).
-//
-// Corresponds with PATCH /api/admin/oidc/clients/{id} (the `PatchOIDCClient` operationId).
-func (c *ClientWithResponses) PatchOIDCClientWithApplicationMergePatchPlusJSONBodyWithResponse(ctx context.Context, id string, body PatchOIDCClientApplicationMergePatchPlusJSONRequestBody, reqEditors ...RequestEditorFn) (*PatchOIDCClientResponse, error) {
-	rsp, err := c.PatchOIDCClientWithApplicationMergePatchPlusJSONBody(ctx, id, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
@@ -28007,21 +27107,6 @@ func (c *ClientWithResponses) PatchCustomOIDCScopeWithResponse(ctx context.Conte
 	return ParsePatchCustomOIDCScopeResponse(rsp)
 }
 
-// PatchCustomOIDCScopeWithApplicationMergePatchPlusJSONBodyWithResponse Update a custom OIDC scope
-//
-// Update the name and description of a custom OIDC scope, whose key can't change, where PATCH changes only the fields in the body
-//
-// Takes a body of the `application/merge-patch+json` content type, and returns a wrapper object for the known response body format(s).
-//
-// Corresponds with PATCH /api/admin/oidc/custom-scopes/{id} (the `PatchCustomOIDCScope` operationId).
-func (c *ClientWithResponses) PatchCustomOIDCScopeWithApplicationMergePatchPlusJSONBodyWithResponse(ctx context.Context, id string, body PatchCustomOIDCScopeApplicationMergePatchPlusJSONRequestBody, reqEditors ...RequestEditorFn) (*PatchCustomOIDCScopeResponse, error) {
-	rsp, err := c.PatchCustomOIDCScopeWithApplicationMergePatchPlusJSONBody(ctx, id, body, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParsePatchCustomOIDCScopeResponse(rsp)
-}
-
 // UpdateCustomOIDCScopeWithBodyWithResponse Update a custom OIDC scope
 //
 // Update the name and description of a custom OIDC scope, whose key can't change, where PATCH changes only the fields in the body
@@ -28151,21 +27236,6 @@ func (c *ClientWithResponses) PatchSCIMServiceProviderWithBodyWithResponse(ctx c
 // Corresponds with PATCH /api/admin/scim/service-provider/{id} (the `PatchSCIMServiceProvider` operationId).
 func (c *ClientWithResponses) PatchSCIMServiceProviderWithResponse(ctx context.Context, id string, body PatchSCIMServiceProviderJSONRequestBody, reqEditors ...RequestEditorFn) (*PatchSCIMServiceProviderResponse, error) {
 	rsp, err := c.PatchSCIMServiceProvider(ctx, id, body, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParsePatchSCIMServiceProviderResponse(rsp)
-}
-
-// PatchSCIMServiceProviderWithApplicationMergePatchPlusJSONBodyWithResponse Update SCIM service provider
-//
-// # Update an existing SCIM service provider, where PATCH changes only the fields in the body, an omitted token keeps the stored one, an empty token removes it and a changed endpoint requires the token
-//
-// Takes a body of the `application/merge-patch+json` content type, and returns a wrapper object for the known response body format(s).
-//
-// Corresponds with PATCH /api/admin/scim/service-provider/{id} (the `PatchSCIMServiceProvider` operationId).
-func (c *ClientWithResponses) PatchSCIMServiceProviderWithApplicationMergePatchPlusJSONBodyWithResponse(ctx context.Context, id string, body PatchSCIMServiceProviderApplicationMergePatchPlusJSONRequestBody, reqEditors ...RequestEditorFn) (*PatchSCIMServiceProviderResponse, error) {
-	rsp, err := c.PatchSCIMServiceProviderWithApplicationMergePatchPlusJSONBody(ctx, id, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
@@ -28382,21 +27452,6 @@ func (c *ClientWithResponses) PatchUserGroupWithResponse(ctx context.Context, id
 	return ParsePatchUserGroupResponse(rsp)
 }
 
-// PatchUserGroupWithApplicationMergePatchPlusJSONBodyWithResponse Update user group
-//
-// # Update an existing user group by ID, where PATCH changes only the fields in the body
-//
-// Takes a body of the `application/merge-patch+json` content type, and returns a wrapper object for the known response body format(s).
-//
-// Corresponds with PATCH /api/admin/user-groups/{id} (the `PatchUserGroup` operationId).
-func (c *ClientWithResponses) PatchUserGroupWithApplicationMergePatchPlusJSONBodyWithResponse(ctx context.Context, id string, body PatchUserGroupApplicationMergePatchPlusJSONRequestBody, reqEditors ...RequestEditorFn) (*PatchUserGroupResponse, error) {
-	rsp, err := c.PatchUserGroupWithApplicationMergePatchPlusJSONBody(ctx, id, body, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParsePatchUserGroupResponse(rsp)
-}
-
 // UpdateUserGroupWithBodyWithResponse Update user group
 //
 // # Update an existing user group by ID, where PATCH changes only the fields in the body
@@ -28586,21 +27641,6 @@ func (c *ClientWithResponses) PatchUserWithBodyWithResponse(ctx context.Context,
 // Corresponds with PATCH /api/admin/users/{id} (the `PatchUser` operationId).
 func (c *ClientWithResponses) PatchUserWithResponse(ctx context.Context, id string, body PatchUserJSONRequestBody, reqEditors ...RequestEditorFn) (*PatchUserResponse, error) {
 	rsp, err := c.PatchUser(ctx, id, body, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParsePatchUserResponse(rsp)
-}
-
-// PatchUserWithApplicationMergePatchPlusJSONBodyWithResponse Update user
-//
-// # Update an existing user by ID, where PATCH changes only the fields in the body
-//
-// Takes a body of the `application/merge-patch+json` content type, and returns a wrapper object for the known response body format(s).
-//
-// Corresponds with PATCH /api/admin/users/{id} (the `PatchUser` operationId).
-func (c *ClientWithResponses) PatchUserWithApplicationMergePatchPlusJSONBodyWithResponse(ctx context.Context, id string, body PatchUserApplicationMergePatchPlusJSONRequestBody, reqEditors ...RequestEditorFn) (*PatchUserResponse, error) {
-	rsp, err := c.PatchUserWithApplicationMergePatchPlusJSONBody(ctx, id, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
@@ -28931,21 +27971,6 @@ func (c *ClientWithResponses) PatchAPIKeyWithBodyWithResponse(ctx context.Contex
 // Corresponds with PATCH /api/api-keys/{id} (the `PatchAPIKey` operationId).
 func (c *ClientWithResponses) PatchAPIKeyWithResponse(ctx context.Context, id string, body PatchAPIKeyJSONRequestBody, reqEditors ...RequestEditorFn) (*PatchAPIKeyResponse, error) {
 	rsp, err := c.PatchAPIKey(ctx, id, body, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParsePatchAPIKeyResponse(rsp)
-}
-
-// PatchAPIKeyWithApplicationMergePatchPlusJSONBodyWithResponse Update API key
-//
-// Change the name, description and scopes of an existing API key, where PATCH changes only the fields in the body; its token stays the same
-//
-// Takes a body of the `application/merge-patch+json` content type, and returns a wrapper object for the known response body format(s).
-//
-// Corresponds with PATCH /api/api-keys/{id} (the `PatchAPIKey` operationId).
-func (c *ClientWithResponses) PatchAPIKeyWithApplicationMergePatchPlusJSONBodyWithResponse(ctx context.Context, id string, body PatchAPIKeyApplicationMergePatchPlusJSONRequestBody, reqEditors ...RequestEditorFn) (*PatchAPIKeyResponse, error) {
-	rsp, err := c.PatchAPIKeyWithApplicationMergePatchPlusJSONBody(ctx, id, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
@@ -29576,21 +28601,6 @@ func (c *ClientWithResponses) PatchCurrentUserWithBodyWithResponse(ctx context.C
 // Corresponds with PATCH /api/users/me (the `PatchCurrentUser` operationId).
 func (c *ClientWithResponses) PatchCurrentUserWithResponse(ctx context.Context, body PatchCurrentUserJSONRequestBody, reqEditors ...RequestEditorFn) (*PatchCurrentUserResponse, error) {
 	rsp, err := c.PatchCurrentUser(ctx, body, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParsePatchCurrentUserResponse(rsp)
-}
-
-// PatchCurrentUserWithApplicationMergePatchPlusJSONBodyWithResponse Update current user
-//
-// # Update the currently authenticated user's information, where PATCH changes only the fields in the body
-//
-// Takes a body of the `application/merge-patch+json` content type, and returns a wrapper object for the known response body format(s).
-//
-// Corresponds with PATCH /api/users/me (the `PatchCurrentUser` operationId).
-func (c *ClientWithResponses) PatchCurrentUserWithApplicationMergePatchPlusJSONBodyWithResponse(ctx context.Context, body PatchCurrentUserApplicationMergePatchPlusJSONRequestBody, reqEditors ...RequestEditorFn) (*PatchCurrentUserResponse, error) {
-	rsp, err := c.PatchCurrentUserWithApplicationMergePatchPlusJSONBody(ctx, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
