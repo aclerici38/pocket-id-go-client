@@ -2038,19 +2038,8 @@ type DecisionDtoDecision string
 
 // EmailAsAdminDto defines model for emailAsAdminDto.
 type EmailAsAdminDto struct {
-	// TTL A duration such as 15m or 24h, or a number of seconds
-	TTL *EmailAsAdminDto_TTL `json:"ttl,omitempty"`
-}
-
-// EmailAsAdminDtoTTL0 defines model for EmailAsAdminDto.TTL.0.
-type EmailAsAdminDtoTTL0 = string
-
-// EmailAsAdminDtoTTL1 defines model for EmailAsAdminDto.TTL.1.
-type EmailAsAdminDtoTTL1 = float64
-
-// EmailAsAdminDto_TTL A duration such as 15m or 24h, or a number of seconds
-type EmailAsAdminDto_TTL struct {
-	union json.RawMessage
+	// TTL A number of seconds
+	TTL *int64 `json:"ttl,omitempty"`
 }
 
 // EmailAsUnauthenticatedUserDto defines model for emailAsUnauthenticatedUserDto.
@@ -2138,21 +2127,10 @@ type SignUpDto struct {
 type SignupTokenCreateDto struct {
 	Email *string `json:"email,omitempty"`
 
-	// TTL A duration such as 15m or 24h, or a number of seconds
-	TTL          SignupTokenCreateDto_TTL    `json:"ttl"`
+	// TTL A number of seconds
+	TTL          int64                       `json:"ttl"`
 	UsageLimit   int                         `json:"usageLimit"`
 	UserGroupIDs nullable.Nullable[[]string] `json:"userGroupIds,omitempty"`
-}
-
-// SignupTokenCreateDtoTTL0 defines model for SignupTokenCreateDto.TTL.0.
-type SignupTokenCreateDtoTTL0 = string
-
-// SignupTokenCreateDtoTTL1 defines model for SignupTokenCreateDto.TTL.1.
-type SignupTokenCreateDtoTTL1 = float64
-
-// SignupTokenCreateDto_TTL A duration such as 15m or 24h, or a number of seconds
-type SignupTokenCreateDto_TTL struct {
-	union json.RawMessage
 }
 
 // SignupTokenDto defines model for signupTokenDto.
@@ -2175,19 +2153,8 @@ type SQLiteStorageWarningDto struct {
 
 // TokenCreateDto defines model for tokenCreateDto.
 type TokenCreateDto struct {
-	// TTL A duration such as 15m or 24h, or a number of seconds
-	TTL *TokenCreateDto_TTL `json:"ttl,omitempty"`
-}
-
-// TokenCreateDtoTTL0 defines model for TokenCreateDto.TTL.0.
-type TokenCreateDtoTTL0 = string
-
-// TokenCreateDtoTTL1 defines model for TokenCreateDto.TTL.1.
-type TokenCreateDtoTTL1 = float64
-
-// TokenCreateDto_TTL A duration such as 15m or 24h, or a number of seconds
-type TokenCreateDto_TTL struct {
-	union json.RawMessage
+	// TTL A number of seconds
+	TTL *int64 `json:"ttl,omitempty"`
 }
 
 // TokenCreatedDto defines model for tokenCreatedDto.
@@ -3328,192 +3295,6 @@ type UpdateCurrentUserProfilePictureMultipartRequestBody UpdateCurrentUserProfil
 
 // VerifyEmailJSONRequestBody defines body for VerifyEmail for application/json ContentType.
 type VerifyEmailJSONRequestBody = EmailVerificationDto
-
-// AsEmailAsAdminDtoTTL0 returns the union data inside the EmailAsAdminDto_TTL as a EmailAsAdminDtoTTL0
-func (t EmailAsAdminDto_TTL) AsEmailAsAdminDtoTTL0() (EmailAsAdminDtoTTL0, error) {
-	var body EmailAsAdminDtoTTL0
-	err := json.Unmarshal(t.union, &body)
-	return body, err
-}
-
-// FromEmailAsAdminDtoTTL0 overwrites any union data inside the EmailAsAdminDto_TTL as the provided EmailAsAdminDtoTTL0
-func (t *EmailAsAdminDto_TTL) FromEmailAsAdminDtoTTL0(v EmailAsAdminDtoTTL0) error {
-	b, err := json.Marshal(v)
-	t.union = b
-	return err
-}
-
-// MergeEmailAsAdminDtoTTL0 performs a merge with any union data inside the EmailAsAdminDto_TTL, using the provided EmailAsAdminDtoTTL0
-func (t *EmailAsAdminDto_TTL) MergeEmailAsAdminDtoTTL0(v EmailAsAdminDtoTTL0) error {
-	b, err := json.Marshal(v)
-	if err != nil {
-		return err
-	}
-
-	merged, err := runtime.JSONMerge(t.union, b)
-	t.union = merged
-	return err
-}
-
-// AsEmailAsAdminDtoTTL1 returns the union data inside the EmailAsAdminDto_TTL as a EmailAsAdminDtoTTL1
-func (t EmailAsAdminDto_TTL) AsEmailAsAdminDtoTTL1() (EmailAsAdminDtoTTL1, error) {
-	var body EmailAsAdminDtoTTL1
-	err := json.Unmarshal(t.union, &body)
-	return body, err
-}
-
-// FromEmailAsAdminDtoTTL1 overwrites any union data inside the EmailAsAdminDto_TTL as the provided EmailAsAdminDtoTTL1
-func (t *EmailAsAdminDto_TTL) FromEmailAsAdminDtoTTL1(v EmailAsAdminDtoTTL1) error {
-	b, err := json.Marshal(v)
-	t.union = b
-	return err
-}
-
-// MergeEmailAsAdminDtoTTL1 performs a merge with any union data inside the EmailAsAdminDto_TTL, using the provided EmailAsAdminDtoTTL1
-func (t *EmailAsAdminDto_TTL) MergeEmailAsAdminDtoTTL1(v EmailAsAdminDtoTTL1) error {
-	b, err := json.Marshal(v)
-	if err != nil {
-		return err
-	}
-
-	merged, err := runtime.JSONMerge(t.union, b)
-	t.union = merged
-	return err
-}
-
-func (t EmailAsAdminDto_TTL) MarshalJSON() ([]byte, error) {
-	b, err := t.union.MarshalJSON()
-	return b, err
-}
-
-func (t *EmailAsAdminDto_TTL) UnmarshalJSON(b []byte) error {
-	err := t.union.UnmarshalJSON(b)
-	return err
-}
-
-// AsSignupTokenCreateDtoTTL0 returns the union data inside the SignupTokenCreateDto_TTL as a SignupTokenCreateDtoTTL0
-func (t SignupTokenCreateDto_TTL) AsSignupTokenCreateDtoTTL0() (SignupTokenCreateDtoTTL0, error) {
-	var body SignupTokenCreateDtoTTL0
-	err := json.Unmarshal(t.union, &body)
-	return body, err
-}
-
-// FromSignupTokenCreateDtoTTL0 overwrites any union data inside the SignupTokenCreateDto_TTL as the provided SignupTokenCreateDtoTTL0
-func (t *SignupTokenCreateDto_TTL) FromSignupTokenCreateDtoTTL0(v SignupTokenCreateDtoTTL0) error {
-	b, err := json.Marshal(v)
-	t.union = b
-	return err
-}
-
-// MergeSignupTokenCreateDtoTTL0 performs a merge with any union data inside the SignupTokenCreateDto_TTL, using the provided SignupTokenCreateDtoTTL0
-func (t *SignupTokenCreateDto_TTL) MergeSignupTokenCreateDtoTTL0(v SignupTokenCreateDtoTTL0) error {
-	b, err := json.Marshal(v)
-	if err != nil {
-		return err
-	}
-
-	merged, err := runtime.JSONMerge(t.union, b)
-	t.union = merged
-	return err
-}
-
-// AsSignupTokenCreateDtoTTL1 returns the union data inside the SignupTokenCreateDto_TTL as a SignupTokenCreateDtoTTL1
-func (t SignupTokenCreateDto_TTL) AsSignupTokenCreateDtoTTL1() (SignupTokenCreateDtoTTL1, error) {
-	var body SignupTokenCreateDtoTTL1
-	err := json.Unmarshal(t.union, &body)
-	return body, err
-}
-
-// FromSignupTokenCreateDtoTTL1 overwrites any union data inside the SignupTokenCreateDto_TTL as the provided SignupTokenCreateDtoTTL1
-func (t *SignupTokenCreateDto_TTL) FromSignupTokenCreateDtoTTL1(v SignupTokenCreateDtoTTL1) error {
-	b, err := json.Marshal(v)
-	t.union = b
-	return err
-}
-
-// MergeSignupTokenCreateDtoTTL1 performs a merge with any union data inside the SignupTokenCreateDto_TTL, using the provided SignupTokenCreateDtoTTL1
-func (t *SignupTokenCreateDto_TTL) MergeSignupTokenCreateDtoTTL1(v SignupTokenCreateDtoTTL1) error {
-	b, err := json.Marshal(v)
-	if err != nil {
-		return err
-	}
-
-	merged, err := runtime.JSONMerge(t.union, b)
-	t.union = merged
-	return err
-}
-
-func (t SignupTokenCreateDto_TTL) MarshalJSON() ([]byte, error) {
-	b, err := t.union.MarshalJSON()
-	return b, err
-}
-
-func (t *SignupTokenCreateDto_TTL) UnmarshalJSON(b []byte) error {
-	err := t.union.UnmarshalJSON(b)
-	return err
-}
-
-// AsTokenCreateDtoTTL0 returns the union data inside the TokenCreateDto_TTL as a TokenCreateDtoTTL0
-func (t TokenCreateDto_TTL) AsTokenCreateDtoTTL0() (TokenCreateDtoTTL0, error) {
-	var body TokenCreateDtoTTL0
-	err := json.Unmarshal(t.union, &body)
-	return body, err
-}
-
-// FromTokenCreateDtoTTL0 overwrites any union data inside the TokenCreateDto_TTL as the provided TokenCreateDtoTTL0
-func (t *TokenCreateDto_TTL) FromTokenCreateDtoTTL0(v TokenCreateDtoTTL0) error {
-	b, err := json.Marshal(v)
-	t.union = b
-	return err
-}
-
-// MergeTokenCreateDtoTTL0 performs a merge with any union data inside the TokenCreateDto_TTL, using the provided TokenCreateDtoTTL0
-func (t *TokenCreateDto_TTL) MergeTokenCreateDtoTTL0(v TokenCreateDtoTTL0) error {
-	b, err := json.Marshal(v)
-	if err != nil {
-		return err
-	}
-
-	merged, err := runtime.JSONMerge(t.union, b)
-	t.union = merged
-	return err
-}
-
-// AsTokenCreateDtoTTL1 returns the union data inside the TokenCreateDto_TTL as a TokenCreateDtoTTL1
-func (t TokenCreateDto_TTL) AsTokenCreateDtoTTL1() (TokenCreateDtoTTL1, error) {
-	var body TokenCreateDtoTTL1
-	err := json.Unmarshal(t.union, &body)
-	return body, err
-}
-
-// FromTokenCreateDtoTTL1 overwrites any union data inside the TokenCreateDto_TTL as the provided TokenCreateDtoTTL1
-func (t *TokenCreateDto_TTL) FromTokenCreateDtoTTL1(v TokenCreateDtoTTL1) error {
-	b, err := json.Marshal(v)
-	t.union = b
-	return err
-}
-
-// MergeTokenCreateDtoTTL1 performs a merge with any union data inside the TokenCreateDto_TTL, using the provided TokenCreateDtoTTL1
-func (t *TokenCreateDto_TTL) MergeTokenCreateDtoTTL1(v TokenCreateDtoTTL1) error {
-	b, err := json.Marshal(v)
-	if err != nil {
-		return err
-	}
-
-	merged, err := runtime.JSONMerge(t.union, b)
-	t.union = merged
-	return err
-}
-
-func (t TokenCreateDto_TTL) MarshalJSON() ([]byte, error) {
-	b, err := t.union.MarshalJSON()
-	return b, err
-}
-
-func (t *TokenCreateDto_TTL) UnmarshalJSON(b []byte) error {
-	err := t.union.UnmarshalJSON(b)
-	return err
-}
 
 // RequestEditorFn is the function signature for the RequestEditor callback function
 type RequestEditorFn func(ctx context.Context, req *http.Request) error
