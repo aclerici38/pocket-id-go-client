@@ -1,6 +1,6 @@
 module github.com/aclerici38/pocket-id-go-client/v3
 
-go 1.27.4
+go 1.26.0
 
 require (
 	github.com/oapi-codegen/nullable v1.2.0
