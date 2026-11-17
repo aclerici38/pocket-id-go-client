@@ -8,6 +8,16 @@ go get github.com/aclerici38/pocket-id-go-client/v2
 
 Release tags match Pocket ID versions, and the module's major version follows Pocket ID's.
 
+## Authentication
+
+Pass an API key with `WithAPIKey`, which sends it in the `X-API-Key` header:
+
+```go
+c, err := client.NewClientWithResponses("https://id.example.com", client.WithAPIKey(key))
+```
+
+For OAuth access tokens, give `WithHTTPClient` an `*http.Client` from `golang.org/x/oauth2`.
+
 ## Development
 
 Tooling (Go, oapi-codegen, oasdiff, zizmor) is managed with [mise](https://mise.jdx.dev); `jq` must also be on your `PATH`. Run `mise install`, then:

@@ -2,7 +2,8 @@
 .upstream/
 
 # Generated files (only committed to release tags, not main)
-client/
+client/*
+!client/auth.go
 openapi.json
 
 # IDE
