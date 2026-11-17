@@ -3,7 +3,9 @@
   "extends": [
     "config:recommended"
   ],
-  "dependencyDashboard": true,
+  "dependencyDashboard": {
+    "enabled": true
+  },
   "prConcurrentLimit": 0,
   "prHourlyLimit": 0,
   "automerge": true,
