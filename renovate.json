@@ -48,12 +48,6 @@
       "ignoreTests": true
     },
     {
-      "matchDatasources": [
-        "golang-version"
-      ],
-      "rangeStrategy": "bump"
-    },
-    {
       "description": "Go version across go.mod and mise",
       "matchPackageNames": [
         "go",
