@@ -16,3 +16,7 @@ actions:
         - type: number
   - target: $..[?(@.oneOf && @.type[0] == 'string' && @.type[1] == 'number')].type
     remove: true
+  # PATCH bodies list merge-patch and plain JSON with the same schema. Upstream reads
+  # plain JSON as a merge patch too, so keep one set of methods and types.
+  - target: $.paths.*.patch.requestBody.content['application/merge-patch+json']
+    remove: true

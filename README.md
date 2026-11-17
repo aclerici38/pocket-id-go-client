@@ -32,6 +32,17 @@ err = client.Check(c.DeleteUser(ctx, id))
 
 The `Code` constants are generated from upstream's `apperror` package.
 
+## Updates
+
+PATCH bodies are JSON merge patches: omitted fields are left alone. Set fields with `new(v)`, and clear nullable ones with `nullable.NewNullNullable`:
+
+```go
+err = client.Check(c.PatchOIDCClient(ctx, id, client.PatchOIDCClientJSONRequestBody{
+	Name:      new("renamed"),
+	LaunchURL: nullable.NewNullNullable[string](),
+}))
+```
+
 ## Development
 
 Tooling (Go, oapi-codegen, oasdiff, zizmor) is managed with [mise](https://mise.jdx.dev); `jq` must also be on your `PATH`. Run `mise install`, then:
