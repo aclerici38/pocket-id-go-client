@@ -25,6 +25,14 @@ def nullable: (.type | type) == "array" and (.type | index("null"));
 ([.paths[] | to_entries[] | name] | group_by(.) | map(select(length == 1)[0])) as $unique
 | .paths[] |= with_entries(((name | select(IN($unique[]))) as $n | .value.operationId = $n) // .)
 
+# Encode OIDC client IDs at the path boundary, including every nested client route.
+# Match route keys here because RFC 9535 JSONPath cannot filter object keys by prefix.
+| .paths |= with_entries(.key as $path | .value |= (
+    (.. | objects | select(.in? == "path" and
+      (.name == "clientId" or (.name == "id" and ($path | startswith("/api/admin/oidc/clients/{id}")))))
+      | .schema["x-go-type"]) = "OIDCClientID"
+  ))
+
 # Upstream marks every pointer, slice and map nullable. Only request bodies need
 # nullable.Nullable to tell unset from cleared, so schemas that appear only in responses
 # drop `null`: slices, maps and strings become plain values (nil and "" stand in for null),
