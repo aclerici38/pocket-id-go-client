@@ -13,3 +13,11 @@ mise run clean      # remove generated files
 ```
 
 Generated code is not committed to `main`. Each release tag is a commit containing only `LICENSE`, `go.mod`, `go.sum`, `client/`, `models/` and `swagger.yaml`, parented on the previous release so tags can be compared.
+
+## Development builds
+
+The `next` branch gets the client generated from upstream Pocket ID `main` whenever it changes, under the major version upstream is developing:
+
+```sh
+go get github.com/aclerici38/pocket-id-go-client/v3@next
+```

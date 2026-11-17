@@ -30,7 +30,7 @@
         "/\\.ya?ml$/"
       ],
       "matchStrings": [
-        "# renovate: datasource=(?<datasource>.*?) depName=(?<depName>.*?)( versioning=(?<versioning>.*?))?\\n.*?[\"']?(?<currentValue>v?\\d+\\.\\d+\\.\\d+[^\"'\\s]*)[\"']?"
+        "# renovate: datasource=(?<datasource>.*?) depName=(?<depName>.*?)( versioning=(?<versioning>.*?))?\\n.*?[\"']?(?<currentValue>v?\\d+(?:\\.\\d+)*[^\"'\\s]*)[\"']?"
       ],
       "versioningTemplate": "{{#if versioning}}{{{versioning}}}{{else}}semver{{/if}}"
     }

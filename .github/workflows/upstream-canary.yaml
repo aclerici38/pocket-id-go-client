@@ -2,7 +2,7 @@ name: Upstream API canary
 
 # Hourly: generates the client from upstream pocket-id `main` and posts its API diff
 # against the latest release on a locked dashboard issue, which is assigned while the
-# client fails to build or the diff has breaking changes.
+# client fails to build or the diff has breaking changes. Builds are pushed to `next`.
 
 on:
   schedule:
@@ -19,6 +19,9 @@ concurrency:
 env:
   CANARY_LABEL: upstream-api-canary
   CANARY_ASSIGNEE: aclerici38
+  # Module major of `next`; Renovate only bumps it up, so it can be set ahead.
+  # renovate: datasource=docker depName=ghcr.io/pocket-id/pocket-id versioning=docker
+  NEXT_MAJOR: v3
   # Only the tools in mise-action's install_args; `mise run` must not install the rest.
   MISE_TASK_RUN_AUTO_INSTALL: false
 
@@ -26,11 +29,13 @@ jobs:
   canary:
     runs-on: ubuntu-latest
     permissions:
-      contents: read
+      contents: write
       issues: write
     steps:
+      # Full history: publishing appends to `next` and merges in release tags.
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
+          fetch-depth: 0
           persist-credentials: false
 
       - name: Resolve upstream main
@@ -59,3 +64,33 @@ jobs:
           BUILD: ${{ steps.build.outcome }}
           RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
         run: ./.github/scripts/update-canary-issue.sh
+
+      # Commits the client to `next` (for `go get <module>@next`) when it changed. Merging in the
+      # latest NEXT_MAJOR release makes later pseudo-versions sort above it. Never forced, as
+      # pseudo-versions only resolve while their commit is reachable.
+      - name: Publish to next
+        if: steps.build.outcome == 'success' && github.ref == 'refs/heads/main'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          UPSTREAM_SHA: ${{ steps.upstream.outputs.sha }}
+        run: |
+          export GIT_INDEX_FILE="$RUNNER_TEMP/next-index"
+          git add -f LICENSE go.mod go.sum client/ openapi.json
+          tree=$(git write-tree)
+          unset GIT_INDEX_FILE
+
+          tip=$(git rev-parse -q --verify origin/next || true)
+          release=$(git tag -l "$NEXT_MAJOR.*" --sort=-v:refname | head -1)
+          parents=()
+          [ -z "$tip" ] || parents+=(-p "$tip")
+          if [ -n "$release" ] && ! { [ -n "$tip" ] && git merge-base --is-ancestor "$release" "$tip"; }; then
+            parents+=(-p "$release")
+          elif [ -n "$tip" ] && [ "$(git rev-parse "$tip^{tree}")" = "$tree" ]; then
+            exit 0
+          fi
+
+          commit=$(git -c user.name="github-actions[bot]" -c user.email="github-actions[bot]@users.noreply.github.com" \
+            commit-tree "$tree" "${parents[@]}" -m "Generated client from pocket-id/pocket-id@${UPSTREAM_SHA}")
+          # Checkout doesn't persist credentials; authenticate git via GH_TOKEN for this step only.
+          gh auth setup-git
+          git push origin "$commit:refs/heads/next"
