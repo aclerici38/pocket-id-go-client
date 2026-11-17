@@ -43,6 +43,21 @@ err = client.Check(c.PatchOIDCClient(ctx, id, client.PatchOIDCClientJSONRequestB
 }))
 ```
 
+## Pagination
+
+`All` yields every item of a list operation, fetching pages as it goes:
+
+```go
+for u, err := range client.All[client.UserDto](func(page int) (*http.Response, error) {
+	return c.ListUsers(ctx, &client.ListUsersParams{PaginationPage: &page, PaginationLimit: new(100)})
+}) {
+	if err != nil {
+		return err
+	}
+	// ...
+}
+```
+
 ## Development
 
 Tooling (Go, oapi-codegen, oasdiff, zizmor) is managed with [mise](https://mise.jdx.dev); `jq` must also be on your `PATH`. Run `mise install`, then:
