@@ -2119,6 +2119,7 @@ type SignUpDto struct {
 	Email     nullable.Nullable[string] `json:"email,omitempty"`
 	FirstName *string                   `json:"firstName,omitempty"`
 	LastName  *string                   `json:"lastName,omitempty"`
+	Locale    nullable.Nullable[string] `json:"locale,omitempty"`
 	Token     *string                   `json:"token,omitempty"`
 	Username  string                    `json:"username"`
 }
@@ -5015,6 +5016,11 @@ type ClientInterface interface {
 	//
 	// Corresponds with GET /api/version/latest (the `GetLatestAvailableVersionOfPocketID` operationId).
 	GetLatestAvailableVersionOfPocketID(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// Logout Log out the current session
+	//
+	// Corresponds with POST /api/webauthn/logout (the `Logout` operationId).
+	Logout(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// RespondsToHealthchecks Responds to healthchecks
 	//
@@ -8700,6 +8706,21 @@ func (c *Client) GetCurrentDeployedVersionOfPocketID(ctx context.Context, reqEdi
 // Corresponds with GET /api/version/latest (the `GetLatestAvailableVersionOfPocketID` operationId).
 func (c *Client) GetLatestAvailableVersionOfPocketID(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewGetLatestAvailableVersionOfPocketIDRequest(c.Server)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+// Logout Log out the current session
+//
+// Corresponds with POST /api/webauthn/logout (the `Logout` operationId).
+func (c *Client) Logout(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewLogoutRequest(c.Server)
 	if err != nil {
 		return nil, err
 	}
@@ -16588,6 +16609,33 @@ func NewGetLatestAvailableVersionOfPocketIDRequest(server string) (*http.Request
 	return req, nil
 }
 
+// NewLogoutRequest constructs an http.Request for the Logout method
+func NewLogoutRequest(server string) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/api/webauthn/logout")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
 // NewRespondsToHealthchecksRequest constructs an http.Request for the RespondsToHealthchecks method
 func NewRespondsToHealthchecksRequest(server string) (*http.Request, error) {
 	var err error
@@ -18490,6 +18538,13 @@ type ClientWithResponsesInterface interface {
 	//
 	// Corresponds with GET /api/version/latest (the `GetLatestAvailableVersionOfPocketID` operationId).
 	GetLatestAvailableVersionOfPocketIDWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*GetLatestAvailableVersionOfPocketIDResponse, error)
+
+	// LogoutWithResponse Log out the current session
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with POST /api/webauthn/logout (the `Logout` operationId).
+	LogoutWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*LogoutResponse, error)
 
 	// RespondsToHealthchecksWithResponse Responds to healthchecks
 	//
@@ -25467,6 +25522,47 @@ func (r GetLatestAvailableVersionOfPocketIDResponse) ContentType() string {
 	return ""
 }
 
+type LogoutResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSONDefault the response for an HTTP default `application/json` response
+	JSONDefault *ErrorDto
+}
+
+// GetJSONDefault returns the response for an HTTP default `application/json` response
+func (r LogoutResponse) GetJSONDefault() *ErrorDto {
+	return r.JSONDefault
+}
+
+// GetBody returns the raw response body bytes
+func (r LogoutResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r LogoutResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r LogoutResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r LogoutResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
 type RespondsToHealthchecksResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
@@ -28562,6 +28658,19 @@ func (c *ClientWithResponses) GetLatestAvailableVersionOfPocketIDWithResponse(ct
 		return nil, err
 	}
 	return ParseGetLatestAvailableVersionOfPocketIDResponse(rsp)
+}
+
+// LogoutWithResponse Log out the current session
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with POST /api/webauthn/logout (the `Logout` operationId).
+func (c *ClientWithResponses) LogoutWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*LogoutResponse, error) {
+	rsp, err := c.Logout(ctx, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseLogoutResponse(rsp)
 }
 
 // RespondsToHealthchecksWithResponse Responds to healthchecks
@@ -33381,6 +33490,35 @@ func ParseGetLatestAvailableVersionOfPocketIDResponse(rsp *http.Response) (*GetL
 			return nil, err
 		}
 		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest ErrorDto
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseLogoutResponse parses an HTTP response from a LogoutWithResponse call
+func ParseLogoutResponse(rsp *http.Response) (*LogoutResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &LogoutResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case rsp.StatusCode == 204:
+		break // No content-type
 
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
 		var dest ErrorDto

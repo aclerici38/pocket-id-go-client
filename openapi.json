@@ -3091,6 +3091,12 @@
             "maxLength": 50,
             "type": "string"
           },
+          "locale": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
           "token": {
             "type": "string"
           },
