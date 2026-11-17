@@ -40,6 +40,29 @@ jobs:
         with:
           install_args: go oapi-codegen github:oasdiff/oasdiff
 
+      # The clone happens in `mise run generate`, so read upstream's go.sum through the API.
+      - name: Resolve upstream go.sum
+        id: upstream
+        env:
+          GH_TOKEN: ${{ github.token }}
+          UPSTREAM_REF: ${{ matrix.upstream-ref }}
+        run: |
+          ref="${UPSTREAM_REF:-$(tr -d '\n' < POCKET_ID_VERSION)}"
+          echo "go-sum=$(gh api "repos/pocket-id/pocket-id/contents/backend/go.sum?ref=$ref" --jq .sha)" >> "$GITHUB_OUTPUT"
+
+      # Without this, compiling upstream's backend from scratch is most of the job. Keyed on
+      # upstream's go.sum; a dependency bump restores the closest cache and rebuilds the rest.
+      - name: Cache Go modules and builds
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: |
+            ~/go/pkg/mod
+            ~/.cache/go-build
+          key: go-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('mise.lock') }}-${{ steps.upstream.outputs.go-sum }}
+          restore-keys: |
+            go-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('mise.lock') }}-
+            go-${{ runner.os }}-${{ runner.arch }}-
+
       - name: Generate client
         env:
           UPSTREAM_REF: ${{ matrix.upstream-ref }}

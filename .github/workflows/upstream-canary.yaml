@@ -45,12 +45,28 @@ jobs:
         id: upstream
         env:
           GH_TOKEN: ${{ github.token }}
-        run: echo "sha=$(gh api repos/pocket-id/pocket-id/commits/main --jq .sha)" >> "$GITHUB_OUTPUT"
+        run: |
+          sha=$(gh api repos/pocket-id/pocket-id/commits/main --jq .sha)
+          echo "sha=$sha" >> "$GITHUB_OUTPUT"
+          echo "go-sum=$(gh api "repos/pocket-id/pocket-id/contents/backend/go.sum?ref=$sha" --jq .sha)" >> "$GITHUB_OUTPUT"
 
       - name: Setup mise
         uses: jdx/mise-action@236a21c3b91f5db6d4e174b348674a0f0caac06d # v5.2.9
         with:
           install_args: go oapi-codegen github:oasdiff/oasdiff
+
+      # Without this, compiling upstream's backend from scratch is most of the job. Keyed on
+      # upstream's go.sum; a dependency bump restores the closest cache and rebuilds the rest.
+      - name: Cache Go modules and builds
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: |
+            ~/go/pkg/mod
+            ~/.cache/go-build
+          key: go-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('mise.lock') }}-${{ steps.upstream.outputs.go-sum }}
+          restore-keys: |
+            go-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('mise.lock') }}-
+            go-${{ runner.os }}-${{ runner.arch }}-
 
       # A failure is reported on the issue, not on the run.
       - name: Generate client from upstream main
