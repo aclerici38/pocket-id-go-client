@@ -26,7 +26,7 @@ Upstream's operationIds are `METHOD_/path`, so `generate-client` names each oper
 
 ## Development builds
 
-The `next` branch gets the client generated from upstream Pocket ID `main` whenever it changes, under the major version upstream is developing:
+The `next` branch gets the client generated from upstream Pocket ID `main` whenever it or this repo's `main` changes the output, under the major version upstream is developing:
 
 ```sh
 go get github.com/aclerici38/pocket-id-go-client/v3@next

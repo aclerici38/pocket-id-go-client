@@ -1,10 +1,13 @@
 name: Upstream API canary
 
-# Hourly: generates the client from upstream pocket-id `main` and posts its API diff
-# against the latest release on a locked dashboard issue, which is assigned while the
-# client fails to build or the diff has breaking changes. Builds are pushed to `next`.
+# Hourly and on each push to main: generates the client from upstream pocket-id `main`
+# and posts its API diff against the latest release on a locked dashboard issue, which is
+# assigned while the client fails to build or the diff has breaking changes. Builds are
+# pushed to `next`.
 
 on:
+  push:
+    branches: [main]
   schedule:
     - cron: "23 * * * *"
   workflow_dispatch:
@@ -90,7 +93,7 @@ jobs:
           fi
 
           commit=$(git -c user.name="github-actions[bot]" -c user.email="github-actions[bot]@users.noreply.github.com" \
-            commit-tree "$tree" "${parents[@]}" -m "Generated client from pocket-id/pocket-id@${UPSTREAM_SHA}")
+            commit-tree "$tree" "${parents[@]}" -m "Generated client from pocket-id/pocket-id@${UPSTREAM_SHA} by ${GITHUB_REPOSITORY}@${GITHUB_SHA}")
           # Checkout doesn't persist credentials; authenticate git via GH_TOKEN for this step only.
           gh auth setup-git
           git push origin "$commit:refs/heads/next"
