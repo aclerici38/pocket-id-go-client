@@ -33,10 +33,14 @@ type APIError struct {
 
 func (e *APIError) Error() string {
 	s := fmt.Sprintf("pocket id: %d %s", e.StatusCode, cmp.Or(e.Message, http.StatusText(e.StatusCode)))
-	if e.Code != "" {
-		s += fmt.Sprintf(" (code %s, request ID %s)", e.Code, e.RequestID)
+	if e.Code == "" {
+		return s
 	}
-	return s
+	// Upstream omits request_id when it has none.
+	if e.RequestID == "" {
+		return s + fmt.Sprintf(" (code %s)", e.Code)
+	}
+	return s + fmt.Sprintf(" (code %s, request ID %s)", e.Code, e.RequestID)
 }
 
 // HasFieldError reports whether a validation error rejects any of fields.

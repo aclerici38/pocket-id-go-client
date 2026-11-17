@@ -59,6 +59,13 @@ func TestAPIError(t *testing.T) {
 	}
 }
 
+func TestAPIErrorWithoutRequestID(t *testing.T) {
+	apiErr := AsAPIError(Check(response(404, nil, `{"error":"User not found","code":"user_not_found"}`), nil))
+	if want := "pocket id: 404 User not found (code user_not_found)"; apiErr == nil || apiErr.Error() != want {
+		t.Fatalf("got %v, want %q", apiErr, want)
+	}
+}
+
 func TestAPIErrorWithoutErrorDto(t *testing.T) {
 	for _, body := range []string{"<html>Bad Gateway</html>", `{"code":502}`} {
 		header := http.Header{"X-Request-Id": {"header-id"}}

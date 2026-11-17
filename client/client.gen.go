@@ -1272,6 +1272,7 @@ type AppConfigUpdateDto struct {
 	EnabledFeatures                            *string                                           `json:"enabledFeatures,omitempty"`
 	HomePageURL                                string                                            `json:"homePageUrl"`
 	LDAPAdminGroupName                         *string                                           `json:"ldapAdminGroupName,omitempty"`
+	LDAPAllowProfilePictureOverride            string                                            `json:"ldapAllowProfilePictureOverride"`
 	LDAPAttributeGroupMember                   *string                                           `json:"ldapAttributeGroupMember,omitempty"`
 	LDAPAttributeGroupName                     *string                                           `json:"ldapAttributeGroupName,omitempty"`
 	LDAPAttributeGroupUniqueIdentifier         *string                                           `json:"ldapAttributeGroupUniqueIdentifier,omitempty"`
@@ -2398,6 +2399,7 @@ type PatchApplicationConfigurationsJSONBody struct {
 	EnabledFeatures                            *string                                                                `json:"enabledFeatures,omitempty"`
 	HomePageURL                                *string                                                                `json:"homePageUrl,omitempty"`
 	LDAPAdminGroupName                         *string                                                                `json:"ldapAdminGroupName,omitempty"`
+	LDAPAllowProfilePictureOverride            *string                                                                `json:"ldapAllowProfilePictureOverride,omitempty"`
 	LDAPAttributeGroupMember                   *string                                                                `json:"ldapAttributeGroupMember,omitempty"`
 	LDAPAttributeGroupName                     *string                                                                `json:"ldapAttributeGroupName,omitempty"`
 	LDAPAttributeGroupUniqueIdentifier         *string                                                                `json:"ldapAttributeGroupUniqueIdentifier,omitempty"`

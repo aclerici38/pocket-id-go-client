@@ -112,6 +112,9 @@
           "ldapAdminGroupName": {
             "type": "string"
           },
+          "ldapAllowProfilePictureOverride": {
+            "type": "string"
+          },
           "ldapAttributeGroupMember": {
             "type": "string"
           },
@@ -252,6 +255,7 @@
           "ldapEnabled",
           "ldapSkipCertVerify",
           "ldapSoftDeleteUsers",
+          "ldapAllowProfilePictureOverride",
           "webauthnUserVerification",
           "webauthnAllowSyncedPasskeys",
           "webauthnAuthenticatorAttachment",
@@ -5689,6 +5693,9 @@
                   "ldapAdminGroupName": {
                     "type": "string"
                   },
+                  "ldapAllowProfilePictureOverride": {
+                    "type": "string"
+                  },
                   "ldapAttributeGroupMember": {
                     "type": "string"
                   },
@@ -5883,6 +5890,9 @@
                     "type": "string"
                   },
                   "ldapAdminGroupName": {
+                    "type": "string"
+                  },
+                  "ldapAllowProfilePictureOverride": {
                     "type": "string"
                   },
                   "ldapAttributeGroupMember": {
