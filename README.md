@@ -18,6 +18,20 @@ c, err := client.NewClientWithResponses("https://id.example.com", client.WithAPI
 
 For OAuth access tokens, give `WithHTTPClient` an `*http.Client` from `golang.org/x/oauth2`.
 
+## Errors
+
+`Decode` and `Check` wrap the raw methods and turn every non-2xx response into an `*APIError`, even when the body isn't Pocket ID's error JSON:
+
+```go
+user, err := client.Decode[*client.UserDto](c.GetUserByID(ctx, id))
+if apiErr := client.AsAPIError(err); apiErr != nil && apiErr.Code == client.CodeNotFound {
+	// ...
+}
+err = client.Check(c.DeleteUser(ctx, id))
+```
+
+The `Code` constants are generated from upstream's `apperror` package.
+
 ## Development
 
 Tooling (Go, oapi-codegen, oasdiff, zizmor) is managed with [mise](https://mise.jdx.dev); `jq` must also be on your `PATH`. Run `mise install`, then:
