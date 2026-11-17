@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-#MISE description="Verify the generated code compiles"
+#MISE description="Verify the generated code compiles and the hand-written code passes its tests"
 set -euo pipefail
 
 go build ./...
+go test ./...
