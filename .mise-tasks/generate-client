@@ -2,5 +2,22 @@
 #MISE description="Generate the Go client from the OpenAPI spec"
 set -euo pipefail
 
+# Name operations after their summaries instead of upstream's `METHOD_/path` operationIds
+# (see README). Works on a copy so the published spec stays as upstream emits it.
+spec="$(mktemp -d)/openapi.json"
+trap 'rm -rf "$(dirname "$spec")"' EXIT
+jq -f /dev/stdin "$OPENAPI_SPEC" > "$spec" <<'JQ'
+# "Get the user's OAuth 2.0 keys" -> get-user-oauth-2-keys; PATCH's "Update …" -> patch-…
+def name: .key as $method
+  | [.value.summary? // empty | ascii_downcase | gsub("'s\\b|(?<=\\d)\\.0\\b"; "")
+     | scan("[a-z0-9]+") | select(IN("a", "an", "the") | not)]
+  | select(. != [])
+  | if $method == "patch" and .[0] == "update" then .[0] = "patch" end
+  | join("-");
+
+([.paths[] | to_entries[] | name] | group_by(.) | map(select(length == 1)[0])) as $unique
+| .paths[] |= with_entries(((name | select(IN($unique[]))) as $n | .value.operationId = $n) // .)
+JQ
+
 mkdir -p client
-oapi-codegen -config oapi-codegen.yaml "$OPENAPI_SPEC"
+oapi-codegen -config oapi-codegen.yaml "$spec"

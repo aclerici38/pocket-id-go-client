@@ -14,7 +14,7 @@ output-options:
   # field that is unset (omitted) apart from one explicitly cleared (null).
   nullable-type: true
   name-normalizer: ToCamelCaseWithInitialisms
-  additional-initialisms: [OIDC, SCIM, CIMD, LDAP, JWKS, PKCE]
+  additional-initialisms: [OIDC, SCIM, CIMD, LDAP, JWKS, PKCE, APIs, IDs, SQLite, OpenID, OAuth, OAuth2, MCP]
   type-mapping:
     # oapi-codegen defaults to float32, which can't hold every whole number of seconds exactly.
     number:
