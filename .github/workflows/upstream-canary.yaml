@@ -94,7 +94,7 @@ jobs:
           UPSTREAM_SHA: ${{ steps.upstream.outputs.sha }}
         run: |
           export GIT_INDEX_FILE="$RUNNER_TEMP/next-index"
-          git add -f LICENSE go.mod go.sum client/ openapi.json
+          git add -f LICENSE README.md go.mod go.sum client/ openapi.json
           tree=$(git write-tree)
           unset GIT_INDEX_FILE
 

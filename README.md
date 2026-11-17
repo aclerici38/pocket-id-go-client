@@ -28,7 +28,7 @@ mise run verify     # check the generated code compiles
 mise run clean      # remove the upstream clone and generated files
 ```
 
-Generated code is not committed to `main`. Each release tag is a commit containing only `LICENSE`, `go.mod`, `go.sum`, `client/` and `openapi.json`, parented on the previous release so tags can be compared.
+Generated code is not committed to `main`. Each release tag is a commit containing only `LICENSE`, `README.md`, `go.mod`, `go.sum`, `client/` and `openapi.json`, parented on the previous release so tags can be compared.
 
 ## Operation names
 
