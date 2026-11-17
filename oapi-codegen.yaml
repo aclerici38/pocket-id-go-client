@@ -23,5 +23,5 @@ output-options:
         type: float64
   overlay:
     path: openapi-overlay.yaml
-    # The overlay targets whatever unions the spec has, which may be none.
+    # Overlay targets may match nothing, e.g. if upstream drops its durations.
     strict: false

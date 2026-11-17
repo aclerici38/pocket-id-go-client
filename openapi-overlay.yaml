@@ -6,16 +6,12 @@ info:
   title: Pocket ID spec adjustments for oapi-codegen
   version: 1.0.0
 actions:
-  # oapi-codegen can't map a multi-type `type: [string, number]` (e.g. the `ttl`
-  # fields) to a Go type. The equivalent oneOf becomes a union with
-  # As/From/Merge helpers for each member.
+  # Durations (the `ttl` fields) are `type: [string, number]`, which oapi-codegen can't
+  # map to a Go type. Upstream reads a number as seconds, so send that.
   - target: $..[?(@.type[0] == 'string' && @.type[1] == 'number' && length(@.type) == 2)]
     update:
-      oneOf:
-        - type: string
-        - type: number
-  - target: $..[?(@.oneOf && @.type[0] == 'string' && @.type[1] == 'number')].type
-    remove: true
+      x-go-type: int64
+      description: A number of seconds
   # PATCH bodies list merge-patch and plain JSON with the same schema. Upstream reads
   # plain JSON as a merge patch too, so keep one set of methods and types.
   - target: $.paths.*.patch.requestBody.content['application/merge-patch+json']
