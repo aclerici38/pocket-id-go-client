@@ -53,6 +53,8 @@ The `Code` constants are generated from upstream's `apperror` package.
 
 ## Updates
 
+OIDC client ID path parameters take `client.OIDCClientID(rawID)`. Pass the raw ID, including the full metadata URL for a CIMD client; the client encodes every ID as `~base64url`, which Pocket ID decodes and validates. Keep JSON body IDs as strings.
+
 PATCH bodies are JSON merge patches: omitted fields are left alone. Set fields with `new(v)`, and clear nullable ones with `nullable.NewNullNullable`:
 
 ```go

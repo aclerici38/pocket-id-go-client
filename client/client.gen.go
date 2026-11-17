@@ -3404,14 +3404,14 @@ type ClientInterface interface {
 	// Get every API the OIDC client may request tokens for, with its access and permissions split into user-delegated and client (machine-to-machine) access
 	//
 	// Corresponds with GET /api/admin/api-access/{clientId}/apis (the `ListAPIsClientMayAccess` operationId).
-	ListAPIsClientMayAccess(ctx context.Context, clientID string, reqEditors ...RequestEditorFn) (*http.Response, error)
+	ListAPIsClientMayAccess(ctx context.Context, clientID OIDCClientID, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ListAPIsClientCanStillBeGrantedAccessTo List APIs a client can still be granted access to
 	//
 	// Get a paginated list of APIs the OIDC client cannot already reach.
 	//
 	// Corresponds with GET /api/admin/api-access/{clientId}/assignable-apis (the `ListAPIsClientCanStillBeGrantedAccessTo` operationId).
-	ListAPIsClientCanStillBeGrantedAccessTo(ctx context.Context, clientID string, params *ListAPIsClientCanStillBeGrantedAccessToParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+	ListAPIsClientCanStillBeGrantedAccessTo(ctx context.Context, clientID OIDCClientID, params *ListAPIsClientCanStillBeGrantedAccessToParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ListAPIs List APIs
 	//
@@ -3525,7 +3525,7 @@ type ClientInterface interface {
 	// Remove every permission of this API a single OIDC client was allowed to request.
 	//
 	// Corresponds with DELETE /api/admin/apis/{id}/clients/{clientId} (the `RevokeClientAccessToAPI` operationId).
-	RevokeClientAccessToAPI(ctx context.Context, id string, clientID string, reqEditors ...RequestEditorFn) (*http.Response, error)
+	RevokeClientAccessToAPI(ctx context.Context, id string, clientID OIDCClientID, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// UpdateClientAccessToAPIWithBody Update a client's access to an API
 	//
@@ -3534,7 +3534,7 @@ type ClientInterface interface {
 	// Takes any type of body and a specified content type.
 	//
 	// Corresponds with PUT /api/admin/apis/{id}/clients/{clientId} (the `UpdateClientAccessToAPI` operationId).
-	UpdateClientAccessToAPIWithBody(ctx context.Context, id string, clientID string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+	UpdateClientAccessToAPIWithBody(ctx context.Context, id string, clientID OIDCClientID, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// UpdateClientAccessToAPI Update a client's access to an API
 	//
@@ -3543,7 +3543,7 @@ type ClientInterface interface {
 	// Takes a body of the `application/json` content type.
 	//
 	// Corresponds with PUT /api/admin/apis/{id}/clients/{clientId} (the `UpdateClientAccessToAPI` operationId).
-	UpdateClientAccessToAPI(ctx context.Context, id string, clientID string, body UpdateClientAccessToAPIJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+	UpdateClientAccessToAPI(ctx context.Context, id string, clientID OIDCClientID, body UpdateClientAccessToAPIJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// UpdateAPIPermissionsWithBody Update API permissions
 	//
@@ -3885,14 +3885,14 @@ type ClientInterface interface {
 	// Remove an OIDC client from this claim mapping policy, so it falls back to the default one
 	//
 	// Corresponds with DELETE /api/admin/oidc/claim-mapping-policies/{id}/clients/{clientId} (the `DetachOIDCClientFromClaimMappingPolicy` operationId).
-	DetachOIDCClientFromClaimMappingPolicy(ctx context.Context, id string, clientID string, reqEditors ...RequestEditorFn) (*http.Response, error)
+	DetachOIDCClientFromClaimMappingPolicy(ctx context.Context, id string, clientID OIDCClientID, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// AssignOIDCClientToClaimMappingPolicy Assign an OIDC client to a claim mapping policy
 	//
 	// Point an OIDC client at this claim mapping policy, replacing the policy it was on
 	//
 	// Corresponds with POST /api/admin/oidc/claim-mapping-policies/{id}/clients/{clientId} (the `AssignOIDCClientToClaimMappingPolicy` operationId).
-	AssignOIDCClientToClaimMappingPolicy(ctx context.Context, id string, clientID string, reqEditors ...RequestEditorFn) (*http.Response, error)
+	AssignOIDCClientToClaimMappingPolicy(ctx context.Context, id string, clientID OIDCClientID, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ListOIDCClients List OIDC clients
 	//
@@ -3924,14 +3924,14 @@ type ClientInterface interface {
 	// Delete an OIDC client by ID.
 	//
 	// Corresponds with DELETE /api/admin/oidc/clients/{id} (the `DeleteOIDCClient` operationId).
-	DeleteOIDCClient(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*http.Response, error)
+	DeleteOIDCClient(ctx context.Context, id OIDCClientID, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetOIDCClient Get OIDC client
 	//
 	// Get detailed information about an OIDC client.
 	//
 	// Corresponds with GET /api/admin/oidc/clients/{id} (the `GetOIDCClient` operationId).
-	GetOIDCClient(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*http.Response, error)
+	GetOIDCClient(ctx context.Context, id OIDCClientID, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// PatchOIDCClientWithBody Update OIDC client
 	//
@@ -3940,7 +3940,7 @@ type ClientInterface interface {
 	// Takes any type of body and a specified content type.
 	//
 	// Corresponds with PATCH /api/admin/oidc/clients/{id} (the `PatchOIDCClient` operationId).
-	PatchOIDCClientWithBody(ctx context.Context, id string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+	PatchOIDCClientWithBody(ctx context.Context, id OIDCClientID, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// PatchOIDCClient Update OIDC client
 	//
@@ -3949,7 +3949,7 @@ type ClientInterface interface {
 	// Takes a body of the `application/json` content type.
 	//
 	// Corresponds with PATCH /api/admin/oidc/clients/{id} (the `PatchOIDCClient` operationId).
-	PatchOIDCClient(ctx context.Context, id string, body PatchOIDCClientJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+	PatchOIDCClient(ctx context.Context, id OIDCClientID, body PatchOIDCClientJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// UpdateOIDCClientWithBody Update OIDC client
 	//
@@ -3958,7 +3958,7 @@ type ClientInterface interface {
 	// Takes any type of body and a specified content type.
 	//
 	// Corresponds with PUT /api/admin/oidc/clients/{id} (the `UpdateOIDCClient` operationId).
-	UpdateOIDCClientWithBody(ctx context.Context, id string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+	UpdateOIDCClientWithBody(ctx context.Context, id OIDCClientID, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// UpdateOIDCClient Update OIDC client
 	//
@@ -3967,7 +3967,7 @@ type ClientInterface interface {
 	// Takes a body of the `application/json` content type.
 	//
 	// Corresponds with PUT /api/admin/oidc/clients/{id} (the `UpdateOIDCClient` operationId).
-	UpdateOIDCClient(ctx context.Context, id string, body UpdateOIDCClientJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+	UpdateOIDCClient(ctx context.Context, id OIDCClientID, body UpdateOIDCClientJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// UpdateAllowedUserGroupsWithBody Update allowed user groups
 	//
@@ -3976,7 +3976,7 @@ type ClientInterface interface {
 	// Takes any type of body and a specified content type.
 	//
 	// Corresponds with PUT /api/admin/oidc/clients/{id}/allowed-user-groups (the `UpdateAllowedUserGroups` operationId).
-	UpdateAllowedUserGroupsWithBody(ctx context.Context, id string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+	UpdateAllowedUserGroupsWithBody(ctx context.Context, id OIDCClientID, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// UpdateAllowedUserGroups Update allowed user groups
 	//
@@ -3985,14 +3985,14 @@ type ClientInterface interface {
 	// Takes a body of the `application/json` content type.
 	//
 	// Corresponds with PUT /api/admin/oidc/clients/{id}/allowed-user-groups (the `UpdateAllowedUserGroups` operationId).
-	UpdateAllowedUserGroups(ctx context.Context, id string, body UpdateAllowedUserGroupsJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+	UpdateAllowedUserGroups(ctx context.Context, id OIDCClientID, body UpdateAllowedUserGroupsJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// DeleteClientLogo Delete client logo
 	//
 	// Delete the logo for an OIDC client.
 	//
 	// Corresponds with DELETE /api/admin/oidc/clients/{id}/logo (the `DeleteClientLogo` operationId).
-	DeleteClientLogo(ctx context.Context, id string, params *DeleteClientLogoParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+	DeleteClientLogo(ctx context.Context, id OIDCClientID, params *DeleteClientLogoParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// UpdateClientLogoWithBody Update client logo
 	//
@@ -4001,35 +4001,35 @@ type ClientInterface interface {
 	// Takes any type of body and a specified content type.
 	//
 	// Corresponds with POST /api/admin/oidc/clients/{id}/logo (the `UpdateClientLogo` operationId).
-	UpdateClientLogoWithBody(ctx context.Context, id string, params *UpdateClientLogoParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+	UpdateClientLogoWithBody(ctx context.Context, id OIDCClientID, params *UpdateClientLogoParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// PreviewOIDCClientDataForUser Preview OIDC client data for user
 	//
 	// Get a preview of the OIDC data (ID token, access token, userinfo) that would be sent to the client for a specific user
 	//
 	// Corresponds with GET /api/admin/oidc/clients/{id}/preview/{userId} (the `PreviewOIDCClientDataForUser` operationId).
-	PreviewOIDCClientDataForUser(ctx context.Context, id string, userID string, params *PreviewOIDCClientDataForUserParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+	PreviewOIDCClientDataForUser(ctx context.Context, id OIDCClientID, userID string, params *PreviewOIDCClientDataForUserParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// RefreshClientMetadataDocument Refresh client metadata document
 	//
 	// Force a re-fetch of the OAuth Client ID Metadata Document for a CIMD client.
 	//
 	// Corresponds with POST /api/admin/oidc/clients/{id}/refresh (the `RefreshClientMetadataDocument` operationId).
-	RefreshClientMetadataDocument(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*http.Response, error)
+	RefreshClientMetadataDocument(ctx context.Context, id OIDCClientID, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetSCIMServiceProvider Get SCIM service provider
 	//
 	// Get the SCIM service provider configuration for an OIDC client.
 	//
 	// Corresponds with GET /api/admin/oidc/clients/{id}/scim-service-provider (the `GetSCIMServiceProvider` operationId).
-	GetSCIMServiceProvider(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*http.Response, error)
+	GetSCIMServiceProvider(ctx context.Context, id OIDCClientID, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ListClientSecrets List client secrets
 	//
 	// List the secrets of an OIDC client, without disclosing their values
 	//
 	// Corresponds with GET /api/admin/oidc/clients/{id}/secrets (the `ListClientSecrets` operationId).
-	ListClientSecrets(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*http.Response, error)
+	ListClientSecrets(ctx context.Context, id OIDCClientID, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// CreateClientSecretWithBody Create client secret
 	//
@@ -4038,7 +4038,7 @@ type ClientInterface interface {
 	// Takes any type of body and a specified content type.
 	//
 	// Corresponds with POST /api/admin/oidc/clients/{id}/secrets (the `CreateClientSecret` operationId).
-	CreateClientSecretWithBody(ctx context.Context, id string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+	CreateClientSecretWithBody(ctx context.Context, id OIDCClientID, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// CreateClientSecret Create client secret
 	//
@@ -4047,14 +4047,14 @@ type ClientInterface interface {
 	// Takes a body of the `application/json` content type.
 	//
 	// Corresponds with POST /api/admin/oidc/clients/{id}/secrets (the `CreateClientSecret` operationId).
-	CreateClientSecret(ctx context.Context, id string, body CreateClientSecretJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+	CreateClientSecret(ctx context.Context, id OIDCClientID, body CreateClientSecretJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// DeleteClientSecret Delete client secret
 	//
 	// Delete a single secret of an OIDC client, making it immediately unusable
 	//
 	// Corresponds with DELETE /api/admin/oidc/clients/{id}/secrets/{secretId} (the `DeleteClientSecret` operationId).
-	DeleteClientSecret(ctx context.Context, id string, secretID string, reqEditors ...RequestEditorFn) (*http.Response, error)
+	DeleteClientSecret(ctx context.Context, id OIDCClientID, secretID string, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ListCustomOIDCScopes List custom OIDC scopes
 	//
@@ -4779,7 +4779,7 @@ type ClientInterface interface {
 	// Revoke the authorization for a specific OIDC client for the current user.
 	//
 	// Corresponds with DELETE /api/oidc/users/me/authorized-clients/{clientId} (the `RevokeAuthorizationForOIDCClient` operationId).
-	RevokeAuthorizationForOIDCClient(ctx context.Context, clientID string, reqEditors ...RequestEditorFn) (*http.Response, error)
+	RevokeAuthorizationForOIDCClient(ctx context.Context, clientID OIDCClientID, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ListAccessibleOIDCClientsForCurrentUser List accessible OIDC clients for current user
 	//
@@ -5103,7 +5103,7 @@ func (c *Client) GetOpenIDConnectDiscoveryConfiguration(ctx context.Context, req
 // # Get every API the OIDC client may request tokens for, with its access and permissions split into user-delegated and client (machine-to-machine) access
 //
 // Corresponds with GET /api/admin/api-access/{clientId}/apis (the `ListAPIsClientMayAccess` operationId).
-func (c *Client) ListAPIsClientMayAccess(ctx context.Context, clientID string, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) ListAPIsClientMayAccess(ctx context.Context, clientID OIDCClientID, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewListAPIsClientMayAccessRequest(c.Server, clientID)
 	if err != nil {
 		return nil, err
@@ -5120,7 +5120,7 @@ func (c *Client) ListAPIsClientMayAccess(ctx context.Context, clientID string, r
 // Get a paginated list of APIs the OIDC client cannot already reach.
 //
 // Corresponds with GET /api/admin/api-access/{clientId}/assignable-apis (the `ListAPIsClientCanStillBeGrantedAccessTo` operationId).
-func (c *Client) ListAPIsClientCanStillBeGrantedAccessTo(ctx context.Context, clientID string, params *ListAPIsClientCanStillBeGrantedAccessToParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) ListAPIsClientCanStillBeGrantedAccessTo(ctx context.Context, clientID OIDCClientID, params *ListAPIsClientCanStillBeGrantedAccessToParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewListAPIsClientCanStillBeGrantedAccessToRequest(c.Server, clientID, params)
 	if err != nil {
 		return nil, err
@@ -5374,7 +5374,7 @@ func (c *Client) ListClientsWithAccessToAPI(ctx context.Context, id string, para
 // Remove every permission of this API a single OIDC client was allowed to request.
 //
 // Corresponds with DELETE /api/admin/apis/{id}/clients/{clientId} (the `RevokeClientAccessToAPI` operationId).
-func (c *Client) RevokeClientAccessToAPI(ctx context.Context, id string, clientID string, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) RevokeClientAccessToAPI(ctx context.Context, id string, clientID OIDCClientID, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewRevokeClientAccessToAPIRequest(c.Server, id, clientID)
 	if err != nil {
 		return nil, err
@@ -5393,7 +5393,7 @@ func (c *Client) RevokeClientAccessToAPI(ctx context.Context, id string, clientI
 // Takes any type of body and a specified content type.
 //
 // Corresponds with PUT /api/admin/apis/{id}/clients/{clientId} (the `UpdateClientAccessToAPI` operationId).
-func (c *Client) UpdateClientAccessToAPIWithBody(ctx context.Context, id string, clientID string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) UpdateClientAccessToAPIWithBody(ctx context.Context, id string, clientID OIDCClientID, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewUpdateClientAccessToAPIRequestWithBody(c.Server, id, clientID, contentType, body)
 	if err != nil {
 		return nil, err
@@ -5412,7 +5412,7 @@ func (c *Client) UpdateClientAccessToAPIWithBody(ctx context.Context, id string,
 // Takes a body of the `application/json` content type.
 //
 // Corresponds with PUT /api/admin/apis/{id}/clients/{clientId} (the `UpdateClientAccessToAPI` operationId).
-func (c *Client) UpdateClientAccessToAPI(ctx context.Context, id string, clientID string, body UpdateClientAccessToAPIJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) UpdateClientAccessToAPI(ctx context.Context, id string, clientID OIDCClientID, body UpdateClientAccessToAPIJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewUpdateClientAccessToAPIRequest(c.Server, id, clientID, body)
 	if err != nil {
 		return nil, err
@@ -6174,7 +6174,7 @@ func (c *Client) ListOIDCClientsUsingClaimMappingPolicy(ctx context.Context, id 
 // # Remove an OIDC client from this claim mapping policy, so it falls back to the default one
 //
 // Corresponds with DELETE /api/admin/oidc/claim-mapping-policies/{id}/clients/{clientId} (the `DetachOIDCClientFromClaimMappingPolicy` operationId).
-func (c *Client) DetachOIDCClientFromClaimMappingPolicy(ctx context.Context, id string, clientID string, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) DetachOIDCClientFromClaimMappingPolicy(ctx context.Context, id string, clientID OIDCClientID, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewDetachOIDCClientFromClaimMappingPolicyRequest(c.Server, id, clientID)
 	if err != nil {
 		return nil, err
@@ -6191,7 +6191,7 @@ func (c *Client) DetachOIDCClientFromClaimMappingPolicy(ctx context.Context, id 
 // # Point an OIDC client at this claim mapping policy, replacing the policy it was on
 //
 // Corresponds with POST /api/admin/oidc/claim-mapping-policies/{id}/clients/{clientId} (the `AssignOIDCClientToClaimMappingPolicy` operationId).
-func (c *Client) AssignOIDCClientToClaimMappingPolicy(ctx context.Context, id string, clientID string, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) AssignOIDCClientToClaimMappingPolicy(ctx context.Context, id string, clientID OIDCClientID, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewAssignOIDCClientToClaimMappingPolicyRequest(c.Server, id, clientID)
 	if err != nil {
 		return nil, err
@@ -6263,7 +6263,7 @@ func (c *Client) CreateOIDCClient(ctx context.Context, body CreateOIDCClientJSON
 // Delete an OIDC client by ID.
 //
 // Corresponds with DELETE /api/admin/oidc/clients/{id} (the `DeleteOIDCClient` operationId).
-func (c *Client) DeleteOIDCClient(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) DeleteOIDCClient(ctx context.Context, id OIDCClientID, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewDeleteOIDCClientRequest(c.Server, id)
 	if err != nil {
 		return nil, err
@@ -6280,7 +6280,7 @@ func (c *Client) DeleteOIDCClient(ctx context.Context, id string, reqEditors ...
 // Get detailed information about an OIDC client.
 //
 // Corresponds with GET /api/admin/oidc/clients/{id} (the `GetOIDCClient` operationId).
-func (c *Client) GetOIDCClient(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) GetOIDCClient(ctx context.Context, id OIDCClientID, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewGetOIDCClientRequest(c.Server, id)
 	if err != nil {
 		return nil, err
@@ -6299,7 +6299,7 @@ func (c *Client) GetOIDCClient(ctx context.Context, id string, reqEditors ...Req
 // Takes any type of body and a specified content type.
 //
 // Corresponds with PATCH /api/admin/oidc/clients/{id} (the `PatchOIDCClient` operationId).
-func (c *Client) PatchOIDCClientWithBody(ctx context.Context, id string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) PatchOIDCClientWithBody(ctx context.Context, id OIDCClientID, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewPatchOIDCClientRequestWithBody(c.Server, id, contentType, body)
 	if err != nil {
 		return nil, err
@@ -6318,7 +6318,7 @@ func (c *Client) PatchOIDCClientWithBody(ctx context.Context, id string, content
 // Takes a body of the `application/json` content type.
 //
 // Corresponds with PATCH /api/admin/oidc/clients/{id} (the `PatchOIDCClient` operationId).
-func (c *Client) PatchOIDCClient(ctx context.Context, id string, body PatchOIDCClientJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) PatchOIDCClient(ctx context.Context, id OIDCClientID, body PatchOIDCClientJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewPatchOIDCClientRequest(c.Server, id, body)
 	if err != nil {
 		return nil, err
@@ -6337,7 +6337,7 @@ func (c *Client) PatchOIDCClient(ctx context.Context, id string, body PatchOIDCC
 // Takes any type of body and a specified content type.
 //
 // Corresponds with PUT /api/admin/oidc/clients/{id} (the `UpdateOIDCClient` operationId).
-func (c *Client) UpdateOIDCClientWithBody(ctx context.Context, id string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) UpdateOIDCClientWithBody(ctx context.Context, id OIDCClientID, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewUpdateOIDCClientRequestWithBody(c.Server, id, contentType, body)
 	if err != nil {
 		return nil, err
@@ -6356,7 +6356,7 @@ func (c *Client) UpdateOIDCClientWithBody(ctx context.Context, id string, conten
 // Takes a body of the `application/json` content type.
 //
 // Corresponds with PUT /api/admin/oidc/clients/{id} (the `UpdateOIDCClient` operationId).
-func (c *Client) UpdateOIDCClient(ctx context.Context, id string, body UpdateOIDCClientJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) UpdateOIDCClient(ctx context.Context, id OIDCClientID, body UpdateOIDCClientJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewUpdateOIDCClientRequest(c.Server, id, body)
 	if err != nil {
 		return nil, err
@@ -6375,7 +6375,7 @@ func (c *Client) UpdateOIDCClient(ctx context.Context, id string, body UpdateOID
 // Takes any type of body and a specified content type.
 //
 // Corresponds with PUT /api/admin/oidc/clients/{id}/allowed-user-groups (the `UpdateAllowedUserGroups` operationId).
-func (c *Client) UpdateAllowedUserGroupsWithBody(ctx context.Context, id string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) UpdateAllowedUserGroupsWithBody(ctx context.Context, id OIDCClientID, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewUpdateAllowedUserGroupsRequestWithBody(c.Server, id, contentType, body)
 	if err != nil {
 		return nil, err
@@ -6394,7 +6394,7 @@ func (c *Client) UpdateAllowedUserGroupsWithBody(ctx context.Context, id string,
 // Takes a body of the `application/json` content type.
 //
 // Corresponds with PUT /api/admin/oidc/clients/{id}/allowed-user-groups (the `UpdateAllowedUserGroups` operationId).
-func (c *Client) UpdateAllowedUserGroups(ctx context.Context, id string, body UpdateAllowedUserGroupsJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) UpdateAllowedUserGroups(ctx context.Context, id OIDCClientID, body UpdateAllowedUserGroupsJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewUpdateAllowedUserGroupsRequest(c.Server, id, body)
 	if err != nil {
 		return nil, err
@@ -6411,7 +6411,7 @@ func (c *Client) UpdateAllowedUserGroups(ctx context.Context, id string, body Up
 // Delete the logo for an OIDC client.
 //
 // Corresponds with DELETE /api/admin/oidc/clients/{id}/logo (the `DeleteClientLogo` operationId).
-func (c *Client) DeleteClientLogo(ctx context.Context, id string, params *DeleteClientLogoParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) DeleteClientLogo(ctx context.Context, id OIDCClientID, params *DeleteClientLogoParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewDeleteClientLogoRequest(c.Server, id, params)
 	if err != nil {
 		return nil, err
@@ -6430,7 +6430,7 @@ func (c *Client) DeleteClientLogo(ctx context.Context, id string, params *Delete
 // Takes any type of body and a specified content type.
 //
 // Corresponds with POST /api/admin/oidc/clients/{id}/logo (the `UpdateClientLogo` operationId).
-func (c *Client) UpdateClientLogoWithBody(ctx context.Context, id string, params *UpdateClientLogoParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) UpdateClientLogoWithBody(ctx context.Context, id OIDCClientID, params *UpdateClientLogoParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewUpdateClientLogoRequestWithBody(c.Server, id, params, contentType, body)
 	if err != nil {
 		return nil, err
@@ -6447,7 +6447,7 @@ func (c *Client) UpdateClientLogoWithBody(ctx context.Context, id string, params
 // # Get a preview of the OIDC data (ID token, access token, userinfo) that would be sent to the client for a specific user
 //
 // Corresponds with GET /api/admin/oidc/clients/{id}/preview/{userId} (the `PreviewOIDCClientDataForUser` operationId).
-func (c *Client) PreviewOIDCClientDataForUser(ctx context.Context, id string, userID string, params *PreviewOIDCClientDataForUserParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) PreviewOIDCClientDataForUser(ctx context.Context, id OIDCClientID, userID string, params *PreviewOIDCClientDataForUserParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewPreviewOIDCClientDataForUserRequest(c.Server, id, userID, params)
 	if err != nil {
 		return nil, err
@@ -6464,7 +6464,7 @@ func (c *Client) PreviewOIDCClientDataForUser(ctx context.Context, id string, us
 // Force a re-fetch of the OAuth Client ID Metadata Document for a CIMD client.
 //
 // Corresponds with POST /api/admin/oidc/clients/{id}/refresh (the `RefreshClientMetadataDocument` operationId).
-func (c *Client) RefreshClientMetadataDocument(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) RefreshClientMetadataDocument(ctx context.Context, id OIDCClientID, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewRefreshClientMetadataDocumentRequest(c.Server, id)
 	if err != nil {
 		return nil, err
@@ -6481,7 +6481,7 @@ func (c *Client) RefreshClientMetadataDocument(ctx context.Context, id string, r
 // Get the SCIM service provider configuration for an OIDC client.
 //
 // Corresponds with GET /api/admin/oidc/clients/{id}/scim-service-provider (the `GetSCIMServiceProvider` operationId).
-func (c *Client) GetSCIMServiceProvider(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) GetSCIMServiceProvider(ctx context.Context, id OIDCClientID, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewGetSCIMServiceProviderRequest(c.Server, id)
 	if err != nil {
 		return nil, err
@@ -6498,7 +6498,7 @@ func (c *Client) GetSCIMServiceProvider(ctx context.Context, id string, reqEdito
 // # List the secrets of an OIDC client, without disclosing their values
 //
 // Corresponds with GET /api/admin/oidc/clients/{id}/secrets (the `ListClientSecrets` operationId).
-func (c *Client) ListClientSecrets(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) ListClientSecrets(ctx context.Context, id OIDCClientID, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewListClientSecretsRequest(c.Server, id)
 	if err != nil {
 		return nil, err
@@ -6517,7 +6517,7 @@ func (c *Client) ListClientSecrets(ctx context.Context, id string, reqEditors ..
 // Takes any type of body and a specified content type.
 //
 // Corresponds with POST /api/admin/oidc/clients/{id}/secrets (the `CreateClientSecret` operationId).
-func (c *Client) CreateClientSecretWithBody(ctx context.Context, id string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) CreateClientSecretWithBody(ctx context.Context, id OIDCClientID, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewCreateClientSecretRequestWithBody(c.Server, id, contentType, body)
 	if err != nil {
 		return nil, err
@@ -6536,7 +6536,7 @@ func (c *Client) CreateClientSecretWithBody(ctx context.Context, id string, cont
 // Takes a body of the `application/json` content type.
 //
 // Corresponds with POST /api/admin/oidc/clients/{id}/secrets (the `CreateClientSecret` operationId).
-func (c *Client) CreateClientSecret(ctx context.Context, id string, body CreateClientSecretJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) CreateClientSecret(ctx context.Context, id OIDCClientID, body CreateClientSecretJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewCreateClientSecretRequest(c.Server, id, body)
 	if err != nil {
 		return nil, err
@@ -6553,7 +6553,7 @@ func (c *Client) CreateClientSecret(ctx context.Context, id string, body CreateC
 // # Delete a single secret of an OIDC client, making it immediately unusable
 //
 // Corresponds with DELETE /api/admin/oidc/clients/{id}/secrets/{secretId} (the `DeleteClientSecret` operationId).
-func (c *Client) DeleteClientSecret(ctx context.Context, id string, secretID string, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) DeleteClientSecret(ctx context.Context, id OIDCClientID, secretID string, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewDeleteClientSecretRequest(c.Server, id, secretID)
 	if err != nil {
 		return nil, err
@@ -8168,7 +8168,7 @@ func (c *Client) ListAuthorizedClientsForCurrentUser(ctx context.Context, params
 // Revoke the authorization for a specific OIDC client for the current user.
 //
 // Corresponds with DELETE /api/oidc/users/me/authorized-clients/{clientId} (the `RevokeAuthorizationForOIDCClient` operationId).
-func (c *Client) RevokeAuthorizationForOIDCClient(ctx context.Context, clientID string, reqEditors ...RequestEditorFn) (*http.Response, error) {
+func (c *Client) RevokeAuthorizationForOIDCClient(ctx context.Context, clientID OIDCClientID, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewRevokeAuthorizationForOIDCClientRequest(c.Server, clientID)
 	if err != nil {
 		return nil, err
@@ -8857,7 +8857,7 @@ func NewGetOpenIDConnectDiscoveryConfigurationRequest(server string) (*http.Requ
 }
 
 // NewListAPIsClientMayAccessRequest constructs an http.Request for the ListAPIsClientMayAccess method
-func NewListAPIsClientMayAccessRequest(server string, clientID string) (*http.Request, error) {
+func NewListAPIsClientMayAccessRequest(server string, clientID OIDCClientID) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -8891,7 +8891,7 @@ func NewListAPIsClientMayAccessRequest(server string, clientID string) (*http.Re
 }
 
 // NewListAPIsClientCanStillBeGrantedAccessToRequest constructs an http.Request for the ListAPIsClientCanStillBeGrantedAccessTo method
-func NewListAPIsClientCanStillBeGrantedAccessToRequest(server string, clientID string, params *ListAPIsClientCanStillBeGrantedAccessToParams) (*http.Request, error) {
+func NewListAPIsClientCanStillBeGrantedAccessToRequest(server string, clientID OIDCClientID, params *ListAPIsClientCanStillBeGrantedAccessToParams) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -9761,7 +9761,7 @@ func NewListClientsWithAccessToAPIRequest(server string, id string, params *List
 }
 
 // NewRevokeClientAccessToAPIRequest constructs an http.Request for the RevokeClientAccessToAPI method
-func NewRevokeClientAccessToAPIRequest(server string, id string, clientID string) (*http.Request, error) {
+func NewRevokeClientAccessToAPIRequest(server string, id string, clientID OIDCClientID) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -9802,7 +9802,7 @@ func NewRevokeClientAccessToAPIRequest(server string, id string, clientID string
 }
 
 // NewUpdateClientAccessToAPIRequest calls the generic UpdateClientAccessToAPI builder with application/json body
-func NewUpdateClientAccessToAPIRequest(server string, id string, clientID string, body UpdateClientAccessToAPIJSONRequestBody) (*http.Request, error) {
+func NewUpdateClientAccessToAPIRequest(server string, id string, clientID OIDCClientID, body UpdateClientAccessToAPIJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
 	buf, err := json.Marshal(body)
 	if err != nil {
@@ -9813,7 +9813,7 @@ func NewUpdateClientAccessToAPIRequest(server string, id string, clientID string
 }
 
 // NewUpdateClientAccessToAPIRequestWithBody constructs an http.Request for the UpdateClientAccessToAPI method, with any body, and a specified content type
-func NewUpdateClientAccessToAPIRequestWithBody(server string, id string, clientID string, contentType string, body io.Reader) (*http.Request, error) {
+func NewUpdateClientAccessToAPIRequestWithBody(server string, id string, clientID OIDCClientID, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -11545,7 +11545,7 @@ func NewListOIDCClientsUsingClaimMappingPolicyRequest(server string, id string, 
 }
 
 // NewDetachOIDCClientFromClaimMappingPolicyRequest constructs an http.Request for the DetachOIDCClientFromClaimMappingPolicy method
-func NewDetachOIDCClientFromClaimMappingPolicyRequest(server string, id string, clientID string) (*http.Request, error) {
+func NewDetachOIDCClientFromClaimMappingPolicyRequest(server string, id string, clientID OIDCClientID) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -11586,7 +11586,7 @@ func NewDetachOIDCClientFromClaimMappingPolicyRequest(server string, id string, 
 }
 
 // NewAssignOIDCClientToClaimMappingPolicyRequest constructs an http.Request for the AssignOIDCClientToClaimMappingPolicy method
-func NewAssignOIDCClientToClaimMappingPolicyRequest(server string, id string, clientID string) (*http.Request, error) {
+func NewAssignOIDCClientToClaimMappingPolicyRequest(server string, id string, clientID OIDCClientID) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -11865,7 +11865,7 @@ func NewCreateOIDCClientRequestWithBody(server string, contentType string, body 
 }
 
 // NewDeleteOIDCClientRequest constructs an http.Request for the DeleteOIDCClient method
-func NewDeleteOIDCClientRequest(server string, id string) (*http.Request, error) {
+func NewDeleteOIDCClientRequest(server string, id OIDCClientID) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -11899,7 +11899,7 @@ func NewDeleteOIDCClientRequest(server string, id string) (*http.Request, error)
 }
 
 // NewGetOIDCClientRequest constructs an http.Request for the GetOIDCClient method
-func NewGetOIDCClientRequest(server string, id string) (*http.Request, error) {
+func NewGetOIDCClientRequest(server string, id OIDCClientID) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -11933,7 +11933,7 @@ func NewGetOIDCClientRequest(server string, id string) (*http.Request, error) {
 }
 
 // NewPatchOIDCClientRequest calls the generic PatchOIDCClient builder with application/json body
-func NewPatchOIDCClientRequest(server string, id string, body PatchOIDCClientJSONRequestBody) (*http.Request, error) {
+func NewPatchOIDCClientRequest(server string, id OIDCClientID, body PatchOIDCClientJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
 	buf, err := json.Marshal(body)
 	if err != nil {
@@ -11944,7 +11944,7 @@ func NewPatchOIDCClientRequest(server string, id string, body PatchOIDCClientJSO
 }
 
 // NewPatchOIDCClientRequestWithBody constructs an http.Request for the PatchOIDCClient method, with any body, and a specified content type
-func NewPatchOIDCClientRequestWithBody(server string, id string, contentType string, body io.Reader) (*http.Request, error) {
+func NewPatchOIDCClientRequestWithBody(server string, id OIDCClientID, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -11980,7 +11980,7 @@ func NewPatchOIDCClientRequestWithBody(server string, id string, contentType str
 }
 
 // NewUpdateOIDCClientRequest calls the generic UpdateOIDCClient builder with application/json body
-func NewUpdateOIDCClientRequest(server string, id string, body UpdateOIDCClientJSONRequestBody) (*http.Request, error) {
+func NewUpdateOIDCClientRequest(server string, id OIDCClientID, body UpdateOIDCClientJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
 	buf, err := json.Marshal(body)
 	if err != nil {
@@ -11991,7 +11991,7 @@ func NewUpdateOIDCClientRequest(server string, id string, body UpdateOIDCClientJ
 }
 
 // NewUpdateOIDCClientRequestWithBody constructs an http.Request for the UpdateOIDCClient method, with any body, and a specified content type
-func NewUpdateOIDCClientRequestWithBody(server string, id string, contentType string, body io.Reader) (*http.Request, error) {
+func NewUpdateOIDCClientRequestWithBody(server string, id OIDCClientID, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -12027,7 +12027,7 @@ func NewUpdateOIDCClientRequestWithBody(server string, id string, contentType st
 }
 
 // NewUpdateAllowedUserGroupsRequest calls the generic UpdateAllowedUserGroups builder with application/json body
-func NewUpdateAllowedUserGroupsRequest(server string, id string, body UpdateAllowedUserGroupsJSONRequestBody) (*http.Request, error) {
+func NewUpdateAllowedUserGroupsRequest(server string, id OIDCClientID, body UpdateAllowedUserGroupsJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
 	buf, err := json.Marshal(body)
 	if err != nil {
@@ -12038,7 +12038,7 @@ func NewUpdateAllowedUserGroupsRequest(server string, id string, body UpdateAllo
 }
 
 // NewUpdateAllowedUserGroupsRequestWithBody constructs an http.Request for the UpdateAllowedUserGroups method, with any body, and a specified content type
-func NewUpdateAllowedUserGroupsRequestWithBody(server string, id string, contentType string, body io.Reader) (*http.Request, error) {
+func NewUpdateAllowedUserGroupsRequestWithBody(server string, id OIDCClientID, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -12074,7 +12074,7 @@ func NewUpdateAllowedUserGroupsRequestWithBody(server string, id string, content
 }
 
 // NewDeleteClientLogoRequest constructs an http.Request for the DeleteClientLogo method
-func NewDeleteClientLogoRequest(server string, id string, params *DeleteClientLogoParams) (*http.Request, error) {
+func NewDeleteClientLogoRequest(server string, id OIDCClientID, params *DeleteClientLogoParams) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -12135,7 +12135,7 @@ func NewDeleteClientLogoRequest(server string, id string, params *DeleteClientLo
 }
 
 // NewUpdateClientLogoRequestWithBody constructs an http.Request for the UpdateClientLogo method, with any body, and a specified content type
-func NewUpdateClientLogoRequestWithBody(server string, id string, params *UpdateClientLogoParams, contentType string, body io.Reader) (*http.Request, error) {
+func NewUpdateClientLogoRequestWithBody(server string, id OIDCClientID, params *UpdateClientLogoParams, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -12198,7 +12198,7 @@ func NewUpdateClientLogoRequestWithBody(server string, id string, params *Update
 }
 
 // NewPreviewOIDCClientDataForUserRequest constructs an http.Request for the PreviewOIDCClientDataForUser method
-func NewPreviewOIDCClientDataForUserRequest(server string, id string, userID string, params *PreviewOIDCClientDataForUserParams) (*http.Request, error) {
+func NewPreviewOIDCClientDataForUserRequest(server string, id OIDCClientID, userID string, params *PreviewOIDCClientDataForUserParams) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -12266,7 +12266,7 @@ func NewPreviewOIDCClientDataForUserRequest(server string, id string, userID str
 }
 
 // NewRefreshClientMetadataDocumentRequest constructs an http.Request for the RefreshClientMetadataDocument method
-func NewRefreshClientMetadataDocumentRequest(server string, id string) (*http.Request, error) {
+func NewRefreshClientMetadataDocumentRequest(server string, id OIDCClientID) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -12300,7 +12300,7 @@ func NewRefreshClientMetadataDocumentRequest(server string, id string) (*http.Re
 }
 
 // NewGetSCIMServiceProviderRequest constructs an http.Request for the GetSCIMServiceProvider method
-func NewGetSCIMServiceProviderRequest(server string, id string) (*http.Request, error) {
+func NewGetSCIMServiceProviderRequest(server string, id OIDCClientID) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -12334,7 +12334,7 @@ func NewGetSCIMServiceProviderRequest(server string, id string) (*http.Request, 
 }
 
 // NewListClientSecretsRequest constructs an http.Request for the ListClientSecrets method
-func NewListClientSecretsRequest(server string, id string) (*http.Request, error) {
+func NewListClientSecretsRequest(server string, id OIDCClientID) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -12368,7 +12368,7 @@ func NewListClientSecretsRequest(server string, id string) (*http.Request, error
 }
 
 // NewCreateClientSecretRequest calls the generic CreateClientSecret builder with application/json body
-func NewCreateClientSecretRequest(server string, id string, body CreateClientSecretJSONRequestBody) (*http.Request, error) {
+func NewCreateClientSecretRequest(server string, id OIDCClientID, body CreateClientSecretJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
 	buf, err := json.Marshal(body)
 	if err != nil {
@@ -12379,7 +12379,7 @@ func NewCreateClientSecretRequest(server string, id string, body CreateClientSec
 }
 
 // NewCreateClientSecretRequestWithBody constructs an http.Request for the CreateClientSecret method, with any body, and a specified content type
-func NewCreateClientSecretRequestWithBody(server string, id string, contentType string, body io.Reader) (*http.Request, error) {
+func NewCreateClientSecretRequestWithBody(server string, id OIDCClientID, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -12415,7 +12415,7 @@ func NewCreateClientSecretRequestWithBody(server string, id string, contentType 
 }
 
 // NewDeleteClientSecretRequest constructs an http.Request for the DeleteClientSecret method
-func NewDeleteClientSecretRequest(server string, id string, secretID string) (*http.Request, error) {
+func NewDeleteClientSecretRequest(server string, id OIDCClientID, secretID string) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -15638,7 +15638,7 @@ func NewListAuthorizedClientsForCurrentUserRequest(server string, params *ListAu
 }
 
 // NewRevokeAuthorizationForOIDCClientRequest constructs an http.Request for the RevokeAuthorizationForOIDCClient method
-func NewRevokeAuthorizationForOIDCClientRequest(server string, clientID string) (*http.Request, error) {
+func NewRevokeAuthorizationForOIDCClientRequest(server string, clientID OIDCClientID) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -16750,7 +16750,7 @@ type ClientWithResponsesInterface interface {
 	// Returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with GET /api/admin/api-access/{clientId}/apis (the `ListAPIsClientMayAccess` operationId).
-	ListAPIsClientMayAccessWithResponse(ctx context.Context, clientID string, reqEditors ...RequestEditorFn) (*ListAPIsClientMayAccessResponse, error)
+	ListAPIsClientMayAccessWithResponse(ctx context.Context, clientID OIDCClientID, reqEditors ...RequestEditorFn) (*ListAPIsClientMayAccessResponse, error)
 
 	// ListAPIsClientCanStillBeGrantedAccessToWithResponse List APIs a client can still be granted access to
 	//
@@ -16759,7 +16759,7 @@ type ClientWithResponsesInterface interface {
 	// Returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with GET /api/admin/api-access/{clientId}/assignable-apis (the `ListAPIsClientCanStillBeGrantedAccessTo` operationId).
-	ListAPIsClientCanStillBeGrantedAccessToWithResponse(ctx context.Context, clientID string, params *ListAPIsClientCanStillBeGrantedAccessToParams, reqEditors ...RequestEditorFn) (*ListAPIsClientCanStillBeGrantedAccessToResponse, error)
+	ListAPIsClientCanStillBeGrantedAccessToWithResponse(ctx context.Context, clientID OIDCClientID, params *ListAPIsClientCanStillBeGrantedAccessToParams, reqEditors ...RequestEditorFn) (*ListAPIsClientCanStillBeGrantedAccessToResponse, error)
 
 	// ListAPIsWithResponse List APIs
 	//
@@ -16885,7 +16885,7 @@ type ClientWithResponsesInterface interface {
 	// Returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with DELETE /api/admin/apis/{id}/clients/{clientId} (the `RevokeClientAccessToAPI` operationId).
-	RevokeClientAccessToAPIWithResponse(ctx context.Context, id string, clientID string, reqEditors ...RequestEditorFn) (*RevokeClientAccessToAPIResponse, error)
+	RevokeClientAccessToAPIWithResponse(ctx context.Context, id string, clientID OIDCClientID, reqEditors ...RequestEditorFn) (*RevokeClientAccessToAPIResponse, error)
 
 	// UpdateClientAccessToAPIWithBodyWithResponse Update a client's access to an API
 	//
@@ -16894,7 +16894,7 @@ type ClientWithResponsesInterface interface {
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with PUT /api/admin/apis/{id}/clients/{clientId} (the `UpdateClientAccessToAPI` operationId).
-	UpdateClientAccessToAPIWithBodyWithResponse(ctx context.Context, id string, clientID string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateClientAccessToAPIResponse, error)
+	UpdateClientAccessToAPIWithBodyWithResponse(ctx context.Context, id string, clientID OIDCClientID, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateClientAccessToAPIResponse, error)
 
 	// UpdateClientAccessToAPIWithResponse Update a client's access to an API
 	//
@@ -16903,7 +16903,7 @@ type ClientWithResponsesInterface interface {
 	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with PUT /api/admin/apis/{id}/clients/{clientId} (the `UpdateClientAccessToAPI` operationId).
-	UpdateClientAccessToAPIWithResponse(ctx context.Context, id string, clientID string, body UpdateClientAccessToAPIJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateClientAccessToAPIResponse, error)
+	UpdateClientAccessToAPIWithResponse(ctx context.Context, id string, clientID OIDCClientID, body UpdateClientAccessToAPIJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateClientAccessToAPIResponse, error)
 
 	// UpdateAPIPermissionsWithBodyWithResponse Update API permissions
 	//
@@ -17281,7 +17281,7 @@ type ClientWithResponsesInterface interface {
 	// Returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with DELETE /api/admin/oidc/claim-mapping-policies/{id}/clients/{clientId} (the `DetachOIDCClientFromClaimMappingPolicy` operationId).
-	DetachOIDCClientFromClaimMappingPolicyWithResponse(ctx context.Context, id string, clientID string, reqEditors ...RequestEditorFn) (*DetachOIDCClientFromClaimMappingPolicyResponse, error)
+	DetachOIDCClientFromClaimMappingPolicyWithResponse(ctx context.Context, id string, clientID OIDCClientID, reqEditors ...RequestEditorFn) (*DetachOIDCClientFromClaimMappingPolicyResponse, error)
 
 	// AssignOIDCClientToClaimMappingPolicyWithResponse Assign an OIDC client to a claim mapping policy
 	//
@@ -17290,7 +17290,7 @@ type ClientWithResponsesInterface interface {
 	// Returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with POST /api/admin/oidc/claim-mapping-policies/{id}/clients/{clientId} (the `AssignOIDCClientToClaimMappingPolicy` operationId).
-	AssignOIDCClientToClaimMappingPolicyWithResponse(ctx context.Context, id string, clientID string, reqEditors ...RequestEditorFn) (*AssignOIDCClientToClaimMappingPolicyResponse, error)
+	AssignOIDCClientToClaimMappingPolicyWithResponse(ctx context.Context, id string, clientID OIDCClientID, reqEditors ...RequestEditorFn) (*AssignOIDCClientToClaimMappingPolicyResponse, error)
 
 	// ListOIDCClientsWithResponse List OIDC clients
 	//
@@ -17326,7 +17326,7 @@ type ClientWithResponsesInterface interface {
 	// Returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with DELETE /api/admin/oidc/clients/{id} (the `DeleteOIDCClient` operationId).
-	DeleteOIDCClientWithResponse(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*DeleteOIDCClientResponse, error)
+	DeleteOIDCClientWithResponse(ctx context.Context, id OIDCClientID, reqEditors ...RequestEditorFn) (*DeleteOIDCClientResponse, error)
 
 	// GetOIDCClientWithResponse Get OIDC client
 	//
@@ -17335,7 +17335,7 @@ type ClientWithResponsesInterface interface {
 	// Returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with GET /api/admin/oidc/clients/{id} (the `GetOIDCClient` operationId).
-	GetOIDCClientWithResponse(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*GetOIDCClientResponse, error)
+	GetOIDCClientWithResponse(ctx context.Context, id OIDCClientID, reqEditors ...RequestEditorFn) (*GetOIDCClientResponse, error)
 
 	// PatchOIDCClientWithBodyWithResponse Update OIDC client
 	//
@@ -17344,7 +17344,7 @@ type ClientWithResponsesInterface interface {
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with PATCH /api/admin/oidc/clients/{id} (the `PatchOIDCClient` operationId).
-	PatchOIDCClientWithBodyWithResponse(ctx context.Context, id string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*PatchOIDCClientResponse, error)
+	PatchOIDCClientWithBodyWithResponse(ctx context.Context, id OIDCClientID, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*PatchOIDCClientResponse, error)
 
 	// PatchOIDCClientWithResponse Update OIDC client
 	//
@@ -17353,7 +17353,7 @@ type ClientWithResponsesInterface interface {
 	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with PATCH /api/admin/oidc/clients/{id} (the `PatchOIDCClient` operationId).
-	PatchOIDCClientWithResponse(ctx context.Context, id string, body PatchOIDCClientJSONRequestBody, reqEditors ...RequestEditorFn) (*PatchOIDCClientResponse, error)
+	PatchOIDCClientWithResponse(ctx context.Context, id OIDCClientID, body PatchOIDCClientJSONRequestBody, reqEditors ...RequestEditorFn) (*PatchOIDCClientResponse, error)
 
 	// UpdateOIDCClientWithBodyWithResponse Update OIDC client
 	//
@@ -17362,7 +17362,7 @@ type ClientWithResponsesInterface interface {
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with PUT /api/admin/oidc/clients/{id} (the `UpdateOIDCClient` operationId).
-	UpdateOIDCClientWithBodyWithResponse(ctx context.Context, id string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateOIDCClientResponse, error)
+	UpdateOIDCClientWithBodyWithResponse(ctx context.Context, id OIDCClientID, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateOIDCClientResponse, error)
 
 	// UpdateOIDCClientWithResponse Update OIDC client
 	//
@@ -17371,7 +17371,7 @@ type ClientWithResponsesInterface interface {
 	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with PUT /api/admin/oidc/clients/{id} (the `UpdateOIDCClient` operationId).
-	UpdateOIDCClientWithResponse(ctx context.Context, id string, body UpdateOIDCClientJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateOIDCClientResponse, error)
+	UpdateOIDCClientWithResponse(ctx context.Context, id OIDCClientID, body UpdateOIDCClientJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateOIDCClientResponse, error)
 
 	// UpdateAllowedUserGroupsWithBodyWithResponse Update allowed user groups
 	//
@@ -17380,7 +17380,7 @@ type ClientWithResponsesInterface interface {
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with PUT /api/admin/oidc/clients/{id}/allowed-user-groups (the `UpdateAllowedUserGroups` operationId).
-	UpdateAllowedUserGroupsWithBodyWithResponse(ctx context.Context, id string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateAllowedUserGroupsResponse, error)
+	UpdateAllowedUserGroupsWithBodyWithResponse(ctx context.Context, id OIDCClientID, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateAllowedUserGroupsResponse, error)
 
 	// UpdateAllowedUserGroupsWithResponse Update allowed user groups
 	//
@@ -17389,7 +17389,7 @@ type ClientWithResponsesInterface interface {
 	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with PUT /api/admin/oidc/clients/{id}/allowed-user-groups (the `UpdateAllowedUserGroups` operationId).
-	UpdateAllowedUserGroupsWithResponse(ctx context.Context, id string, body UpdateAllowedUserGroupsJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateAllowedUserGroupsResponse, error)
+	UpdateAllowedUserGroupsWithResponse(ctx context.Context, id OIDCClientID, body UpdateAllowedUserGroupsJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateAllowedUserGroupsResponse, error)
 
 	// DeleteClientLogoWithResponse Delete client logo
 	//
@@ -17398,7 +17398,7 @@ type ClientWithResponsesInterface interface {
 	// Returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with DELETE /api/admin/oidc/clients/{id}/logo (the `DeleteClientLogo` operationId).
-	DeleteClientLogoWithResponse(ctx context.Context, id string, params *DeleteClientLogoParams, reqEditors ...RequestEditorFn) (*DeleteClientLogoResponse, error)
+	DeleteClientLogoWithResponse(ctx context.Context, id OIDCClientID, params *DeleteClientLogoParams, reqEditors ...RequestEditorFn) (*DeleteClientLogoResponse, error)
 
 	// UpdateClientLogoWithBodyWithResponse Update client logo
 	//
@@ -17407,7 +17407,7 @@ type ClientWithResponsesInterface interface {
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with POST /api/admin/oidc/clients/{id}/logo (the `UpdateClientLogo` operationId).
-	UpdateClientLogoWithBodyWithResponse(ctx context.Context, id string, params *UpdateClientLogoParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateClientLogoResponse, error)
+	UpdateClientLogoWithBodyWithResponse(ctx context.Context, id OIDCClientID, params *UpdateClientLogoParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateClientLogoResponse, error)
 
 	// PreviewOIDCClientDataForUserWithResponse Preview OIDC client data for user
 	//
@@ -17416,7 +17416,7 @@ type ClientWithResponsesInterface interface {
 	// Returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with GET /api/admin/oidc/clients/{id}/preview/{userId} (the `PreviewOIDCClientDataForUser` operationId).
-	PreviewOIDCClientDataForUserWithResponse(ctx context.Context, id string, userID string, params *PreviewOIDCClientDataForUserParams, reqEditors ...RequestEditorFn) (*PreviewOIDCClientDataForUserResponse, error)
+	PreviewOIDCClientDataForUserWithResponse(ctx context.Context, id OIDCClientID, userID string, params *PreviewOIDCClientDataForUserParams, reqEditors ...RequestEditorFn) (*PreviewOIDCClientDataForUserResponse, error)
 
 	// RefreshClientMetadataDocumentWithResponse Refresh client metadata document
 	//
@@ -17425,7 +17425,7 @@ type ClientWithResponsesInterface interface {
 	// Returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with POST /api/admin/oidc/clients/{id}/refresh (the `RefreshClientMetadataDocument` operationId).
-	RefreshClientMetadataDocumentWithResponse(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*RefreshClientMetadataDocumentResponse, error)
+	RefreshClientMetadataDocumentWithResponse(ctx context.Context, id OIDCClientID, reqEditors ...RequestEditorFn) (*RefreshClientMetadataDocumentResponse, error)
 
 	// GetSCIMServiceProviderWithResponse Get SCIM service provider
 	//
@@ -17434,7 +17434,7 @@ type ClientWithResponsesInterface interface {
 	// Returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with GET /api/admin/oidc/clients/{id}/scim-service-provider (the `GetSCIMServiceProvider` operationId).
-	GetSCIMServiceProviderWithResponse(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*GetSCIMServiceProviderResponse, error)
+	GetSCIMServiceProviderWithResponse(ctx context.Context, id OIDCClientID, reqEditors ...RequestEditorFn) (*GetSCIMServiceProviderResponse, error)
 
 	// ListClientSecretsWithResponse List client secrets
 	//
@@ -17443,7 +17443,7 @@ type ClientWithResponsesInterface interface {
 	// Returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with GET /api/admin/oidc/clients/{id}/secrets (the `ListClientSecrets` operationId).
-	ListClientSecretsWithResponse(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*ListClientSecretsResponse, error)
+	ListClientSecretsWithResponse(ctx context.Context, id OIDCClientID, reqEditors ...RequestEditorFn) (*ListClientSecretsResponse, error)
 
 	// CreateClientSecretWithBodyWithResponse Create client secret
 	//
@@ -17452,7 +17452,7 @@ type ClientWithResponsesInterface interface {
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with POST /api/admin/oidc/clients/{id}/secrets (the `CreateClientSecret` operationId).
-	CreateClientSecretWithBodyWithResponse(ctx context.Context, id string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateClientSecretResponse, error)
+	CreateClientSecretWithBodyWithResponse(ctx context.Context, id OIDCClientID, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateClientSecretResponse, error)
 
 	// CreateClientSecretWithResponse Create client secret
 	//
@@ -17461,7 +17461,7 @@ type ClientWithResponsesInterface interface {
 	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with POST /api/admin/oidc/clients/{id}/secrets (the `CreateClientSecret` operationId).
-	CreateClientSecretWithResponse(ctx context.Context, id string, body CreateClientSecretJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateClientSecretResponse, error)
+	CreateClientSecretWithResponse(ctx context.Context, id OIDCClientID, body CreateClientSecretJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateClientSecretResponse, error)
 
 	// DeleteClientSecretWithResponse Delete client secret
 	//
@@ -17470,7 +17470,7 @@ type ClientWithResponsesInterface interface {
 	// Returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with DELETE /api/admin/oidc/clients/{id}/secrets/{secretId} (the `DeleteClientSecret` operationId).
-	DeleteClientSecretWithResponse(ctx context.Context, id string, secretID string, reqEditors ...RequestEditorFn) (*DeleteClientSecretResponse, error)
+	DeleteClientSecretWithResponse(ctx context.Context, id OIDCClientID, secretID string, reqEditors ...RequestEditorFn) (*DeleteClientSecretResponse, error)
 
 	// ListCustomOIDCScopesWithResponse List custom OIDC scopes
 	//
@@ -18271,7 +18271,7 @@ type ClientWithResponsesInterface interface {
 	// Returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with DELETE /api/oidc/users/me/authorized-clients/{clientId} (the `RevokeAuthorizationForOIDCClient` operationId).
-	RevokeAuthorizationForOIDCClientWithResponse(ctx context.Context, clientID string, reqEditors ...RequestEditorFn) (*RevokeAuthorizationForOIDCClientResponse, error)
+	RevokeAuthorizationForOIDCClientWithResponse(ctx context.Context, clientID OIDCClientID, reqEditors ...RequestEditorFn) (*RevokeAuthorizationForOIDCClientResponse, error)
 
 	// ListAccessibleOIDCClientsForCurrentUserWithResponse List accessible OIDC clients for current user
 	//
@@ -25671,7 +25671,7 @@ func (c *ClientWithResponses) GetOpenIDConnectDiscoveryConfigurationWithResponse
 // Returns a wrapper object for the known response body format(s).
 //
 // Corresponds with GET /api/admin/api-access/{clientId}/apis (the `ListAPIsClientMayAccess` operationId).
-func (c *ClientWithResponses) ListAPIsClientMayAccessWithResponse(ctx context.Context, clientID string, reqEditors ...RequestEditorFn) (*ListAPIsClientMayAccessResponse, error) {
+func (c *ClientWithResponses) ListAPIsClientMayAccessWithResponse(ctx context.Context, clientID OIDCClientID, reqEditors ...RequestEditorFn) (*ListAPIsClientMayAccessResponse, error) {
 	rsp, err := c.ListAPIsClientMayAccess(ctx, clientID, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -25686,7 +25686,7 @@ func (c *ClientWithResponses) ListAPIsClientMayAccessWithResponse(ctx context.Co
 // Returns a wrapper object for the known response body format(s).
 //
 // Corresponds with GET /api/admin/api-access/{clientId}/assignable-apis (the `ListAPIsClientCanStillBeGrantedAccessTo` operationId).
-func (c *ClientWithResponses) ListAPIsClientCanStillBeGrantedAccessToWithResponse(ctx context.Context, clientID string, params *ListAPIsClientCanStillBeGrantedAccessToParams, reqEditors ...RequestEditorFn) (*ListAPIsClientCanStillBeGrantedAccessToResponse, error) {
+func (c *ClientWithResponses) ListAPIsClientCanStillBeGrantedAccessToWithResponse(ctx context.Context, clientID OIDCClientID, params *ListAPIsClientCanStillBeGrantedAccessToParams, reqEditors ...RequestEditorFn) (*ListAPIsClientCanStillBeGrantedAccessToResponse, error) {
 	rsp, err := c.ListAPIsClientCanStillBeGrantedAccessTo(ctx, clientID, params, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -25896,7 +25896,7 @@ func (c *ClientWithResponses) ListClientsWithAccessToAPIWithResponse(ctx context
 // Returns a wrapper object for the known response body format(s).
 //
 // Corresponds with DELETE /api/admin/apis/{id}/clients/{clientId} (the `RevokeClientAccessToAPI` operationId).
-func (c *ClientWithResponses) RevokeClientAccessToAPIWithResponse(ctx context.Context, id string, clientID string, reqEditors ...RequestEditorFn) (*RevokeClientAccessToAPIResponse, error) {
+func (c *ClientWithResponses) RevokeClientAccessToAPIWithResponse(ctx context.Context, id string, clientID OIDCClientID, reqEditors ...RequestEditorFn) (*RevokeClientAccessToAPIResponse, error) {
 	rsp, err := c.RevokeClientAccessToAPI(ctx, id, clientID, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -25911,7 +25911,7 @@ func (c *ClientWithResponses) RevokeClientAccessToAPIWithResponse(ctx context.Co
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
 // Corresponds with PUT /api/admin/apis/{id}/clients/{clientId} (the `UpdateClientAccessToAPI` operationId).
-func (c *ClientWithResponses) UpdateClientAccessToAPIWithBodyWithResponse(ctx context.Context, id string, clientID string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateClientAccessToAPIResponse, error) {
+func (c *ClientWithResponses) UpdateClientAccessToAPIWithBodyWithResponse(ctx context.Context, id string, clientID OIDCClientID, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateClientAccessToAPIResponse, error) {
 	rsp, err := c.UpdateClientAccessToAPIWithBody(ctx, id, clientID, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -25926,7 +25926,7 @@ func (c *ClientWithResponses) UpdateClientAccessToAPIWithBodyWithResponse(ctx co
 // Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //
 // Corresponds with PUT /api/admin/apis/{id}/clients/{clientId} (the `UpdateClientAccessToAPI` operationId).
-func (c *ClientWithResponses) UpdateClientAccessToAPIWithResponse(ctx context.Context, id string, clientID string, body UpdateClientAccessToAPIJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateClientAccessToAPIResponse, error) {
+func (c *ClientWithResponses) UpdateClientAccessToAPIWithResponse(ctx context.Context, id string, clientID OIDCClientID, body UpdateClientAccessToAPIJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateClientAccessToAPIResponse, error) {
 	rsp, err := c.UpdateClientAccessToAPI(ctx, id, clientID, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -26556,7 +26556,7 @@ func (c *ClientWithResponses) ListOIDCClientsUsingClaimMappingPolicyWithResponse
 // Returns a wrapper object for the known response body format(s).
 //
 // Corresponds with DELETE /api/admin/oidc/claim-mapping-policies/{id}/clients/{clientId} (the `DetachOIDCClientFromClaimMappingPolicy` operationId).
-func (c *ClientWithResponses) DetachOIDCClientFromClaimMappingPolicyWithResponse(ctx context.Context, id string, clientID string, reqEditors ...RequestEditorFn) (*DetachOIDCClientFromClaimMappingPolicyResponse, error) {
+func (c *ClientWithResponses) DetachOIDCClientFromClaimMappingPolicyWithResponse(ctx context.Context, id string, clientID OIDCClientID, reqEditors ...RequestEditorFn) (*DetachOIDCClientFromClaimMappingPolicyResponse, error) {
 	rsp, err := c.DetachOIDCClientFromClaimMappingPolicy(ctx, id, clientID, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -26571,7 +26571,7 @@ func (c *ClientWithResponses) DetachOIDCClientFromClaimMappingPolicyWithResponse
 // Returns a wrapper object for the known response body format(s).
 //
 // Corresponds with POST /api/admin/oidc/claim-mapping-policies/{id}/clients/{clientId} (the `AssignOIDCClientToClaimMappingPolicy` operationId).
-func (c *ClientWithResponses) AssignOIDCClientToClaimMappingPolicyWithResponse(ctx context.Context, id string, clientID string, reqEditors ...RequestEditorFn) (*AssignOIDCClientToClaimMappingPolicyResponse, error) {
+func (c *ClientWithResponses) AssignOIDCClientToClaimMappingPolicyWithResponse(ctx context.Context, id string, clientID OIDCClientID, reqEditors ...RequestEditorFn) (*AssignOIDCClientToClaimMappingPolicyResponse, error) {
 	rsp, err := c.AssignOIDCClientToClaimMappingPolicy(ctx, id, clientID, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -26631,7 +26631,7 @@ func (c *ClientWithResponses) CreateOIDCClientWithResponse(ctx context.Context, 
 // Returns a wrapper object for the known response body format(s).
 //
 // Corresponds with DELETE /api/admin/oidc/clients/{id} (the `DeleteOIDCClient` operationId).
-func (c *ClientWithResponses) DeleteOIDCClientWithResponse(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*DeleteOIDCClientResponse, error) {
+func (c *ClientWithResponses) DeleteOIDCClientWithResponse(ctx context.Context, id OIDCClientID, reqEditors ...RequestEditorFn) (*DeleteOIDCClientResponse, error) {
 	rsp, err := c.DeleteOIDCClient(ctx, id, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -26646,7 +26646,7 @@ func (c *ClientWithResponses) DeleteOIDCClientWithResponse(ctx context.Context, 
 // Returns a wrapper object for the known response body format(s).
 //
 // Corresponds with GET /api/admin/oidc/clients/{id} (the `GetOIDCClient` operationId).
-func (c *ClientWithResponses) GetOIDCClientWithResponse(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*GetOIDCClientResponse, error) {
+func (c *ClientWithResponses) GetOIDCClientWithResponse(ctx context.Context, id OIDCClientID, reqEditors ...RequestEditorFn) (*GetOIDCClientResponse, error) {
 	rsp, err := c.GetOIDCClient(ctx, id, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -26661,7 +26661,7 @@ func (c *ClientWithResponses) GetOIDCClientWithResponse(ctx context.Context, id 
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
 // Corresponds with PATCH /api/admin/oidc/clients/{id} (the `PatchOIDCClient` operationId).
-func (c *ClientWithResponses) PatchOIDCClientWithBodyWithResponse(ctx context.Context, id string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*PatchOIDCClientResponse, error) {
+func (c *ClientWithResponses) PatchOIDCClientWithBodyWithResponse(ctx context.Context, id OIDCClientID, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*PatchOIDCClientResponse, error) {
 	rsp, err := c.PatchOIDCClientWithBody(ctx, id, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -26676,7 +26676,7 @@ func (c *ClientWithResponses) PatchOIDCClientWithBodyWithResponse(ctx context.Co
 // Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //
 // Corresponds with PATCH /api/admin/oidc/clients/{id} (the `PatchOIDCClient` operationId).
-func (c *ClientWithResponses) PatchOIDCClientWithResponse(ctx context.Context, id string, body PatchOIDCClientJSONRequestBody, reqEditors ...RequestEditorFn) (*PatchOIDCClientResponse, error) {
+func (c *ClientWithResponses) PatchOIDCClientWithResponse(ctx context.Context, id OIDCClientID, body PatchOIDCClientJSONRequestBody, reqEditors ...RequestEditorFn) (*PatchOIDCClientResponse, error) {
 	rsp, err := c.PatchOIDCClient(ctx, id, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -26691,7 +26691,7 @@ func (c *ClientWithResponses) PatchOIDCClientWithResponse(ctx context.Context, i
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
 // Corresponds with PUT /api/admin/oidc/clients/{id} (the `UpdateOIDCClient` operationId).
-func (c *ClientWithResponses) UpdateOIDCClientWithBodyWithResponse(ctx context.Context, id string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateOIDCClientResponse, error) {
+func (c *ClientWithResponses) UpdateOIDCClientWithBodyWithResponse(ctx context.Context, id OIDCClientID, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateOIDCClientResponse, error) {
 	rsp, err := c.UpdateOIDCClientWithBody(ctx, id, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -26706,7 +26706,7 @@ func (c *ClientWithResponses) UpdateOIDCClientWithBodyWithResponse(ctx context.C
 // Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //
 // Corresponds with PUT /api/admin/oidc/clients/{id} (the `UpdateOIDCClient` operationId).
-func (c *ClientWithResponses) UpdateOIDCClientWithResponse(ctx context.Context, id string, body UpdateOIDCClientJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateOIDCClientResponse, error) {
+func (c *ClientWithResponses) UpdateOIDCClientWithResponse(ctx context.Context, id OIDCClientID, body UpdateOIDCClientJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateOIDCClientResponse, error) {
 	rsp, err := c.UpdateOIDCClient(ctx, id, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -26721,7 +26721,7 @@ func (c *ClientWithResponses) UpdateOIDCClientWithResponse(ctx context.Context, 
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
 // Corresponds with PUT /api/admin/oidc/clients/{id}/allowed-user-groups (the `UpdateAllowedUserGroups` operationId).
-func (c *ClientWithResponses) UpdateAllowedUserGroupsWithBodyWithResponse(ctx context.Context, id string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateAllowedUserGroupsResponse, error) {
+func (c *ClientWithResponses) UpdateAllowedUserGroupsWithBodyWithResponse(ctx context.Context, id OIDCClientID, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateAllowedUserGroupsResponse, error) {
 	rsp, err := c.UpdateAllowedUserGroupsWithBody(ctx, id, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -26736,7 +26736,7 @@ func (c *ClientWithResponses) UpdateAllowedUserGroupsWithBodyWithResponse(ctx co
 // Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //
 // Corresponds with PUT /api/admin/oidc/clients/{id}/allowed-user-groups (the `UpdateAllowedUserGroups` operationId).
-func (c *ClientWithResponses) UpdateAllowedUserGroupsWithResponse(ctx context.Context, id string, body UpdateAllowedUserGroupsJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateAllowedUserGroupsResponse, error) {
+func (c *ClientWithResponses) UpdateAllowedUserGroupsWithResponse(ctx context.Context, id OIDCClientID, body UpdateAllowedUserGroupsJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateAllowedUserGroupsResponse, error) {
 	rsp, err := c.UpdateAllowedUserGroups(ctx, id, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -26751,7 +26751,7 @@ func (c *ClientWithResponses) UpdateAllowedUserGroupsWithResponse(ctx context.Co
 // Returns a wrapper object for the known response body format(s).
 //
 // Corresponds with DELETE /api/admin/oidc/clients/{id}/logo (the `DeleteClientLogo` operationId).
-func (c *ClientWithResponses) DeleteClientLogoWithResponse(ctx context.Context, id string, params *DeleteClientLogoParams, reqEditors ...RequestEditorFn) (*DeleteClientLogoResponse, error) {
+func (c *ClientWithResponses) DeleteClientLogoWithResponse(ctx context.Context, id OIDCClientID, params *DeleteClientLogoParams, reqEditors ...RequestEditorFn) (*DeleteClientLogoResponse, error) {
 	rsp, err := c.DeleteClientLogo(ctx, id, params, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -26766,7 +26766,7 @@ func (c *ClientWithResponses) DeleteClientLogoWithResponse(ctx context.Context, 
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
 // Corresponds with POST /api/admin/oidc/clients/{id}/logo (the `UpdateClientLogo` operationId).
-func (c *ClientWithResponses) UpdateClientLogoWithBodyWithResponse(ctx context.Context, id string, params *UpdateClientLogoParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateClientLogoResponse, error) {
+func (c *ClientWithResponses) UpdateClientLogoWithBodyWithResponse(ctx context.Context, id OIDCClientID, params *UpdateClientLogoParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateClientLogoResponse, error) {
 	rsp, err := c.UpdateClientLogoWithBody(ctx, id, params, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -26781,7 +26781,7 @@ func (c *ClientWithResponses) UpdateClientLogoWithBodyWithResponse(ctx context.C
 // Returns a wrapper object for the known response body format(s).
 //
 // Corresponds with GET /api/admin/oidc/clients/{id}/preview/{userId} (the `PreviewOIDCClientDataForUser` operationId).
-func (c *ClientWithResponses) PreviewOIDCClientDataForUserWithResponse(ctx context.Context, id string, userID string, params *PreviewOIDCClientDataForUserParams, reqEditors ...RequestEditorFn) (*PreviewOIDCClientDataForUserResponse, error) {
+func (c *ClientWithResponses) PreviewOIDCClientDataForUserWithResponse(ctx context.Context, id OIDCClientID, userID string, params *PreviewOIDCClientDataForUserParams, reqEditors ...RequestEditorFn) (*PreviewOIDCClientDataForUserResponse, error) {
 	rsp, err := c.PreviewOIDCClientDataForUser(ctx, id, userID, params, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -26796,7 +26796,7 @@ func (c *ClientWithResponses) PreviewOIDCClientDataForUserWithResponse(ctx conte
 // Returns a wrapper object for the known response body format(s).
 //
 // Corresponds with POST /api/admin/oidc/clients/{id}/refresh (the `RefreshClientMetadataDocument` operationId).
-func (c *ClientWithResponses) RefreshClientMetadataDocumentWithResponse(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*RefreshClientMetadataDocumentResponse, error) {
+func (c *ClientWithResponses) RefreshClientMetadataDocumentWithResponse(ctx context.Context, id OIDCClientID, reqEditors ...RequestEditorFn) (*RefreshClientMetadataDocumentResponse, error) {
 	rsp, err := c.RefreshClientMetadataDocument(ctx, id, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -26811,7 +26811,7 @@ func (c *ClientWithResponses) RefreshClientMetadataDocumentWithResponse(ctx cont
 // Returns a wrapper object for the known response body format(s).
 //
 // Corresponds with GET /api/admin/oidc/clients/{id}/scim-service-provider (the `GetSCIMServiceProvider` operationId).
-func (c *ClientWithResponses) GetSCIMServiceProviderWithResponse(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*GetSCIMServiceProviderResponse, error) {
+func (c *ClientWithResponses) GetSCIMServiceProviderWithResponse(ctx context.Context, id OIDCClientID, reqEditors ...RequestEditorFn) (*GetSCIMServiceProviderResponse, error) {
 	rsp, err := c.GetSCIMServiceProvider(ctx, id, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -26826,7 +26826,7 @@ func (c *ClientWithResponses) GetSCIMServiceProviderWithResponse(ctx context.Con
 // Returns a wrapper object for the known response body format(s).
 //
 // Corresponds with GET /api/admin/oidc/clients/{id}/secrets (the `ListClientSecrets` operationId).
-func (c *ClientWithResponses) ListClientSecretsWithResponse(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*ListClientSecretsResponse, error) {
+func (c *ClientWithResponses) ListClientSecretsWithResponse(ctx context.Context, id OIDCClientID, reqEditors ...RequestEditorFn) (*ListClientSecretsResponse, error) {
 	rsp, err := c.ListClientSecrets(ctx, id, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -26841,7 +26841,7 @@ func (c *ClientWithResponses) ListClientSecretsWithResponse(ctx context.Context,
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
 // Corresponds with POST /api/admin/oidc/clients/{id}/secrets (the `CreateClientSecret` operationId).
-func (c *ClientWithResponses) CreateClientSecretWithBodyWithResponse(ctx context.Context, id string, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateClientSecretResponse, error) {
+func (c *ClientWithResponses) CreateClientSecretWithBodyWithResponse(ctx context.Context, id OIDCClientID, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateClientSecretResponse, error) {
 	rsp, err := c.CreateClientSecretWithBody(ctx, id, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -26856,7 +26856,7 @@ func (c *ClientWithResponses) CreateClientSecretWithBodyWithResponse(ctx context
 // Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //
 // Corresponds with POST /api/admin/oidc/clients/{id}/secrets (the `CreateClientSecret` operationId).
-func (c *ClientWithResponses) CreateClientSecretWithResponse(ctx context.Context, id string, body CreateClientSecretJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateClientSecretResponse, error) {
+func (c *ClientWithResponses) CreateClientSecretWithResponse(ctx context.Context, id OIDCClientID, body CreateClientSecretJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateClientSecretResponse, error) {
 	rsp, err := c.CreateClientSecret(ctx, id, body, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -26871,7 +26871,7 @@ func (c *ClientWithResponses) CreateClientSecretWithResponse(ctx context.Context
 // Returns a wrapper object for the known response body format(s).
 //
 // Corresponds with DELETE /api/admin/oidc/clients/{id}/secrets/{secretId} (the `DeleteClientSecret` operationId).
-func (c *ClientWithResponses) DeleteClientSecretWithResponse(ctx context.Context, id string, secretID string, reqEditors ...RequestEditorFn) (*DeleteClientSecretResponse, error) {
+func (c *ClientWithResponses) DeleteClientSecretWithResponse(ctx context.Context, id OIDCClientID, secretID string, reqEditors ...RequestEditorFn) (*DeleteClientSecretResponse, error) {
 	rsp, err := c.DeleteClientSecret(ctx, id, secretID, reqEditors...)
 	if err != nil {
 		return nil, err
@@ -28206,7 +28206,7 @@ func (c *ClientWithResponses) ListAuthorizedClientsForCurrentUserWithResponse(ct
 // Returns a wrapper object for the known response body format(s).
 //
 // Corresponds with DELETE /api/oidc/users/me/authorized-clients/{clientId} (the `RevokeAuthorizationForOIDCClient` operationId).
-func (c *ClientWithResponses) RevokeAuthorizationForOIDCClientWithResponse(ctx context.Context, clientID string, reqEditors ...RequestEditorFn) (*RevokeAuthorizationForOIDCClientResponse, error) {
+func (c *ClientWithResponses) RevokeAuthorizationForOIDCClientWithResponse(ctx context.Context, clientID OIDCClientID, reqEditors ...RequestEditorFn) (*RevokeAuthorizationForOIDCClientResponse, error) {
 	rsp, err := c.RevokeAuthorizationForOIDCClient(ctx, clientID, reqEditors...)
 	if err != nil {
 		return nil, err
