@@ -7,8 +7,9 @@ set -euo pipefail
 mise run generate-spec
 mise run generate-client
 
-# Release tags mirror Pocket ID versions, so the module path follows its major version.
-go mod edit -module "github.com/aclerici38/pocket-id-go-client/$(cut -d. -f1 POCKET_ID_VERSION)"
+# Release tags mirror Pocket ID versions, so the module path follows its major version
+# (NEXT_MAJOR when the upstream canary builds upstream main).
+go mod edit -module "github.com/aclerici38/pocket-id-go-client/${NEXT_MAJOR:-$(cut -d. -f1 POCKET_ID_VERSION)}"
 
 go mod tidy
 rm -rf "$UPSTREAM_DIR"
