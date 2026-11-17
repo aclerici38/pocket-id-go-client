@@ -6,6 +6,29 @@ info:
   title: Pocket ID spec adjustments for oapi-codegen
   version: 1.0.0
 actions:
+  # WebAuthn's logout route is not documented upstream yet. Only fill a missing
+  # route, so a future upstream definition takes precedence.
+  - target: $[?(@['/api/one-time-access-token'] && !@['/api/webauthn/logout'])]
+    update:
+      /api/webauthn/logout:
+        post:
+          operationId: logout
+          summary: Log out the current session
+          security:
+            - session: []
+          responses:
+            '204':
+              description: Logged out
+            default:
+              description: Error
+              content:
+                application/json:
+                  schema:
+                    $ref: '#/components/schemas/ErrorDto'
+  # Keep the helper's generated method name stable when upstream documents it.
+  - target: $.paths['/api/webauthn/logout'].post
+    update:
+      operationId: logout
   # Durations (the `ttl` fields) are `type: [string, number]`, which oapi-codegen can't
   # map to a Go type. Upstream reads a number as seconds, so send that.
   - target: $..[?(@.type[0] == 'string' && @.type[1] == 'number' && length(@.type) == 2)]

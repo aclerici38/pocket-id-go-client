@@ -18,6 +18,25 @@ c, err := client.NewClientWithResponses("https://id.example.com", client.WithAPI
 
 For OAuth access tokens, give `WithHTTPClient` an `*http.Client` from `golang.org/x/oauth2`.
 
+For temporary access as a user, exchange a one-time access token with `NewSession`:
+
+```go
+c, err := client.NewSession(ctx, "https://id.example.com", oneTimeToken, nil)
+if err != nil {
+	return err
+}
+defer func() {
+	cleanupCtx, cancel := context.WithTimeout(context.WithoutCancel(ctx), 5*time.Second)
+	defer cancel()
+	if err := client.Check(c.Logout(cleanupCtx)); err != nil {
+		log.Printf("end Pocket ID session: %v", err)
+	}
+}()
+user, err := client.Decode[client.UserDto](c.GetCurrentUser(ctx))
+```
+
+`NewSession` returns the generated `*Client` with a private cookie jar and sends `remember=false`. Its final argument accepts a custom `*http.Client` whose settings are copied and transport shared; pass `nil` for defaults. Create the one-time token separately with your admin client. The caller owns logout and cleanup deadlines.
+
 ## Errors
 
 `Decode` and `Check` wrap the raw methods and turn every non-2xx response into an `*APIError`, even when the body isn't Pocket ID's error JSON:
