@@ -1398,14 +1398,14 @@ func (e ListAccessibleOIDCClientsForCurrentUserParamsSortDirection) Valid() bool
 
 // AccessibleOIDCClientDto defines model for AccessibleOidcClientDto.
 type AccessibleOIDCClientDto struct {
-	ClientType               string                       `json:"clientType"`
-	HasDarkLogo              bool                         `json:"hasDarkLogo"`
-	HasLogo                  bool                         `json:"hasLogo"`
-	ID                       string                       `json:"id"`
-	LastUsedAt               nullable.Nullable[time.Time] `json:"lastUsedAt"`
-	LaunchURL                nullable.Nullable[string]    `json:"launchURL"`
-	Name                     string                       `json:"name"`
-	RequiresReauthentication bool                         `json:"requiresReauthentication"`
+	ClientType               string     `json:"clientType"`
+	HasDarkLogo              bool       `json:"hasDarkLogo"`
+	HasLogo                  bool       `json:"hasLogo"`
+	ID                       string     `json:"id"`
+	LastUsedAt               *time.Time `json:"lastUsedAt,omitempty"`
+	LaunchURL                string     `json:"launchURL"`
+	Name                     string     `json:"name"`
+	RequiresReauthentication bool       `json:"requiresReauthentication"`
 }
 
 // AppConfigUpdateDto defines model for AppConfigUpdateDto.
@@ -1431,6 +1431,7 @@ type AppConfigUpdateDto struct {
 	LDAPAttributeUserDisplayName               *string                                           `json:"ldapAttributeUserDisplayName,omitempty"`
 	LDAPAttributeUserEmail                     *string                                           `json:"ldapAttributeUserEmail,omitempty"`
 	LDAPAttributeUserFirstName                 *string                                           `json:"ldapAttributeUserFirstName,omitempty"`
+	LDAPAttributeUserLanguage                  *string                                           `json:"ldapAttributeUserLanguage,omitempty"`
 	LDAPAttributeUserLastName                  *string                                           `json:"ldapAttributeUserLastName,omitempty"`
 	LDAPAttributeUserProfilePicture            *string                                           `json:"ldapAttributeUserProfilePicture,omitempty"`
 	LDAPAttributeUserUniqueIdentifier          *string                                           `json:"ldapAttributeUserUniqueIdentifier,omitempty"`
@@ -1500,9 +1501,9 @@ type AuthorizedOIDCClientDto struct {
 
 // ClaimMappingsPreview defines model for ClaimMappingsPreview.
 type ClaimMappingsPreview struct {
-	AccessToken nullable.Nullable[map[string]interface{}] `json:"accessToken"`
-	IDToken     nullable.Nullable[map[string]interface{}] `json:"idToken"`
-	UserInfo    nullable.Nullable[map[string]interface{}] `json:"userInfo"`
+	AccessToken map[string]interface{} `json:"accessToken"`
+	IDToken     map[string]interface{} `json:"idToken"`
+	UserInfo    map[string]interface{} `json:"userInfo"`
 }
 
 // CustomClaimCreateDto defines model for CustomClaimCreateDto.
@@ -1534,10 +1535,10 @@ type EmailVerificationDto struct {
 
 // ErrorDto defines model for ErrorDto.
 type ErrorDto struct {
-	Code      string                                    `json:"code"`
-	Details   nullable.Nullable[map[string]interface{}] `json:"details,omitempty"`
-	Error     string                                    `json:"error"`
-	RequestID *string                                   `json:"request_id,omitempty"`
+	Code      string                 `json:"code"`
+	Details   map[string]interface{} `json:"details"`
+	Error     string                 `json:"error"`
+	RequestID *string                `json:"request_id,omitempty"`
 }
 
 // OIDCClaimMappingDto defines model for OidcClaimMappingDto.
@@ -1603,30 +1604,30 @@ type OIDCClientCreateDto struct {
 
 // OIDCClientCreatedDto defines model for OidcClientCreatedDto.
 type OIDCClientCreatedDto struct {
-	AccessTokenDurationMinutes          int64                                    `json:"accessTokenDurationMinutes"`
-	AllowedUserGroups                   nullable.Nullable[[]UserGroupMinimalDto] `json:"allowedUserGroups"`
-	BackchannelLogoutURL                string                                   `json:"backchannelLogoutURL"`
-	CallbackURLs                        nullable.Nullable[[]string]              `json:"callbackURLs"`
-	ClaimMappingPolicyID                string                                   `json:"claimMappingPolicyId"`
-	ClientType                          string                                   `json:"clientType"`
-	CreatedSecret                       *OIDCClientSecretCreatedDto              `json:"createdSecret,omitempty"`
-	Credentials                         OIDCClientCredentialsDto                 `json:"credentials"`
-	Disabled                            bool                                     `json:"disabled"`
-	HasDarkLogo                         bool                                     `json:"hasDarkLogo"`
-	HasLogo                             bool                                     `json:"hasLogo"`
-	ID                                  string                                   `json:"id"`
-	IsGroupRestricted                   bool                                     `json:"isGroupRestricted"`
-	IsPublic                            bool                                     `json:"isPublic"`
-	LaunchURL                           nullable.Nullable[string]                `json:"launchURL"`
-	LogoutCallbackURLs                  nullable.Nullable[[]string]              `json:"logoutCallbackURLs"`
-	Name                                string                                   `json:"name"`
-	Notes                               string                                   `json:"notes"`
-	PKCEEnabled                         bool                                     `json:"pkceEnabled"`
-	PKCESupported                       *bool                                    `json:"pkceSupported,omitempty"`
-	RefreshTokenDurationMinutes         int64                                    `json:"refreshTokenDurationMinutes"`
-	RequiresPushedAuthorizationRequests bool                                     `json:"requiresPushedAuthorizationRequests"`
-	RequiresReauthentication            bool                                     `json:"requiresReauthentication"`
-	SkipConsent                         bool                                     `json:"skipConsent"`
+	AccessTokenDurationMinutes          int64                       `json:"accessTokenDurationMinutes"`
+	AllowedUserGroups                   []UserGroupMinimalDto       `json:"allowedUserGroups"`
+	BackchannelLogoutURL                string                      `json:"backchannelLogoutURL"`
+	CallbackURLs                        []string                    `json:"callbackURLs"`
+	ClaimMappingPolicyID                string                      `json:"claimMappingPolicyId"`
+	ClientType                          string                      `json:"clientType"`
+	CreatedSecret                       *OIDCClientSecretCreatedDto `json:"createdSecret,omitempty"`
+	Credentials                         OIDCClientCredentialsDto    `json:"credentials"`
+	Disabled                            bool                        `json:"disabled"`
+	HasDarkLogo                         bool                        `json:"hasDarkLogo"`
+	HasLogo                             bool                        `json:"hasLogo"`
+	ID                                  string                      `json:"id"`
+	IsGroupRestricted                   bool                        `json:"isGroupRestricted"`
+	IsPublic                            bool                        `json:"isPublic"`
+	LaunchURL                           string                      `json:"launchURL"`
+	LogoutCallbackURLs                  []string                    `json:"logoutCallbackURLs"`
+	Name                                string                      `json:"name"`
+	Notes                               string                      `json:"notes"`
+	PKCEEnabled                         bool                        `json:"pkceEnabled"`
+	PKCESupported                       *bool                       `json:"pkceSupported,omitempty"`
+	RefreshTokenDurationMinutes         int64                       `json:"refreshTokenDurationMinutes"`
+	RequiresPushedAuthorizationRequests bool                        `json:"requiresPushedAuthorizationRequests"`
+	RequiresReauthentication            bool                        `json:"requiresReauthentication"`
+	SkipConsent                         bool                        `json:"skipConsent"`
 }
 
 // OIDCClientCredentialsDto defines model for OidcClientCredentialsDto.
@@ -1637,28 +1638,28 @@ type OIDCClientCredentialsDto struct {
 
 // OIDCClientDto defines model for OidcClientDto.
 type OIDCClientDto struct {
-	AccessTokenDurationMinutes          int64                       `json:"accessTokenDurationMinutes"`
-	BackchannelLogoutURL                string                      `json:"backchannelLogoutURL"`
-	CallbackURLs                        nullable.Nullable[[]string] `json:"callbackURLs"`
-	ClaimMappingPolicyID                string                      `json:"claimMappingPolicyId"`
-	ClientType                          string                      `json:"clientType"`
-	Credentials                         OIDCClientCredentialsDto    `json:"credentials"`
-	Disabled                            bool                        `json:"disabled"`
-	HasDarkLogo                         bool                        `json:"hasDarkLogo"`
-	HasLogo                             bool                        `json:"hasLogo"`
-	ID                                  string                      `json:"id"`
-	IsGroupRestricted                   bool                        `json:"isGroupRestricted"`
-	IsPublic                            bool                        `json:"isPublic"`
-	LaunchURL                           nullable.Nullable[string]   `json:"launchURL"`
-	LogoutCallbackURLs                  nullable.Nullable[[]string] `json:"logoutCallbackURLs"`
-	Name                                string                      `json:"name"`
-	Notes                               string                      `json:"notes"`
-	PKCEEnabled                         bool                        `json:"pkceEnabled"`
-	PKCESupported                       *bool                       `json:"pkceSupported,omitempty"`
-	RefreshTokenDurationMinutes         int64                       `json:"refreshTokenDurationMinutes"`
-	RequiresPushedAuthorizationRequests bool                        `json:"requiresPushedAuthorizationRequests"`
-	RequiresReauthentication            bool                        `json:"requiresReauthentication"`
-	SkipConsent                         bool                        `json:"skipConsent"`
+	AccessTokenDurationMinutes          int64                    `json:"accessTokenDurationMinutes"`
+	BackchannelLogoutURL                string                   `json:"backchannelLogoutURL"`
+	CallbackURLs                        []string                 `json:"callbackURLs"`
+	ClaimMappingPolicyID                string                   `json:"claimMappingPolicyId"`
+	ClientType                          string                   `json:"clientType"`
+	Credentials                         OIDCClientCredentialsDto `json:"credentials"`
+	Disabled                            bool                     `json:"disabled"`
+	HasDarkLogo                         bool                     `json:"hasDarkLogo"`
+	HasLogo                             bool                     `json:"hasLogo"`
+	ID                                  string                   `json:"id"`
+	IsGroupRestricted                   bool                     `json:"isGroupRestricted"`
+	IsPublic                            bool                     `json:"isPublic"`
+	LaunchURL                           string                   `json:"launchURL"`
+	LogoutCallbackURLs                  []string                 `json:"logoutCallbackURLs"`
+	Name                                string                   `json:"name"`
+	Notes                               string                   `json:"notes"`
+	PKCEEnabled                         bool                     `json:"pkceEnabled"`
+	PKCESupported                       *bool                    `json:"pkceSupported,omitempty"`
+	RefreshTokenDurationMinutes         int64                    `json:"refreshTokenDurationMinutes"`
+	RequiresPushedAuthorizationRequests bool                     `json:"requiresPushedAuthorizationRequests"`
+	RequiresReauthentication            bool                     `json:"requiresReauthentication"`
+	SkipConsent                         bool                     `json:"skipConsent"`
 }
 
 // OIDCClientFederatedIdentityDto defines model for OidcClientFederatedIdentityDto.
@@ -1673,20 +1674,20 @@ type OIDCClientFederatedIdentityDto struct {
 
 // OIDCClientMetaDataDto defines model for OidcClientMetaDataDto.
 type OIDCClientMetaDataDto struct {
-	ClientType               string                    `json:"clientType"`
-	HasDarkLogo              bool                      `json:"hasDarkLogo"`
-	HasLogo                  bool                      `json:"hasLogo"`
-	ID                       string                    `json:"id"`
-	LaunchURL                nullable.Nullable[string] `json:"launchURL"`
-	Name                     string                    `json:"name"`
-	RequiresReauthentication bool                      `json:"requiresReauthentication"`
+	ClientType               string `json:"clientType"`
+	HasDarkLogo              bool   `json:"hasDarkLogo"`
+	HasLogo                  bool   `json:"hasLogo"`
+	ID                       string `json:"id"`
+	LaunchURL                string `json:"launchURL"`
+	Name                     string `json:"name"`
+	RequiresReauthentication bool   `json:"requiresReauthentication"`
 }
 
 // OIDCClientPreviewDto defines model for OidcClientPreviewDto.
 type OIDCClientPreviewDto struct {
-	AccessToken nullable.Nullable[map[string]interface{}] `json:"accessToken"`
-	IDToken     nullable.Nullable[map[string]interface{}] `json:"idToken"`
-	UserInfo    nullable.Nullable[map[string]interface{}] `json:"userInfo"`
+	AccessToken map[string]interface{} `json:"accessToken"`
+	IDToken     map[string]interface{} `json:"idToken"`
+	UserInfo    map[string]interface{} `json:"userInfo"`
 }
 
 // OIDCClientSecretCreateDto defines model for OidcClientSecretCreateDto.
@@ -1697,12 +1698,12 @@ type OIDCClientSecretCreateDto struct {
 
 // OIDCClientSecretCreatedDto defines model for OidcClientSecretCreatedDto.
 type OIDCClientSecretCreatedDto struct {
-	CreatedAt time.Time                    `json:"createdAt"`
-	ExpiresAt nullable.Nullable[time.Time] `json:"expiresAt"`
-	ID        string                       `json:"id"`
-	IsActive  bool                         `json:"isActive"`
-	Prefix    string                       `json:"prefix"`
-	Secret    string                       `json:"secret"`
+	CreatedAt time.Time  `json:"createdAt"`
+	ExpiresAt *time.Time `json:"expiresAt,omitempty"`
+	ID        string     `json:"id"`
+	IsActive  bool       `json:"isActive"`
+	Prefix    string     `json:"prefix"`
+	Secret    string     `json:"secret"`
 }
 
 // OIDCClientSecretDto defines model for OidcClientSecretDto.
@@ -1741,56 +1742,56 @@ type OIDCClientUpdateDto struct {
 
 // OIDCClientWithAllowedGroupsDto defines model for OidcClientWithAllowedGroupsDto.
 type OIDCClientWithAllowedGroupsDto struct {
-	AccessTokenDurationMinutes          int64                                    `json:"accessTokenDurationMinutes"`
-	AllowedUserGroups                   nullable.Nullable[[]UserGroupMinimalDto] `json:"allowedUserGroups"`
-	BackchannelLogoutURL                string                                   `json:"backchannelLogoutURL"`
-	CallbackURLs                        nullable.Nullable[[]string]              `json:"callbackURLs"`
-	ClaimMappingPolicyID                string                                   `json:"claimMappingPolicyId"`
-	ClientType                          string                                   `json:"clientType"`
-	Credentials                         OIDCClientCredentialsDto                 `json:"credentials"`
-	Disabled                            bool                                     `json:"disabled"`
-	HasDarkLogo                         bool                                     `json:"hasDarkLogo"`
-	HasLogo                             bool                                     `json:"hasLogo"`
-	ID                                  string                                   `json:"id"`
-	IsGroupRestricted                   bool                                     `json:"isGroupRestricted"`
-	IsPublic                            bool                                     `json:"isPublic"`
-	LaunchURL                           nullable.Nullable[string]                `json:"launchURL"`
-	LogoutCallbackURLs                  nullable.Nullable[[]string]              `json:"logoutCallbackURLs"`
-	Name                                string                                   `json:"name"`
-	Notes                               string                                   `json:"notes"`
-	PKCEEnabled                         bool                                     `json:"pkceEnabled"`
-	PKCESupported                       *bool                                    `json:"pkceSupported,omitempty"`
-	RefreshTokenDurationMinutes         int64                                    `json:"refreshTokenDurationMinutes"`
-	RequiresPushedAuthorizationRequests bool                                     `json:"requiresPushedAuthorizationRequests"`
-	RequiresReauthentication            bool                                     `json:"requiresReauthentication"`
-	SkipConsent                         bool                                     `json:"skipConsent"`
+	AccessTokenDurationMinutes          int64                    `json:"accessTokenDurationMinutes"`
+	AllowedUserGroups                   []UserGroupMinimalDto    `json:"allowedUserGroups"`
+	BackchannelLogoutURL                string                   `json:"backchannelLogoutURL"`
+	CallbackURLs                        []string                 `json:"callbackURLs"`
+	ClaimMappingPolicyID                string                   `json:"claimMappingPolicyId"`
+	ClientType                          string                   `json:"clientType"`
+	Credentials                         OIDCClientCredentialsDto `json:"credentials"`
+	Disabled                            bool                     `json:"disabled"`
+	HasDarkLogo                         bool                     `json:"hasDarkLogo"`
+	HasLogo                             bool                     `json:"hasLogo"`
+	ID                                  string                   `json:"id"`
+	IsGroupRestricted                   bool                     `json:"isGroupRestricted"`
+	IsPublic                            bool                     `json:"isPublic"`
+	LaunchURL                           string                   `json:"launchURL"`
+	LogoutCallbackURLs                  []string                 `json:"logoutCallbackURLs"`
+	Name                                string                   `json:"name"`
+	Notes                               string                   `json:"notes"`
+	PKCEEnabled                         bool                     `json:"pkceEnabled"`
+	PKCESupported                       *bool                    `json:"pkceSupported,omitempty"`
+	RefreshTokenDurationMinutes         int64                    `json:"refreshTokenDurationMinutes"`
+	RequiresPushedAuthorizationRequests bool                     `json:"requiresPushedAuthorizationRequests"`
+	RequiresReauthentication            bool                     `json:"requiresReauthentication"`
+	SkipConsent                         bool                     `json:"skipConsent"`
 }
 
 // OIDCClientWithAllowedUserGroupsDto defines model for OidcClientWithAllowedUserGroupsDto.
 type OIDCClientWithAllowedUserGroupsDto struct {
-	AccessTokenDurationMinutes          int64                                    `json:"accessTokenDurationMinutes"`
-	AllowedUserGroups                   nullable.Nullable[[]UserGroupMinimalDto] `json:"allowedUserGroups"`
-	BackchannelLogoutURL                string                                   `json:"backchannelLogoutURL"`
-	CallbackURLs                        nullable.Nullable[[]string]              `json:"callbackURLs"`
-	ClaimMappingPolicyID                string                                   `json:"claimMappingPolicyId"`
-	ClientType                          string                                   `json:"clientType"`
-	Credentials                         OIDCClientCredentialsDto                 `json:"credentials"`
-	Disabled                            bool                                     `json:"disabled"`
-	HasDarkLogo                         bool                                     `json:"hasDarkLogo"`
-	HasLogo                             bool                                     `json:"hasLogo"`
-	ID                                  string                                   `json:"id"`
-	IsGroupRestricted                   bool                                     `json:"isGroupRestricted"`
-	IsPublic                            bool                                     `json:"isPublic"`
-	LaunchURL                           nullable.Nullable[string]                `json:"launchURL"`
-	LogoutCallbackURLs                  nullable.Nullable[[]string]              `json:"logoutCallbackURLs"`
-	Name                                string                                   `json:"name"`
-	Notes                               string                                   `json:"notes"`
-	PKCEEnabled                         bool                                     `json:"pkceEnabled"`
-	PKCESupported                       *bool                                    `json:"pkceSupported,omitempty"`
-	RefreshTokenDurationMinutes         int64                                    `json:"refreshTokenDurationMinutes"`
-	RequiresPushedAuthorizationRequests bool                                     `json:"requiresPushedAuthorizationRequests"`
-	RequiresReauthentication            bool                                     `json:"requiresReauthentication"`
-	SkipConsent                         bool                                     `json:"skipConsent"`
+	AccessTokenDurationMinutes          int64                    `json:"accessTokenDurationMinutes"`
+	AllowedUserGroups                   []UserGroupMinimalDto    `json:"allowedUserGroups"`
+	BackchannelLogoutURL                string                   `json:"backchannelLogoutURL"`
+	CallbackURLs                        []string                 `json:"callbackURLs"`
+	ClaimMappingPolicyID                string                   `json:"claimMappingPolicyId"`
+	ClientType                          string                   `json:"clientType"`
+	Credentials                         OIDCClientCredentialsDto `json:"credentials"`
+	Disabled                            bool                     `json:"disabled"`
+	HasDarkLogo                         bool                     `json:"hasDarkLogo"`
+	HasLogo                             bool                     `json:"hasLogo"`
+	ID                                  string                   `json:"id"`
+	IsGroupRestricted                   bool                     `json:"isGroupRestricted"`
+	IsPublic                            bool                     `json:"isPublic"`
+	LaunchURL                           string                   `json:"launchURL"`
+	LogoutCallbackURLs                  []string                 `json:"logoutCallbackURLs"`
+	Name                                string                   `json:"name"`
+	Notes                               string                   `json:"notes"`
+	PKCEEnabled                         bool                     `json:"pkceEnabled"`
+	PKCESupported                       *bool                    `json:"pkceSupported,omitempty"`
+	RefreshTokenDurationMinutes         int64                    `json:"refreshTokenDurationMinutes"`
+	RequiresPushedAuthorizationRequests bool                     `json:"requiresPushedAuthorizationRequests"`
+	RequiresReauthentication            bool                     `json:"requiresReauthentication"`
+	SkipConsent                         bool                     `json:"skipConsent"`
 }
 
 // OIDCUpdateAllowedUserGroupsDto defines model for OidcUpdateAllowedUserGroupsDto.
@@ -1800,86 +1801,86 @@ type OIDCUpdateAllowedUserGroupsDto struct {
 
 // PaginatedAPIAPIClientAccessDto defines model for Paginated_api.apiClientAccessDto.
 type PaginatedAPIAPIClientAccessDto struct {
-	Data       nullable.Nullable[[]APIClientAccessDto] `json:"data"`
-	Pagination PaginationResponse                      `json:"pagination"`
+	Data       []APIClientAccessDto `json:"data"`
+	Pagination PaginationResponse   `json:"pagination"`
 }
 
 // PaginatedAPIAPIClientDto defines model for Paginated_api.apiClientDto.
 type PaginatedAPIAPIClientDto struct {
-	Data       nullable.Nullable[[]APIClientDto] `json:"data"`
-	Pagination PaginationResponse                `json:"pagination"`
+	Data       []APIClientDto     `json:"data"`
+	Pagination PaginationResponse `json:"pagination"`
 }
 
 // PaginatedAPIAPIResponseDto defines model for Paginated_api.apiResponseDto.
 type PaginatedAPIAPIResponseDto struct {
-	Data       nullable.Nullable[[]APIResponseDto] `json:"data"`
-	Pagination PaginationResponse                  `json:"pagination"`
+	Data       []APIResponseDto   `json:"data"`
+	Pagination PaginationResponse `json:"pagination"`
 }
 
 // PaginatedApikeyAPIKeyDto defines model for Paginated_apikey.apiKeyDto.
 type PaginatedApikeyAPIKeyDto struct {
-	Data       nullable.Nullable[[]APIKeyDto] `json:"data"`
-	Pagination PaginationResponse             `json:"pagination"`
+	Data       []APIKeyDto        `json:"data"`
+	Pagination PaginationResponse `json:"pagination"`
 }
 
 // PaginatedAuditlogsAuditLogDto defines model for Paginated_auditlogs.auditLogDto.
 type PaginatedAuditlogsAuditLogDto struct {
-	Data       nullable.Nullable[[]AuditLogDto] `json:"data"`
-	Pagination PaginationResponse               `json:"pagination"`
+	Data       []AuditLogDto      `json:"data"`
+	Pagination PaginationResponse `json:"pagination"`
 }
 
 // PaginatedClaimmappingpolicyCustomScopeDto defines model for Paginated_claimmappingpolicy.CustomScopeDto.
 type PaginatedClaimmappingpolicyCustomScopeDto struct {
-	Data       nullable.Nullable[[]CustomScopeDto] `json:"data"`
-	Pagination PaginationResponse                  `json:"pagination"`
+	Data       []CustomScopeDto   `json:"data"`
+	Pagination PaginationResponse `json:"pagination"`
 }
 
 // PaginatedClaimmappingpolicyOIDCClaimMappingPolicyMetadataDto defines model for Paginated_claimmappingpolicy.OidcClaimMappingPolicyMetadataDto.
 type PaginatedClaimmappingpolicyOIDCClaimMappingPolicyMetadataDto struct {
-	Data       nullable.Nullable[[]OIDCClaimMappingPolicyMetadataDto] `json:"data"`
-	Pagination PaginationResponse                                     `json:"pagination"`
+	Data       []OIDCClaimMappingPolicyMetadataDto `json:"data"`
+	Pagination PaginationResponse                  `json:"pagination"`
 }
 
 // PaginatedDtoAccessibleOIDCClientDto defines model for Paginated_dto.AccessibleOidcClientDto.
 type PaginatedDtoAccessibleOIDCClientDto struct {
-	Data       nullable.Nullable[[]AccessibleOIDCClientDto] `json:"data"`
-	Pagination PaginationResponse                           `json:"pagination"`
+	Data       []AccessibleOIDCClientDto `json:"data"`
+	Pagination PaginationResponse        `json:"pagination"`
 }
 
 // PaginatedDtoAuthorizedOIDCClientDto defines model for Paginated_dto.AuthorizedOidcClientDto.
 type PaginatedDtoAuthorizedOIDCClientDto struct {
-	Data       nullable.Nullable[[]AuthorizedOIDCClientDto] `json:"data"`
-	Pagination PaginationResponse                           `json:"pagination"`
+	Data       []AuthorizedOIDCClientDto `json:"data"`
+	Pagination PaginationResponse        `json:"pagination"`
 }
 
 // PaginatedDtoOIDCClientMetaDataDto defines model for Paginated_dto.OidcClientMetaDataDto.
 type PaginatedDtoOIDCClientMetaDataDto struct {
-	Data       nullable.Nullable[[]OIDCClientMetaDataDto] `json:"data"`
-	Pagination PaginationResponse                         `json:"pagination"`
+	Data       []OIDCClientMetaDataDto `json:"data"`
+	Pagination PaginationResponse      `json:"pagination"`
 }
 
 // PaginatedDtoOIDCClientWithAllowedGroupsDto defines model for Paginated_dto.OidcClientWithAllowedGroupsDto.
 type PaginatedDtoOIDCClientWithAllowedGroupsDto struct {
-	Data       nullable.Nullable[[]OIDCClientWithAllowedGroupsDto] `json:"data"`
-	Pagination PaginationResponse                                  `json:"pagination"`
+	Data       []OIDCClientWithAllowedGroupsDto `json:"data"`
+	Pagination PaginationResponse               `json:"pagination"`
 }
 
 // PaginatedDtoUserDto defines model for Paginated_dto.UserDto.
 type PaginatedDtoUserDto struct {
-	Data       nullable.Nullable[[]UserDto] `json:"data"`
-	Pagination PaginationResponse           `json:"pagination"`
+	Data       []UserDto          `json:"data"`
+	Pagination PaginationResponse `json:"pagination"`
 }
 
 // PaginatedDtoUserGroupMinimalDto defines model for Paginated_dto.UserGroupMinimalDto.
 type PaginatedDtoUserGroupMinimalDto struct {
-	Data       nullable.Nullable[[]UserGroupMinimalDto] `json:"data"`
-	Pagination PaginationResponse                       `json:"pagination"`
+	Data       []UserGroupMinimalDto `json:"data"`
+	Pagination PaginationResponse    `json:"pagination"`
 }
 
 // PaginatedUsersignupSignupTokenDto defines model for Paginated_usersignup.signupTokenDto.
 type PaginatedUsersignupSignupTokenDto struct {
-	Data       nullable.Nullable[[]SignupTokenDto] `json:"data"`
-	Pagination PaginationResponse                  `json:"pagination"`
+	Data       []SignupTokenDto   `json:"data"`
+	Pagination PaginationResponse `json:"pagination"`
 }
 
 // PaginationResponse defines model for PaginationResponse.
@@ -1906,11 +1907,11 @@ type SCIMServiceProviderCreateDTO struct {
 
 // SCIMServiceProviderDTO defines model for ScimServiceProviderDTO.
 type SCIMServiceProviderDTO struct {
-	CreatedAt    time.Time                    `json:"createdAt"`
-	Endpoint     string                       `json:"endpoint"`
-	HasToken     bool                         `json:"hasToken"`
-	ID           string                       `json:"id"`
-	LastSyncedAt nullable.Nullable[time.Time] `json:"lastSyncedAt"`
+	CreatedAt    time.Time  `json:"createdAt"`
+	Endpoint     string     `json:"endpoint"`
+	HasToken     bool       `json:"hasToken"`
+	ID           string     `json:"id"`
+	LastSyncedAt *time.Time `json:"lastSyncedAt,omitempty"`
 }
 
 // Status defines model for Status.
@@ -1936,20 +1937,20 @@ type UserCreateDto struct {
 
 // UserDto defines model for UserDto.
 type UserDto struct {
-	CustomClaims              nullable.Nullable[[]CustomClaimDto]      `json:"customClaims"`
-	Disabled                  bool                                     `json:"disabled"`
-	DisplayName               string                                   `json:"displayName"`
-	Email                     nullable.Nullable[string]                `json:"email"`
-	EmailVerificationDeadline nullable.Nullable[time.Time]             `json:"emailVerificationDeadline,omitempty"`
-	EmailVerified             bool                                     `json:"emailVerified"`
-	FirstName                 string                                   `json:"firstName"`
-	ID                        string                                   `json:"id"`
-	IsAdmin                   bool                                     `json:"isAdmin"`
-	LastName                  nullable.Nullable[string]                `json:"lastName"`
-	LDAPID                    nullable.Nullable[string]                `json:"ldapId"`
-	Locale                    nullable.Nullable[string]                `json:"locale"`
-	UserGroups                nullable.Nullable[[]UserGroupMinimalDto] `json:"userGroups"`
-	Username                  string                                   `json:"username"`
+	CustomClaims              []CustomClaimDto      `json:"customClaims"`
+	Disabled                  bool                  `json:"disabled"`
+	DisplayName               string                `json:"displayName"`
+	Email                     string                `json:"email"`
+	EmailVerificationDeadline *time.Time            `json:"emailVerificationDeadline,omitempty"`
+	EmailVerified             bool                  `json:"emailVerified"`
+	FirstName                 string                `json:"firstName"`
+	ID                        string                `json:"id"`
+	IsAdmin                   bool                  `json:"isAdmin"`
+	LastName                  string                `json:"lastName"`
+	LDAPID                    string                `json:"ldapId"`
+	Locale                    string                `json:"locale"`
+	UserGroups                []UserGroupMinimalDto `json:"userGroups"`
+	Username                  string                `json:"username"`
 }
 
 // UserGroupCreateDto defines model for UserGroupCreateDto.
@@ -1961,26 +1962,26 @@ type UserGroupCreateDto struct {
 
 // UserGroupDto defines model for UserGroupDto.
 type UserGroupDto struct {
-	AllowedOIDCClients nullable.Nullable[[]OIDCClientMetaDataDto] `json:"allowedOidcClients"`
-	CreatedAt          time.Time                                  `json:"createdAt"`
-	CustomClaims       nullable.Nullable[[]CustomClaimDto]        `json:"customClaims"`
-	FriendlyName       string                                     `json:"friendlyName"`
-	ID                 string                                     `json:"id"`
-	LDAPID             nullable.Nullable[string]                  `json:"ldapId"`
-	Name               string                                     `json:"name"`
-	Notes              string                                     `json:"notes"`
-	Users              nullable.Nullable[[]UserDto]               `json:"users"`
+	AllowedOIDCClients []OIDCClientMetaDataDto `json:"allowedOidcClients"`
+	CreatedAt          time.Time               `json:"createdAt"`
+	CustomClaims       []CustomClaimDto        `json:"customClaims"`
+	FriendlyName       string                  `json:"friendlyName"`
+	ID                 string                  `json:"id"`
+	LDAPID             string                  `json:"ldapId"`
+	Name               string                  `json:"name"`
+	Notes              string                  `json:"notes"`
+	Users              []UserDto               `json:"users"`
 }
 
 // UserGroupMinimalDto defines model for UserGroupMinimalDto.
 type UserGroupMinimalDto struct {
-	CreatedAt    time.Time                           `json:"createdAt"`
-	CustomClaims nullable.Nullable[[]CustomClaimDto] `json:"customClaims"`
-	FriendlyName string                              `json:"friendlyName"`
-	ID           string                              `json:"id"`
-	LDAPID       nullable.Nullable[string]           `json:"ldapId"`
-	Name         string                              `json:"name"`
-	UserCount    int64                               `json:"userCount"`
+	CreatedAt    time.Time        `json:"createdAt"`
+	CustomClaims []CustomClaimDto `json:"customClaims"`
+	FriendlyName string           `json:"friendlyName"`
+	ID           string           `json:"id"`
+	LDAPID       string           `json:"ldapId"`
+	Name         string           `json:"name"`
+	UserCount    int64            `json:"userCount"`
 }
 
 // UserGroupUpdateAllowedOIDCClientsDto defines model for UserGroupUpdateAllowedOidcClientsDto.
@@ -2000,18 +2001,18 @@ type UserUpdateUserGroupDto struct {
 
 // WebauthnCredentialDto defines model for WebauthnCredentialDto.
 type WebauthnCredentialDto struct {
-	Aaguid                    string                      `json:"aaguid"`
-	AttestationType           string                      `json:"attestationType"`
-	AttestationVerified       bool                        `json:"attestationVerified"`
-	BackupEligible            bool                        `json:"backupEligible"`
-	BackupState               bool                        `json:"backupState"`
-	CreatedAt                 time.Time                   `json:"createdAt"`
-	CredentialID              string                      `json:"credentialID"`
-	HasIcon                   bool                        `json:"hasIcon"`
-	ID                        string                      `json:"id"`
-	Name                      string                      `json:"name"`
-	Transport                 nullable.Nullable[[]string] `json:"transport"`
-	VerifiedAuthenticatorName *string                     `json:"verifiedAuthenticatorName,omitempty"`
+	Aaguid                    string    `json:"aaguid"`
+	AttestationType           string    `json:"attestationType"`
+	AttestationVerified       bool      `json:"attestationVerified"`
+	BackupEligible            bool      `json:"backupEligible"`
+	BackupState               bool      `json:"backupState"`
+	CreatedAt                 time.Time `json:"createdAt"`
+	CredentialID              string    `json:"credentialID"`
+	HasIcon                   bool      `json:"hasIcon"`
+	ID                        string    `json:"id"`
+	Name                      string    `json:"name"`
+	Transport                 []string  `json:"transport"`
+	VerifiedAuthenticatorName *string   `json:"verifiedAuthenticatorName,omitempty"`
 }
 
 // APICIMDAccessUpdateDto defines model for apiCimdAccessUpdateDto.
@@ -2022,13 +2023,13 @@ type APICIMDAccessUpdateDto struct {
 
 // APIClientAccessDto defines model for apiClientAccessDto.
 type APIClientAccessDto struct {
-	CIMDGrantedAccess          bool                        `json:"cimdGrantedAccess"`
-	CIMDGrantedPermissionIDs   nullable.Nullable[[]string] `json:"cimdGrantedPermissionIds"`
-	Client                     APIClientDto                `json:"client"`
-	ClientAccess               bool                        `json:"clientAccess"`
-	ClientPermissionIDs        nullable.Nullable[[]string] `json:"clientPermissionIds"`
-	UserDelegatedAccess        bool                        `json:"userDelegatedAccess"`
-	UserDelegatedPermissionIDs nullable.Nullable[[]string] `json:"userDelegatedPermissionIds"`
+	CIMDGrantedAccess          bool         `json:"cimdGrantedAccess"`
+	CIMDGrantedPermissionIDs   []string     `json:"cimdGrantedPermissionIds"`
+	Client                     APIClientDto `json:"client"`
+	ClientAccess               bool         `json:"clientAccess"`
+	ClientPermissionIDs        []string     `json:"clientPermissionIds"`
+	UserDelegatedAccess        bool         `json:"userDelegatedAccess"`
+	UserDelegatedPermissionIDs []string     `json:"userDelegatedPermissionIds"`
 }
 
 // APIClientDto defines model for apiClientDto.
@@ -2043,10 +2044,10 @@ type APIClientDto struct {
 
 // APIClientGrantDto defines model for apiClientGrantDto.
 type APIClientGrantDto struct {
-	ClientAccess               bool                        `json:"clientAccess"`
-	ClientPermissionIDs        nullable.Nullable[[]string] `json:"clientPermissionIds"`
-	UserDelegatedAccess        bool                        `json:"userDelegatedAccess"`
-	UserDelegatedPermissionIDs nullable.Nullable[[]string] `json:"userDelegatedPermissionIds"`
+	ClientAccess               bool     `json:"clientAccess"`
+	ClientPermissionIDs        []string `json:"clientPermissionIds"`
+	UserDelegatedAccess        bool     `json:"userDelegatedAccess"`
+	UserDelegatedPermissionIDs []string `json:"userDelegatedPermissionIds"`
 }
 
 // APIClientGrantUpdateDto defines model for apiClientGrantUpdateDto.
@@ -2073,15 +2074,15 @@ type APIKeyCreateDto struct {
 
 // APIKeyDto defines model for apiKeyDto.
 type APIKeyDto struct {
-	CreatedAt            time.Time                    `json:"createdAt"`
-	Description          nullable.Nullable[string]    `json:"description"`
-	ExpirationEmailSent  bool                         `json:"expirationEmailSent"`
-	ExpiresAt            time.Time                    `json:"expiresAt"`
-	ID                   string                       `json:"id"`
-	LastUsedAt           nullable.Nullable[time.Time] `json:"lastUsedAt"`
-	Name                 string                       `json:"name"`
-	PreviousKeyExpiresAt nullable.Nullable[time.Time] `json:"previousKeyExpiresAt"`
-	Scopes               nullable.Nullable[[]string]  `json:"scopes"`
+	CreatedAt            time.Time  `json:"createdAt"`
+	Description          string     `json:"description"`
+	ExpirationEmailSent  bool       `json:"expirationEmailSent"`
+	ExpiresAt            time.Time  `json:"expiresAt"`
+	ID                   string     `json:"id"`
+	LastUsedAt           *time.Time `json:"lastUsedAt,omitempty"`
+	Name                 string     `json:"name"`
+	PreviousKeyExpiresAt *time.Time `json:"previousKeyExpiresAt,omitempty"`
+	Scopes               []string   `json:"scopes"`
 }
 
 // APIKeyRenewDto defines model for apiKeyRenewDto.
@@ -2112,11 +2113,11 @@ type APIPermissionInputDto struct {
 
 // APIPermissionResponseDto defines model for apiPermissionResponseDto.
 type APIPermissionResponseDto struct {
-	AllowedForCIMDClients bool                      `json:"allowedForCimdClients"`
-	Description           nullable.Nullable[string] `json:"description,omitempty"`
-	ID                    string                    `json:"id"`
-	Key                   string                    `json:"key"`
-	Name                  string                    `json:"name"`
+	AllowedForCIMDClients bool   `json:"allowedForCimdClients"`
+	Description           string `json:"description"`
+	ID                    string `json:"id"`
+	Key                   string `json:"key"`
+	Name                  string `json:"name"`
 }
 
 // APIPermissionsUpdateDto defines model for apiPermissionsUpdateDto.
@@ -2126,12 +2127,12 @@ type APIPermissionsUpdateDto struct {
 
 // APIResponseDto defines model for apiResponseDto.
 type APIResponseDto struct {
-	AllowCIMDClients bool                                          `json:"allowCimdClients"`
-	CreatedAt        time.Time                                     `json:"createdAt"`
-	ID               string                                        `json:"id"`
-	Name             string                                        `json:"name"`
-	Permissions      nullable.Nullable[[]APIPermissionResponseDto] `json:"permissions"`
-	Resource         string                                        `json:"resource"`
+	AllowCIMDClients bool                       `json:"allowCimdClients"`
+	CreatedAt        time.Time                  `json:"createdAt"`
+	ID               string                     `json:"id"`
+	Name             string                     `json:"name"`
+	Permissions      []APIPermissionResponseDto `json:"permissions"`
+	Resource         string                     `json:"resource"`
 }
 
 // APIUpdateDto defines model for apiUpdateDto.
@@ -2141,19 +2142,19 @@ type APIUpdateDto struct {
 
 // AuditLogDto defines model for auditLogDto.
 type AuditLogDto struct {
-	ActorID   string                               `json:"actorID"`
-	ActorName string                               `json:"actorName"`
-	ActorType string                               `json:"actorType"`
-	City      string                               `json:"city"`
-	Country   string                               `json:"country"`
-	CreatedAt time.Time                            `json:"createdAt"`
-	Data      nullable.Nullable[map[string]string] `json:"data"`
-	Device    string                               `json:"device"`
-	Event     string                               `json:"event"`
-	ID        string                               `json:"id"`
-	IPAddress string                               `json:"ipAddress"`
-	UserID    string                               `json:"userID"`
-	Username  string                               `json:"username"`
+	ActorID   string            `json:"actorID"`
+	ActorName string            `json:"actorName"`
+	ActorType string            `json:"actorType"`
+	City      string            `json:"city"`
+	Country   string            `json:"country"`
+	CreatedAt time.Time         `json:"createdAt"`
+	Data      map[string]string `json:"data"`
+	Device    string            `json:"device"`
+	Event     string            `json:"event"`
+	ID        string            `json:"id"`
+	IPAddress string            `json:"ipAddress"`
+	UserID    string            `json:"userID"`
+	Username  string            `json:"username"`
 }
 
 // ClaimMappingsPreviewInput defines model for claimMappingsPreviewInput.
@@ -2165,13 +2166,13 @@ type ClaimMappingsPreviewInput struct {
 
 // ClientAPIGrantDto defines model for clientApiGrantDto.
 type ClientAPIGrantDto struct {
-	API                        APIResponseDto              `json:"api"`
-	CIMDGrantedAccess          bool                        `json:"cimdGrantedAccess"`
-	CIMDGrantedPermissionIDs   nullable.Nullable[[]string] `json:"cimdGrantedPermissionIds"`
-	ClientAccess               bool                        `json:"clientAccess"`
-	ClientPermissionIDs        nullable.Nullable[[]string] `json:"clientPermissionIds"`
-	UserDelegatedAccess        bool                        `json:"userDelegatedAccess"`
-	UserDelegatedPermissionIDs nullable.Nullable[[]string] `json:"userDelegatedPermissionIds"`
+	API                        APIResponseDto `json:"api"`
+	CIMDGrantedAccess          bool           `json:"cimdGrantedAccess"`
+	CIMDGrantedPermissionIDs   []string       `json:"cimdGrantedPermissionIds"`
+	ClientAccess               bool           `json:"clientAccess"`
+	ClientPermissionIDs        []string       `json:"clientPermissionIds"`
+	UserDelegatedAccess        bool           `json:"userDelegatedAccess"`
+	UserDelegatedPermissionIDs []string       `json:"userDelegatedPermissionIds"`
 }
 
 // CurrentVersionDto defines model for currentVersionDto.
@@ -2244,10 +2245,10 @@ type LatestVersionDto struct {
 
 // LogoPresetDto defines model for logoPresetDto.
 type LogoPresetDto struct {
-	DarkLogoURL nullable.Nullable[string] `json:"darkLogoUrl"`
-	LogoURL     string                    `json:"logoUrl"`
-	Name        string                    `json:"name"`
-	Reference   string                    `json:"reference"`
+	DarkLogoURL string `json:"darkLogoUrl"`
+	LogoURL     string `json:"logoUrl"`
+	Name        string `json:"name"`
+	Reference   string `json:"reference"`
 }
 
 // RequestCreateDto defines model for requestCreateDto.
@@ -2309,15 +2310,15 @@ type SignupTokenCreateDto_TTL struct {
 
 // SignupTokenDto defines model for signupTokenDto.
 type SignupTokenDto struct {
-	CreatedAt  time.Time                                `json:"createdAt"`
-	ExpiresAt  time.Time                                `json:"expiresAt"`
-	ID         string                                   `json:"id"`
-	Prefix     string                                   `json:"prefix"`
-	SentTo     *string                                  `json:"sentTo,omitempty"`
-	Token      *string                                  `json:"token,omitempty"`
-	UsageCount int                                      `json:"usageCount"`
-	UsageLimit int                                      `json:"usageLimit"`
-	UserGroups nullable.Nullable[[]UserGroupMinimalDto] `json:"userGroups"`
+	CreatedAt  time.Time             `json:"createdAt"`
+	ExpiresAt  time.Time             `json:"expiresAt"`
+	ID         string                `json:"id"`
+	Prefix     string                `json:"prefix"`
+	SentTo     *string               `json:"sentTo,omitempty"`
+	Token      *string               `json:"token,omitempty"`
+	UsageCount int                   `json:"usageCount"`
+	UsageLimit int                   `json:"usageLimit"`
+	UserGroups []UserGroupMinimalDto `json:"userGroups"`
 }
 
 // SQLiteStorageWarningDto defines model for sqliteStorageWarningDto.
@@ -2593,6 +2594,7 @@ type PatchApplicationConfigurationsJSONBody struct {
 	LDAPAttributeUserDisplayName               *string                                                                `json:"ldapAttributeUserDisplayName,omitempty"`
 	LDAPAttributeUserEmail                     *string                                                                `json:"ldapAttributeUserEmail,omitempty"`
 	LDAPAttributeUserFirstName                 *string                                                                `json:"ldapAttributeUserFirstName,omitempty"`
+	LDAPAttributeUserLanguage                  *string                                                                `json:"ldapAttributeUserLanguage,omitempty"`
 	LDAPAttributeUserLastName                  *string                                                                `json:"ldapAttributeUserLastName,omitempty"`
 	LDAPAttributeUserProfilePicture            *string                                                                `json:"ldapAttributeUserProfilePicture,omitempty"`
 	LDAPAttributeUserUniqueIdentifier          *string                                                                `json:"ldapAttributeUserUniqueIdentifier,omitempty"`
@@ -2646,6 +2648,7 @@ type PatchApplicationConfigurationsApplicationMergePatchPlusJSONBody struct {
 	LDAPAttributeUserDisplayName               *string                                                                                         `json:"ldapAttributeUserDisplayName,omitempty"`
 	LDAPAttributeUserEmail                     *string                                                                                         `json:"ldapAttributeUserEmail,omitempty"`
 	LDAPAttributeUserFirstName                 *string                                                                                         `json:"ldapAttributeUserFirstName,omitempty"`
+	LDAPAttributeUserLanguage                  *string                                                                                         `json:"ldapAttributeUserLanguage,omitempty"`
 	LDAPAttributeUserLastName                  *string                                                                                         `json:"ldapAttributeUserLastName,omitempty"`
 	LDAPAttributeUserProfilePicture            *string                                                                                         `json:"ldapAttributeUserProfilePicture,omitempty"`
 	LDAPAttributeUserUniqueIdentifier          *string                                                                                         `json:"ldapAttributeUserUniqueIdentifier,omitempty"`

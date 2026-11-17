@@ -130,6 +130,9 @@
           "ldapAttributeUserFirstName": {
             "type": "string"
           },
+          "ldapAttributeUserLanguage": {
+            "type": "string"
+          },
           "ldapAttributeUserLastName": {
             "type": "string"
           },
@@ -5698,6 +5701,9 @@
                   "ldapAttributeUserFirstName": {
                     "type": "string"
                   },
+                  "ldapAttributeUserLanguage": {
+                    "type": "string"
+                  },
                   "ldapAttributeUserLastName": {
                     "type": "string"
                   },
@@ -5889,6 +5895,9 @@
                     "type": "string"
                   },
                   "ldapAttributeUserFirstName": {
+                    "type": "string"
+                  },
+                  "ldapAttributeUserLanguage": {
                     "type": "string"
                   },
                   "ldapAttributeUserLastName": {
