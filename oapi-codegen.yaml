@@ -11,7 +11,8 @@ compatibility:
   always-prefix-enum-values: true
 output-options:
   # nullable.Nullable[T] for `type: [T, "null"]`, so a merge-patch body can tell a
-  # field that is unset (omitted) apart from one explicitly cleared (null).
+  # field that is unset (omitted) apart from one explicitly cleared (null). Schemas
+  # that appear only in responses have `null` stripped first (see generate-client).
   nullable-type: true
   name-normalizer: ToCamelCaseWithInitialisms
   additional-initialisms: [OIDC, SCIM, CIMD, LDAP, JWKS, PKCE, APIs, IDs, SQLite, OpenID, OAuth, OAuth2, MCP]

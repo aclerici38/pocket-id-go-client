@@ -15,8 +15,33 @@ def name: .key as $method
   | if $method == "patch" and .[0] == "update" then .[0] = "patch" end
   | join("-");
 
+def schema_refs: [.. | objects | .["$ref"]? // empty | select(startswith("#/components/schemas/"))
+  | ltrimstr("#/components/schemas/")];
+# Grows a set of schema names until it includes every schema they reference.
+def reachable($schemas): (. + [.[] as $n | $schemas[$n] | schema_refs[]] | unique) as $next
+  | if $next == . then . else $next | reachable($schemas) end;
+def nullable: (.type | type) == "array" and (.type | index("null"));
+
 ([.paths[] | to_entries[] | name] | group_by(.) | map(select(length == 1)[0])) as $unique
 | .paths[] |= with_entries(((name | select(IN($unique[]))) as $n | .value.operationId = $n) // .)
+
+# Upstream marks every pointer, slice and map nullable. Only request bodies need
+# nullable.Nullable to tell unset from cleared, so schemas that appear only in responses
+# drop `null`: slices, maps and strings become plain values (nil and "" stand in for null),
+# while timestamps become *time.Time, since null there means "never" and the zero
+# time.Time would read as long past.
+| .components.schemas as $schemas
+| ([.paths[] | .parameters?, (.[] | objects | .requestBody?, .parameters?) | schema_refs[]]
+   | unique | reachable($schemas)) as $requests
+| .components.schemas |= with_entries(
+    if (.key | IN($requests[])) then . else .value |= (
+      [.properties // {} | to_entries[] | select(.value | nullable) | .key] as $nullable
+      | [.properties // {} | to_entries[] | select((.value | nullable) and .value.format == "date-time") | .key] as $timestamps
+      | if $nullable == [] then . else
+          .required = ((.required // []) + $nullable - $timestamps | unique)
+          | .properties[$nullable[]].type |= (map(select(. != "null")) | if length == 1 then .[0] end)
+        end
+    ) end)
 JQ
 
 mkdir -p client
