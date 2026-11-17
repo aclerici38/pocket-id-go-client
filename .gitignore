@@ -2,10 +2,7 @@
 .upstream/
 
 # Generated files (only committed to release tags, not main)
-client/*
-!client/auth.go
-!client/errors.go
-!client/errors_test.go
+client/*.gen.go
 openapi.json
 
 # IDE
