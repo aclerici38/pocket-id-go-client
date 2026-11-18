@@ -3038,6 +3038,9 @@
           "current": {
             "type": "boolean"
           },
+          "deviceBound": {
+            "type": "boolean"
+          },
           "deviceType": {
             "type": "string"
           },
@@ -3069,6 +3072,7 @@
           "country",
           "createdAt",
           "current",
+          "deviceBound",
           "deviceType",
           "expiresAt",
           "id",

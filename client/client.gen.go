@@ -2187,6 +2187,7 @@ type SessionDto struct {
 	Country              string    `json:"country"`
 	CreatedAt            time.Time `json:"createdAt"`
 	Current              bool      `json:"current"`
+	DeviceBound          bool      `json:"deviceBound"`
 	DeviceType           string    `json:"deviceType"`
 	ExpiresAt            time.Time `json:"expiresAt"`
 	ID                   string    `json:"id"`
