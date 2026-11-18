@@ -12,7 +12,7 @@ go = "1.27.4"
 oapi-codegen = "2.8.2"
 
 # API changelogs for releases and breaking-change detection for the upstream API canary
-"github:oasdiff/oasdiff" = "v1.38.0"
+"github:oasdiff/oasdiff" = "v1.39.0"
 
 # Workflow linting
 zizmor = "1.32.0"

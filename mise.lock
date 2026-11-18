@@ -3,27 +3,27 @@
 lockfile_version = 3
 
 [[tools."github:oasdiff/oasdiff"]]
-version = "1.38.0"
+version = "1.39.0"
 backend = "github:oasdiff/oasdiff"
-specifiers = ["v1.38.0"]
+specifiers = ["v1.39.0"]
 
 [tools."github:oasdiff/oasdiff"."platforms.linux-arm64"]
-checksum = "sha256:a5ebb16d90f729f6b436a92d3054c11ba5633ddfb639dfdfb64b0023cd03680c"
+checksum = "sha256:481db7d891d916f13df277b2ef8bbb95477702827710e49fe22cef69c359c780"
 checksum_source = "mise-versions"
-url = "https://github.com/oasdiff/oasdiff/releases/download/v1.38.0/oasdiff_1.38.0_linux_arm64.tar.gz"
-url_api = "https://api.github.com/repos/oasdiff/oasdiff/releases/assets/747750953"
+url = "https://github.com/oasdiff/oasdiff/releases/download/v1.39.0/oasdiff_1.39.0_linux_arm64.tar.gz"
+url_api = "https://api.github.com/repos/oasdiff/oasdiff/releases/assets/760679266"
 
 [tools."github:oasdiff/oasdiff"."platforms.linux-x64"]
-checksum = "sha256:613037fd6a1d3362a1b742d6d86c338c0eb5ab3511f4942ce3948e78720ea2da"
+checksum = "sha256:71a85930728f367a2086077b7ae1411319421549d18473a3e8258b6451520433"
 checksum_source = "mise-versions"
-url = "https://github.com/oasdiff/oasdiff/releases/download/v1.38.0/oasdiff_1.38.0_linux_amd64.tar.gz"
-url_api = "https://api.github.com/repos/oasdiff/oasdiff/releases/assets/747750952"
+url = "https://github.com/oasdiff/oasdiff/releases/download/v1.39.0/oasdiff_1.39.0_linux_amd64.tar.gz"
+url_api = "https://api.github.com/repos/oasdiff/oasdiff/releases/assets/760679280"
 
 [tools."github:oasdiff/oasdiff"."platforms.macos-arm64"]
-checksum = "sha256:8a85428df3b00e76e7d41c49d222533c9beec813e9cbdc8162f3a6e776604c18"
+checksum = "sha256:fe88d9950324d3b0ebeaf8e0d3a210b64cb099a0f55fce5ee5a22b276df0eac4"
 checksum_source = "mise-versions"
-url = "https://github.com/oasdiff/oasdiff/releases/download/v1.38.0/oasdiff_1.38.0_darwin_all.tar.gz"
-url_api = "https://api.github.com/repos/oasdiff/oasdiff/releases/assets/747751019"
+url = "https://github.com/oasdiff/oasdiff/releases/download/v1.39.0/oasdiff_1.39.0_darwin_all.tar.gz"
+url_api = "https://api.github.com/repos/oasdiff/oasdiff/releases/assets/760679349"
 
 [[tools.go]]
 version = "1.27.4"
