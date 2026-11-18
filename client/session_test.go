@@ -1,19 +1,25 @@
 package client
 
 import (
+	"context"
 	"encoding/json"
+	"net"
 	"net/http"
 	"net/http/cookiejar"
 	"net/http/httptest"
+	"net/url"
+	"strings"
 	"testing"
 	"time"
 )
 
+// Plain http uses a non-loopback host: cookiejar treats loopback as secure.
 func TestNewSession(t *testing.T) {
-	for _, name := range []string{"session_token", "__Host-session_token"} {
-		t.Run(name, func(t *testing.T) {
+	for _, tc := range []string{"https/session_token", "https/__Host-session_token", "http/session_token", "http/__Host-session_token"} {
+		scheme, name, _ := strings.Cut(tc, "/")
+		t.Run(tc, func(t *testing.T) {
 			var loggedOut string
-			srv := httptest.NewTLSServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			srv := httptest.NewUnstartedServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 				if r.Header.Get(APIKeyHeader) != "" {
 					t.Error("session sent an API key")
 				}
@@ -39,10 +45,19 @@ func TestNewSession(t *testing.T) {
 				}
 			}))
 			defer srv.Close()
-			hc := srv.Client()
+			var hc *http.Client
+			base := "http://pocket-id.svc/prefix"
+			if scheme == "https" {
+				srv.StartTLS()
+				hc, base = srv.Client(), srv.URL+"/prefix"
+			} else {
+				srv.Start()
+				hc = &http.Client{Transport: &http.Transport{DialContext: func(ctx context.Context, network, _ string) (net.Conn, error) {
+					return (&net.Dialer{}).DialContext(ctx, network, srv.Listener.Addr().String())
+				}}}
+			}
 			hc.Timeout = time.Second
 			hc.Jar, _ = cookiejar.New(nil)
-			base := srv.URL + "/prefix"
 			a, err := NewSession(t.Context(), base, "a", hc)
 			if err != nil {
 				t.Fatal(err)
@@ -64,5 +79,18 @@ func TestNewSession(t *testing.T) {
 				t.Fatalf("failed exchange: %v", err)
 			}
 		})
+	}
+}
+
+func TestSessionJarOrigin(t *testing.T) {
+	for origin, other := range map[string]string{"https://p.test": "http://p.test", "http://p.test": "http://p.test:8080"} {
+		jar, _ := cookiejar.New(nil)
+		j := sessionJar{jar, origin}
+		u, _ := url.Parse(origin)
+		o, _ := url.Parse(other)
+		j.SetCookies(u, []*http.Cookie{{Name: "s", Value: "v", Secure: true}})
+		if len(j.Cookies(u)) != 1 || len(j.Cookies(o)) != 0 {
+			t.Errorf("%s: secure cookie not limited to its origin", origin)
+		}
 	}
 }
