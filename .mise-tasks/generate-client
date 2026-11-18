@@ -21,6 +21,9 @@ def schema_refs: [.. | objects | .["$ref"]? // empty | select(startswith("#/comp
 def reachable($schemas): (. + [.[] as $n | $schemas[$n] | schema_refs[]] | unique) as $next
   | if $next == . then . else $next | reachable($schemas) end;
 def nullable: (.type | type) == "array" and (.type | index("null"));
+def requests($schemas): [.paths[] | .parameters?, (.[] | objects | .requestBody?, .parameters?) | schema_refs[]]
+  | unique | reachable($schemas);
+def input_name: sub("(Dto)?$"; "InputDto");
 
 ([.paths[] | to_entries[] | name] | group_by(.) | map(select(length == 1)[0])) as $unique
 | .paths[] |= with_entries(((name | select(IN($unique[]))) as $n | .value.operationId = $n) // .)
@@ -33,16 +36,31 @@ def nullable: (.type | type) == "array" and (.type | index("null"));
       | .schema["x-go-type"]) = "OIDCClientID"
   ))
 
+# Upstream emits one schema per Go type, and one that requests also use keeps only the
+# request's required fields. Requests get a copy named …InputDto instead, so the original
+# is response-only and goes through the rule below.
+| .components.schemas as $schemas
+| requests($schemas) as $requests
+| ([.paths[][] | objects | .responses? | schema_refs[]] | unique | reachable($schemas)) as $responses
+| [$requests[] | select(IN($responses[]))] as $shared
+| if any($shared[] | input_name; . as $n | $schemas | has($n)) then error("an …InputDto name is taken") end
+| def to_input: walk(if type == "object" and (.["$ref"]? | type) == "string"
+    and (.["$ref"] | ltrimstr("#/components/schemas/") | IN($shared[])) then .["$ref"] |= input_name end);
+  .paths[] |= with_entries(.value |= if type == "object"
+    then with_entries(if .key == "responses" then . else .value |= to_input end) else to_input end)
+| .components.schemas |= with_entries(if .key | IN($requests[]) and (IN($shared[]) | not) then .value |= to_input end)
+    + ([$shared[] | {key: input_name, value: ($schemas[.] | to_input)}] | from_entries)
+
 # Upstream marks every pointer, slice and map nullable. Only request bodies need
 # nullable.Nullable to tell unset from cleared, so schemas that appear only in responses
 # drop `null`: slices, maps and strings become plain values (nil and "" stand in for null),
 # while timestamps become *time.Time, since null there means "never" and the zero
 # time.Time would read as long past.
-# Their other optional fields are omitempty values, omitted only when zero, so they become
-# plain too. A $ref stays optional: it is a struct pointer whose absence means "none".
+# Their other fields aren't pointers upstream, so a missing one can only mean the zero value
+# and they become plain too. A $ref stays optional: it is a struct pointer whose absence
+# means "none".
 | .components.schemas as $schemas
-| ([.paths[] | .parameters?, (.[] | objects | .requestBody?, .parameters?) | schema_refs[]]
-   | unique | reachable($schemas)) as $requests
+| requests($schemas) as $requests
 | .components.schemas |= with_entries(
     if (.key | IN($requests[])) or (.value.properties | not) then . else .value |= (
       [.properties | to_entries[] | select(.value | nullable) | .key] as $nullable
