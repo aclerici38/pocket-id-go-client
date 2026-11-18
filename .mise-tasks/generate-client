@@ -38,16 +38,19 @@ def nullable: (.type | type) == "array" and (.type | index("null"));
 # drop `null`: slices, maps and strings become plain values (nil and "" stand in for null),
 # while timestamps become *time.Time, since null there means "never" and the zero
 # time.Time would read as long past.
+# Their other optional fields are omitempty values, omitted only when zero, so they become
+# plain too. A $ref stays optional: it is a struct pointer whose absence means "none".
 | .components.schemas as $schemas
 | ([.paths[] | .parameters?, (.[] | objects | .requestBody?, .parameters?) | schema_refs[]]
    | unique | reachable($schemas)) as $requests
 | .components.schemas |= with_entries(
-    if (.key | IN($requests[])) then . else .value |= (
-      [.properties // {} | to_entries[] | select(.value | nullable) | .key] as $nullable
-      | [.properties // {} | to_entries[] | select((.value | nullable) and .value.format == "date-time") | .key] as $timestamps
+    if (.key | IN($requests[])) or (.value.properties | not) then . else .value |= (
+      [.properties | to_entries[] | select(.value | nullable) | .key] as $nullable
+      | [.properties | to_entries[] | select((.value | nullable) and .value.format == "date-time") | .key] as $timestamps
+      | .required = ((.required // []) + [.properties | to_entries[] | select(.value | has("$ref") | not) | .key]
+          - $timestamps | unique)
       | if $nullable == [] then . else
-          .required = ((.required // []) + $nullable - $timestamps | unique)
-          | .properties[$nullable[]].type |= (map(select(. != "null")) | if length == 1 then .[0] end)
+          .properties[$nullable[]].type |= (map(select(. != "null")) | if length == 1 then .[0] end)
         end
     ) end)
 JQ
