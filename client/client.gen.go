@@ -193,6 +193,27 @@ func (e OIDCClaimMappingDtoSourceType) Valid() bool {
 	}
 }
 
+// Defines values for OIDCClaimMappingInputDtoSourceType.
+const (
+	OIDCClaimMappingInputDtoSourceTypeCustomClaim OIDCClaimMappingInputDtoSourceType = "custom_claim"
+	OIDCClaimMappingInputDtoSourceTypeStatic      OIDCClaimMappingInputDtoSourceType = "static"
+	OIDCClaimMappingInputDtoSourceTypeUserField   OIDCClaimMappingInputDtoSourceType = "user_field"
+)
+
+// Valid indicates whether the value is a known member of the OIDCClaimMappingInputDtoSourceType enum.
+func (e OIDCClaimMappingInputDtoSourceType) Valid() bool {
+	switch e {
+	case OIDCClaimMappingInputDtoSourceTypeCustomClaim:
+		return true
+	case OIDCClaimMappingInputDtoSourceTypeStatic:
+		return true
+	case OIDCClaimMappingInputDtoSourceTypeUserField:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for DecisionDtoDecision.
 const (
 	DecisionDtoDecisionApprove DecisionDtoDecision = "approve"
@@ -1368,6 +1389,16 @@ type CustomClaimDto struct {
 
 // CustomScopeDto defines model for CustomScopeDto.
 type CustomScopeDto struct {
+	CreatedAt   time.Time `json:"createdAt"`
+	Description string    `json:"description"`
+	ID          string    `json:"id"`
+	Key         string    `json:"key"`
+	Name        string    `json:"name"`
+	Policies    []string  `json:"policies"`
+}
+
+// CustomScopeInputDto defines model for CustomScopeInputDto.
+type CustomScopeInputDto struct {
 	CreatedAt   *time.Time                  `json:"createdAt,omitempty"`
 	Description string                      `json:"description"`
 	ID          *string                     `json:"id,omitempty"`
@@ -1391,27 +1422,52 @@ type ErrorDto struct {
 
 // OIDCClaimMappingDto defines model for OidcClaimMappingDto.
 type OIDCClaimMappingDto struct {
-	AccessToken *bool                         `json:"accessToken,omitempty"`
+	AccessToken bool                          `json:"accessToken"`
 	ClaimName   string                        `json:"claimName"`
-	IDToken     *bool                         `json:"idToken,omitempty"`
-	Scope       *[]string                     `json:"scope,omitempty"`
+	IDToken     bool                          `json:"idToken"`
+	Scope       []string                      `json:"scope"`
 	SourceType  OIDCClaimMappingDtoSourceType `json:"sourceType"`
 	SourceValue string                        `json:"sourceValue"`
-	UserInfo    *bool                         `json:"userInfo,omitempty"`
+	UserInfo    bool                          `json:"userInfo"`
 }
 
 // OIDCClaimMappingDtoSourceType defines model for OIDCClaimMappingDto.SourceType.
 type OIDCClaimMappingDtoSourceType string
 
+// OIDCClaimMappingInputDto defines model for OidcClaimMappingInputDto.
+type OIDCClaimMappingInputDto struct {
+	AccessToken *bool                              `json:"accessToken,omitempty"`
+	ClaimName   string                             `json:"claimName"`
+	IDToken     *bool                              `json:"idToken,omitempty"`
+	Scope       *[]string                          `json:"scope,omitempty"`
+	SourceType  OIDCClaimMappingInputDtoSourceType `json:"sourceType"`
+	SourceValue string                             `json:"sourceValue"`
+	UserInfo    *bool                              `json:"userInfo,omitempty"`
+}
+
+// OIDCClaimMappingInputDtoSourceType defines model for OIDCClaimMappingInputDto.SourceType.
+type OIDCClaimMappingInputDtoSourceType string
+
 // OIDCClaimMappingPolicyDto defines model for OidcClaimMappingPolicyDto.
 type OIDCClaimMappingPolicyDto struct {
-	ClaimCount    *int                                     `json:"claimCount,omitempty"`
-	ClaimMappings nullable.Nullable[[]OIDCClaimMappingDto] `json:"claimMappings,omitempty"`
-	ClientCount   *int64                                   `json:"clientCount,omitempty"`
-	CreatedAt     *time.Time                               `json:"createdAt,omitempty"`
-	ID            *string                                  `json:"id,omitempty"`
-	IsDefault     *bool                                    `json:"isDefault,omitempty"`
-	Name          string                                   `json:"name"`
+	ClaimCount    int                   `json:"claimCount"`
+	ClaimMappings []OIDCClaimMappingDto `json:"claimMappings"`
+	ClientCount   int64                 `json:"clientCount"`
+	CreatedAt     time.Time             `json:"createdAt"`
+	ID            string                `json:"id"`
+	IsDefault     bool                  `json:"isDefault"`
+	Name          string                `json:"name"`
+}
+
+// OIDCClaimMappingPolicyInputDto defines model for OidcClaimMappingPolicyInputDto.
+type OIDCClaimMappingPolicyInputDto struct {
+	ClaimCount    *int                                          `json:"claimCount,omitempty"`
+	ClaimMappings nullable.Nullable[[]OIDCClaimMappingInputDto] `json:"claimMappings,omitempty"`
+	ClientCount   *int64                                        `json:"clientCount,omitempty"`
+	CreatedAt     *time.Time                                    `json:"createdAt,omitempty"`
+	ID            *string                                       `json:"id,omitempty"`
+	IsDefault     *bool                                         `json:"isDefault,omitempty"`
+	Name          string                                        `json:"name"`
 }
 
 // OIDCClaimMappingPolicyMetadataDto defines model for OidcClaimMappingPolicyMetadataDto.
@@ -1426,28 +1482,28 @@ type OIDCClaimMappingPolicyMetadataDto struct {
 
 // OIDCClientCreateDto defines model for OidcClientCreateDto.
 type OIDCClientCreateDto struct {
-	AccessTokenDurationMinutes          *int64                      `json:"accessTokenDurationMinutes,omitempty"`
-	BackchannelLogoutURL                *string                     `json:"backchannelLogoutURL,omitempty"`
-	CallbackURLs                        nullable.Nullable[[]string] `json:"callbackURLs,omitempty"`
-	ClaimMappingPolicyID                *string                     `json:"claimMappingPolicyId,omitempty"`
-	Credentials                         *OIDCClientCredentialsDto   `json:"credentials,omitempty"`
-	DarkLogoURL                         nullable.Nullable[string]   `json:"darkLogoUrl,omitempty"`
-	Disabled                            *bool                       `json:"disabled,omitempty"`
-	HasDarkLogo                         *bool                       `json:"hasDarkLogo,omitempty"`
-	HasLogo                             *bool                       `json:"hasLogo,omitempty"`
-	ID                                  *string                     `json:"id,omitempty"`
-	IsGroupRestricted                   *bool                       `json:"isGroupRestricted,omitempty"`
-	IsPublic                            *bool                       `json:"isPublic,omitempty"`
-	LaunchURL                           nullable.Nullable[string]   `json:"launchURL,omitempty"`
-	LogoURL                             nullable.Nullable[string]   `json:"logoUrl,omitempty"`
-	LogoutCallbackURLs                  nullable.Nullable[[]string] `json:"logoutCallbackURLs,omitempty"`
-	Name                                string                      `json:"name"`
-	Notes                               *string                     `json:"notes,omitempty"`
-	PKCEEnabled                         *bool                       `json:"pkceEnabled,omitempty"`
-	RefreshTokenDurationMinutes         *int64                      `json:"refreshTokenDurationMinutes,omitempty"`
-	RequiresPushedAuthorizationRequests *bool                       `json:"requiresPushedAuthorizationRequests,omitempty"`
-	RequiresReauthentication            *bool                       `json:"requiresReauthentication,omitempty"`
-	SkipConsent                         *bool                       `json:"skipConsent,omitempty"`
+	AccessTokenDurationMinutes          *int64                         `json:"accessTokenDurationMinutes,omitempty"`
+	BackchannelLogoutURL                *string                        `json:"backchannelLogoutURL,omitempty"`
+	CallbackURLs                        nullable.Nullable[[]string]    `json:"callbackURLs,omitempty"`
+	ClaimMappingPolicyID                *string                        `json:"claimMappingPolicyId,omitempty"`
+	Credentials                         *OIDCClientCredentialsInputDto `json:"credentials,omitempty"`
+	DarkLogoURL                         nullable.Nullable[string]      `json:"darkLogoUrl,omitempty"`
+	Disabled                            *bool                          `json:"disabled,omitempty"`
+	HasDarkLogo                         *bool                          `json:"hasDarkLogo,omitempty"`
+	HasLogo                             *bool                          `json:"hasLogo,omitempty"`
+	ID                                  *string                        `json:"id,omitempty"`
+	IsGroupRestricted                   *bool                          `json:"isGroupRestricted,omitempty"`
+	IsPublic                            *bool                          `json:"isPublic,omitempty"`
+	LaunchURL                           nullable.Nullable[string]      `json:"launchURL,omitempty"`
+	LogoURL                             nullable.Nullable[string]      `json:"logoUrl,omitempty"`
+	LogoutCallbackURLs                  nullable.Nullable[[]string]    `json:"logoutCallbackURLs,omitempty"`
+	Name                                string                         `json:"name"`
+	Notes                               *string                        `json:"notes,omitempty"`
+	PKCEEnabled                         *bool                          `json:"pkceEnabled,omitempty"`
+	RefreshTokenDurationMinutes         *int64                         `json:"refreshTokenDurationMinutes,omitempty"`
+	RequiresPushedAuthorizationRequests *bool                          `json:"requiresPushedAuthorizationRequests,omitempty"`
+	RequiresReauthentication            *bool                          `json:"requiresReauthentication,omitempty"`
+	SkipConsent                         *bool                          `json:"skipConsent,omitempty"`
 }
 
 // OIDCClientCreatedDto defines model for OidcClientCreatedDto.
@@ -1480,8 +1536,14 @@ type OIDCClientCreatedDto struct {
 
 // OIDCClientCredentialsDto defines model for OidcClientCredentialsDto.
 type OIDCClientCredentialsDto struct {
-	FederatedIdentities nullable.Nullable[[]OIDCClientFederatedIdentityDto] `json:"federatedIdentities,omitempty"`
-	Secrets             nullable.Nullable[[]OIDCClientSecretDto]            `json:"secrets,omitempty"`
+	FederatedIdentities []OIDCClientFederatedIdentityDto `json:"federatedIdentities"`
+	Secrets             []OIDCClientSecretDto            `json:"secrets"`
+}
+
+// OIDCClientCredentialsInputDto defines model for OidcClientCredentialsInputDto.
+type OIDCClientCredentialsInputDto struct {
+	FederatedIdentities nullable.Nullable[[]OIDCClientFederatedIdentityInputDto] `json:"federatedIdentities,omitempty"`
+	Secrets             nullable.Nullable[[]OIDCClientSecretInputDto]            `json:"secrets,omitempty"`
 }
 
 // OIDCClientDto defines model for OidcClientDto.
@@ -1512,6 +1574,16 @@ type OIDCClientDto struct {
 
 // OIDCClientFederatedIdentityDto defines model for OidcClientFederatedIdentityDto.
 type OIDCClientFederatedIdentityDto struct {
+	Audience         string        `json:"audience"`
+	Issuer           string        `json:"issuer"`
+	JWKS             string        `json:"jwks"`
+	PublicKeys       []interface{} `json:"publicKeys"`
+	ReplayProtection bool          `json:"replayProtection"`
+	Subject          string        `json:"subject"`
+}
+
+// OIDCClientFederatedIdentityInputDto defines model for OidcClientFederatedIdentityInputDto.
+type OIDCClientFederatedIdentityInputDto struct {
 	Audience         *string                          `json:"audience,omitempty"`
 	Issuer           *string                          `json:"issuer,omitempty"`
 	JWKS             *string                          `json:"jwks,omitempty"`
@@ -1556,6 +1628,15 @@ type OIDCClientSecretCreatedDto struct {
 
 // OIDCClientSecretDto defines model for OidcClientSecretDto.
 type OIDCClientSecretDto struct {
+	CreatedAt time.Time  `json:"createdAt"`
+	ExpiresAt *time.Time `json:"expiresAt,omitempty"`
+	ID        string     `json:"id"`
+	IsActive  bool       `json:"isActive"`
+	Prefix    string     `json:"prefix"`
+}
+
+// OIDCClientSecretInputDto defines model for OidcClientSecretInputDto.
+type OIDCClientSecretInputDto struct {
 	CreatedAt *time.Time                   `json:"createdAt,omitempty"`
 	ExpiresAt nullable.Nullable[time.Time] `json:"expiresAt,omitempty"`
 	ID        *string                      `json:"id,omitempty"`
@@ -1565,27 +1646,27 @@ type OIDCClientSecretDto struct {
 
 // OIDCClientUpdateDto defines model for OidcClientUpdateDto.
 type OIDCClientUpdateDto struct {
-	AccessTokenDurationMinutes          *int64                      `json:"accessTokenDurationMinutes,omitempty"`
-	BackchannelLogoutURL                *string                     `json:"backchannelLogoutURL,omitempty"`
-	CallbackURLs                        nullable.Nullable[[]string] `json:"callbackURLs,omitempty"`
-	ClaimMappingPolicyID                *string                     `json:"claimMappingPolicyId,omitempty"`
-	Credentials                         *OIDCClientCredentialsDto   `json:"credentials,omitempty"`
-	DarkLogoURL                         nullable.Nullable[string]   `json:"darkLogoUrl,omitempty"`
-	Disabled                            *bool                       `json:"disabled,omitempty"`
-	HasDarkLogo                         *bool                       `json:"hasDarkLogo,omitempty"`
-	HasLogo                             *bool                       `json:"hasLogo,omitempty"`
-	IsGroupRestricted                   *bool                       `json:"isGroupRestricted,omitempty"`
-	IsPublic                            *bool                       `json:"isPublic,omitempty"`
-	LaunchURL                           nullable.Nullable[string]   `json:"launchURL,omitempty"`
-	LogoURL                             nullable.Nullable[string]   `json:"logoUrl,omitempty"`
-	LogoutCallbackURLs                  nullable.Nullable[[]string] `json:"logoutCallbackURLs,omitempty"`
-	Name                                string                      `json:"name"`
-	Notes                               *string                     `json:"notes,omitempty"`
-	PKCEEnabled                         *bool                       `json:"pkceEnabled,omitempty"`
-	RefreshTokenDurationMinutes         *int64                      `json:"refreshTokenDurationMinutes,omitempty"`
-	RequiresPushedAuthorizationRequests *bool                       `json:"requiresPushedAuthorizationRequests,omitempty"`
-	RequiresReauthentication            *bool                       `json:"requiresReauthentication,omitempty"`
-	SkipConsent                         *bool                       `json:"skipConsent,omitempty"`
+	AccessTokenDurationMinutes          *int64                         `json:"accessTokenDurationMinutes,omitempty"`
+	BackchannelLogoutURL                *string                        `json:"backchannelLogoutURL,omitempty"`
+	CallbackURLs                        nullable.Nullable[[]string]    `json:"callbackURLs,omitempty"`
+	ClaimMappingPolicyID                *string                        `json:"claimMappingPolicyId,omitempty"`
+	Credentials                         *OIDCClientCredentialsInputDto `json:"credentials,omitempty"`
+	DarkLogoURL                         nullable.Nullable[string]      `json:"darkLogoUrl,omitempty"`
+	Disabled                            *bool                          `json:"disabled,omitempty"`
+	HasDarkLogo                         *bool                          `json:"hasDarkLogo,omitempty"`
+	HasLogo                             *bool                          `json:"hasLogo,omitempty"`
+	IsGroupRestricted                   *bool                          `json:"isGroupRestricted,omitempty"`
+	IsPublic                            *bool                          `json:"isPublic,omitempty"`
+	LaunchURL                           nullable.Nullable[string]      `json:"launchURL,omitempty"`
+	LogoURL                             nullable.Nullable[string]      `json:"logoUrl,omitempty"`
+	LogoutCallbackURLs                  nullable.Nullable[[]string]    `json:"logoutCallbackURLs,omitempty"`
+	Name                                string                         `json:"name"`
+	Notes                               *string                        `json:"notes,omitempty"`
+	PKCEEnabled                         *bool                          `json:"pkceEnabled,omitempty"`
+	RefreshTokenDurationMinutes         *int64                         `json:"refreshTokenDurationMinutes,omitempty"`
+	RequiresPushedAuthorizationRequests *bool                          `json:"requiresPushedAuthorizationRequests,omitempty"`
+	RequiresReauthentication            *bool                          `json:"requiresReauthentication,omitempty"`
+	SkipConsent                         *bool                          `json:"skipConsent,omitempty"`
 }
 
 // OIDCClientWithAllowedGroupsDto defines model for OidcClientWithAllowedGroupsDto.
@@ -2007,9 +2088,9 @@ type AuditLogDto struct {
 
 // ClaimMappingsPreviewInput defines model for claimMappingsPreviewInput.
 type ClaimMappingsPreviewInput struct {
-	ClaimMappings nullable.Nullable[[]OIDCClaimMappingDto] `json:"claimMappings,omitempty"`
-	Scopes        nullable.Nullable[[]string]              `json:"scopes,omitempty"`
-	UserID        string                                   `json:"userId"`
+	ClaimMappings nullable.Nullable[[]OIDCClaimMappingInputDto] `json:"claimMappings,omitempty"`
+	Scopes        nullable.Nullable[[]string]                   `json:"scopes,omitempty"`
+	UserID        string                                        `json:"userId"`
 }
 
 // ClientAPIGrantDto defines model for clientApiGrantDto.
@@ -2529,13 +2610,13 @@ type ListOIDCClaimMappingPoliciesParamsSortDirection string
 
 // PatchOIDCClaimMappingPolicyJSONBody defines parameters for PatchOIDCClaimMappingPolicy.
 type PatchOIDCClaimMappingPolicyJSONBody struct {
-	ClaimCount    *int                                     `json:"claimCount,omitempty"`
-	ClaimMappings nullable.Nullable[[]OIDCClaimMappingDto] `json:"claimMappings,omitempty"`
-	ClientCount   *int64                                   `json:"clientCount,omitempty"`
-	CreatedAt     *time.Time                               `json:"createdAt,omitempty"`
-	ID            *string                                  `json:"id,omitempty"`
-	IsDefault     *bool                                    `json:"isDefault,omitempty"`
-	Name          *string                                  `json:"name,omitempty"`
+	ClaimCount    *int                                          `json:"claimCount,omitempty"`
+	ClaimMappings nullable.Nullable[[]OIDCClaimMappingInputDto] `json:"claimMappings,omitempty"`
+	ClientCount   *int64                                        `json:"clientCount,omitempty"`
+	CreatedAt     *time.Time                                    `json:"createdAt,omitempty"`
+	ID            *string                                       `json:"id,omitempty"`
+	IsDefault     *bool                                         `json:"isDefault,omitempty"`
+	Name          *string                                       `json:"name,omitempty"`
 }
 
 // ListOIDCClientsThatCanStillBeAssignedToClaimMappingPolicyParams defines parameters for ListOIDCClientsThatCanStillBeAssignedToClaimMappingPolicy.
@@ -2684,27 +2765,27 @@ type ListOIDCClientsParamsSortDirection string
 
 // PatchOIDCClientJSONBody defines parameters for PatchOIDCClient.
 type PatchOIDCClientJSONBody struct {
-	AccessTokenDurationMinutes          *int64                      `json:"accessTokenDurationMinutes,omitempty"`
-	BackchannelLogoutURL                *string                     `json:"backchannelLogoutURL,omitempty"`
-	CallbackURLs                        nullable.Nullable[[]string] `json:"callbackURLs,omitempty"`
-	ClaimMappingPolicyID                *string                     `json:"claimMappingPolicyId,omitempty"`
-	Credentials                         *OIDCClientCredentialsDto   `json:"credentials,omitempty"`
-	DarkLogoURL                         nullable.Nullable[string]   `json:"darkLogoUrl,omitempty"`
-	Disabled                            *bool                       `json:"disabled,omitempty"`
-	HasDarkLogo                         *bool                       `json:"hasDarkLogo,omitempty"`
-	HasLogo                             *bool                       `json:"hasLogo,omitempty"`
-	IsGroupRestricted                   *bool                       `json:"isGroupRestricted,omitempty"`
-	IsPublic                            *bool                       `json:"isPublic,omitempty"`
-	LaunchURL                           nullable.Nullable[string]   `json:"launchURL,omitempty"`
-	LogoURL                             nullable.Nullable[string]   `json:"logoUrl,omitempty"`
-	LogoutCallbackURLs                  nullable.Nullable[[]string] `json:"logoutCallbackURLs,omitempty"`
-	Name                                *string                     `json:"name,omitempty"`
-	Notes                               *string                     `json:"notes,omitempty"`
-	PKCEEnabled                         *bool                       `json:"pkceEnabled,omitempty"`
-	RefreshTokenDurationMinutes         *int64                      `json:"refreshTokenDurationMinutes,omitempty"`
-	RequiresPushedAuthorizationRequests *bool                       `json:"requiresPushedAuthorizationRequests,omitempty"`
-	RequiresReauthentication            *bool                       `json:"requiresReauthentication,omitempty"`
-	SkipConsent                         *bool                       `json:"skipConsent,omitempty"`
+	AccessTokenDurationMinutes          *int64                         `json:"accessTokenDurationMinutes,omitempty"`
+	BackchannelLogoutURL                *string                        `json:"backchannelLogoutURL,omitempty"`
+	CallbackURLs                        nullable.Nullable[[]string]    `json:"callbackURLs,omitempty"`
+	ClaimMappingPolicyID                *string                        `json:"claimMappingPolicyId,omitempty"`
+	Credentials                         *OIDCClientCredentialsInputDto `json:"credentials,omitempty"`
+	DarkLogoURL                         nullable.Nullable[string]      `json:"darkLogoUrl,omitempty"`
+	Disabled                            *bool                          `json:"disabled,omitempty"`
+	HasDarkLogo                         *bool                          `json:"hasDarkLogo,omitempty"`
+	HasLogo                             *bool                          `json:"hasLogo,omitempty"`
+	IsGroupRestricted                   *bool                          `json:"isGroupRestricted,omitempty"`
+	IsPublic                            *bool                          `json:"isPublic,omitempty"`
+	LaunchURL                           nullable.Nullable[string]      `json:"launchURL,omitempty"`
+	LogoURL                             nullable.Nullable[string]      `json:"logoUrl,omitempty"`
+	LogoutCallbackURLs                  nullable.Nullable[[]string]    `json:"logoutCallbackURLs,omitempty"`
+	Name                                *string                        `json:"name,omitempty"`
+	Notes                               *string                        `json:"notes,omitempty"`
+	PKCEEnabled                         *bool                          `json:"pkceEnabled,omitempty"`
+	RefreshTokenDurationMinutes         *int64                         `json:"refreshTokenDurationMinutes,omitempty"`
+	RequiresPushedAuthorizationRequests *bool                          `json:"requiresPushedAuthorizationRequests,omitempty"`
+	RequiresReauthentication            *bool                          `json:"requiresReauthentication,omitempty"`
+	SkipConsent                         *bool                          `json:"skipConsent,omitempty"`
 }
 
 // DeleteClientLogoParams defines parameters for DeleteClientLogo.
@@ -3168,7 +3249,7 @@ type UpdateCustomClaimsForUserGroupJSONRequestBody = UpdateCustomClaimsForUserGr
 type UpdateCustomClaimsForUserJSONRequestBody = UpdateCustomClaimsForUserJSONBody
 
 // CreateOIDCClaimMappingPolicyJSONRequestBody defines body for CreateOIDCClaimMappingPolicy for application/json ContentType.
-type CreateOIDCClaimMappingPolicyJSONRequestBody = OIDCClaimMappingPolicyDto
+type CreateOIDCClaimMappingPolicyJSONRequestBody = OIDCClaimMappingPolicyInputDto
 
 // PreviewClaimMappingsJSONRequestBody defines body for PreviewClaimMappings for application/json ContentType.
 type PreviewClaimMappingsJSONRequestBody = ClaimMappingsPreviewInput
@@ -3177,7 +3258,7 @@ type PreviewClaimMappingsJSONRequestBody = ClaimMappingsPreviewInput
 type PatchOIDCClaimMappingPolicyJSONRequestBody PatchOIDCClaimMappingPolicyJSONBody
 
 // UpdateOIDCClaimMappingPolicyJSONRequestBody defines body for UpdateOIDCClaimMappingPolicy for application/json ContentType.
-type UpdateOIDCClaimMappingPolicyJSONRequestBody = OIDCClaimMappingPolicyDto
+type UpdateOIDCClaimMappingPolicyJSONRequestBody = OIDCClaimMappingPolicyInputDto
 
 // CreateOIDCClientJSONRequestBody defines body for CreateOIDCClient for application/json ContentType.
 type CreateOIDCClientJSONRequestBody = OIDCClientCreateDto
@@ -3198,13 +3279,13 @@ type UpdateClientLogoMultipartRequestBody UpdateClientLogoMultipartBody
 type CreateClientSecretJSONRequestBody = OIDCClientSecretCreateDto
 
 // CreateCustomOIDCScopeJSONRequestBody defines body for CreateCustomOIDCScope for application/json ContentType.
-type CreateCustomOIDCScopeJSONRequestBody = CustomScopeDto
+type CreateCustomOIDCScopeJSONRequestBody = CustomScopeInputDto
 
 // PatchCustomOIDCScopeJSONRequestBody defines body for PatchCustomOIDCScope for application/json ContentType.
 type PatchCustomOIDCScopeJSONRequestBody PatchCustomOIDCScopeJSONBody
 
 // UpdateCustomOIDCScopeJSONRequestBody defines body for UpdateCustomOIDCScope for application/json ContentType.
-type UpdateCustomOIDCScopeJSONRequestBody = CustomScopeDto
+type UpdateCustomOIDCScopeJSONRequestBody = CustomScopeInputDto
 
 // CreateSCIMServiceProviderJSONRequestBody defines body for CreateSCIMServiceProvider for application/json ContentType.
 type CreateSCIMServiceProviderJSONRequestBody = SCIMServiceProviderCreateDTO
