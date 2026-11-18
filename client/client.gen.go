@@ -1386,7 +1386,7 @@ type ErrorDto struct {
 	Code      string                 `json:"code"`
 	Details   map[string]interface{} `json:"details"`
 	Error     string                 `json:"error"`
-	RequestID *string                `json:"request_id,omitempty"`
+	RequestID string                 `json:"request_id"`
 }
 
 // OIDCClaimMappingDto defines model for OidcClaimMappingDto.
@@ -1471,7 +1471,7 @@ type OIDCClientCreatedDto struct {
 	Name                                string                      `json:"name"`
 	Notes                               string                      `json:"notes"`
 	PKCEEnabled                         bool                        `json:"pkceEnabled"`
-	PKCESupported                       *bool                       `json:"pkceSupported,omitempty"`
+	PKCESupported                       bool                        `json:"pkceSupported"`
 	RefreshTokenDurationMinutes         int64                       `json:"refreshTokenDurationMinutes"`
 	RequiresPushedAuthorizationRequests bool                        `json:"requiresPushedAuthorizationRequests"`
 	RequiresReauthentication            bool                        `json:"requiresReauthentication"`
@@ -1503,7 +1503,7 @@ type OIDCClientDto struct {
 	Name                                string                   `json:"name"`
 	Notes                               string                   `json:"notes"`
 	PKCEEnabled                         bool                     `json:"pkceEnabled"`
-	PKCESupported                       *bool                    `json:"pkceSupported,omitempty"`
+	PKCESupported                       bool                     `json:"pkceSupported"`
 	RefreshTokenDurationMinutes         int64                    `json:"refreshTokenDurationMinutes"`
 	RequiresPushedAuthorizationRequests bool                     `json:"requiresPushedAuthorizationRequests"`
 	RequiresReauthentication            bool                     `json:"requiresReauthentication"`
@@ -1608,7 +1608,7 @@ type OIDCClientWithAllowedGroupsDto struct {
 	Name                                string                   `json:"name"`
 	Notes                               string                   `json:"notes"`
 	PKCEEnabled                         bool                     `json:"pkceEnabled"`
-	PKCESupported                       *bool                    `json:"pkceSupported,omitempty"`
+	PKCESupported                       bool                     `json:"pkceSupported"`
 	RefreshTokenDurationMinutes         int64                    `json:"refreshTokenDurationMinutes"`
 	RequiresPushedAuthorizationRequests bool                     `json:"requiresPushedAuthorizationRequests"`
 	RequiresReauthentication            bool                     `json:"requiresReauthentication"`
@@ -1635,7 +1635,7 @@ type OIDCClientWithAllowedUserGroupsDto struct {
 	Name                                string                   `json:"name"`
 	Notes                               string                   `json:"notes"`
 	PKCEEnabled                         bool                     `json:"pkceEnabled"`
-	PKCESupported                       *bool                    `json:"pkceSupported,omitempty"`
+	PKCESupported                       bool                     `json:"pkceSupported"`
 	RefreshTokenDurationMinutes         int64                    `json:"refreshTokenDurationMinutes"`
 	RequiresPushedAuthorizationRequests bool                     `json:"requiresPushedAuthorizationRequests"`
 	RequiresReauthentication            bool                     `json:"requiresReauthentication"`
@@ -1860,7 +1860,7 @@ type WebauthnCredentialDto struct {
 	ID                        string    `json:"id"`
 	Name                      string    `json:"name"`
 	Transport                 []string  `json:"transport"`
-	VerifiedAuthenticatorName *string   `json:"verifiedAuthenticatorName,omitempty"`
+	VerifiedAuthenticatorName string    `json:"verifiedAuthenticatorName"`
 }
 
 // APICIMDAccessUpdateDto defines model for apiCimdAccessUpdateDto.
@@ -2141,8 +2141,8 @@ type SignupTokenDto struct {
 	ExpiresAt  time.Time             `json:"expiresAt"`
 	ID         string                `json:"id"`
 	Prefix     string                `json:"prefix"`
-	SentTo     *string               `json:"sentTo,omitempty"`
-	Token      *string               `json:"token,omitempty"`
+	SentTo     string                `json:"sentTo"`
+	Token      string                `json:"token"`
 	UsageCount int                   `json:"usageCount"`
 	UsageLimit int                   `json:"usageLimit"`
 	UserGroups []UserGroupMinimalDto `json:"userGroups"`

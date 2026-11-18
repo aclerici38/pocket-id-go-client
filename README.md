@@ -3,7 +3,7 @@
 Go client for [Pocket ID](https://github.com/pocket-id/pocket-id), generated with [oapi-codegen](https://github.com/oapi-codegen/oapi-codegen) from the OpenAPI 3.1 spec that upstream builds from its route definitions.
 
 ```sh
-go get github.com/aclerici38/pocket-id-go-client/v2
+go get github.com/aclerici38/pocket-id-go-client/v3
 ```
 
 Release tags match Pocket ID versions, and the module's major version follows Pocket ID's.
@@ -13,7 +13,7 @@ Release tags match Pocket ID versions, and the module's major version follows Po
 Pass an API key with `WithAPIKey`, which sends it in the `X-API-Key` header:
 
 ```go
-c, err := client.NewClientWithResponses("https://id.example.com", client.WithAPIKey(key))
+c, err := client.NewClient("https://id.example.com", client.WithAPIKey(key))
 ```
 
 For OAuth access tokens, give `WithHTTPClient` an `*http.Client` from `golang.org/x/oauth2`.
@@ -42,7 +42,7 @@ user, err := client.Decode[client.UserDto](c.GetCurrentUser(ctx))
 `Decode` and `Check` wrap the raw methods and turn every non-2xx response into an `*APIError`, even when the body isn't Pocket ID's error JSON:
 
 ```go
-user, err := client.Decode[*client.UserDto](c.GetUserByID(ctx, id))
+user, err := client.Decode[client.UserDto](c.GetUserByID(ctx, id))
 if apiErr := client.AsAPIError(err); apiErr != nil && apiErr.Code == client.CodeNotFound {
 	// ...
 }
