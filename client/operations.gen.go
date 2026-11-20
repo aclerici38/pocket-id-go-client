@@ -31,7 +31,7 @@ var operations = map[string]string{
 	"DELETE /api/users/me/profile-picture":                                  "ResetCurrentUserProfilePicture",
 	"GET /.well-known/jwks.json":                                            "GetJSONWebKeySetJWKS",
 	"GET /.well-known/oauth-authorization-server":                           "GetOAuth2AuthorizationServerMetadata",
-	"GET /.well-known/oauth-protected-resource/mcp":                         "GetOAuth2ProtectedResourceMetadataOfMCPEndpoint",
+	"GET /.well-known/oauth-protected-resource/api/admin/mcp":               "GetOAuth2ProtectedResourceMetadataOfMCPEndpoint",
 	"GET /.well-known/openid-configuration":                                 "GetOpenIDConnectDiscoveryConfiguration",
 	"GET /api/admin/api-access/{clientId}/apis":                             "ListAPIsClientMayAccess",
 	"GET /api/admin/api-access/{clientId}/assignable-apis":                  "ListAPIsClientCanStillBeGrantedAccessTo",

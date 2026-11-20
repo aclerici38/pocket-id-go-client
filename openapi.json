@@ -3428,10 +3428,10 @@
         ]
       }
     },
-    "/.well-known/oauth-protected-resource/mcp": {
+    "/.well-known/oauth-protected-resource/api/admin/mcp": {
       "get": {
         "description": "Returns the RFC 9728 protected resource metadata of Pocket ID's MCP endpoint, which MCP clients use to find the authorization server and the scopes they can request",
-        "operationId": "GET_/.well-known/oauth-protected-resource/mcp",
+        "operationId": "GET_/.well-known/oauth-protected-resource/api/admin/mcp",
         "responses": {
           "200": {
             "content": {

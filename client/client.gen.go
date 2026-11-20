@@ -3473,7 +3473,7 @@ type ClientInterface interface {
 	//
 	// Returns the RFC 9728 protected resource metadata of Pocket ID's MCP endpoint, which MCP clients use to find the authorization server and the scopes they can request
 	//
-	// Corresponds with GET /.well-known/oauth-protected-resource/mcp (the `GetOAuth2ProtectedResourceMetadataOfMCPEndpoint` operationId).
+	// Corresponds with GET /.well-known/oauth-protected-resource/api/admin/mcp (the `GetOAuth2ProtectedResourceMetadataOfMCPEndpoint` operationId).
 	GetOAuth2ProtectedResourceMetadataOfMCPEndpoint(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetOpenIDConnectDiscoveryConfiguration Get OpenID Connect discovery configuration
@@ -5152,7 +5152,7 @@ func (c *Client) GetOAuth2AuthorizationServerMetadata(ctx context.Context, reqEd
 //
 // # Returns the RFC 9728 protected resource metadata of Pocket ID's MCP endpoint, which MCP clients use to find the authorization server and the scopes they can request
 //
-// Corresponds with GET /.well-known/oauth-protected-resource/mcp (the `GetOAuth2ProtectedResourceMetadataOfMCPEndpoint` operationId).
+// Corresponds with GET /.well-known/oauth-protected-resource/api/admin/mcp (the `GetOAuth2ProtectedResourceMetadataOfMCPEndpoint` operationId).
 func (c *Client) GetOAuth2ProtectedResourceMetadataOfMCPEndpoint(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewGetOAuth2ProtectedResourceMetadataOfMCPEndpointRequest(c.Server)
 	if err != nil {
@@ -8895,7 +8895,7 @@ func NewGetOAuth2ProtectedResourceMetadataOfMCPEndpointRequest(server string) (*
 		return nil, err
 	}
 
-	operationPath := fmt.Sprintf("/.well-known/oauth-protected-resource/mcp")
+	operationPath := fmt.Sprintf("/.well-known/oauth-protected-resource/api/admin/mcp")
 	if operationPath[0] == '/' {
 		operationPath = "." + operationPath
 	}
@@ -16815,7 +16815,7 @@ type ClientWithResponsesInterface interface {
 	//
 	// Returns a wrapper object for the known response body format(s).
 	//
-	// Corresponds with GET /.well-known/oauth-protected-resource/mcp (the `GetOAuth2ProtectedResourceMetadataOfMCPEndpoint` operationId).
+	// Corresponds with GET /.well-known/oauth-protected-resource/api/admin/mcp (the `GetOAuth2ProtectedResourceMetadataOfMCPEndpoint` operationId).
 	GetOAuth2ProtectedResourceMetadataOfMCPEndpointWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*GetOAuth2ProtectedResourceMetadataOfMCPEndpointResponse, error)
 
 	// GetOpenIDConnectDiscoveryConfigurationWithResponse Get OpenID Connect discovery configuration
@@ -25724,7 +25724,7 @@ func (c *ClientWithResponses) GetOAuth2AuthorizationServerMetadataWithResponse(c
 //
 // Returns a wrapper object for the known response body format(s).
 //
-// Corresponds with GET /.well-known/oauth-protected-resource/mcp (the `GetOAuth2ProtectedResourceMetadataOfMCPEndpoint` operationId).
+// Corresponds with GET /.well-known/oauth-protected-resource/api/admin/mcp (the `GetOAuth2ProtectedResourceMetadataOfMCPEndpoint` operationId).
 func (c *ClientWithResponses) GetOAuth2ProtectedResourceMetadataOfMCPEndpointWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*GetOAuth2ProtectedResourceMetadataOfMCPEndpointResponse, error) {
 	rsp, err := c.GetOAuth2ProtectedResourceMetadataOfMCPEndpoint(ctx, reqEditors...)
 	if err != nil {
