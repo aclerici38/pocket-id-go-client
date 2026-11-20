@@ -4,7 +4,7 @@ go 1.26.0
 
 require (
 	github.com/oapi-codegen/nullable v1.2.0
-	github.com/oapi-codegen/runtime v1.9.0
+	github.com/oapi-codegen/runtime v1.9.1
 )
 
 require (
