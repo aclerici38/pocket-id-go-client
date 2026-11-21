@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-#MISE description="Full pipeline: clone upstream, generate the spec and client, tidy the module"
+#MISE description="Full pipeline: clone upstream, generate the spec, client and go.mod"
 set -euo pipefail
 
 # generate-client reads the spec generate-spec writes, so run them in order
@@ -9,7 +9,10 @@ mise run generate-client
 
 # Release tags mirror Pocket ID versions, so the module path follows its major version
 # (NEXT_MAJOR when the upstream canary builds upstream main).
-go mod edit -module "github.com/aclerici38/pocket-id-go-client/${NEXT_MAJOR:-$(cut -d. -f1 POCKET_ID_VERSION)}"
-
+rm -f go.mod go.sum
+go mod init "github.com/aclerici38/pocket-id-go-client/${NEXT_MAJOR:-$(cut -d. -f1 POCKET_ID_VERSION)}"
+# Tidy only raises the go line, so start at the floor and let it climb to the highest
+# minimum among the dependencies.
+go mod edit -go=1.21
 go mod tidy
 rm -rf "$UPSTREAM_DIR"

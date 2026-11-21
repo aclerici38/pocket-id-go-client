@@ -10,10 +10,6 @@
   "prHourlyLimit": 0,
   "automerge": true,
   "platformAutomerge": true,
-  "postUpdateOptions": [
-    "gomodTidy",
-    "gomodUpdateImportPaths"
-  ],
   "customManagers": [
     {
       "customType": "regex",
@@ -46,15 +42,6 @@
       "commitMessageTopic": "Pocket ID",
       "automergeType": "branch",
       "ignoreTests": true
-    },
-    {
-      "description": "Go version across go.mod and mise",
-      "matchPackageNames": [
-        "go",
-        "golang/go"
-      ],
-      "groupName": "golang",
-      "separateMinorPatch": true
     }
   ]
 }

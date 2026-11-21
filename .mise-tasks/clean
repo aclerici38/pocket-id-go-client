@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-#MISE description="Remove the upstream clone and all generated files"
+#MISE description="Remove the upstream clone and all generated files, including go.mod"
 set -euo pipefail
 
 # The other files in client/ are hand-written and tracked.
-rm -rf "$UPSTREAM_DIR" client/*.gen.go "$OPENAPI_SPEC"
+rm -rf "$UPSTREAM_DIR" client/*.gen.go "$OPENAPI_SPEC" go.mod go.sum

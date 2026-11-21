@@ -4,6 +4,8 @@
 # Generated files (only committed to release tags, not main)
 client/*.gen.go
 openapi.json
+go.mod
+go.sum
 
 # IDE
 .idea/

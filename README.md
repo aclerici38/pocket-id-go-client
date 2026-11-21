@@ -84,12 +84,12 @@ for u, err := range client.All[client.UserDto](func(page int) (*http.Response, e
 Tooling (Go, oapi-codegen, oasdiff, zizmor) is managed with [mise](https://mise.jdx.dev); `jq` must also be on your `PATH`. Run `mise install`, then:
 
 ```sh
-mise run generate   # clone upstream at POCKET_ID_VERSION, generate openapi.json + client, tidy
+mise run generate   # clone upstream at POCKET_ID_VERSION, generate openapi.json, client + go.mod
 mise run verify     # check the generated code compiles
 mise run clean      # remove the upstream clone and generated files
 ```
 
-Generated code is not committed to `main`. Each release tag is a commit containing only `LICENSE`, `README.md`, `go.mod`, `go.sum`, `client/` and `openapi.json`, parented on the previous release so tags can be compared.
+Generated code, including `go.mod`, is not committed to `main`. Each release tag is a commit containing only `LICENSE`, `README.md`, `go.mod`, `go.sum`, `client/` and `openapi.json`, parented on the previous release so tags can be compared.
 
 ## Operation names
 
