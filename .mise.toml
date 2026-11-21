@@ -9,7 +9,7 @@ lockfile_platforms = ["linux-x64", "linux-arm64", "macos-arm64"]
 go = "1.27.4"
 
 # Go client generation from the OpenAPI spec (config: oapi-codegen.yaml)
-oapi-codegen = "2.8.2"
+oapi-codegen = "v2.9.0"
 
 # API changelogs for releases and breaking-change detection for the upstream API canary
 "github:oasdiff/oasdiff" = "v1.39.0"
