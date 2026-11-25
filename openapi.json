@@ -3201,17 +3201,6 @@
         ],
         "type": "object"
       },
-      "sqliteStorageWarningDto": {
-        "properties": {
-          "showWarning": {
-            "type": "boolean"
-          }
-        },
-        "required": [
-          "showWarning"
-        ],
-        "type": "object"
-      },
       "tokenCreateDto": {
         "properties": {
           "ttl": {
@@ -3275,6 +3264,23 @@
           "expiresAt",
           "ipAddress",
           "userCode"
+        ],
+        "type": "object"
+      },
+      "warningsDto": {
+        "properties": {
+          "warnings": {
+            "items": {
+              "type": "string"
+            },
+            "type": [
+              "array",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "warnings"
         ],
         "type": "object"
       }
@@ -12451,6 +12457,60 @@
         ]
       }
     },
+    "/api/admin/warnings": {
+      "get": {
+        "description": "Lists the problems with this instance that admins should fix, such as a SQLite database on a networked filesystem or a database that a newer Pocket ID version migrated",
+        "operationId": "GET_/api/admin/warnings",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/warningsDto"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "default": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorDto"
+                }
+              }
+            },
+            "description": "Error"
+          }
+        },
+        "security": [
+          {
+            "apiKey": [
+              "config:read"
+            ]
+          },
+          {
+            "oauth2": [
+              "config:read"
+            ]
+          },
+          {
+            "oauth2ClientCredentials": [
+              "config:read"
+            ]
+          },
+          {
+            "session": [
+              "config:read"
+            ]
+          }
+        ],
+        "summary": "Get the warnings for admins",
+        "tags": [
+          "Warnings"
+        ]
+      }
+    },
     "/api/api-keys": {
       "get": {
         "description": "Get a paginated list of API keys belonging to the current user",
@@ -14457,52 +14517,6 @@
         ]
       }
     },
-    "/api/storage/sqlite-warning": {
-      "get": {
-        "description": "Reports whether Pocket ID found its SQLite database on a networked filesystem, which is unsupported and can lead to database corruption",
-        "operationId": "GET_/api/storage/sqlite-warning",
-        "responses": {
-          "200": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/sqliteStorageWarningDto"
-                }
-              }
-            },
-            "description": "OK"
-          },
-          "default": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorDto"
-                }
-              }
-            },
-            "description": "Error"
-          }
-        },
-        "security": [
-          {
-            "apiKey": []
-          },
-          {
-            "oauth2": []
-          },
-          {
-            "oauth2ClientCredentials": []
-          },
-          {
-            "session": []
-          }
-        ],
-        "summary": "Get whether the SQLite storage warning should be shown",
-        "tags": [
-          "Storage"
-        ]
-      }
-    },
     "/api/users/me": {
       "get": {
         "description": "Retrieve information about the currently authenticated user",
@@ -15283,8 +15297,8 @@
       "name": "Health"
     },
     {
-      "description": "Storage warnings for the admin UI.",
-      "name": "Storage"
+      "description": "Problems with this instance that admins should fix.",
+      "name": "Warnings"
     }
   ]
 }

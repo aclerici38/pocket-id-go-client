@@ -2228,11 +2228,6 @@ type SignupTokenDto struct {
 	UserGroups []UserGroupMinimalDto `json:"userGroups"`
 }
 
-// SQLiteStorageWarningDto defines model for sqliteStorageWarningDto.
-type SQLiteStorageWarningDto struct {
-	ShowWarning bool `json:"showWarning"`
-}
-
 // TokenCreateDto defines model for tokenCreateDto.
 type TokenCreateDto struct {
 	// TTL A number of seconds
@@ -2257,6 +2252,11 @@ type VerificationInfoDto struct {
 	ExpiresAt time.Time `json:"expiresAt"`
 	IPAddress string    `json:"ipAddress"`
 	UserCode  string    `json:"userCode"`
+}
+
+// WarningsDto defines model for warningsDto.
+type WarningsDto struct {
+	Warnings []string `json:"warnings"`
 }
 
 // ListAPIsClientCanStillBeGrantedAccessToParams defines parameters for ListAPIsClientCanStillBeGrantedAccessTo.
@@ -4625,6 +4625,13 @@ type ClientInterface interface {
 	// Corresponds with DELETE /api/admin/users/{id}/webauthn-credentials/{credentialId} (the `DeleteUserPasskey` operationId).
 	DeleteUserPasskey(ctx context.Context, id string, credentialID string, reqEditors ...RequestEditorFn) (*http.Response, error)
 
+	// GetWarningsForAdmins Get the warnings for admins
+	//
+	// Lists the problems with this instance that admins should fix, such as a SQLite database on a networked filesystem or a database that a newer Pocket ID version migrated
+	//
+	// Corresponds with GET /api/admin/warnings (the `GetWarningsForAdmins` operationId).
+	GetWarningsForAdmins(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
+
 	// ListAPIKeys List API keys
 	//
 	// Get a paginated list of API keys belonging to the current user.
@@ -4976,13 +4983,6 @@ type ClientInterface interface {
 	//
 	// Corresponds with POST /api/signup/setup (the `SignUpInitialAdminUser` operationId).
 	SignUpInitialAdminUser(ctx context.Context, body SignUpInitialAdminUserJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// GetWhetherSQLiteStorageWarningShouldBeShown Get whether the SQLite storage warning should be shown
-	//
-	// Reports whether Pocket ID found its SQLite database on a networked filesystem, which is unsupported and can lead to database corruption
-	//
-	// Corresponds with GET /api/storage/sqlite-warning (the `GetWhetherSQLiteStorageWarningShouldBeShown` operationId).
-	GetWhetherSQLiteStorageWarningShouldBeShown(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetCurrentUser Get current user
 	//
@@ -7724,6 +7724,23 @@ func (c *Client) DeleteUserPasskey(ctx context.Context, id string, credentialID 
 	return c.Client.Do(req)
 }
 
+// GetWarningsForAdmins Get the warnings for admins
+//
+// # Lists the problems with this instance that admins should fix, such as a SQLite database on a networked filesystem or a database that a newer Pocket ID version migrated
+//
+// Corresponds with GET /api/admin/warnings (the `GetWarningsForAdmins` operationId).
+func (c *Client) GetWarningsForAdmins(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetWarningsForAdminsRequest(c.Server)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
 // ListAPIKeys List API keys
 //
 // Get a paginated list of API keys belonging to the current user.
@@ -8506,23 +8523,6 @@ func (c *Client) SignUpInitialAdminUserWithBody(ctx context.Context, contentType
 // Corresponds with POST /api/signup/setup (the `SignUpInitialAdminUser` operationId).
 func (c *Client) SignUpInitialAdminUser(ctx context.Context, body SignUpInitialAdminUserJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewSignUpInitialAdminUserRequest(c.Server, body)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-// GetWhetherSQLiteStorageWarningShouldBeShown Get whether the SQLite storage warning should be shown
-//
-// # Reports whether Pocket ID found its SQLite database on a networked filesystem, which is unsupported and can lead to database corruption
-//
-// Corresponds with GET /api/storage/sqlite-warning (the `GetWhetherSQLiteStorageWarningShouldBeShown` operationId).
-func (c *Client) GetWhetherSQLiteStorageWarningShouldBeShown(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewGetWhetherSQLiteStorageWarningShouldBeShownRequest(c.Server)
 	if err != nil {
 		return nil, err
 	}
@@ -14542,6 +14542,33 @@ func NewDeleteUserPasskeyRequest(server string, id string, credentialID string) 
 	return req, nil
 }
 
+// NewGetWarningsForAdminsRequest constructs an http.Request for the GetWarningsForAdmins method
+func NewGetWarningsForAdminsRequest(server string) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := "/api/admin/warnings"
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	return req, nil
+}
+
 // NewListAPIKeysRequest constructs an http.Request for the ListAPIKeys method
 func NewListAPIKeysRequest(server string, params *ListAPIKeysParams) (*http.Request, error) {
 	var err error
@@ -16288,33 +16315,6 @@ func NewSignUpInitialAdminUserRequestWithBody(server string, contentType string,
 	}
 
 	req.Header.Add("Content-Type", contentType)
-
-	return req, nil
-}
-
-// NewGetWhetherSQLiteStorageWarningShouldBeShownRequest constructs an http.Request for the GetWhetherSQLiteStorageWarningShouldBeShown method
-func NewGetWhetherSQLiteStorageWarningShouldBeShownRequest(server string) (*http.Request, error) {
-	var err error
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := "/api/storage/sqlite-warning"
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
-	if err != nil {
-		return nil, err
-	}
 
 	return req, nil
 }
@@ -18085,6 +18085,15 @@ type ClientWithResponsesInterface interface {
 	// Corresponds with DELETE /api/admin/users/{id}/webauthn-credentials/{credentialId} (the `DeleteUserPasskey` operationId).
 	DeleteUserPasskeyWithResponse(ctx context.Context, id string, credentialID string, reqEditors ...RequestEditorFn) (*DeleteUserPasskeyResponse, error)
 
+	// GetWarningsForAdminsWithResponse Get the warnings for admins
+	//
+	// Lists the problems with this instance that admins should fix, such as a SQLite database on a networked filesystem or a database that a newer Pocket ID version migrated
+	//
+	// Returns a wrapper object for the known response body format(s).
+	//
+	// Corresponds with GET /api/admin/warnings (the `GetWarningsForAdmins` operationId).
+	GetWarningsForAdminsWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*GetWarningsForAdminsResponse, error)
+
 	// ListAPIKeysWithResponse List API keys
 	//
 	// Get a paginated list of API keys belonging to the current user.
@@ -18480,15 +18489,6 @@ type ClientWithResponsesInterface interface {
 	//
 	// Corresponds with POST /api/signup/setup (the `SignUpInitialAdminUser` operationId).
 	SignUpInitialAdminUserWithResponse(ctx context.Context, body SignUpInitialAdminUserJSONRequestBody, reqEditors ...RequestEditorFn) (*SignUpInitialAdminUserResponse, error)
-
-	// GetWhetherSQLiteStorageWarningShouldBeShownWithResponse Get whether the SQLite storage warning should be shown
-	//
-	// Reports whether Pocket ID found its SQLite database on a networked filesystem, which is unsupported and can lead to database corruption
-	//
-	// Returns a wrapper object for the known response body format(s).
-	//
-	// Corresponds with GET /api/storage/sqlite-warning (the `GetWhetherSQLiteStorageWarningShouldBeShown` operationId).
-	GetWhetherSQLiteStorageWarningShouldBeShownWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*GetWhetherSQLiteStorageWarningShouldBeShownResponse, error)
 
 	// GetCurrentUserWithResponse Get current user
 	//
@@ -23536,6 +23536,54 @@ func (r DeleteUserPasskeyResponse) ContentType() string {
 	return ""
 }
 
+type GetWarningsForAdminsResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	// JSON200 the response for an HTTP 200 `application/json` response
+	JSON200 *WarningsDto
+	// JSONDefault the response for an HTTP default `application/json` response
+	JSONDefault *ErrorDto
+}
+
+// GetJSON200 returns the response for an HTTP 200 `application/json` response
+func (r GetWarningsForAdminsResponse) GetJSON200() *WarningsDto {
+	return r.JSON200
+}
+
+// GetJSONDefault returns the response for an HTTP default `application/json` response
+func (r GetWarningsForAdminsResponse) GetJSONDefault() *ErrorDto {
+	return r.JSONDefault
+}
+
+// GetBody returns the raw response body bytes
+func (r GetWarningsForAdminsResponse) GetBody() []byte {
+	return r.Body
+}
+
+// Status returns HTTPResponse.Status
+func (r GetWarningsForAdminsResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetWarningsForAdminsResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetWarningsForAdminsResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
 type ListAPIKeysResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
@@ -25016,54 +25064,6 @@ func (r SignUpInitialAdminUserResponse) StatusCode() int {
 
 // ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
 func (r SignUpInitialAdminUserResponse) ContentType() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Header.Get("Content-Type")
-	}
-	return ""
-}
-
-type GetWhetherSQLiteStorageWarningShouldBeShownResponse struct {
-	Body         []byte
-	HTTPResponse *http.Response
-	// JSON200 the response for an HTTP 200 `application/json` response
-	JSON200 *SQLiteStorageWarningDto
-	// JSONDefault the response for an HTTP default `application/json` response
-	JSONDefault *ErrorDto
-}
-
-// GetJSON200 returns the response for an HTTP 200 `application/json` response
-func (r GetWhetherSQLiteStorageWarningShouldBeShownResponse) GetJSON200() *SQLiteStorageWarningDto {
-	return r.JSON200
-}
-
-// GetJSONDefault returns the response for an HTTP default `application/json` response
-func (r GetWhetherSQLiteStorageWarningShouldBeShownResponse) GetJSONDefault() *ErrorDto {
-	return r.JSONDefault
-}
-
-// GetBody returns the raw response body bytes
-func (r GetWhetherSQLiteStorageWarningShouldBeShownResponse) GetBody() []byte {
-	return r.Body
-}
-
-// Status returns HTTPResponse.Status
-func (r GetWhetherSQLiteStorageWarningShouldBeShownResponse) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r GetWhetherSQLiteStorageWarningShouldBeShownResponse) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
-// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
-func (r GetWhetherSQLiteStorageWarningShouldBeShownResponse) ContentType() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Header.Get("Content-Type")
 	}
@@ -27846,6 +27846,21 @@ func (c *ClientWithResponses) DeleteUserPasskeyWithResponse(ctx context.Context,
 	return ParseDeleteUserPasskeyResponse(rsp)
 }
 
+// GetWarningsForAdminsWithResponse Get the warnings for admins
+//
+// # Lists the problems with this instance that admins should fix, such as a SQLite database on a networked filesystem or a database that a newer Pocket ID version migrated
+//
+// Returns a wrapper object for the known response body format(s).
+//
+// Corresponds with GET /api/admin/warnings (the `GetWarningsForAdmins` operationId).
+func (c *ClientWithResponses) GetWarningsForAdminsWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*GetWarningsForAdminsResponse, error) {
+	rsp, err := c.GetWarningsForAdmins(ctx, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetWarningsForAdminsResponse(rsp)
+}
+
 // ListAPIKeysWithResponse List API keys
 //
 // Get a paginated list of API keys belonging to the current user.
@@ -28504,21 +28519,6 @@ func (c *ClientWithResponses) SignUpInitialAdminUserWithResponse(ctx context.Con
 		return nil, err
 	}
 	return ParseSignUpInitialAdminUserResponse(rsp)
-}
-
-// GetWhetherSQLiteStorageWarningShouldBeShownWithResponse Get whether the SQLite storage warning should be shown
-//
-// # Reports whether Pocket ID found its SQLite database on a networked filesystem, which is unsupported and can lead to database corruption
-//
-// Returns a wrapper object for the known response body format(s).
-//
-// Corresponds with GET /api/storage/sqlite-warning (the `GetWhetherSQLiteStorageWarningShouldBeShown` operationId).
-func (c *ClientWithResponses) GetWhetherSQLiteStorageWarningShouldBeShownWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*GetWhetherSQLiteStorageWarningShouldBeShownResponse, error) {
-	rsp, err := c.GetWhetherSQLiteStorageWarningShouldBeShown(ctx, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseGetWhetherSQLiteStorageWarningShouldBeShownResponse(rsp)
 }
 
 // GetCurrentUserWithResponse Get current user
@@ -32162,6 +32162,39 @@ func ParseDeleteUserPasskeyResponse(rsp *http.Response) (*DeleteUserPasskeyRespo
 	return response, nil
 }
 
+// ParseGetWarningsForAdminsResponse parses an HTTP response from a GetWarningsForAdminsWithResponse call
+func ParseGetWarningsForAdminsResponse(rsp *http.Response) (*GetWarningsForAdminsResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetWarningsForAdminsResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest WarningsDto
+		if err := runtime.JSONUnmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
+		var dest ErrorDto
+		if err := runtime.JSONUnmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSONDefault = &dest
+
+	}
+
+	return response, nil
+}
+
 // ParseListAPIKeysResponse parses an HTTP response from a ListAPIKeysWithResponse call
 func ParseListAPIKeysResponse(rsp *http.Response) (*ListAPIKeysResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
@@ -33163,39 +33196,6 @@ func ParseSignUpInitialAdminUserResponse(rsp *http.Response) (*SignUpInitialAdmi
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
 		var dest UserDto
-		if err := runtime.JSONUnmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON200 = &dest
-
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && true:
-		var dest ErrorDto
-		if err := runtime.JSONUnmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSONDefault = &dest
-
-	}
-
-	return response, nil
-}
-
-// ParseGetWhetherSQLiteStorageWarningShouldBeShownResponse parses an HTTP response from a GetWhetherSQLiteStorageWarningShouldBeShownWithResponse call
-func ParseGetWhetherSQLiteStorageWarningShouldBeShownResponse(rsp *http.Response) (*GetWhetherSQLiteStorageWarningShouldBeShownResponse, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &GetWhetherSQLiteStorageWarningShouldBeShownResponse{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest SQLiteStorageWarningDto
 		if err := runtime.JSONUnmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
