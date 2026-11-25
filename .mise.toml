@@ -15,7 +15,7 @@ oapi-codegen = "v2.9.0"
 "github:oasdiff/oasdiff" = "v1.39.0"
 
 # Workflow linting
-zizmor = "1.32.0"
+zizmor = "1.33.1"
 
 [env]
 UPSTREAM_REPO = "https://github.com/pocket-id/pocket-id.git"
