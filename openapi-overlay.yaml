@@ -14,6 +14,7 @@ actions:
         post:
           operationId: logout
           summary: Log out the current session
+          description: 'Credentials: `session`.'
           security:
             - session: []
           responses:

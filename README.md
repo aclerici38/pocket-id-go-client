@@ -79,6 +79,16 @@ for u, err := range client.All[client.UserDto](func(page int) (*http.Response, e
 }
 ```
 
+## Scopes
+
+Each method's doc comment lists the credentials and scope it needs. `Scopes` collects them for a set of methods, e.g. to document what an API key needs:
+
+```go
+scopes, err := client.Scopes(client.SchemeAPIKey, "ListUsers", "CreateUser") // [users:read users:write]
+```
+
+It never returns `admin-access:write`, which Pocket ID also requires for requests that decide who holds admin access, such as editing an admin user.
+
 ## Development
 
 Tooling (Go, oapi-codegen, oasdiff, zizmor) is managed with [mise](https://mise.jdx.dev); `jq` must also be on your `PATH`. Run `mise install`, then:
