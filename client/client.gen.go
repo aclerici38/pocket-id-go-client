@@ -3483,7 +3483,9 @@ type ClientInterface interface {
 
 	// ListAPIsClientMayAccess List APIs a client may access
 	//
-	// Get every API the OIDC client may request tokens for, with its access and permissions split into user-delegated and client (machine-to-machine) access
+	// Get every API the OIDC client may request tokens for, with its access and permissions split into user-delegated and client (machine-to-machine) access.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `apis:read`.
 	//
 	// Corresponds with GET /api/admin/api-access/{clientId}/apis (the `ListAPIsClientMayAccess` operationId).
 	ListAPIsClientMayAccess(ctx context.Context, clientID OIDCClientID, reqEditors ...RequestEditorFn) (*http.Response, error)
@@ -3492,6 +3494,8 @@ type ClientInterface interface {
 	//
 	// Get a paginated list of APIs the OIDC client cannot already reach.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `apis:read`.
+	//
 	// Corresponds with GET /api/admin/api-access/{clientId}/assignable-apis (the `ListAPIsClientCanStillBeGrantedAccessTo` operationId).
 	ListAPIsClientCanStillBeGrantedAccessTo(ctx context.Context, clientID OIDCClientID, params *ListAPIsClientCanStillBeGrantedAccessToParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
@@ -3499,12 +3503,16 @@ type ClientInterface interface {
 	//
 	// Get a paginated list of APIs with optional search and sorting.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `apis:read`.
+	//
 	// Corresponds with GET /api/admin/apis (the `ListAPIs` operationId).
 	ListAPIs(ctx context.Context, params *ListAPIsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// CreateAPIWithBody Create API
 	//
 	// Create a new API resource server.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `apis:write`.
 	//
 	// Takes any type of body and a specified content type.
 	//
@@ -3515,6 +3523,8 @@ type ClientInterface interface {
 	//
 	// Create a new API resource server.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `apis:write`.
+	//
 	// Takes a body of the `application/json` content type.
 	//
 	// Corresponds with POST /api/admin/apis (the `CreateAPI` operationId).
@@ -3524,6 +3534,8 @@ type ClientInterface interface {
 	//
 	// Delete an API by ID.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `apis:write`.
+	//
 	// Corresponds with DELETE /api/admin/apis/{id} (the `DeleteAPI` operationId).
 	DeleteAPI(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*http.Response, error)
 
@@ -3531,12 +3543,16 @@ type ClientInterface interface {
 	//
 	// Retrieve a single API including its permissions.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `apis:read`.
+	//
 	// Corresponds with GET /api/admin/apis/{id} (the `GetAPIByID` operationId).
 	GetAPIByID(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// PatchAPIWithBody Update API
 	//
-	// Update an existing API by ID, where PATCH changes only the fields in the body
+	// Update an existing API by ID, where PATCH changes only the fields in the body.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `apis:write`.
 	//
 	// Takes any type of body and a specified content type.
 	//
@@ -3545,7 +3561,9 @@ type ClientInterface interface {
 
 	// PatchAPI Update API
 	//
-	// Update an existing API by ID, where PATCH changes only the fields in the body
+	// Update an existing API by ID, where PATCH changes only the fields in the body.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `apis:write`.
 	//
 	// Takes a body of the `application/json` content type.
 	//
@@ -3554,7 +3572,9 @@ type ClientInterface interface {
 
 	// UpdateAPIWithBody Update API
 	//
-	// Update an existing API by ID, where PATCH changes only the fields in the body
+	// Update an existing API by ID, where PATCH changes only the fields in the body.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `apis:write`.
 	//
 	// Takes any type of body and a specified content type.
 	//
@@ -3563,7 +3583,9 @@ type ClientInterface interface {
 
 	// UpdateAPI Update API
 	//
-	// Update an existing API by ID, where PATCH changes only the fields in the body
+	// Update an existing API by ID, where PATCH changes only the fields in the body.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `apis:write`.
 	//
 	// Takes a body of the `application/json` content type.
 	//
@@ -3574,12 +3596,16 @@ type ClientInterface interface {
 	//
 	// Get a paginated list of OIDC clients that have no grant on the API yet.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `apis:read`.
+	//
 	// Corresponds with GET /api/admin/apis/{id}/assignable-clients (the `ListClientsThatCanStillBeGrantedAccessToAPI` operationId).
 	ListClientsThatCanStillBeGrantedAccessToAPI(ctx context.Context, id string, params *ListClientsThatCanStillBeGrantedAccessToAPIParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// UpdateMetadataDocumentClientAccessWithBody Update metadata document client access
 	//
 	// Replace which permissions of an API every client registered through a Client ID Metadata Document may request.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `apis:write`.
 	//
 	// Takes any type of body and a specified content type.
 	//
@@ -3590,6 +3616,8 @@ type ClientInterface interface {
 	//
 	// Replace which permissions of an API every client registered through a Client ID Metadata Document may request.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `apis:write`.
+	//
 	// Takes a body of the `application/json` content type.
 	//
 	// Corresponds with PUT /api/admin/apis/{id}/cimd-access (the `UpdateMetadataDocumentClientAccess` operationId).
@@ -3597,7 +3625,9 @@ type ClientInterface interface {
 
 	// ListClientsWithAccessToAPI List clients with access to an API
 	//
-	// Get a paginated list of OIDC clients that may reach the API, with their permissions split into user-delegated and client (machine-to-machine) access
+	// Get a paginated list of OIDC clients that may reach the API, with their permissions split into user-delegated and client (machine-to-machine) access.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `apis:read`.
 	//
 	// Corresponds with GET /api/admin/apis/{id}/clients (the `ListClientsWithAccessToAPI` operationId).
 	ListClientsWithAccessToAPI(ctx context.Context, id string, params *ListClientsWithAccessToAPIParams, reqEditors ...RequestEditorFn) (*http.Response, error)
@@ -3606,12 +3636,16 @@ type ClientInterface interface {
 	//
 	// Remove every permission of this API a single OIDC client was allowed to request.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `apis:write`.
+	//
 	// Corresponds with DELETE /api/admin/apis/{id}/clients/{clientId} (the `RevokeClientAccessToAPI` operationId).
 	RevokeClientAccessToAPI(ctx context.Context, id string, clientID OIDCClientID, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// UpdateClientAccessToAPIWithBody Update a client's access to an API
 	//
-	// Replace the permissions of this API a single OIDC client may request, leaving its grants on other APIs untouched
+	// Replace the permissions of this API a single OIDC client may request, leaving its grants on other APIs untouched.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `apis:write`.
 	//
 	// Takes any type of body and a specified content type.
 	//
@@ -3620,7 +3654,9 @@ type ClientInterface interface {
 
 	// UpdateClientAccessToAPI Update a client's access to an API
 	//
-	// Replace the permissions of this API a single OIDC client may request, leaving its grants on other APIs untouched
+	// Replace the permissions of this API a single OIDC client may request, leaving its grants on other APIs untouched.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `apis:write`.
 	//
 	// Takes a body of the `application/json` content type.
 	//
@@ -3631,6 +3667,8 @@ type ClientInterface interface {
 	//
 	// Replace the full set of permissions for an API.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `apis:write`.
+	//
 	// Takes any type of body and a specified content type.
 	//
 	// Corresponds with PUT /api/admin/apis/{id}/permissions (the `UpdateAPIPermissions` operationId).
@@ -3639,6 +3677,8 @@ type ClientInterface interface {
 	// UpdateAPIPermissions Update API permissions
 	//
 	// Replace the full set of permissions for an API.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `apis:write`.
 	//
 	// Takes a body of the `application/json` content type.
 	//
@@ -3649,12 +3689,16 @@ type ClientInterface interface {
 	//
 	// Delete the application background image.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `config:write`.
+	//
 	// Corresponds with DELETE /api/admin/application-assets/background (the `DeleteBackgroundImage` operationId).
 	DeleteBackgroundImage(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// UpdateBackgroundImageWithBody Update background image
 	//
 	// Update the application background image.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `config:write`.
 	//
 	// Takes any type of body and a specified content type.
 	//
@@ -3665,6 +3709,8 @@ type ClientInterface interface {
 	//
 	// Delete the default profile picture image.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `config:write`.
+	//
 	// Corresponds with DELETE /api/admin/application-assets/default-profile-picture (the `DeleteDefaultProfilePictureImage` operationId).
 	DeleteDefaultProfilePictureImage(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
 
@@ -3672,12 +3718,16 @@ type ClientInterface interface {
 	//
 	// Get the default profile picture image for the application.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `config:read`.
+	//
 	// Corresponds with GET /api/admin/application-assets/default-profile-picture (the `GetDefaultProfilePictureImage` operationId).
 	GetDefaultProfilePictureImage(ctx context.Context, params *GetDefaultProfilePictureImageParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// UpdateDefaultProfilePictureImageWithBody Update default profile picture image
 	//
 	// Update the default profile picture image.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `config:write`.
 	//
 	// Takes any type of body and a specified content type.
 	//
@@ -3688,6 +3738,8 @@ type ClientInterface interface {
 	//
 	// Update the email logo for use in emails.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `config:write`.
+	//
 	// Takes any type of body and a specified content type.
 	//
 	// Corresponds with PUT /api/admin/application-assets/email (the `UpdateEmailLogo` operationId).
@@ -3696,6 +3748,8 @@ type ClientInterface interface {
 	// UpdateFaviconWithBody Update favicon
 	//
 	// Update the application favicon.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `config:write`.
 	//
 	// Takes any type of body and a specified content type.
 	//
@@ -3706,12 +3760,16 @@ type ClientInterface interface {
 	//
 	// Delete the custom font of page and dialog titles.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `config:write`.
+	//
 	// Corresponds with DELETE /api/admin/application-assets/font (the `DeleteTitleFont` operationId).
 	DeleteTitleFont(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// UpdateTitleFontWithBody Update title font
 	//
 	// Update the custom font of page and dialog titles.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `config:write`.
 	//
 	// Takes any type of body and a specified content type.
 	//
@@ -3722,12 +3780,16 @@ type ClientInterface interface {
 	//
 	// Delete the custom application logo and restore the default logo.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `config:write`.
+	//
 	// Corresponds with DELETE /api/admin/application-assets/logo (the `DeleteLogoImage` operationId).
 	DeleteLogoImage(ctx context.Context, params *DeleteLogoImageParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// UpdateLogoWithBody Update logo
 	//
 	// Update the application logo.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `config:write`.
 	//
 	// Takes any type of body and a specified content type.
 	//
@@ -3738,12 +3800,16 @@ type ClientInterface interface {
 	//
 	// Get all application configurations including private ones.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `config:read`.
+	//
 	// Corresponds with GET /api/admin/application-configuration (the `ListAllApplicationConfigurations` operationId).
 	ListAllApplicationConfigurations(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// PatchApplicationConfigurationsWithBody Update application configurations
 	//
-	// Update application configuration settings, where PATCH changes only the fields in the body
+	// Update application configuration settings, where PATCH changes only the fields in the body.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `config:write`.
 	//
 	// Takes any type of body and a specified content type.
 	//
@@ -3752,7 +3818,9 @@ type ClientInterface interface {
 
 	// PatchApplicationConfigurations Update application configurations
 	//
-	// Update application configuration settings, where PATCH changes only the fields in the body
+	// Update application configuration settings, where PATCH changes only the fields in the body.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `config:write`.
 	//
 	// Takes a body of the `application/json` content type.
 	//
@@ -3761,7 +3829,9 @@ type ClientInterface interface {
 
 	// UpdateApplicationConfigurationsWithBody Update application configurations
 	//
-	// Update application configuration settings, where PATCH changes only the fields in the body
+	// Update application configuration settings, where PATCH changes only the fields in the body.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `config:write`.
 	//
 	// Takes any type of body and a specified content type.
 	//
@@ -3770,7 +3840,9 @@ type ClientInterface interface {
 
 	// UpdateApplicationConfigurations Update application configurations
 	//
-	// Update application configuration settings, where PATCH changes only the fields in the body
+	// Update application configuration settings, where PATCH changes only the fields in the body.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `config:write`.
 	//
 	// Takes a body of the `application/json` content type.
 	//
@@ -3781,12 +3853,16 @@ type ClientInterface interface {
 	//
 	// Manually trigger LDAP synchronization.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `config:write`.
+	//
 	// Corresponds with POST /api/admin/application-configuration/sync-ldap (the `SynchronizeLDAP` operationId).
 	SynchronizeLDAP(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// SendTestEmail Send test email
 	//
 	// Send a test email to verify email configuration.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `config:write`.
 	//
 	// Corresponds with POST /api/admin/application-configuration/test-email (the `SendTestEmail` operationId).
 	SendTestEmail(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
@@ -3795,12 +3871,16 @@ type ClientInterface interface {
 	//
 	// Get a paginated list of all audit logs (admin only).
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `audit-logs:read`.
+	//
 	// Corresponds with GET /api/admin/audit-logs (the `ListAllAuditLogs` operationId).
 	ListAllAuditLogs(ctx context.Context, params *ListAllAuditLogsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ListClientNames List client names
 	//
 	// Get a list of all client names for audit log filtering.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `audit-logs:read`.
 	//
 	// Corresponds with GET /api/admin/audit-logs/filters/client-names (the `ListClientNames` operationId).
 	ListClientNames(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
@@ -3809,6 +3889,8 @@ type ClientInterface interface {
 	//
 	// Get a list of all usernames with their IDs for audit log filtering.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `audit-logs:read`.
+	//
 	// Corresponds with GET /api/admin/audit-logs/filters/users (the `ListUsersWithIDs` operationId).
 	ListUsersWithIDs(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
 
@@ -3816,12 +3898,16 @@ type ClientInterface interface {
 	//
 	// Get a list of suggested custom claim names.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:read`.
+	//
 	// Corresponds with GET /api/admin/custom-claims/suggestions (the `GetCustomClaimSuggestions` operationId).
 	GetCustomClaimSuggestions(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// UpdateCustomClaimsForUserGroupWithBody Update custom claims for a user group
 	//
 	// Update or create custom claims for a specific user group.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `groups:write`.
 	//
 	// Takes any type of body and a specified content type.
 	//
@@ -3832,6 +3918,8 @@ type ClientInterface interface {
 	//
 	// Update or create custom claims for a specific user group.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `groups:write`.
+	//
 	// Takes a body of the `application/json` content type.
 	//
 	// Corresponds with PUT /api/admin/custom-claims/user-group/{userGroupId} (the `UpdateCustomClaimsForUserGroup` operationId).
@@ -3840,6 +3928,8 @@ type ClientInterface interface {
 	// UpdateCustomClaimsForUserWithBody Update custom claims for a user
 	//
 	// Update or create custom claims for a specific user.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:write`.
 	//
 	// Takes any type of body and a specified content type.
 	//
@@ -3850,6 +3940,8 @@ type ClientInterface interface {
 	//
 	// Update or create custom claims for a specific user.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:write`.
+	//
 	// Takes a body of the `application/json` content type.
 	//
 	// Corresponds with PUT /api/admin/custom-claims/user/{userId} (the `UpdateCustomClaimsForUser` operationId).
@@ -3859,12 +3951,16 @@ type ClientInterface interface {
 	//
 	// Get a paginated list of OIDC claim mapping policies with optional search and sorting.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-claim-mapping-policies:read`.
+	//
 	// Corresponds with GET /api/admin/oidc/claim-mapping-policies (the `ListOIDCClaimMappingPolicies` operationId).
 	ListOIDCClaimMappingPolicies(ctx context.Context, params *ListOIDCClaimMappingPoliciesParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// CreateOIDCClaimMappingPolicyWithBody Create OIDC claim mapping policy
 	//
 	// Create a new OIDC claim mapping policy.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-claim-mapping-policies:write`.
 	//
 	// Takes any type of body and a specified content type.
 	//
@@ -3875,6 +3971,8 @@ type ClientInterface interface {
 	//
 	// Create a new OIDC claim mapping policy.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-claim-mapping-policies:write`.
+	//
 	// Takes a body of the `application/json` content type.
 	//
 	// Corresponds with POST /api/admin/oidc/claim-mapping-policies (the `CreateOIDCClaimMappingPolicy` operationId).
@@ -3882,7 +3980,9 @@ type ClientInterface interface {
 
 	// PreviewClaimMappingsWithBody Preview claim mappings
 	//
-	// Get the claims that claim mappings, saved or not, release for a user and set of scopes
+	// Get the claims that claim mappings, saved or not, release for a user and set of scopes.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:read`.
 	//
 	// Takes any type of body and a specified content type.
 	//
@@ -3891,7 +3991,9 @@ type ClientInterface interface {
 
 	// PreviewClaimMappings Preview claim mappings
 	//
-	// Get the claims that claim mappings, saved or not, release for a user and set of scopes
+	// Get the claims that claim mappings, saved or not, release for a user and set of scopes.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:read`.
 	//
 	// Takes a body of the `application/json` content type.
 	//
@@ -3902,6 +4004,8 @@ type ClientInterface interface {
 	//
 	// Delete an OIDC claim mapping policy by ID.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-claim-mapping-policies:write`.
+	//
 	// Corresponds with DELETE /api/admin/oidc/claim-mapping-policies/{id} (the `DeleteOIDCClaimMappingPolicy` operationId).
 	DeleteOIDCClaimMappingPolicy(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*http.Response, error)
 
@@ -3909,12 +4013,16 @@ type ClientInterface interface {
 	//
 	// Retrieve an existing OIDC claim mapping policy.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-claim-mapping-policies:read`.
+	//
 	// Corresponds with GET /api/admin/oidc/claim-mapping-policies/{id} (the `GetOIDCClaimMappingPolicy` operationId).
 	GetOIDCClaimMappingPolicy(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// PatchOIDCClaimMappingPolicyWithBody Update an OIDC claim mapping policy
 	//
-	// Update an existing OIDC claim mapping policy, where PATCH changes only the fields in the body
+	// Update an existing OIDC claim mapping policy, where PATCH changes only the fields in the body.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-claim-mapping-policies:write`.
 	//
 	// Takes any type of body and a specified content type.
 	//
@@ -3923,7 +4031,9 @@ type ClientInterface interface {
 
 	// PatchOIDCClaimMappingPolicy Update an OIDC claim mapping policy
 	//
-	// Update an existing OIDC claim mapping policy, where PATCH changes only the fields in the body
+	// Update an existing OIDC claim mapping policy, where PATCH changes only the fields in the body.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-claim-mapping-policies:write`.
 	//
 	// Takes a body of the `application/json` content type.
 	//
@@ -3932,7 +4042,9 @@ type ClientInterface interface {
 
 	// UpdateOIDCClaimMappingPolicyWithBody Update an OIDC claim mapping policy
 	//
-	// Update an existing OIDC claim mapping policy, where PATCH changes only the fields in the body
+	// Update an existing OIDC claim mapping policy, where PATCH changes only the fields in the body.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-claim-mapping-policies:write`.
 	//
 	// Takes any type of body and a specified content type.
 	//
@@ -3941,7 +4053,9 @@ type ClientInterface interface {
 
 	// UpdateOIDCClaimMappingPolicy Update an OIDC claim mapping policy
 	//
-	// Update an existing OIDC claim mapping policy, where PATCH changes only the fields in the body
+	// Update an existing OIDC claim mapping policy, where PATCH changes only the fields in the body.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-claim-mapping-policies:write`.
 	//
 	// Takes a body of the `application/json` content type.
 	//
@@ -3952,6 +4066,8 @@ type ClientInterface interface {
 	//
 	// Get a paginated list of the OIDC clients that are not on this claim mapping policy yet.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-claim-mapping-policies:read`.
+	//
 	// Corresponds with GET /api/admin/oidc/claim-mapping-policies/{id}/assignable-clients (the `ListOIDCClientsThatCanStillBeAssignedToClaimMappingPolicy` operationId).
 	ListOIDCClientsThatCanStillBeAssignedToClaimMappingPolicy(ctx context.Context, id string, params *ListOIDCClientsThatCanStillBeAssignedToClaimMappingPolicyParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
@@ -3959,19 +4075,25 @@ type ClientInterface interface {
 	//
 	// Get a paginated list of the OIDC clients assigned to a claim mapping policy.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-claim-mapping-policies:read`.
+	//
 	// Corresponds with GET /api/admin/oidc/claim-mapping-policies/{id}/clients (the `ListOIDCClientsUsingClaimMappingPolicy` operationId).
 	ListOIDCClientsUsingClaimMappingPolicy(ctx context.Context, id string, params *ListOIDCClientsUsingClaimMappingPolicyParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// DetachOIDCClientFromClaimMappingPolicy Detach an OIDC client from a claim mapping policy
 	//
-	// Remove an OIDC client from this claim mapping policy, so it falls back to the default one
+	// Remove an OIDC client from this claim mapping policy, so it falls back to the default one.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-claim-mapping-policies:write`.
 	//
 	// Corresponds with DELETE /api/admin/oidc/claim-mapping-policies/{id}/clients/{clientId} (the `DetachOIDCClientFromClaimMappingPolicy` operationId).
 	DetachOIDCClientFromClaimMappingPolicy(ctx context.Context, id string, clientID OIDCClientID, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// AssignOIDCClientToClaimMappingPolicy Assign an OIDC client to a claim mapping policy
 	//
-	// Point an OIDC client at this claim mapping policy, replacing the policy it was on
+	// Point an OIDC client at this claim mapping policy, replacing the policy it was on.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-claim-mapping-policies:write`.
 	//
 	// Corresponds with POST /api/admin/oidc/claim-mapping-policies/{id}/clients/{clientId} (the `AssignOIDCClientToClaimMappingPolicy` operationId).
 	AssignOIDCClientToClaimMappingPolicy(ctx context.Context, id string, clientID OIDCClientID, reqEditors ...RequestEditorFn) (*http.Response, error)
@@ -3980,12 +4102,16 @@ type ClientInterface interface {
 	//
 	// Get a paginated list of OIDC clients with optional search and sorting.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-clients:read`.
+	//
 	// Corresponds with GET /api/admin/oidc/clients (the `ListOIDCClients` operationId).
 	ListOIDCClients(ctx context.Context, params *ListOIDCClientsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// CreateOIDCClientWithBody Create OIDC client
 	//
 	// Create a new OIDC client.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-clients:write`.
 	//
 	// Takes any type of body and a specified content type.
 	//
@@ -3996,6 +4122,8 @@ type ClientInterface interface {
 	//
 	// Create a new OIDC client.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-clients:write`.
+	//
 	// Takes a body of the `application/json` content type.
 	//
 	// Corresponds with POST /api/admin/oidc/clients (the `CreateOIDCClient` operationId).
@@ -4005,6 +4133,8 @@ type ClientInterface interface {
 	//
 	// Delete an OIDC client by ID.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-clients:write`.
+	//
 	// Corresponds with DELETE /api/admin/oidc/clients/{id} (the `DeleteOIDCClient` operationId).
 	DeleteOIDCClient(ctx context.Context, id OIDCClientID, reqEditors ...RequestEditorFn) (*http.Response, error)
 
@@ -4012,12 +4142,16 @@ type ClientInterface interface {
 	//
 	// Get detailed information about an OIDC client.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-clients:read`.
+	//
 	// Corresponds with GET /api/admin/oidc/clients/{id} (the `GetOIDCClient` operationId).
 	GetOIDCClient(ctx context.Context, id OIDCClientID, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// PatchOIDCClientWithBody Update OIDC client
 	//
-	// Update an existing OIDC client, where PATCH changes only the fields in the body
+	// Update an existing OIDC client, where PATCH changes only the fields in the body.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-clients:write`.
 	//
 	// Takes any type of body and a specified content type.
 	//
@@ -4026,7 +4160,9 @@ type ClientInterface interface {
 
 	// PatchOIDCClient Update OIDC client
 	//
-	// Update an existing OIDC client, where PATCH changes only the fields in the body
+	// Update an existing OIDC client, where PATCH changes only the fields in the body.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-clients:write`.
 	//
 	// Takes a body of the `application/json` content type.
 	//
@@ -4035,7 +4171,9 @@ type ClientInterface interface {
 
 	// UpdateOIDCClientWithBody Update OIDC client
 	//
-	// Update an existing OIDC client, where PATCH changes only the fields in the body
+	// Update an existing OIDC client, where PATCH changes only the fields in the body.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-clients:write`.
 	//
 	// Takes any type of body and a specified content type.
 	//
@@ -4044,7 +4182,9 @@ type ClientInterface interface {
 
 	// UpdateOIDCClient Update OIDC client
 	//
-	// Update an existing OIDC client, where PATCH changes only the fields in the body
+	// Update an existing OIDC client, where PATCH changes only the fields in the body.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-clients:write`.
 	//
 	// Takes a body of the `application/json` content type.
 	//
@@ -4055,6 +4195,8 @@ type ClientInterface interface {
 	//
 	// Update the user groups allowed to access an OIDC client.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-clients:write`.
+	//
 	// Takes any type of body and a specified content type.
 	//
 	// Corresponds with PUT /api/admin/oidc/clients/{id}/allowed-user-groups (the `UpdateAllowedUserGroups` operationId).
@@ -4063,6 +4205,8 @@ type ClientInterface interface {
 	// UpdateAllowedUserGroups Update allowed user groups
 	//
 	// Update the user groups allowed to access an OIDC client.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-clients:write`.
 	//
 	// Takes a body of the `application/json` content type.
 	//
@@ -4073,12 +4217,16 @@ type ClientInterface interface {
 	//
 	// Delete the logo for an OIDC client.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-clients:write`.
+	//
 	// Corresponds with DELETE /api/admin/oidc/clients/{id}/logo (the `DeleteClientLogo` operationId).
 	DeleteClientLogo(ctx context.Context, id OIDCClientID, params *DeleteClientLogoParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// UpdateClientLogoWithBody Update client logo
 	//
 	// Upload or update the logo for an OIDC client.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-clients:write`.
 	//
 	// Takes any type of body and a specified content type.
 	//
@@ -4087,7 +4235,9 @@ type ClientInterface interface {
 
 	// PreviewOIDCClientDataForUser Preview OIDC client data for user
 	//
-	// Get a preview of the OIDC data (ID token, access token, userinfo) that would be sent to the client for a specific user
+	// Get a preview of the OIDC data (ID token, access token, userinfo) that would be sent to the client for a specific user.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:read`.
 	//
 	// Corresponds with GET /api/admin/oidc/clients/{id}/preview/{userId} (the `PreviewOIDCClientDataForUser` operationId).
 	PreviewOIDCClientDataForUser(ctx context.Context, id OIDCClientID, userID string, params *PreviewOIDCClientDataForUserParams, reqEditors ...RequestEditorFn) (*http.Response, error)
@@ -4096,6 +4246,8 @@ type ClientInterface interface {
 	//
 	// Force a re-fetch of the OAuth Client ID Metadata Document for a CIMD client.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-clients:write`.
+	//
 	// Corresponds with POST /api/admin/oidc/clients/{id}/refresh (the `RefreshClientMetadataDocument` operationId).
 	RefreshClientMetadataDocument(ctx context.Context, id OIDCClientID, reqEditors ...RequestEditorFn) (*http.Response, error)
 
@@ -4103,12 +4255,16 @@ type ClientInterface interface {
 	//
 	// Get the SCIM service provider configuration for an OIDC client.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-clients:read`.
+	//
 	// Corresponds with GET /api/admin/oidc/clients/{id}/scim-service-provider (the `GetSCIMServiceProvider` operationId).
 	GetSCIMServiceProvider(ctx context.Context, id OIDCClientID, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ListClientSecrets List client secrets
 	//
-	// List the secrets of an OIDC client, without disclosing their values
+	// List the secrets of an OIDC client, without disclosing their values.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-clients:read`.
 	//
 	// Corresponds with GET /api/admin/oidc/clients/{id}/secrets (the `ListClientSecrets` operationId).
 	ListClientSecrets(ctx context.Context, id OIDCClientID, reqEditors ...RequestEditorFn) (*http.Response, error)
@@ -4116,6 +4272,8 @@ type ClientInterface interface {
 	// CreateClientSecretWithBody Create client secret
 	//
 	// Add a new secret to an OIDC client, leaving the existing ones usable. The value is only returned by this endpoint and cannot be retrieved later.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-clients:write`.
 	//
 	// Takes any type of body and a specified content type.
 	//
@@ -4126,6 +4284,8 @@ type ClientInterface interface {
 	//
 	// Add a new secret to an OIDC client, leaving the existing ones usable. The value is only returned by this endpoint and cannot be retrieved later.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-clients:write`.
+	//
 	// Takes a body of the `application/json` content type.
 	//
 	// Corresponds with POST /api/admin/oidc/clients/{id}/secrets (the `CreateClientSecret` operationId).
@@ -4133,7 +4293,9 @@ type ClientInterface interface {
 
 	// DeleteClientSecret Delete client secret
 	//
-	// Delete a single secret of an OIDC client, making it immediately unusable
+	// Delete a single secret of an OIDC client, making it immediately unusable.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-clients:write`.
 	//
 	// Corresponds with DELETE /api/admin/oidc/clients/{id}/secrets/{secretId} (the `DeleteClientSecret` operationId).
 	DeleteClientSecret(ctx context.Context, id OIDCClientID, secretID string, reqEditors ...RequestEditorFn) (*http.Response, error)
@@ -4142,12 +4304,16 @@ type ClientInterface interface {
 	//
 	// Get a paginated list of the custom OIDC scopes with optional search and sorting.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-claim-mapping-policies:read`.
+	//
 	// Corresponds with GET /api/admin/oidc/custom-scopes (the `ListCustomOIDCScopes` operationId).
 	ListCustomOIDCScopes(ctx context.Context, params *ListCustomOIDCScopesParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// CreateCustomOIDCScopeWithBody Create a custom OIDC scope
 	//
-	// Create a custom OIDC scope, which claim mappings can then be released with
+	// Create a custom OIDC scope, which claim mappings can then be released with.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-claim-mapping-policies:write`.
 	//
 	// Takes any type of body and a specified content type.
 	//
@@ -4156,7 +4322,9 @@ type ClientInterface interface {
 
 	// CreateCustomOIDCScope Create a custom OIDC scope
 	//
-	// Create a custom OIDC scope, which claim mappings can then be released with
+	// Create a custom OIDC scope, which claim mappings can then be released with.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-claim-mapping-policies:write`.
 	//
 	// Takes a body of the `application/json` content type.
 	//
@@ -4165,7 +4333,9 @@ type ClientInterface interface {
 
 	// ListKeysOfAllCustomOIDCScopes List the keys of all custom OIDC scopes
 	//
-	// Get the keys of every custom OIDC scope, sorted, for pickers that offer all of them at once
+	// Get the keys of every custom OIDC scope, sorted, for pickers that offer all of them at once.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-claim-mapping-policies:read`.
 	//
 	// Corresponds with GET /api/admin/oidc/custom-scopes/keys (the `ListKeysOfAllCustomOIDCScopes` operationId).
 	ListKeysOfAllCustomOIDCScopes(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
@@ -4174,12 +4344,16 @@ type ClientInterface interface {
 	//
 	// Delete a custom OIDC scope that no claim mapping is released with.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-claim-mapping-policies:write`.
+	//
 	// Corresponds with DELETE /api/admin/oidc/custom-scopes/{id} (the `DeleteCustomOIDCScope` operationId).
 	DeleteCustomOIDCScope(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// PatchCustomOIDCScopeWithBody Update a custom OIDC scope
 	//
-	// Update the name and description of a custom OIDC scope, whose key can't change, where PATCH changes only the fields in the body
+	// Update the name and description of a custom OIDC scope, whose key can't change, where PATCH changes only the fields in the body.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-claim-mapping-policies:write`.
 	//
 	// Takes any type of body and a specified content type.
 	//
@@ -4188,7 +4362,9 @@ type ClientInterface interface {
 
 	// PatchCustomOIDCScope Update a custom OIDC scope
 	//
-	// Update the name and description of a custom OIDC scope, whose key can't change, where PATCH changes only the fields in the body
+	// Update the name and description of a custom OIDC scope, whose key can't change, where PATCH changes only the fields in the body.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-claim-mapping-policies:write`.
 	//
 	// Takes a body of the `application/json` content type.
 	//
@@ -4197,7 +4373,9 @@ type ClientInterface interface {
 
 	// UpdateCustomOIDCScopeWithBody Update a custom OIDC scope
 	//
-	// Update the name and description of a custom OIDC scope, whose key can't change, where PATCH changes only the fields in the body
+	// Update the name and description of a custom OIDC scope, whose key can't change, where PATCH changes only the fields in the body.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-claim-mapping-policies:write`.
 	//
 	// Takes any type of body and a specified content type.
 	//
@@ -4206,7 +4384,9 @@ type ClientInterface interface {
 
 	// UpdateCustomOIDCScope Update a custom OIDC scope
 	//
-	// Update the name and description of a custom OIDC scope, whose key can't change, where PATCH changes only the fields in the body
+	// Update the name and description of a custom OIDC scope, whose key can't change, where PATCH changes only the fields in the body.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-claim-mapping-policies:write`.
 	//
 	// Takes a body of the `application/json` content type.
 	//
@@ -4217,6 +4397,8 @@ type ClientInterface interface {
 	//
 	// Search the icon library for logos that can be used for OIDC clients.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-clients:read`.
+	//
 	// Corresponds with GET /api/admin/oidc/logo-presets (the `SearchLogoPresets` operationId).
 	SearchLogoPresets(ctx context.Context, params *SearchLogoPresetsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
@@ -4224,12 +4406,16 @@ type ClientInterface interface {
 	//
 	// Get a paginated list of OIDC clients that a specific user has authorized.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:read`.
+	//
 	// Corresponds with GET /api/admin/oidc/users/{id}/authorized-clients (the `ListAuthorizedClientsForUser` operationId).
 	ListAuthorizedClientsForUser(ctx context.Context, id string, params *ListAuthorizedClientsForUserParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// CreateSCIMServiceProviderWithBody Create SCIM service provider
 	//
 	// Create a new SCIM service provider.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-clients:write`.
 	//
 	// Takes any type of body and a specified content type.
 	//
@@ -4240,6 +4426,8 @@ type ClientInterface interface {
 	//
 	// Create a new SCIM service provider.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-clients:write`.
+	//
 	// Takes a body of the `application/json` content type.
 	//
 	// Corresponds with POST /api/admin/scim/service-provider (the `CreateSCIMServiceProvider` operationId).
@@ -4249,12 +4437,16 @@ type ClientInterface interface {
 	//
 	// Delete a SCIM service provider by ID.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-clients:write`.
+	//
 	// Corresponds with DELETE /api/admin/scim/service-provider/{id} (the `DeleteSCIMServiceProvider` operationId).
 	DeleteSCIMServiceProvider(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// PatchSCIMServiceProviderWithBody Update SCIM service provider
 	//
-	// Update an existing SCIM service provider, where PATCH changes only the fields in the body, an omitted token keeps the stored one, an empty token removes it and a changed endpoint requires the token
+	// Update an existing SCIM service provider, where PATCH changes only the fields in the body, an omitted token keeps the stored one, an empty token removes it and a changed endpoint requires the token.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-clients:write`.
 	//
 	// Takes any type of body and a specified content type.
 	//
@@ -4263,7 +4455,9 @@ type ClientInterface interface {
 
 	// PatchSCIMServiceProvider Update SCIM service provider
 	//
-	// Update an existing SCIM service provider, where PATCH changes only the fields in the body, an omitted token keeps the stored one, an empty token removes it and a changed endpoint requires the token
+	// Update an existing SCIM service provider, where PATCH changes only the fields in the body, an omitted token keeps the stored one, an empty token removes it and a changed endpoint requires the token.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-clients:write`.
 	//
 	// Takes a body of the `application/json` content type.
 	//
@@ -4272,7 +4466,9 @@ type ClientInterface interface {
 
 	// UpdateSCIMServiceProviderWithBody Update SCIM service provider
 	//
-	// Update an existing SCIM service provider, where PATCH changes only the fields in the body, an omitted token keeps the stored one, an empty token removes it and a changed endpoint requires the token
+	// Update an existing SCIM service provider, where PATCH changes only the fields in the body, an omitted token keeps the stored one, an empty token removes it and a changed endpoint requires the token.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-clients:write`.
 	//
 	// Takes any type of body and a specified content type.
 	//
@@ -4281,7 +4477,9 @@ type ClientInterface interface {
 
 	// UpdateSCIMServiceProvider Update SCIM service provider
 	//
-	// Update an existing SCIM service provider, where PATCH changes only the fields in the body, an omitted token keeps the stored one, an empty token removes it and a changed endpoint requires the token
+	// Update an existing SCIM service provider, where PATCH changes only the fields in the body, an omitted token keeps the stored one, an empty token removes it and a changed endpoint requires the token.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-clients:write`.
 	//
 	// Takes a body of the `application/json` content type.
 	//
@@ -4292,6 +4490,8 @@ type ClientInterface interface {
 	//
 	// Trigger synchronization for a SCIM service provider.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-clients:write`.
+	//
 	// Corresponds with POST /api/admin/scim/service-provider/{id}/sync (the `SyncSCIMServiceProvider` operationId).
 	SyncSCIMServiceProvider(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*http.Response, error)
 
@@ -4299,12 +4499,16 @@ type ClientInterface interface {
 	//
 	// Get a paginated list of signup tokens.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:invite`.
+	//
 	// Corresponds with GET /api/admin/signup-tokens (the `ListSignupTokens` operationId).
 	ListSignupTokens(ctx context.Context, params *ListSignupTokensParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// CreateSignupTokenWithBody Create signup token
 	//
 	// Create a new signup token that allows user registration.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:invite`.
 	//
 	// Takes any type of body and a specified content type.
 	//
@@ -4315,6 +4519,8 @@ type ClientInterface interface {
 	//
 	// Create a new signup token that allows user registration.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:invite`.
+	//
 	// Takes a body of the `application/json` content type.
 	//
 	// Corresponds with POST /api/admin/signup-tokens (the `CreateSignupToken` operationId).
@@ -4324,6 +4530,8 @@ type ClientInterface interface {
 	//
 	// Delete a signup token by ID.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:invite`.
+	//
 	// Corresponds with DELETE /api/admin/signup-tokens/{id} (the `DeleteSignupToken` operationId).
 	DeleteSignupToken(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*http.Response, error)
 
@@ -4331,12 +4539,16 @@ type ClientInterface interface {
 	//
 	// Get a paginated list of user groups with optional search and sorting.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `groups:read`.
+	//
 	// Corresponds with GET /api/admin/user-groups (the `ListUserGroups` operationId).
 	ListUserGroups(ctx context.Context, params *ListUserGroupsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// CreateUserGroupWithBody Create user group
 	//
 	// Create a new user group.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `groups:write`.
 	//
 	// Takes any type of body and a specified content type.
 	//
@@ -4347,6 +4559,8 @@ type ClientInterface interface {
 	//
 	// Create a new user group.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `groups:write`.
+	//
 	// Takes a body of the `application/json` content type.
 	//
 	// Corresponds with POST /api/admin/user-groups (the `CreateUserGroup` operationId).
@@ -4356,6 +4570,8 @@ type ClientInterface interface {
 	//
 	// Delete a specific user group by ID.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `groups:write`.
+	//
 	// Corresponds with DELETE /api/admin/user-groups/{id} (the `DeleteUserGroup` operationId).
 	DeleteUserGroup(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*http.Response, error)
 
@@ -4363,12 +4579,16 @@ type ClientInterface interface {
 	//
 	// Retrieve detailed information about a specific user group including its users.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `groups:read`.
+	//
 	// Corresponds with GET /api/admin/user-groups/{id} (the `GetUserGroupByID` operationId).
 	GetUserGroupByID(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// PatchUserGroupWithBody Update user group
 	//
-	// Update an existing user group by ID, where PATCH changes only the fields in the body
+	// Update an existing user group by ID, where PATCH changes only the fields in the body.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `groups:write`.
 	//
 	// Takes any type of body and a specified content type.
 	//
@@ -4377,7 +4597,9 @@ type ClientInterface interface {
 
 	// PatchUserGroup Update user group
 	//
-	// Update an existing user group by ID, where PATCH changes only the fields in the body
+	// Update an existing user group by ID, where PATCH changes only the fields in the body.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `groups:write`.
 	//
 	// Takes a body of the `application/json` content type.
 	//
@@ -4386,7 +4608,9 @@ type ClientInterface interface {
 
 	// UpdateUserGroupWithBody Update user group
 	//
-	// Update an existing user group by ID, where PATCH changes only the fields in the body
+	// Update an existing user group by ID, where PATCH changes only the fields in the body.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `groups:write`.
 	//
 	// Takes any type of body and a specified content type.
 	//
@@ -4395,7 +4619,9 @@ type ClientInterface interface {
 
 	// UpdateUserGroup Update user group
 	//
-	// Update an existing user group by ID, where PATCH changes only the fields in the body
+	// Update an existing user group by ID, where PATCH changes only the fields in the body.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `groups:write`.
 	//
 	// Takes a body of the `application/json` content type.
 	//
@@ -4406,6 +4632,8 @@ type ClientInterface interface {
 	//
 	// Update the OIDC clients allowed for a specific user group.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `groups:write`.
+	//
 	// Takes any type of body and a specified content type.
 	//
 	// Corresponds with PUT /api/admin/user-groups/{id}/allowed-oidc-clients (the `UpdateAllowedOIDCClients` operationId).
@@ -4414,6 +4642,8 @@ type ClientInterface interface {
 	// UpdateAllowedOIDCClients Update allowed OIDC clients
 	//
 	// Update the OIDC clients allowed for a specific user group.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `groups:write`.
 	//
 	// Takes a body of the `application/json` content type.
 	//
@@ -4424,6 +4654,8 @@ type ClientInterface interface {
 	//
 	// Update the list of users belonging to a specific user group.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `groups:write`.
+	//
 	// Takes any type of body and a specified content type.
 	//
 	// Corresponds with PUT /api/admin/user-groups/{id}/users (the `UpdateUsersInGroup` operationId).
@@ -4432,6 +4664,8 @@ type ClientInterface interface {
 	// UpdateUsersInGroup Update users in a group
 	//
 	// Update the list of users belonging to a specific user group.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `groups:write`.
 	//
 	// Takes a body of the `application/json` content type.
 	//
@@ -4442,12 +4676,16 @@ type ClientInterface interface {
 	//
 	// Get a paginated list of users with optional search and sorting.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:read`.
+	//
 	// Corresponds with GET /api/admin/users (the `ListUsers` operationId).
 	ListUsers(ctx context.Context, params *ListUsersParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// CreateUserWithBody Create user
 	//
 	// Create a new user.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:write`.
 	//
 	// Takes any type of body and a specified content type.
 	//
@@ -4458,6 +4696,8 @@ type ClientInterface interface {
 	//
 	// Create a new user.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:write`.
+	//
 	// Takes a body of the `application/json` content type.
 	//
 	// Corresponds with POST /api/admin/users (the `CreateUser` operationId).
@@ -4467,6 +4707,8 @@ type ClientInterface interface {
 	//
 	// Delete a specific user by ID.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:write`.
+	//
 	// Corresponds with DELETE /api/admin/users/{id} (the `DeleteUser` operationId).
 	DeleteUser(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*http.Response, error)
 
@@ -4474,12 +4716,16 @@ type ClientInterface interface {
 	//
 	// Retrieve detailed information about a specific user.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:read`.
+	//
 	// Corresponds with GET /api/admin/users/{id} (the `GetUserByID` operationId).
 	GetUserByID(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// PatchUserWithBody Update user
 	//
-	// Update an existing user by ID, where PATCH changes only the fields in the body
+	// Update an existing user by ID, where PATCH changes only the fields in the body.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:write`.
 	//
 	// Takes any type of body and a specified content type.
 	//
@@ -4488,7 +4734,9 @@ type ClientInterface interface {
 
 	// PatchUser Update user
 	//
-	// Update an existing user by ID, where PATCH changes only the fields in the body
+	// Update an existing user by ID, where PATCH changes only the fields in the body.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:write`.
 	//
 	// Takes a body of the `application/json` content type.
 	//
@@ -4497,7 +4745,9 @@ type ClientInterface interface {
 
 	// UpdateUserWithBody Update user
 	//
-	// Update an existing user by ID, where PATCH changes only the fields in the body
+	// Update an existing user by ID, where PATCH changes only the fields in the body.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:write`.
 	//
 	// Takes any type of body and a specified content type.
 	//
@@ -4506,7 +4756,9 @@ type ClientInterface interface {
 
 	// UpdateUser Update user
 	//
-	// Update an existing user by ID, where PATCH changes only the fields in the body
+	// Update an existing user by ID, where PATCH changes only the fields in the body.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:write`.
 	//
 	// Takes a body of the `application/json` content type.
 	//
@@ -4517,12 +4769,16 @@ type ClientInterface interface {
 	//
 	// Retrieve all groups a specific user belongs to.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:read`.
+	//
 	// Corresponds with GET /api/admin/users/{id}/groups (the `GetUserGroups` operationId).
 	GetUserGroups(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// RequestOneTimeAccessEmailAdminWithBody Request one-time access email (admin)
 	//
 	// Request a one-time access email for a specific user (admin only).
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:login-codes`.
 	//
 	// Takes any type of body and a specified content type.
 	//
@@ -4533,6 +4789,8 @@ type ClientInterface interface {
 	//
 	// Request a one-time access email for a specific user (admin only).
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:login-codes`.
+	//
 	// Takes a body of the `application/json` content type.
 	//
 	// Corresponds with POST /api/admin/users/{id}/one-time-access-email (the `RequestOneTimeAccessEmailAdmin` operationId).
@@ -4541,6 +4799,8 @@ type ClientInterface interface {
 	// CreateOneTimeAccessTokenForUserAdminWithBody Create one-time access token for user (admin)
 	//
 	// Generate a one-time access token for a specific user (admin only).
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:login-codes`.
 	//
 	// Takes any type of body and a specified content type.
 	//
@@ -4551,6 +4811,8 @@ type ClientInterface interface {
 	//
 	// Generate a one-time access token for a specific user (admin only).
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:login-codes`.
+	//
 	// Takes a body of the `application/json` content type.
 	//
 	// Corresponds with POST /api/admin/users/{id}/one-time-access-token (the `CreateOneTimeAccessTokenForUserAdmin` operationId).
@@ -4560,12 +4822,16 @@ type ClientInterface interface {
 	//
 	// Reset a specific user's profile picture to the default.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:write`.
+	//
 	// Corresponds with DELETE /api/admin/users/{id}/profile-picture (the `ResetUserProfilePicture` operationId).
 	ResetUserProfilePicture(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// UpdateUserProfilePictureWithBody Update user profile picture
 	//
 	// Update a specific user's profile picture.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:write`.
 	//
 	// Takes any type of body and a specified content type.
 	//
@@ -4574,14 +4840,18 @@ type ClientInterface interface {
 
 	// RevokeAllSessionsOfUser Revoke all sessions of a user
 	//
-	// Sign a user out of every session and revoke every grant their apps hold, offline_access ones included
+	// Sign a user out of every session and revoke every grant their apps hold, offline_access ones included.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:write`.
 	//
 	// Corresponds with DELETE /api/admin/users/{id}/sessions (the `RevokeAllSessionsOfUser` operationId).
 	RevokeAllSessionsOfUser(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ListSessionsOfUser List sessions of a user
 	//
-	// Get the browsers in which a user is signed in, most recently active first
+	// Get the browsers in which a user is signed in, most recently active first.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:read`.
 	//
 	// Corresponds with GET /api/admin/users/{id}/sessions (the `ListSessionsOfUser` operationId).
 	ListSessionsOfUser(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*http.Response, error)
@@ -4590,12 +4860,16 @@ type ClientInterface interface {
 	//
 	// Sign a user out of one of their sessions.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:write`.
+	//
 	// Corresponds with DELETE /api/admin/users/{id}/sessions/{sessionId} (the `RevokeSessionOfUser` operationId).
 	RevokeSessionOfUser(ctx context.Context, id string, sessionID string, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// UpdateUserGroupsWithBody Update user groups
 	//
 	// Update the groups a specific user belongs to.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:write`.
 	//
 	// Takes any type of body and a specified content type.
 	//
@@ -4606,6 +4880,8 @@ type ClientInterface interface {
 	//
 	// Update the groups a specific user belongs to.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:write`.
+	//
 	// Takes a body of the `application/json` content type.
 	//
 	// Corresponds with PUT /api/admin/users/{id}/user-groups (the `UpdateUserGroups` operationId).
@@ -4615,6 +4891,8 @@ type ClientInterface interface {
 	//
 	// Retrieve all WebAuthn credentials for a specific user.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:read`.
+	//
 	// Corresponds with GET /api/admin/users/{id}/webauthn-credentials (the `ListUserPasskeys` operationId).
 	ListUserPasskeys(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*http.Response, error)
 
@@ -4622,12 +4900,16 @@ type ClientInterface interface {
 	//
 	// Delete a specific WebAuthn credential for a user.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:write`.
+	//
 	// Corresponds with DELETE /api/admin/users/{id}/webauthn-credentials/{credentialId} (the `DeleteUserPasskey` operationId).
 	DeleteUserPasskey(ctx context.Context, id string, credentialID string, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetWarningsForAdmins Get the warnings for admins
 	//
-	// Lists the problems with this instance that admins should fix, such as a SQLite database on a networked filesystem or a database that a newer Pocket ID version migrated
+	// Lists the problems with this instance that admins should fix, such as a SQLite database on a networked filesystem or a database that a newer Pocket ID version migrated.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `config:read`.
 	//
 	// Corresponds with GET /api/admin/warnings (the `GetWarningsForAdmins` operationId).
 	GetWarningsForAdmins(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
@@ -4636,12 +4918,16 @@ type ClientInterface interface {
 	//
 	// Get a paginated list of API keys belonging to the current user.
 	//
+	// Credentials: `apiKey`, `oauth2`, `session`. Scope: `account:api-keys`.
+	//
 	// Corresponds with GET /api/api-keys (the `ListAPIKeys` operationId).
 	ListAPIKeys(ctx context.Context, params *ListAPIKeysParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// CreateAPIKeyWithBody Create API key
 	//
 	// Create a new API key for the current user.
+	//
+	// Credentials: `session`. Scope: `account:api-keys:create`.
 	//
 	// Takes any type of body and a specified content type.
 	//
@@ -4652,6 +4938,8 @@ type ClientInterface interface {
 	//
 	// Create a new API key for the current user.
 	//
+	// Credentials: `session`. Scope: `account:api-keys:create`.
+	//
 	// Takes a body of the `application/json` content type.
 	//
 	// Corresponds with POST /api/api-keys (the `CreateAPIKey` operationId).
@@ -4661,12 +4949,16 @@ type ClientInterface interface {
 	//
 	// Revoke (delete) an existing API key by ID.
 	//
+	// Credentials: `apiKey`, `oauth2`, `session`. Scope: `account:api-keys`.
+	//
 	// Corresponds with DELETE /api/api-keys/{id} (the `RevokeAPIKey` operationId).
 	RevokeAPIKey(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// PatchAPIKeyWithBody Update API key
 	//
-	// Change the name, description and scopes of an existing API key, where PATCH changes only the fields in the body; its token stays the same
+	// Change the name, description and scopes of an existing API key, where PATCH changes only the fields in the body; its token stays the same.
+	//
+	// Credentials: `session`. Scope: `account:api-keys:create`.
 	//
 	// Takes any type of body and a specified content type.
 	//
@@ -4675,7 +4967,9 @@ type ClientInterface interface {
 
 	// PatchAPIKey Update API key
 	//
-	// Change the name, description and scopes of an existing API key, where PATCH changes only the fields in the body; its token stays the same
+	// Change the name, description and scopes of an existing API key, where PATCH changes only the fields in the body; its token stays the same.
+	//
+	// Credentials: `session`. Scope: `account:api-keys:create`.
 	//
 	// Takes a body of the `application/json` content type.
 	//
@@ -4684,7 +4978,9 @@ type ClientInterface interface {
 
 	// UpdateAPIKeyWithBody Update API key
 	//
-	// Change the name, description and scopes of an existing API key, where PATCH changes only the fields in the body; its token stays the same
+	// Change the name, description and scopes of an existing API key, where PATCH changes only the fields in the body; its token stays the same.
+	//
+	// Credentials: `session`. Scope: `account:api-keys:create`.
 	//
 	// Takes any type of body and a specified content type.
 	//
@@ -4693,7 +4989,9 @@ type ClientInterface interface {
 
 	// UpdateAPIKey Update API key
 	//
-	// Change the name, description and scopes of an existing API key, where PATCH changes only the fields in the body; its token stays the same
+	// Change the name, description and scopes of an existing API key, where PATCH changes only the fields in the body; its token stays the same.
+	//
+	// Credentials: `session`. Scope: `account:api-keys:create`.
 	//
 	// Takes a body of the `application/json` content type.
 	//
@@ -4702,7 +5000,9 @@ type ClientInterface interface {
 
 	// RenewAPIKeyWithBody Renew API key
 	//
-	// While a key has not expired, its old token keeps working for the given grace period, but never past the key's previous expiration
+	// While a key has not expired, its old token keeps working for the given grace period, but never past the key's previous expiration.
+	//
+	// Credentials: `session`. Scope: `account:api-keys:create`.
 	//
 	// Takes any type of body and a specified content type.
 	//
@@ -4711,7 +5011,9 @@ type ClientInterface interface {
 
 	// RenewAPIKey Renew API key
 	//
-	// While a key has not expired, its old token keeps working for the given grace period, but never past the key's previous expiration
+	// While a key has not expired, its old token keeps working for the given grace period, but never past the key's previous expiration.
+	//
+	// Credentials: `session`. Scope: `account:api-keys:create`.
 	//
 	// Takes a body of the `application/json` content type.
 	//
@@ -4764,6 +5066,8 @@ type ClientInterface interface {
 	//
 	// Get a paginated list of the audit logs about the current user.
 	//
+	// Credentials: `apiKey`, `oauth2`, `session`. Scope: `account:audit-logs`.
+	//
 	// Corresponds with GET /api/audit-logs (the `ListAuditLogs` operationId).
 	ListAuditLogs(ctx context.Context, params *ListAuditLogsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
@@ -4785,6 +5089,8 @@ type ClientInterface interface {
 	//
 	// Retrieve the requesting device details for an authenticated user before approval or denial.
 	//
+	// Credentials: `session`. Scope: `account:session`.
+	//
 	// Takes any type of body and a specified content type.
 	//
 	// Corresponds with POST /api/device-login/verification (the `InspectDeviceLoginRequest` operationId).
@@ -4794,6 +5100,8 @@ type ClientInterface interface {
 	//
 	// Retrieve the requesting device details for an authenticated user before approval or denial.
 	//
+	// Credentials: `session`. Scope: `account:session`.
+	//
 	// Takes a body of the `application/json` content type.
 	//
 	// Corresponds with POST /api/device-login/verification (the `InspectDeviceLoginRequest` operationId).
@@ -4801,7 +5109,9 @@ type ClientInterface interface {
 
 	// DecideDeviceLoginRequestWithBody Decide device login request
 	//
-	// Approve or deny a device login request; approval requires fresh passkey reauthentication
+	// Approve or deny a device login request; approval requires fresh passkey reauthentication.
+	//
+	// Credentials: `session`. Scope: `account:session`.
 	//
 	// Takes any type of body and a specified content type.
 	//
@@ -4810,7 +5120,9 @@ type ClientInterface interface {
 
 	// DecideDeviceLoginRequest Decide device login request
 	//
-	// Approve or deny a device login request; approval requires fresh passkey reauthentication
+	// Approve or deny a device login request; approval requires fresh passkey reauthentication.
+	//
+	// Credentials: `session`. Scope: `account:session`.
 	//
 	// Takes a body of the `application/json` content type.
 	//
@@ -4819,7 +5131,9 @@ type ClientInterface interface {
 
 	// ListOptionalFeatures List optional features
 	//
-	// Get whether each optional feature is on and whether anything uses it; a feature in use is always on
+	// Get whether each optional feature is on and whether anything uses it; a feature in use is always on.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`.
 	//
 	// Corresponds with GET /api/features (the `ListOptionalFeatures` operationId).
 	ListOptionalFeatures(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
@@ -4860,6 +5174,8 @@ type ClientInterface interface {
 	//
 	// Get a paginated list of OIDC clients that the current user has authorized.
 	//
+	// Credentials: `apiKey`, `oauth2`, `session`. Scope: `account:apps`.
+	//
 	// Corresponds with GET /api/oidc/users/me/authorized-clients (the `ListAuthorizedClientsForCurrentUser` operationId).
 	ListAuthorizedClientsForCurrentUser(ctx context.Context, params *ListAuthorizedClientsForCurrentUserParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
@@ -4867,12 +5183,16 @@ type ClientInterface interface {
 	//
 	// Revoke the authorization for a specific OIDC client for the current user.
 	//
+	// Credentials: `apiKey`, `oauth2`, `session`. Scope: `account:apps`.
+	//
 	// Corresponds with DELETE /api/oidc/users/me/authorized-clients/{clientId} (the `RevokeAuthorizationForOIDCClient` operationId).
 	RevokeAuthorizationForOIDCClient(ctx context.Context, clientID OIDCClientID, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ListAccessibleOIDCClientsForCurrentUser List accessible OIDC clients for current user
 	//
 	// Get a list of OIDC clients that the current user can access.
+	//
+	// Credentials: `apiKey`, `oauth2`, `session`. Scope: `account:apps`.
 	//
 	// Corresponds with GET /api/oidc/users/me/clients (the `ListAccessibleOIDCClientsForCurrentUser` operationId).
 	ListAccessibleOIDCClientsForCurrentUser(ctx context.Context, params *ListAccessibleOIDCClientsForCurrentUserParams, reqEditors ...RequestEditorFn) (*http.Response, error)
@@ -4917,19 +5237,25 @@ type ClientInterface interface {
 	//
 	// Sign the current user out of every session except the current one.
 	//
+	// Credentials: `session`. Scope: `account:session`.
+	//
 	// Corresponds with DELETE /api/sessions (the `RevokeOtherOwnSessions` operationId).
 	RevokeOtherOwnSessions(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// ListOwnSessions List own sessions
 	//
-	// Get the browsers in which the current user is signed in, most recently active first
+	// Get the browsers in which the current user is signed in, most recently active first.
+	//
+	// Credentials: `session`. Scope: `account:session`.
 	//
 	// Corresponds with GET /api/sessions (the `ListOwnSessions` operationId).
 	ListOwnSessions(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// RememberCurrentSession Remember current session
 	//
-	// Keep the current session signed in after the browser closes and while it goes unused, for a sign-in that was not remembered
+	// Keep the current session signed in after the browser closes and while it goes unused, for a sign-in that was not remembered.
+	//
+	// Credentials: `session`. Scope: `account:session`.
 	//
 	// Corresponds with POST /api/sessions/current/remember (the `RememberCurrentSession` operationId).
 	RememberCurrentSession(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
@@ -4937,6 +5263,8 @@ type ClientInterface interface {
 	// RevokeOwnSession Revoke own session
 	//
 	// Sign the current user out of one of their sessions.
+	//
+	// Credentials: `session`. Scope: `account:session`.
 	//
 	// Corresponds with DELETE /api/sessions/{id} (the `RevokeOwnSession` operationId).
 	RevokeOwnSession(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*http.Response, error)
@@ -4988,12 +5316,16 @@ type ClientInterface interface {
 	//
 	// Retrieve information about the currently authenticated user.
 	//
+	// Credentials: `apiKey`, `oauth2`, `session`. Scope: `account:read`.
+	//
 	// Corresponds with GET /api/users/me (the `GetCurrentUser` operationId).
 	GetCurrentUser(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// PatchCurrentUserWithBody Update current user
 	//
-	// Update the currently authenticated user's information, where PATCH changes only the fields in the body
+	// Update the currently authenticated user's information, where PATCH changes only the fields in the body.
+	//
+	// Credentials: `apiKey`, `oauth2`, `session`. Scope: `account:write`.
 	//
 	// Takes any type of body and a specified content type.
 	//
@@ -5002,7 +5334,9 @@ type ClientInterface interface {
 
 	// PatchCurrentUser Update current user
 	//
-	// Update the currently authenticated user's information, where PATCH changes only the fields in the body
+	// Update the currently authenticated user's information, where PATCH changes only the fields in the body.
+	//
+	// Credentials: `apiKey`, `oauth2`, `session`. Scope: `account:write`.
 	//
 	// Takes a body of the `application/json` content type.
 	//
@@ -5011,7 +5345,9 @@ type ClientInterface interface {
 
 	// UpdateCurrentUserWithBody Update current user
 	//
-	// Update the currently authenticated user's information, where PATCH changes only the fields in the body
+	// Update the currently authenticated user's information, where PATCH changes only the fields in the body.
+	//
+	// Credentials: `apiKey`, `oauth2`, `session`. Scope: `account:write`.
 	//
 	// Takes any type of body and a specified content type.
 	//
@@ -5020,7 +5356,9 @@ type ClientInterface interface {
 
 	// UpdateCurrentUser Update current user
 	//
-	// Update the currently authenticated user's information, where PATCH changes only the fields in the body
+	// Update the currently authenticated user's information, where PATCH changes only the fields in the body.
+	//
+	// Credentials: `apiKey`, `oauth2`, `session`. Scope: `account:write`.
 	//
 	// Takes a body of the `application/json` content type.
 	//
@@ -5029,7 +5367,9 @@ type ClientInterface interface {
 
 	// CancelPendingEmailChange Cancel pending email change
 	//
-	// Cancel the pending email change of the currently authenticated user, so its verification link stops working
+	// Cancel the pending email change of the currently authenticated user, so its verification link stops working.
+	//
+	// Credentials: `apiKey`, `oauth2`, `session`. Scope: `account:write`.
 	//
 	// Corresponds with DELETE /api/users/me/email-change (the `CancelPendingEmailChange` operationId).
 	CancelPendingEmailChange(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
@@ -5038,6 +5378,8 @@ type ClientInterface interface {
 	//
 	// Get the email change of the currently authenticated user that still has to be confirmed through the emailed link.
 	//
+	// Credentials: `apiKey`, `oauth2`, `session`. Scope: `account:read`.
+	//
 	// Corresponds with GET /api/users/me/email-change (the `GetPendingEmailChange` operationId).
 	GetPendingEmailChange(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
 
@@ -5045,12 +5387,16 @@ type ClientInterface interface {
 	//
 	// Reset the currently authenticated user's profile picture to the default.
 	//
+	// Credentials: `apiKey`, `oauth2`, `session`. Scope: `account:write`.
+	//
 	// Corresponds with DELETE /api/users/me/profile-picture (the `ResetCurrentUserProfilePicture` operationId).
 	ResetCurrentUserProfilePicture(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// UpdateCurrentUserProfilePictureWithBody Update current user's profile picture
 	//
 	// Update the currently authenticated user's profile picture.
+	//
+	// Credentials: `apiKey`, `oauth2`, `session`. Scope: `account:write`.
 	//
 	// Takes any type of body and a specified content type.
 	//
@@ -5061,12 +5407,16 @@ type ClientInterface interface {
 	//
 	// Send an email verification to the currently authenticated user.
 	//
+	// Credentials: `apiKey`, `oauth2`, `session`. Scope: `account:write`.
+	//
 	// Corresponds with POST /api/users/me/send-email-verification (the `SendEmailVerification` operationId).
 	SendEmailVerification(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// VerifyEmailWithBody Verify email
 	//
 	// Verify the currently authenticated user's email using a verification token.
+	//
+	// Credentials: `apiKey`, `oauth2`, `session`. Scope: `account:write`.
 	//
 	// Takes any type of body and a specified content type.
 	//
@@ -5076,6 +5426,8 @@ type ClientInterface interface {
 	// VerifyEmail Verify email
 	//
 	// Verify the currently authenticated user's email using a verification token.
+	//
+	// Credentials: `apiKey`, `oauth2`, `session`. Scope: `account:write`.
 	//
 	// Takes a body of the `application/json` content type.
 	//
@@ -5091,6 +5443,8 @@ type ClientInterface interface {
 
 	// GetCurrentDeployedVersionOfPocketID Get current deployed version of Pocket ID
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`.
+	//
 	// Corresponds with GET /api/version/current (the `GetCurrentDeployedVersionOfPocketID` operationId).
 	GetCurrentDeployedVersionOfPocketID(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
 
@@ -5100,6 +5454,8 @@ type ClientInterface interface {
 	GetLatestAvailableVersionOfPocketID(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// Logout Log out the current session
+	//
+	// Credentials: `session`.
 	//
 	// Corresponds with POST /api/webauthn/logout (the `Logout` operationId).
 	Logout(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error)
@@ -5182,7 +5538,9 @@ func (c *Client) GetOpenIDConnectDiscoveryConfiguration(ctx context.Context, req
 
 // ListAPIsClientMayAccess List APIs a client may access
 //
-// # Get every API the OIDC client may request tokens for, with its access and permissions split into user-delegated and client (machine-to-machine) access
+// Get every API the OIDC client may request tokens for, with its access and permissions split into user-delegated and client (machine-to-machine) access.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `apis:read`.
 //
 // Corresponds with GET /api/admin/api-access/{clientId}/apis (the `ListAPIsClientMayAccess` operationId).
 func (c *Client) ListAPIsClientMayAccess(ctx context.Context, clientID OIDCClientID, reqEditors ...RequestEditorFn) (*http.Response, error) {
@@ -5201,6 +5559,8 @@ func (c *Client) ListAPIsClientMayAccess(ctx context.Context, clientID OIDCClien
 //
 // Get a paginated list of APIs the OIDC client cannot already reach.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `apis:read`.
+//
 // Corresponds with GET /api/admin/api-access/{clientId}/assignable-apis (the `ListAPIsClientCanStillBeGrantedAccessTo` operationId).
 func (c *Client) ListAPIsClientCanStillBeGrantedAccessTo(ctx context.Context, clientID OIDCClientID, params *ListAPIsClientCanStillBeGrantedAccessToParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewListAPIsClientCanStillBeGrantedAccessToRequest(c.Server, clientID, params)
@@ -5218,6 +5578,8 @@ func (c *Client) ListAPIsClientCanStillBeGrantedAccessTo(ctx context.Context, cl
 //
 // Get a paginated list of APIs with optional search and sorting.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `apis:read`.
+//
 // Corresponds with GET /api/admin/apis (the `ListAPIs` operationId).
 func (c *Client) ListAPIs(ctx context.Context, params *ListAPIsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewListAPIsRequest(c.Server, params)
@@ -5234,6 +5596,8 @@ func (c *Client) ListAPIs(ctx context.Context, params *ListAPIsParams, reqEditor
 // CreateAPIWithBody Create API
 //
 // Create a new API resource server.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `apis:write`.
 //
 // Takes any type of body and a specified content type.
 //
@@ -5254,6 +5618,8 @@ func (c *Client) CreateAPIWithBody(ctx context.Context, contentType string, body
 //
 // Create a new API resource server.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `apis:write`.
+//
 // Takes a body of the `application/json` content type.
 //
 // Corresponds with POST /api/admin/apis (the `CreateAPI` operationId).
@@ -5273,6 +5639,8 @@ func (c *Client) CreateAPI(ctx context.Context, body CreateAPIJSONRequestBody, r
 //
 // Delete an API by ID.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `apis:write`.
+//
 // Corresponds with DELETE /api/admin/apis/{id} (the `DeleteAPI` operationId).
 func (c *Client) DeleteAPI(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewDeleteAPIRequest(c.Server, id)
@@ -5290,6 +5658,8 @@ func (c *Client) DeleteAPI(ctx context.Context, id string, reqEditors ...Request
 //
 // Retrieve a single API including its permissions.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `apis:read`.
+//
 // Corresponds with GET /api/admin/apis/{id} (the `GetAPIByID` operationId).
 func (c *Client) GetAPIByID(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewGetAPIByIDRequest(c.Server, id)
@@ -5305,7 +5675,9 @@ func (c *Client) GetAPIByID(ctx context.Context, id string, reqEditors ...Reques
 
 // PatchAPIWithBody Update API
 //
-// # Update an existing API by ID, where PATCH changes only the fields in the body
+// Update an existing API by ID, where PATCH changes only the fields in the body.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `apis:write`.
 //
 // Takes any type of body and a specified content type.
 //
@@ -5324,7 +5696,9 @@ func (c *Client) PatchAPIWithBody(ctx context.Context, id string, contentType st
 
 // PatchAPI Update API
 //
-// # Update an existing API by ID, where PATCH changes only the fields in the body
+// Update an existing API by ID, where PATCH changes only the fields in the body.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `apis:write`.
 //
 // Takes a body of the `application/json` content type.
 //
@@ -5343,7 +5717,9 @@ func (c *Client) PatchAPI(ctx context.Context, id string, body PatchAPIJSONReque
 
 // UpdateAPIWithBody Update API
 //
-// # Update an existing API by ID, where PATCH changes only the fields in the body
+// Update an existing API by ID, where PATCH changes only the fields in the body.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `apis:write`.
 //
 // Takes any type of body and a specified content type.
 //
@@ -5362,7 +5738,9 @@ func (c *Client) UpdateAPIWithBody(ctx context.Context, id string, contentType s
 
 // UpdateAPI Update API
 //
-// # Update an existing API by ID, where PATCH changes only the fields in the body
+// Update an existing API by ID, where PATCH changes only the fields in the body.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `apis:write`.
 //
 // Takes a body of the `application/json` content type.
 //
@@ -5383,6 +5761,8 @@ func (c *Client) UpdateAPI(ctx context.Context, id string, body UpdateAPIJSONReq
 //
 // Get a paginated list of OIDC clients that have no grant on the API yet.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `apis:read`.
+//
 // Corresponds with GET /api/admin/apis/{id}/assignable-clients (the `ListClientsThatCanStillBeGrantedAccessToAPI` operationId).
 func (c *Client) ListClientsThatCanStillBeGrantedAccessToAPI(ctx context.Context, id string, params *ListClientsThatCanStillBeGrantedAccessToAPIParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewListClientsThatCanStillBeGrantedAccessToAPIRequest(c.Server, id, params)
@@ -5399,6 +5779,8 @@ func (c *Client) ListClientsThatCanStillBeGrantedAccessToAPI(ctx context.Context
 // UpdateMetadataDocumentClientAccessWithBody Update metadata document client access
 //
 // Replace which permissions of an API every client registered through a Client ID Metadata Document may request.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `apis:write`.
 //
 // Takes any type of body and a specified content type.
 //
@@ -5419,6 +5801,8 @@ func (c *Client) UpdateMetadataDocumentClientAccessWithBody(ctx context.Context,
 //
 // Replace which permissions of an API every client registered through a Client ID Metadata Document may request.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `apis:write`.
+//
 // Takes a body of the `application/json` content type.
 //
 // Corresponds with PUT /api/admin/apis/{id}/cimd-access (the `UpdateMetadataDocumentClientAccess` operationId).
@@ -5436,7 +5820,9 @@ func (c *Client) UpdateMetadataDocumentClientAccess(ctx context.Context, id stri
 
 // ListClientsWithAccessToAPI List clients with access to an API
 //
-// # Get a paginated list of OIDC clients that may reach the API, with their permissions split into user-delegated and client (machine-to-machine) access
+// Get a paginated list of OIDC clients that may reach the API, with their permissions split into user-delegated and client (machine-to-machine) access.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `apis:read`.
 //
 // Corresponds with GET /api/admin/apis/{id}/clients (the `ListClientsWithAccessToAPI` operationId).
 func (c *Client) ListClientsWithAccessToAPI(ctx context.Context, id string, params *ListClientsWithAccessToAPIParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
@@ -5455,6 +5841,8 @@ func (c *Client) ListClientsWithAccessToAPI(ctx context.Context, id string, para
 //
 // Remove every permission of this API a single OIDC client was allowed to request.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `apis:write`.
+//
 // Corresponds with DELETE /api/admin/apis/{id}/clients/{clientId} (the `RevokeClientAccessToAPI` operationId).
 func (c *Client) RevokeClientAccessToAPI(ctx context.Context, id string, clientID OIDCClientID, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewRevokeClientAccessToAPIRequest(c.Server, id, clientID)
@@ -5470,7 +5858,9 @@ func (c *Client) RevokeClientAccessToAPI(ctx context.Context, id string, clientI
 
 // UpdateClientAccessToAPIWithBody Update a client's access to an API
 //
-// # Replace the permissions of this API a single OIDC client may request, leaving its grants on other APIs untouched
+// Replace the permissions of this API a single OIDC client may request, leaving its grants on other APIs untouched.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `apis:write`.
 //
 // Takes any type of body and a specified content type.
 //
@@ -5489,7 +5879,9 @@ func (c *Client) UpdateClientAccessToAPIWithBody(ctx context.Context, id string,
 
 // UpdateClientAccessToAPI Update a client's access to an API
 //
-// # Replace the permissions of this API a single OIDC client may request, leaving its grants on other APIs untouched
+// Replace the permissions of this API a single OIDC client may request, leaving its grants on other APIs untouched.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `apis:write`.
 //
 // Takes a body of the `application/json` content type.
 //
@@ -5510,6 +5902,8 @@ func (c *Client) UpdateClientAccessToAPI(ctx context.Context, id string, clientI
 //
 // Replace the full set of permissions for an API.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `apis:write`.
+//
 // Takes any type of body and a specified content type.
 //
 // Corresponds with PUT /api/admin/apis/{id}/permissions (the `UpdateAPIPermissions` operationId).
@@ -5528,6 +5922,8 @@ func (c *Client) UpdateAPIPermissionsWithBody(ctx context.Context, id string, co
 // UpdateAPIPermissions Update API permissions
 //
 // Replace the full set of permissions for an API.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `apis:write`.
 //
 // Takes a body of the `application/json` content type.
 //
@@ -5548,6 +5944,8 @@ func (c *Client) UpdateAPIPermissions(ctx context.Context, id string, body Updat
 //
 // Delete the application background image.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `config:write`.
+//
 // Corresponds with DELETE /api/admin/application-assets/background (the `DeleteBackgroundImage` operationId).
 func (c *Client) DeleteBackgroundImage(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewDeleteBackgroundImageRequest(c.Server)
@@ -5564,6 +5962,8 @@ func (c *Client) DeleteBackgroundImage(ctx context.Context, reqEditors ...Reques
 // UpdateBackgroundImageWithBody Update background image
 //
 // Update the application background image.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `config:write`.
 //
 // Takes any type of body and a specified content type.
 //
@@ -5584,6 +5984,8 @@ func (c *Client) UpdateBackgroundImageWithBody(ctx context.Context, contentType 
 //
 // Delete the default profile picture image.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `config:write`.
+//
 // Corresponds with DELETE /api/admin/application-assets/default-profile-picture (the `DeleteDefaultProfilePictureImage` operationId).
 func (c *Client) DeleteDefaultProfilePictureImage(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewDeleteDefaultProfilePictureImageRequest(c.Server)
@@ -5601,6 +6003,8 @@ func (c *Client) DeleteDefaultProfilePictureImage(ctx context.Context, reqEditor
 //
 // Get the default profile picture image for the application.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `config:read`.
+//
 // Corresponds with GET /api/admin/application-assets/default-profile-picture (the `GetDefaultProfilePictureImage` operationId).
 func (c *Client) GetDefaultProfilePictureImage(ctx context.Context, params *GetDefaultProfilePictureImageParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewGetDefaultProfilePictureImageRequest(c.Server, params)
@@ -5617,6 +6021,8 @@ func (c *Client) GetDefaultProfilePictureImage(ctx context.Context, params *GetD
 // UpdateDefaultProfilePictureImageWithBody Update default profile picture image
 //
 // Update the default profile picture image.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `config:write`.
 //
 // Takes any type of body and a specified content type.
 //
@@ -5637,6 +6043,8 @@ func (c *Client) UpdateDefaultProfilePictureImageWithBody(ctx context.Context, c
 //
 // Update the email logo for use in emails.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `config:write`.
+//
 // Takes any type of body and a specified content type.
 //
 // Corresponds with PUT /api/admin/application-assets/email (the `UpdateEmailLogo` operationId).
@@ -5655,6 +6063,8 @@ func (c *Client) UpdateEmailLogoWithBody(ctx context.Context, contentType string
 // UpdateFaviconWithBody Update favicon
 //
 // Update the application favicon.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `config:write`.
 //
 // Takes any type of body and a specified content type.
 //
@@ -5675,6 +6085,8 @@ func (c *Client) UpdateFaviconWithBody(ctx context.Context, contentType string, 
 //
 // Delete the custom font of page and dialog titles.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `config:write`.
+//
 // Corresponds with DELETE /api/admin/application-assets/font (the `DeleteTitleFont` operationId).
 func (c *Client) DeleteTitleFont(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewDeleteTitleFontRequest(c.Server)
@@ -5691,6 +6103,8 @@ func (c *Client) DeleteTitleFont(ctx context.Context, reqEditors ...RequestEdito
 // UpdateTitleFontWithBody Update title font
 //
 // Update the custom font of page and dialog titles.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `config:write`.
 //
 // Takes any type of body and a specified content type.
 //
@@ -5711,6 +6125,8 @@ func (c *Client) UpdateTitleFontWithBody(ctx context.Context, contentType string
 //
 // Delete the custom application logo and restore the default logo.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `config:write`.
+//
 // Corresponds with DELETE /api/admin/application-assets/logo (the `DeleteLogoImage` operationId).
 func (c *Client) DeleteLogoImage(ctx context.Context, params *DeleteLogoImageParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewDeleteLogoImageRequest(c.Server, params)
@@ -5727,6 +6143,8 @@ func (c *Client) DeleteLogoImage(ctx context.Context, params *DeleteLogoImagePar
 // UpdateLogoWithBody Update logo
 //
 // Update the application logo.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `config:write`.
 //
 // Takes any type of body and a specified content type.
 //
@@ -5747,6 +6165,8 @@ func (c *Client) UpdateLogoWithBody(ctx context.Context, params *UpdateLogoParam
 //
 // Get all application configurations including private ones.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `config:read`.
+//
 // Corresponds with GET /api/admin/application-configuration (the `ListAllApplicationConfigurations` operationId).
 func (c *Client) ListAllApplicationConfigurations(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewListAllApplicationConfigurationsRequest(c.Server)
@@ -5762,7 +6182,9 @@ func (c *Client) ListAllApplicationConfigurations(ctx context.Context, reqEditor
 
 // PatchApplicationConfigurationsWithBody Update application configurations
 //
-// # Update application configuration settings, where PATCH changes only the fields in the body
+// Update application configuration settings, where PATCH changes only the fields in the body.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `config:write`.
 //
 // Takes any type of body and a specified content type.
 //
@@ -5781,7 +6203,9 @@ func (c *Client) PatchApplicationConfigurationsWithBody(ctx context.Context, con
 
 // PatchApplicationConfigurations Update application configurations
 //
-// # Update application configuration settings, where PATCH changes only the fields in the body
+// Update application configuration settings, where PATCH changes only the fields in the body.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `config:write`.
 //
 // Takes a body of the `application/json` content type.
 //
@@ -5800,7 +6224,9 @@ func (c *Client) PatchApplicationConfigurations(ctx context.Context, body PatchA
 
 // UpdateApplicationConfigurationsWithBody Update application configurations
 //
-// # Update application configuration settings, where PATCH changes only the fields in the body
+// Update application configuration settings, where PATCH changes only the fields in the body.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `config:write`.
 //
 // Takes any type of body and a specified content type.
 //
@@ -5819,7 +6245,9 @@ func (c *Client) UpdateApplicationConfigurationsWithBody(ctx context.Context, co
 
 // UpdateApplicationConfigurations Update application configurations
 //
-// # Update application configuration settings, where PATCH changes only the fields in the body
+// Update application configuration settings, where PATCH changes only the fields in the body.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `config:write`.
 //
 // Takes a body of the `application/json` content type.
 //
@@ -5840,6 +6268,8 @@ func (c *Client) UpdateApplicationConfigurations(ctx context.Context, body Updat
 //
 // Manually trigger LDAP synchronization.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `config:write`.
+//
 // Corresponds with POST /api/admin/application-configuration/sync-ldap (the `SynchronizeLDAP` operationId).
 func (c *Client) SynchronizeLDAP(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewSynchronizeLDAPRequest(c.Server)
@@ -5856,6 +6286,8 @@ func (c *Client) SynchronizeLDAP(ctx context.Context, reqEditors ...RequestEdito
 // SendTestEmail Send test email
 //
 // Send a test email to verify email configuration.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `config:write`.
 //
 // Corresponds with POST /api/admin/application-configuration/test-email (the `SendTestEmail` operationId).
 func (c *Client) SendTestEmail(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error) {
@@ -5874,6 +6306,8 @@ func (c *Client) SendTestEmail(ctx context.Context, reqEditors ...RequestEditorF
 //
 // Get a paginated list of all audit logs (admin only).
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `audit-logs:read`.
+//
 // Corresponds with GET /api/admin/audit-logs (the `ListAllAuditLogs` operationId).
 func (c *Client) ListAllAuditLogs(ctx context.Context, params *ListAllAuditLogsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewListAllAuditLogsRequest(c.Server, params)
@@ -5890,6 +6324,8 @@ func (c *Client) ListAllAuditLogs(ctx context.Context, params *ListAllAuditLogsP
 // ListClientNames List client names
 //
 // Get a list of all client names for audit log filtering.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `audit-logs:read`.
 //
 // Corresponds with GET /api/admin/audit-logs/filters/client-names (the `ListClientNames` operationId).
 func (c *Client) ListClientNames(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error) {
@@ -5908,6 +6344,8 @@ func (c *Client) ListClientNames(ctx context.Context, reqEditors ...RequestEdito
 //
 // Get a list of all usernames with their IDs for audit log filtering.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `audit-logs:read`.
+//
 // Corresponds with GET /api/admin/audit-logs/filters/users (the `ListUsersWithIDs` operationId).
 func (c *Client) ListUsersWithIDs(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewListUsersWithIDsRequest(c.Server)
@@ -5925,6 +6363,8 @@ func (c *Client) ListUsersWithIDs(ctx context.Context, reqEditors ...RequestEdit
 //
 // Get a list of suggested custom claim names.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:read`.
+//
 // Corresponds with GET /api/admin/custom-claims/suggestions (the `GetCustomClaimSuggestions` operationId).
 func (c *Client) GetCustomClaimSuggestions(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewGetCustomClaimSuggestionsRequest(c.Server)
@@ -5941,6 +6381,8 @@ func (c *Client) GetCustomClaimSuggestions(ctx context.Context, reqEditors ...Re
 // UpdateCustomClaimsForUserGroupWithBody Update custom claims for a user group
 //
 // Update or create custom claims for a specific user group.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `groups:write`.
 //
 // Takes any type of body and a specified content type.
 //
@@ -5961,6 +6403,8 @@ func (c *Client) UpdateCustomClaimsForUserGroupWithBody(ctx context.Context, use
 //
 // Update or create custom claims for a specific user group.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `groups:write`.
+//
 // Takes a body of the `application/json` content type.
 //
 // Corresponds with PUT /api/admin/custom-claims/user-group/{userGroupId} (the `UpdateCustomClaimsForUserGroup` operationId).
@@ -5979,6 +6423,8 @@ func (c *Client) UpdateCustomClaimsForUserGroup(ctx context.Context, userGroupID
 // UpdateCustomClaimsForUserWithBody Update custom claims for a user
 //
 // Update or create custom claims for a specific user.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:write`.
 //
 // Takes any type of body and a specified content type.
 //
@@ -5999,6 +6445,8 @@ func (c *Client) UpdateCustomClaimsForUserWithBody(ctx context.Context, userID s
 //
 // Update or create custom claims for a specific user.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:write`.
+//
 // Takes a body of the `application/json` content type.
 //
 // Corresponds with PUT /api/admin/custom-claims/user/{userId} (the `UpdateCustomClaimsForUser` operationId).
@@ -6018,6 +6466,8 @@ func (c *Client) UpdateCustomClaimsForUser(ctx context.Context, userID string, b
 //
 // Get a paginated list of OIDC claim mapping policies with optional search and sorting.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-claim-mapping-policies:read`.
+//
 // Corresponds with GET /api/admin/oidc/claim-mapping-policies (the `ListOIDCClaimMappingPolicies` operationId).
 func (c *Client) ListOIDCClaimMappingPolicies(ctx context.Context, params *ListOIDCClaimMappingPoliciesParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewListOIDCClaimMappingPoliciesRequest(c.Server, params)
@@ -6034,6 +6484,8 @@ func (c *Client) ListOIDCClaimMappingPolicies(ctx context.Context, params *ListO
 // CreateOIDCClaimMappingPolicyWithBody Create OIDC claim mapping policy
 //
 // Create a new OIDC claim mapping policy.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-claim-mapping-policies:write`.
 //
 // Takes any type of body and a specified content type.
 //
@@ -6054,6 +6506,8 @@ func (c *Client) CreateOIDCClaimMappingPolicyWithBody(ctx context.Context, conte
 //
 // Create a new OIDC claim mapping policy.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-claim-mapping-policies:write`.
+//
 // Takes a body of the `application/json` content type.
 //
 // Corresponds with POST /api/admin/oidc/claim-mapping-policies (the `CreateOIDCClaimMappingPolicy` operationId).
@@ -6071,7 +6525,9 @@ func (c *Client) CreateOIDCClaimMappingPolicy(ctx context.Context, body CreateOI
 
 // PreviewClaimMappingsWithBody Preview claim mappings
 //
-// # Get the claims that claim mappings, saved or not, release for a user and set of scopes
+// Get the claims that claim mappings, saved or not, release for a user and set of scopes.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:read`.
 //
 // Takes any type of body and a specified content type.
 //
@@ -6090,7 +6546,9 @@ func (c *Client) PreviewClaimMappingsWithBody(ctx context.Context, contentType s
 
 // PreviewClaimMappings Preview claim mappings
 //
-// # Get the claims that claim mappings, saved or not, release for a user and set of scopes
+// Get the claims that claim mappings, saved or not, release for a user and set of scopes.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:read`.
 //
 // Takes a body of the `application/json` content type.
 //
@@ -6111,6 +6569,8 @@ func (c *Client) PreviewClaimMappings(ctx context.Context, body PreviewClaimMapp
 //
 // Delete an OIDC claim mapping policy by ID.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-claim-mapping-policies:write`.
+//
 // Corresponds with DELETE /api/admin/oidc/claim-mapping-policies/{id} (the `DeleteOIDCClaimMappingPolicy` operationId).
 func (c *Client) DeleteOIDCClaimMappingPolicy(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewDeleteOIDCClaimMappingPolicyRequest(c.Server, id)
@@ -6128,6 +6588,8 @@ func (c *Client) DeleteOIDCClaimMappingPolicy(ctx context.Context, id string, re
 //
 // Retrieve an existing OIDC claim mapping policy.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-claim-mapping-policies:read`.
+//
 // Corresponds with GET /api/admin/oidc/claim-mapping-policies/{id} (the `GetOIDCClaimMappingPolicy` operationId).
 func (c *Client) GetOIDCClaimMappingPolicy(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewGetOIDCClaimMappingPolicyRequest(c.Server, id)
@@ -6143,7 +6605,9 @@ func (c *Client) GetOIDCClaimMappingPolicy(ctx context.Context, id string, reqEd
 
 // PatchOIDCClaimMappingPolicyWithBody Update an OIDC claim mapping policy
 //
-// # Update an existing OIDC claim mapping policy, where PATCH changes only the fields in the body
+// Update an existing OIDC claim mapping policy, where PATCH changes only the fields in the body.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-claim-mapping-policies:write`.
 //
 // Takes any type of body and a specified content type.
 //
@@ -6162,7 +6626,9 @@ func (c *Client) PatchOIDCClaimMappingPolicyWithBody(ctx context.Context, id str
 
 // PatchOIDCClaimMappingPolicy Update an OIDC claim mapping policy
 //
-// # Update an existing OIDC claim mapping policy, where PATCH changes only the fields in the body
+// Update an existing OIDC claim mapping policy, where PATCH changes only the fields in the body.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-claim-mapping-policies:write`.
 //
 // Takes a body of the `application/json` content type.
 //
@@ -6181,7 +6647,9 @@ func (c *Client) PatchOIDCClaimMappingPolicy(ctx context.Context, id string, bod
 
 // UpdateOIDCClaimMappingPolicyWithBody Update an OIDC claim mapping policy
 //
-// # Update an existing OIDC claim mapping policy, where PATCH changes only the fields in the body
+// Update an existing OIDC claim mapping policy, where PATCH changes only the fields in the body.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-claim-mapping-policies:write`.
 //
 // Takes any type of body and a specified content type.
 //
@@ -6200,7 +6668,9 @@ func (c *Client) UpdateOIDCClaimMappingPolicyWithBody(ctx context.Context, id st
 
 // UpdateOIDCClaimMappingPolicy Update an OIDC claim mapping policy
 //
-// # Update an existing OIDC claim mapping policy, where PATCH changes only the fields in the body
+// Update an existing OIDC claim mapping policy, where PATCH changes only the fields in the body.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-claim-mapping-policies:write`.
 //
 // Takes a body of the `application/json` content type.
 //
@@ -6221,6 +6691,8 @@ func (c *Client) UpdateOIDCClaimMappingPolicy(ctx context.Context, id string, bo
 //
 // Get a paginated list of the OIDC clients that are not on this claim mapping policy yet.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-claim-mapping-policies:read`.
+//
 // Corresponds with GET /api/admin/oidc/claim-mapping-policies/{id}/assignable-clients (the `ListOIDCClientsThatCanStillBeAssignedToClaimMappingPolicy` operationId).
 func (c *Client) ListOIDCClientsThatCanStillBeAssignedToClaimMappingPolicy(ctx context.Context, id string, params *ListOIDCClientsThatCanStillBeAssignedToClaimMappingPolicyParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewListOIDCClientsThatCanStillBeAssignedToClaimMappingPolicyRequest(c.Server, id, params)
@@ -6238,6 +6710,8 @@ func (c *Client) ListOIDCClientsThatCanStillBeAssignedToClaimMappingPolicy(ctx c
 //
 // Get a paginated list of the OIDC clients assigned to a claim mapping policy.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-claim-mapping-policies:read`.
+//
 // Corresponds with GET /api/admin/oidc/claim-mapping-policies/{id}/clients (the `ListOIDCClientsUsingClaimMappingPolicy` operationId).
 func (c *Client) ListOIDCClientsUsingClaimMappingPolicy(ctx context.Context, id string, params *ListOIDCClientsUsingClaimMappingPolicyParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewListOIDCClientsUsingClaimMappingPolicyRequest(c.Server, id, params)
@@ -6253,7 +6727,9 @@ func (c *Client) ListOIDCClientsUsingClaimMappingPolicy(ctx context.Context, id 
 
 // DetachOIDCClientFromClaimMappingPolicy Detach an OIDC client from a claim mapping policy
 //
-// # Remove an OIDC client from this claim mapping policy, so it falls back to the default one
+// Remove an OIDC client from this claim mapping policy, so it falls back to the default one.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-claim-mapping-policies:write`.
 //
 // Corresponds with DELETE /api/admin/oidc/claim-mapping-policies/{id}/clients/{clientId} (the `DetachOIDCClientFromClaimMappingPolicy` operationId).
 func (c *Client) DetachOIDCClientFromClaimMappingPolicy(ctx context.Context, id string, clientID OIDCClientID, reqEditors ...RequestEditorFn) (*http.Response, error) {
@@ -6270,7 +6746,9 @@ func (c *Client) DetachOIDCClientFromClaimMappingPolicy(ctx context.Context, id 
 
 // AssignOIDCClientToClaimMappingPolicy Assign an OIDC client to a claim mapping policy
 //
-// # Point an OIDC client at this claim mapping policy, replacing the policy it was on
+// Point an OIDC client at this claim mapping policy, replacing the policy it was on.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-claim-mapping-policies:write`.
 //
 // Corresponds with POST /api/admin/oidc/claim-mapping-policies/{id}/clients/{clientId} (the `AssignOIDCClientToClaimMappingPolicy` operationId).
 func (c *Client) AssignOIDCClientToClaimMappingPolicy(ctx context.Context, id string, clientID OIDCClientID, reqEditors ...RequestEditorFn) (*http.Response, error) {
@@ -6289,6 +6767,8 @@ func (c *Client) AssignOIDCClientToClaimMappingPolicy(ctx context.Context, id st
 //
 // Get a paginated list of OIDC clients with optional search and sorting.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-clients:read`.
+//
 // Corresponds with GET /api/admin/oidc/clients (the `ListOIDCClients` operationId).
 func (c *Client) ListOIDCClients(ctx context.Context, params *ListOIDCClientsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewListOIDCClientsRequest(c.Server, params)
@@ -6305,6 +6785,8 @@ func (c *Client) ListOIDCClients(ctx context.Context, params *ListOIDCClientsPar
 // CreateOIDCClientWithBody Create OIDC client
 //
 // Create a new OIDC client.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-clients:write`.
 //
 // Takes any type of body and a specified content type.
 //
@@ -6325,6 +6807,8 @@ func (c *Client) CreateOIDCClientWithBody(ctx context.Context, contentType strin
 //
 // Create a new OIDC client.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-clients:write`.
+//
 // Takes a body of the `application/json` content type.
 //
 // Corresponds with POST /api/admin/oidc/clients (the `CreateOIDCClient` operationId).
@@ -6344,6 +6828,8 @@ func (c *Client) CreateOIDCClient(ctx context.Context, body CreateOIDCClientJSON
 //
 // Delete an OIDC client by ID.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-clients:write`.
+//
 // Corresponds with DELETE /api/admin/oidc/clients/{id} (the `DeleteOIDCClient` operationId).
 func (c *Client) DeleteOIDCClient(ctx context.Context, id OIDCClientID, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewDeleteOIDCClientRequest(c.Server, id)
@@ -6361,6 +6847,8 @@ func (c *Client) DeleteOIDCClient(ctx context.Context, id OIDCClientID, reqEdito
 //
 // Get detailed information about an OIDC client.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-clients:read`.
+//
 // Corresponds with GET /api/admin/oidc/clients/{id} (the `GetOIDCClient` operationId).
 func (c *Client) GetOIDCClient(ctx context.Context, id OIDCClientID, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewGetOIDCClientRequest(c.Server, id)
@@ -6376,7 +6864,9 @@ func (c *Client) GetOIDCClient(ctx context.Context, id OIDCClientID, reqEditors 
 
 // PatchOIDCClientWithBody Update OIDC client
 //
-// # Update an existing OIDC client, where PATCH changes only the fields in the body
+// Update an existing OIDC client, where PATCH changes only the fields in the body.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-clients:write`.
 //
 // Takes any type of body and a specified content type.
 //
@@ -6395,7 +6885,9 @@ func (c *Client) PatchOIDCClientWithBody(ctx context.Context, id OIDCClientID, c
 
 // PatchOIDCClient Update OIDC client
 //
-// # Update an existing OIDC client, where PATCH changes only the fields in the body
+// Update an existing OIDC client, where PATCH changes only the fields in the body.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-clients:write`.
 //
 // Takes a body of the `application/json` content type.
 //
@@ -6414,7 +6906,9 @@ func (c *Client) PatchOIDCClient(ctx context.Context, id OIDCClientID, body Patc
 
 // UpdateOIDCClientWithBody Update OIDC client
 //
-// # Update an existing OIDC client, where PATCH changes only the fields in the body
+// Update an existing OIDC client, where PATCH changes only the fields in the body.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-clients:write`.
 //
 // Takes any type of body and a specified content type.
 //
@@ -6433,7 +6927,9 @@ func (c *Client) UpdateOIDCClientWithBody(ctx context.Context, id OIDCClientID, 
 
 // UpdateOIDCClient Update OIDC client
 //
-// # Update an existing OIDC client, where PATCH changes only the fields in the body
+// Update an existing OIDC client, where PATCH changes only the fields in the body.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-clients:write`.
 //
 // Takes a body of the `application/json` content type.
 //
@@ -6454,6 +6950,8 @@ func (c *Client) UpdateOIDCClient(ctx context.Context, id OIDCClientID, body Upd
 //
 // Update the user groups allowed to access an OIDC client.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-clients:write`.
+//
 // Takes any type of body and a specified content type.
 //
 // Corresponds with PUT /api/admin/oidc/clients/{id}/allowed-user-groups (the `UpdateAllowedUserGroups` operationId).
@@ -6472,6 +6970,8 @@ func (c *Client) UpdateAllowedUserGroupsWithBody(ctx context.Context, id OIDCCli
 // UpdateAllowedUserGroups Update allowed user groups
 //
 // Update the user groups allowed to access an OIDC client.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-clients:write`.
 //
 // Takes a body of the `application/json` content type.
 //
@@ -6492,6 +6992,8 @@ func (c *Client) UpdateAllowedUserGroups(ctx context.Context, id OIDCClientID, b
 //
 // Delete the logo for an OIDC client.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-clients:write`.
+//
 // Corresponds with DELETE /api/admin/oidc/clients/{id}/logo (the `DeleteClientLogo` operationId).
 func (c *Client) DeleteClientLogo(ctx context.Context, id OIDCClientID, params *DeleteClientLogoParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewDeleteClientLogoRequest(c.Server, id, params)
@@ -6508,6 +7010,8 @@ func (c *Client) DeleteClientLogo(ctx context.Context, id OIDCClientID, params *
 // UpdateClientLogoWithBody Update client logo
 //
 // Upload or update the logo for an OIDC client.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-clients:write`.
 //
 // Takes any type of body and a specified content type.
 //
@@ -6526,7 +7030,9 @@ func (c *Client) UpdateClientLogoWithBody(ctx context.Context, id OIDCClientID, 
 
 // PreviewOIDCClientDataForUser Preview OIDC client data for user
 //
-// # Get a preview of the OIDC data (ID token, access token, userinfo) that would be sent to the client for a specific user
+// Get a preview of the OIDC data (ID token, access token, userinfo) that would be sent to the client for a specific user.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:read`.
 //
 // Corresponds with GET /api/admin/oidc/clients/{id}/preview/{userId} (the `PreviewOIDCClientDataForUser` operationId).
 func (c *Client) PreviewOIDCClientDataForUser(ctx context.Context, id OIDCClientID, userID string, params *PreviewOIDCClientDataForUserParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
@@ -6545,6 +7051,8 @@ func (c *Client) PreviewOIDCClientDataForUser(ctx context.Context, id OIDCClient
 //
 // Force a re-fetch of the OAuth Client ID Metadata Document for a CIMD client.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-clients:write`.
+//
 // Corresponds with POST /api/admin/oidc/clients/{id}/refresh (the `RefreshClientMetadataDocument` operationId).
 func (c *Client) RefreshClientMetadataDocument(ctx context.Context, id OIDCClientID, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewRefreshClientMetadataDocumentRequest(c.Server, id)
@@ -6562,6 +7070,8 @@ func (c *Client) RefreshClientMetadataDocument(ctx context.Context, id OIDCClien
 //
 // Get the SCIM service provider configuration for an OIDC client.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-clients:read`.
+//
 // Corresponds with GET /api/admin/oidc/clients/{id}/scim-service-provider (the `GetSCIMServiceProvider` operationId).
 func (c *Client) GetSCIMServiceProvider(ctx context.Context, id OIDCClientID, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewGetSCIMServiceProviderRequest(c.Server, id)
@@ -6577,7 +7087,9 @@ func (c *Client) GetSCIMServiceProvider(ctx context.Context, id OIDCClientID, re
 
 // ListClientSecrets List client secrets
 //
-// # List the secrets of an OIDC client, without disclosing their values
+// List the secrets of an OIDC client, without disclosing their values.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-clients:read`.
 //
 // Corresponds with GET /api/admin/oidc/clients/{id}/secrets (the `ListClientSecrets` operationId).
 func (c *Client) ListClientSecrets(ctx context.Context, id OIDCClientID, reqEditors ...RequestEditorFn) (*http.Response, error) {
@@ -6595,6 +7107,8 @@ func (c *Client) ListClientSecrets(ctx context.Context, id OIDCClientID, reqEdit
 // CreateClientSecretWithBody Create client secret
 //
 // Add a new secret to an OIDC client, leaving the existing ones usable. The value is only returned by this endpoint and cannot be retrieved later.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-clients:write`.
 //
 // Takes any type of body and a specified content type.
 //
@@ -6615,6 +7129,8 @@ func (c *Client) CreateClientSecretWithBody(ctx context.Context, id OIDCClientID
 //
 // Add a new secret to an OIDC client, leaving the existing ones usable. The value is only returned by this endpoint and cannot be retrieved later.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-clients:write`.
+//
 // Takes a body of the `application/json` content type.
 //
 // Corresponds with POST /api/admin/oidc/clients/{id}/secrets (the `CreateClientSecret` operationId).
@@ -6632,7 +7148,9 @@ func (c *Client) CreateClientSecret(ctx context.Context, id OIDCClientID, body C
 
 // DeleteClientSecret Delete client secret
 //
-// # Delete a single secret of an OIDC client, making it immediately unusable
+// Delete a single secret of an OIDC client, making it immediately unusable.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-clients:write`.
 //
 // Corresponds with DELETE /api/admin/oidc/clients/{id}/secrets/{secretId} (the `DeleteClientSecret` operationId).
 func (c *Client) DeleteClientSecret(ctx context.Context, id OIDCClientID, secretID string, reqEditors ...RequestEditorFn) (*http.Response, error) {
@@ -6651,6 +7169,8 @@ func (c *Client) DeleteClientSecret(ctx context.Context, id OIDCClientID, secret
 //
 // Get a paginated list of the custom OIDC scopes with optional search and sorting.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-claim-mapping-policies:read`.
+//
 // Corresponds with GET /api/admin/oidc/custom-scopes (the `ListCustomOIDCScopes` operationId).
 func (c *Client) ListCustomOIDCScopes(ctx context.Context, params *ListCustomOIDCScopesParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewListCustomOIDCScopesRequest(c.Server, params)
@@ -6666,7 +7186,9 @@ func (c *Client) ListCustomOIDCScopes(ctx context.Context, params *ListCustomOID
 
 // CreateCustomOIDCScopeWithBody Create a custom OIDC scope
 //
-// # Create a custom OIDC scope, which claim mappings can then be released with
+// Create a custom OIDC scope, which claim mappings can then be released with.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-claim-mapping-policies:write`.
 //
 // Takes any type of body and a specified content type.
 //
@@ -6685,7 +7207,9 @@ func (c *Client) CreateCustomOIDCScopeWithBody(ctx context.Context, contentType 
 
 // CreateCustomOIDCScope Create a custom OIDC scope
 //
-// # Create a custom OIDC scope, which claim mappings can then be released with
+// Create a custom OIDC scope, which claim mappings can then be released with.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-claim-mapping-policies:write`.
 //
 // Takes a body of the `application/json` content type.
 //
@@ -6704,7 +7228,9 @@ func (c *Client) CreateCustomOIDCScope(ctx context.Context, body CreateCustomOID
 
 // ListKeysOfAllCustomOIDCScopes List the keys of all custom OIDC scopes
 //
-// # Get the keys of every custom OIDC scope, sorted, for pickers that offer all of them at once
+// Get the keys of every custom OIDC scope, sorted, for pickers that offer all of them at once.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-claim-mapping-policies:read`.
 //
 // Corresponds with GET /api/admin/oidc/custom-scopes/keys (the `ListKeysOfAllCustomOIDCScopes` operationId).
 func (c *Client) ListKeysOfAllCustomOIDCScopes(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error) {
@@ -6723,6 +7249,8 @@ func (c *Client) ListKeysOfAllCustomOIDCScopes(ctx context.Context, reqEditors .
 //
 // Delete a custom OIDC scope that no claim mapping is released with.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-claim-mapping-policies:write`.
+//
 // Corresponds with DELETE /api/admin/oidc/custom-scopes/{id} (the `DeleteCustomOIDCScope` operationId).
 func (c *Client) DeleteCustomOIDCScope(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewDeleteCustomOIDCScopeRequest(c.Server, id)
@@ -6738,7 +7266,9 @@ func (c *Client) DeleteCustomOIDCScope(ctx context.Context, id string, reqEditor
 
 // PatchCustomOIDCScopeWithBody Update a custom OIDC scope
 //
-// Update the name and description of a custom OIDC scope, whose key can't change, where PATCH changes only the fields in the body
+// Update the name and description of a custom OIDC scope, whose key can't change, where PATCH changes only the fields in the body.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-claim-mapping-policies:write`.
 //
 // Takes any type of body and a specified content type.
 //
@@ -6757,7 +7287,9 @@ func (c *Client) PatchCustomOIDCScopeWithBody(ctx context.Context, id string, co
 
 // PatchCustomOIDCScope Update a custom OIDC scope
 //
-// Update the name and description of a custom OIDC scope, whose key can't change, where PATCH changes only the fields in the body
+// Update the name and description of a custom OIDC scope, whose key can't change, where PATCH changes only the fields in the body.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-claim-mapping-policies:write`.
 //
 // Takes a body of the `application/json` content type.
 //
@@ -6776,7 +7308,9 @@ func (c *Client) PatchCustomOIDCScope(ctx context.Context, id string, body Patch
 
 // UpdateCustomOIDCScopeWithBody Update a custom OIDC scope
 //
-// Update the name and description of a custom OIDC scope, whose key can't change, where PATCH changes only the fields in the body
+// Update the name and description of a custom OIDC scope, whose key can't change, where PATCH changes only the fields in the body.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-claim-mapping-policies:write`.
 //
 // Takes any type of body and a specified content type.
 //
@@ -6795,7 +7329,9 @@ func (c *Client) UpdateCustomOIDCScopeWithBody(ctx context.Context, id string, c
 
 // UpdateCustomOIDCScope Update a custom OIDC scope
 //
-// Update the name and description of a custom OIDC scope, whose key can't change, where PATCH changes only the fields in the body
+// Update the name and description of a custom OIDC scope, whose key can't change, where PATCH changes only the fields in the body.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-claim-mapping-policies:write`.
 //
 // Takes a body of the `application/json` content type.
 //
@@ -6816,6 +7352,8 @@ func (c *Client) UpdateCustomOIDCScope(ctx context.Context, id string, body Upda
 //
 // Search the icon library for logos that can be used for OIDC clients.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-clients:read`.
+//
 // Corresponds with GET /api/admin/oidc/logo-presets (the `SearchLogoPresets` operationId).
 func (c *Client) SearchLogoPresets(ctx context.Context, params *SearchLogoPresetsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewSearchLogoPresetsRequest(c.Server, params)
@@ -6833,6 +7371,8 @@ func (c *Client) SearchLogoPresets(ctx context.Context, params *SearchLogoPreset
 //
 // Get a paginated list of OIDC clients that a specific user has authorized.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:read`.
+//
 // Corresponds with GET /api/admin/oidc/users/{id}/authorized-clients (the `ListAuthorizedClientsForUser` operationId).
 func (c *Client) ListAuthorizedClientsForUser(ctx context.Context, id string, params *ListAuthorizedClientsForUserParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewListAuthorizedClientsForUserRequest(c.Server, id, params)
@@ -6849,6 +7389,8 @@ func (c *Client) ListAuthorizedClientsForUser(ctx context.Context, id string, pa
 // CreateSCIMServiceProviderWithBody Create SCIM service provider
 //
 // Create a new SCIM service provider.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-clients:write`.
 //
 // Takes any type of body and a specified content type.
 //
@@ -6869,6 +7411,8 @@ func (c *Client) CreateSCIMServiceProviderWithBody(ctx context.Context, contentT
 //
 // Create a new SCIM service provider.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-clients:write`.
+//
 // Takes a body of the `application/json` content type.
 //
 // Corresponds with POST /api/admin/scim/service-provider (the `CreateSCIMServiceProvider` operationId).
@@ -6888,6 +7432,8 @@ func (c *Client) CreateSCIMServiceProvider(ctx context.Context, body CreateSCIMS
 //
 // Delete a SCIM service provider by ID.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-clients:write`.
+//
 // Corresponds with DELETE /api/admin/scim/service-provider/{id} (the `DeleteSCIMServiceProvider` operationId).
 func (c *Client) DeleteSCIMServiceProvider(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewDeleteSCIMServiceProviderRequest(c.Server, id)
@@ -6903,7 +7449,9 @@ func (c *Client) DeleteSCIMServiceProvider(ctx context.Context, id string, reqEd
 
 // PatchSCIMServiceProviderWithBody Update SCIM service provider
 //
-// # Update an existing SCIM service provider, where PATCH changes only the fields in the body, an omitted token keeps the stored one, an empty token removes it and a changed endpoint requires the token
+// Update an existing SCIM service provider, where PATCH changes only the fields in the body, an omitted token keeps the stored one, an empty token removes it and a changed endpoint requires the token.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-clients:write`.
 //
 // Takes any type of body and a specified content type.
 //
@@ -6922,7 +7470,9 @@ func (c *Client) PatchSCIMServiceProviderWithBody(ctx context.Context, id string
 
 // PatchSCIMServiceProvider Update SCIM service provider
 //
-// # Update an existing SCIM service provider, where PATCH changes only the fields in the body, an omitted token keeps the stored one, an empty token removes it and a changed endpoint requires the token
+// Update an existing SCIM service provider, where PATCH changes only the fields in the body, an omitted token keeps the stored one, an empty token removes it and a changed endpoint requires the token.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-clients:write`.
 //
 // Takes a body of the `application/json` content type.
 //
@@ -6941,7 +7491,9 @@ func (c *Client) PatchSCIMServiceProvider(ctx context.Context, id string, body P
 
 // UpdateSCIMServiceProviderWithBody Update SCIM service provider
 //
-// # Update an existing SCIM service provider, where PATCH changes only the fields in the body, an omitted token keeps the stored one, an empty token removes it and a changed endpoint requires the token
+// Update an existing SCIM service provider, where PATCH changes only the fields in the body, an omitted token keeps the stored one, an empty token removes it and a changed endpoint requires the token.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-clients:write`.
 //
 // Takes any type of body and a specified content type.
 //
@@ -6960,7 +7512,9 @@ func (c *Client) UpdateSCIMServiceProviderWithBody(ctx context.Context, id strin
 
 // UpdateSCIMServiceProvider Update SCIM service provider
 //
-// # Update an existing SCIM service provider, where PATCH changes only the fields in the body, an omitted token keeps the stored one, an empty token removes it and a changed endpoint requires the token
+// Update an existing SCIM service provider, where PATCH changes only the fields in the body, an omitted token keeps the stored one, an empty token removes it and a changed endpoint requires the token.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-clients:write`.
 //
 // Takes a body of the `application/json` content type.
 //
@@ -6981,6 +7535,8 @@ func (c *Client) UpdateSCIMServiceProvider(ctx context.Context, id string, body 
 //
 // Trigger synchronization for a SCIM service provider.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-clients:write`.
+//
 // Corresponds with POST /api/admin/scim/service-provider/{id}/sync (the `SyncSCIMServiceProvider` operationId).
 func (c *Client) SyncSCIMServiceProvider(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewSyncSCIMServiceProviderRequest(c.Server, id)
@@ -6998,6 +7554,8 @@ func (c *Client) SyncSCIMServiceProvider(ctx context.Context, id string, reqEdit
 //
 // Get a paginated list of signup tokens.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:invite`.
+//
 // Corresponds with GET /api/admin/signup-tokens (the `ListSignupTokens` operationId).
 func (c *Client) ListSignupTokens(ctx context.Context, params *ListSignupTokensParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewListSignupTokensRequest(c.Server, params)
@@ -7014,6 +7572,8 @@ func (c *Client) ListSignupTokens(ctx context.Context, params *ListSignupTokensP
 // CreateSignupTokenWithBody Create signup token
 //
 // Create a new signup token that allows user registration.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:invite`.
 //
 // Takes any type of body and a specified content type.
 //
@@ -7034,6 +7594,8 @@ func (c *Client) CreateSignupTokenWithBody(ctx context.Context, contentType stri
 //
 // Create a new signup token that allows user registration.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:invite`.
+//
 // Takes a body of the `application/json` content type.
 //
 // Corresponds with POST /api/admin/signup-tokens (the `CreateSignupToken` operationId).
@@ -7053,6 +7615,8 @@ func (c *Client) CreateSignupToken(ctx context.Context, body CreateSignupTokenJS
 //
 // Delete a signup token by ID.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:invite`.
+//
 // Corresponds with DELETE /api/admin/signup-tokens/{id} (the `DeleteSignupToken` operationId).
 func (c *Client) DeleteSignupToken(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewDeleteSignupTokenRequest(c.Server, id)
@@ -7070,6 +7634,8 @@ func (c *Client) DeleteSignupToken(ctx context.Context, id string, reqEditors ..
 //
 // Get a paginated list of user groups with optional search and sorting.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `groups:read`.
+//
 // Corresponds with GET /api/admin/user-groups (the `ListUserGroups` operationId).
 func (c *Client) ListUserGroups(ctx context.Context, params *ListUserGroupsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewListUserGroupsRequest(c.Server, params)
@@ -7086,6 +7652,8 @@ func (c *Client) ListUserGroups(ctx context.Context, params *ListUserGroupsParam
 // CreateUserGroupWithBody Create user group
 //
 // Create a new user group.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `groups:write`.
 //
 // Takes any type of body and a specified content type.
 //
@@ -7106,6 +7674,8 @@ func (c *Client) CreateUserGroupWithBody(ctx context.Context, contentType string
 //
 // Create a new user group.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `groups:write`.
+//
 // Takes a body of the `application/json` content type.
 //
 // Corresponds with POST /api/admin/user-groups (the `CreateUserGroup` operationId).
@@ -7125,6 +7695,8 @@ func (c *Client) CreateUserGroup(ctx context.Context, body CreateUserGroupJSONRe
 //
 // Delete a specific user group by ID.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `groups:write`.
+//
 // Corresponds with DELETE /api/admin/user-groups/{id} (the `DeleteUserGroup` operationId).
 func (c *Client) DeleteUserGroup(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewDeleteUserGroupRequest(c.Server, id)
@@ -7142,6 +7714,8 @@ func (c *Client) DeleteUserGroup(ctx context.Context, id string, reqEditors ...R
 //
 // Retrieve detailed information about a specific user group including its users.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `groups:read`.
+//
 // Corresponds with GET /api/admin/user-groups/{id} (the `GetUserGroupByID` operationId).
 func (c *Client) GetUserGroupByID(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewGetUserGroupByIDRequest(c.Server, id)
@@ -7157,7 +7731,9 @@ func (c *Client) GetUserGroupByID(ctx context.Context, id string, reqEditors ...
 
 // PatchUserGroupWithBody Update user group
 //
-// # Update an existing user group by ID, where PATCH changes only the fields in the body
+// Update an existing user group by ID, where PATCH changes only the fields in the body.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `groups:write`.
 //
 // Takes any type of body and a specified content type.
 //
@@ -7176,7 +7752,9 @@ func (c *Client) PatchUserGroupWithBody(ctx context.Context, id string, contentT
 
 // PatchUserGroup Update user group
 //
-// # Update an existing user group by ID, where PATCH changes only the fields in the body
+// Update an existing user group by ID, where PATCH changes only the fields in the body.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `groups:write`.
 //
 // Takes a body of the `application/json` content type.
 //
@@ -7195,7 +7773,9 @@ func (c *Client) PatchUserGroup(ctx context.Context, id string, body PatchUserGr
 
 // UpdateUserGroupWithBody Update user group
 //
-// # Update an existing user group by ID, where PATCH changes only the fields in the body
+// Update an existing user group by ID, where PATCH changes only the fields in the body.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `groups:write`.
 //
 // Takes any type of body and a specified content type.
 //
@@ -7214,7 +7794,9 @@ func (c *Client) UpdateUserGroupWithBody(ctx context.Context, id string, content
 
 // UpdateUserGroup Update user group
 //
-// # Update an existing user group by ID, where PATCH changes only the fields in the body
+// Update an existing user group by ID, where PATCH changes only the fields in the body.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `groups:write`.
 //
 // Takes a body of the `application/json` content type.
 //
@@ -7235,6 +7817,8 @@ func (c *Client) UpdateUserGroup(ctx context.Context, id string, body UpdateUser
 //
 // Update the OIDC clients allowed for a specific user group.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `groups:write`.
+//
 // Takes any type of body and a specified content type.
 //
 // Corresponds with PUT /api/admin/user-groups/{id}/allowed-oidc-clients (the `UpdateAllowedOIDCClients` operationId).
@@ -7253,6 +7837,8 @@ func (c *Client) UpdateAllowedOIDCClientsWithBody(ctx context.Context, id string
 // UpdateAllowedOIDCClients Update allowed OIDC clients
 //
 // Update the OIDC clients allowed for a specific user group.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `groups:write`.
 //
 // Takes a body of the `application/json` content type.
 //
@@ -7273,6 +7859,8 @@ func (c *Client) UpdateAllowedOIDCClients(ctx context.Context, id string, body U
 //
 // Update the list of users belonging to a specific user group.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `groups:write`.
+//
 // Takes any type of body and a specified content type.
 //
 // Corresponds with PUT /api/admin/user-groups/{id}/users (the `UpdateUsersInGroup` operationId).
@@ -7291,6 +7879,8 @@ func (c *Client) UpdateUsersInGroupWithBody(ctx context.Context, id string, cont
 // UpdateUsersInGroup Update users in a group
 //
 // Update the list of users belonging to a specific user group.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `groups:write`.
 //
 // Takes a body of the `application/json` content type.
 //
@@ -7311,6 +7901,8 @@ func (c *Client) UpdateUsersInGroup(ctx context.Context, id string, body UpdateU
 //
 // Get a paginated list of users with optional search and sorting.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:read`.
+//
 // Corresponds with GET /api/admin/users (the `ListUsers` operationId).
 func (c *Client) ListUsers(ctx context.Context, params *ListUsersParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewListUsersRequest(c.Server, params)
@@ -7327,6 +7919,8 @@ func (c *Client) ListUsers(ctx context.Context, params *ListUsersParams, reqEdit
 // CreateUserWithBody Create user
 //
 // Create a new user.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:write`.
 //
 // Takes any type of body and a specified content type.
 //
@@ -7347,6 +7941,8 @@ func (c *Client) CreateUserWithBody(ctx context.Context, contentType string, bod
 //
 // Create a new user.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:write`.
+//
 // Takes a body of the `application/json` content type.
 //
 // Corresponds with POST /api/admin/users (the `CreateUser` operationId).
@@ -7366,6 +7962,8 @@ func (c *Client) CreateUser(ctx context.Context, body CreateUserJSONRequestBody,
 //
 // Delete a specific user by ID.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:write`.
+//
 // Corresponds with DELETE /api/admin/users/{id} (the `DeleteUser` operationId).
 func (c *Client) DeleteUser(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewDeleteUserRequest(c.Server, id)
@@ -7383,6 +7981,8 @@ func (c *Client) DeleteUser(ctx context.Context, id string, reqEditors ...Reques
 //
 // Retrieve detailed information about a specific user.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:read`.
+//
 // Corresponds with GET /api/admin/users/{id} (the `GetUserByID` operationId).
 func (c *Client) GetUserByID(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewGetUserByIDRequest(c.Server, id)
@@ -7398,7 +7998,9 @@ func (c *Client) GetUserByID(ctx context.Context, id string, reqEditors ...Reque
 
 // PatchUserWithBody Update user
 //
-// # Update an existing user by ID, where PATCH changes only the fields in the body
+// Update an existing user by ID, where PATCH changes only the fields in the body.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:write`.
 //
 // Takes any type of body and a specified content type.
 //
@@ -7417,7 +8019,9 @@ func (c *Client) PatchUserWithBody(ctx context.Context, id string, contentType s
 
 // PatchUser Update user
 //
-// # Update an existing user by ID, where PATCH changes only the fields in the body
+// Update an existing user by ID, where PATCH changes only the fields in the body.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:write`.
 //
 // Takes a body of the `application/json` content type.
 //
@@ -7436,7 +8040,9 @@ func (c *Client) PatchUser(ctx context.Context, id string, body PatchUserJSONReq
 
 // UpdateUserWithBody Update user
 //
-// # Update an existing user by ID, where PATCH changes only the fields in the body
+// Update an existing user by ID, where PATCH changes only the fields in the body.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:write`.
 //
 // Takes any type of body and a specified content type.
 //
@@ -7455,7 +8061,9 @@ func (c *Client) UpdateUserWithBody(ctx context.Context, id string, contentType 
 
 // UpdateUser Update user
 //
-// # Update an existing user by ID, where PATCH changes only the fields in the body
+// Update an existing user by ID, where PATCH changes only the fields in the body.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:write`.
 //
 // Takes a body of the `application/json` content type.
 //
@@ -7476,6 +8084,8 @@ func (c *Client) UpdateUser(ctx context.Context, id string, body UpdateUserJSONR
 //
 // Retrieve all groups a specific user belongs to.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:read`.
+//
 // Corresponds with GET /api/admin/users/{id}/groups (the `GetUserGroups` operationId).
 func (c *Client) GetUserGroups(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewGetUserGroupsRequest(c.Server, id)
@@ -7492,6 +8102,8 @@ func (c *Client) GetUserGroups(ctx context.Context, id string, reqEditors ...Req
 // RequestOneTimeAccessEmailAdminWithBody Request one-time access email (admin)
 //
 // Request a one-time access email for a specific user (admin only).
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:login-codes`.
 //
 // Takes any type of body and a specified content type.
 //
@@ -7512,6 +8124,8 @@ func (c *Client) RequestOneTimeAccessEmailAdminWithBody(ctx context.Context, id 
 //
 // Request a one-time access email for a specific user (admin only).
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:login-codes`.
+//
 // Takes a body of the `application/json` content type.
 //
 // Corresponds with POST /api/admin/users/{id}/one-time-access-email (the `RequestOneTimeAccessEmailAdmin` operationId).
@@ -7530,6 +8144,8 @@ func (c *Client) RequestOneTimeAccessEmailAdmin(ctx context.Context, id string, 
 // CreateOneTimeAccessTokenForUserAdminWithBody Create one-time access token for user (admin)
 //
 // Generate a one-time access token for a specific user (admin only).
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:login-codes`.
 //
 // Takes any type of body and a specified content type.
 //
@@ -7550,6 +8166,8 @@ func (c *Client) CreateOneTimeAccessTokenForUserAdminWithBody(ctx context.Contex
 //
 // Generate a one-time access token for a specific user (admin only).
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:login-codes`.
+//
 // Takes a body of the `application/json` content type.
 //
 // Corresponds with POST /api/admin/users/{id}/one-time-access-token (the `CreateOneTimeAccessTokenForUserAdmin` operationId).
@@ -7569,6 +8187,8 @@ func (c *Client) CreateOneTimeAccessTokenForUserAdmin(ctx context.Context, id st
 //
 // Reset a specific user's profile picture to the default.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:write`.
+//
 // Corresponds with DELETE /api/admin/users/{id}/profile-picture (the `ResetUserProfilePicture` operationId).
 func (c *Client) ResetUserProfilePicture(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewResetUserProfilePictureRequest(c.Server, id)
@@ -7585,6 +8205,8 @@ func (c *Client) ResetUserProfilePicture(ctx context.Context, id string, reqEdit
 // UpdateUserProfilePictureWithBody Update user profile picture
 //
 // Update a specific user's profile picture.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:write`.
 //
 // Takes any type of body and a specified content type.
 //
@@ -7603,7 +8225,9 @@ func (c *Client) UpdateUserProfilePictureWithBody(ctx context.Context, id string
 
 // RevokeAllSessionsOfUser Revoke all sessions of a user
 //
-// Sign a user out of every session and revoke every grant their apps hold, offline_access ones included
+// Sign a user out of every session and revoke every grant their apps hold, offline_access ones included.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:write`.
 //
 // Corresponds with DELETE /api/admin/users/{id}/sessions (the `RevokeAllSessionsOfUser` operationId).
 func (c *Client) RevokeAllSessionsOfUser(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*http.Response, error) {
@@ -7620,7 +8244,9 @@ func (c *Client) RevokeAllSessionsOfUser(ctx context.Context, id string, reqEdit
 
 // ListSessionsOfUser List sessions of a user
 //
-// # Get the browsers in which a user is signed in, most recently active first
+// Get the browsers in which a user is signed in, most recently active first.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:read`.
 //
 // Corresponds with GET /api/admin/users/{id}/sessions (the `ListSessionsOfUser` operationId).
 func (c *Client) ListSessionsOfUser(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*http.Response, error) {
@@ -7639,6 +8265,8 @@ func (c *Client) ListSessionsOfUser(ctx context.Context, id string, reqEditors .
 //
 // Sign a user out of one of their sessions.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:write`.
+//
 // Corresponds with DELETE /api/admin/users/{id}/sessions/{sessionId} (the `RevokeSessionOfUser` operationId).
 func (c *Client) RevokeSessionOfUser(ctx context.Context, id string, sessionID string, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewRevokeSessionOfUserRequest(c.Server, id, sessionID)
@@ -7655,6 +8283,8 @@ func (c *Client) RevokeSessionOfUser(ctx context.Context, id string, sessionID s
 // UpdateUserGroupsWithBody Update user groups
 //
 // Update the groups a specific user belongs to.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:write`.
 //
 // Takes any type of body and a specified content type.
 //
@@ -7675,6 +8305,8 @@ func (c *Client) UpdateUserGroupsWithBody(ctx context.Context, id string, conten
 //
 // Update the groups a specific user belongs to.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:write`.
+//
 // Takes a body of the `application/json` content type.
 //
 // Corresponds with PUT /api/admin/users/{id}/user-groups (the `UpdateUserGroups` operationId).
@@ -7694,6 +8326,8 @@ func (c *Client) UpdateUserGroups(ctx context.Context, id string, body UpdateUse
 //
 // Retrieve all WebAuthn credentials for a specific user.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:read`.
+//
 // Corresponds with GET /api/admin/users/{id}/webauthn-credentials (the `ListUserPasskeys` operationId).
 func (c *Client) ListUserPasskeys(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewListUserPasskeysRequest(c.Server, id)
@@ -7711,6 +8345,8 @@ func (c *Client) ListUserPasskeys(ctx context.Context, id string, reqEditors ...
 //
 // Delete a specific WebAuthn credential for a user.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:write`.
+//
 // Corresponds with DELETE /api/admin/users/{id}/webauthn-credentials/{credentialId} (the `DeleteUserPasskey` operationId).
 func (c *Client) DeleteUserPasskey(ctx context.Context, id string, credentialID string, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewDeleteUserPasskeyRequest(c.Server, id, credentialID)
@@ -7726,7 +8362,9 @@ func (c *Client) DeleteUserPasskey(ctx context.Context, id string, credentialID 
 
 // GetWarningsForAdmins Get the warnings for admins
 //
-// # Lists the problems with this instance that admins should fix, such as a SQLite database on a networked filesystem or a database that a newer Pocket ID version migrated
+// Lists the problems with this instance that admins should fix, such as a SQLite database on a networked filesystem or a database that a newer Pocket ID version migrated.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `config:read`.
 //
 // Corresponds with GET /api/admin/warnings (the `GetWarningsForAdmins` operationId).
 func (c *Client) GetWarningsForAdmins(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error) {
@@ -7745,6 +8383,8 @@ func (c *Client) GetWarningsForAdmins(ctx context.Context, reqEditors ...Request
 //
 // Get a paginated list of API keys belonging to the current user.
 //
+// Credentials: `apiKey`, `oauth2`, `session`. Scope: `account:api-keys`.
+//
 // Corresponds with GET /api/api-keys (the `ListAPIKeys` operationId).
 func (c *Client) ListAPIKeys(ctx context.Context, params *ListAPIKeysParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewListAPIKeysRequest(c.Server, params)
@@ -7761,6 +8401,8 @@ func (c *Client) ListAPIKeys(ctx context.Context, params *ListAPIKeysParams, req
 // CreateAPIKeyWithBody Create API key
 //
 // Create a new API key for the current user.
+//
+// Credentials: `session`. Scope: `account:api-keys:create`.
 //
 // Takes any type of body and a specified content type.
 //
@@ -7781,6 +8423,8 @@ func (c *Client) CreateAPIKeyWithBody(ctx context.Context, contentType string, b
 //
 // Create a new API key for the current user.
 //
+// Credentials: `session`. Scope: `account:api-keys:create`.
+//
 // Takes a body of the `application/json` content type.
 //
 // Corresponds with POST /api/api-keys (the `CreateAPIKey` operationId).
@@ -7800,6 +8444,8 @@ func (c *Client) CreateAPIKey(ctx context.Context, body CreateAPIKeyJSONRequestB
 //
 // Revoke (delete) an existing API key by ID.
 //
+// Credentials: `apiKey`, `oauth2`, `session`. Scope: `account:api-keys`.
+//
 // Corresponds with DELETE /api/api-keys/{id} (the `RevokeAPIKey` operationId).
 func (c *Client) RevokeAPIKey(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewRevokeAPIKeyRequest(c.Server, id)
@@ -7815,7 +8461,9 @@ func (c *Client) RevokeAPIKey(ctx context.Context, id string, reqEditors ...Requ
 
 // PatchAPIKeyWithBody Update API key
 //
-// Change the name, description and scopes of an existing API key, where PATCH changes only the fields in the body; its token stays the same
+// Change the name, description and scopes of an existing API key, where PATCH changes only the fields in the body; its token stays the same.
+//
+// Credentials: `session`. Scope: `account:api-keys:create`.
 //
 // Takes any type of body and a specified content type.
 //
@@ -7834,7 +8482,9 @@ func (c *Client) PatchAPIKeyWithBody(ctx context.Context, id string, contentType
 
 // PatchAPIKey Update API key
 //
-// Change the name, description and scopes of an existing API key, where PATCH changes only the fields in the body; its token stays the same
+// Change the name, description and scopes of an existing API key, where PATCH changes only the fields in the body; its token stays the same.
+//
+// Credentials: `session`. Scope: `account:api-keys:create`.
 //
 // Takes a body of the `application/json` content type.
 //
@@ -7853,7 +8503,9 @@ func (c *Client) PatchAPIKey(ctx context.Context, id string, body PatchAPIKeyJSO
 
 // UpdateAPIKeyWithBody Update API key
 //
-// Change the name, description and scopes of an existing API key, where PATCH changes only the fields in the body; its token stays the same
+// Change the name, description and scopes of an existing API key, where PATCH changes only the fields in the body; its token stays the same.
+//
+// Credentials: `session`. Scope: `account:api-keys:create`.
 //
 // Takes any type of body and a specified content type.
 //
@@ -7872,7 +8524,9 @@ func (c *Client) UpdateAPIKeyWithBody(ctx context.Context, id string, contentTyp
 
 // UpdateAPIKey Update API key
 //
-// Change the name, description and scopes of an existing API key, where PATCH changes only the fields in the body; its token stays the same
+// Change the name, description and scopes of an existing API key, where PATCH changes only the fields in the body; its token stays the same.
+//
+// Credentials: `session`. Scope: `account:api-keys:create`.
 //
 // Takes a body of the `application/json` content type.
 //
@@ -7891,7 +8545,9 @@ func (c *Client) UpdateAPIKey(ctx context.Context, id string, body UpdateAPIKeyJ
 
 // RenewAPIKeyWithBody Renew API key
 //
-// # While a key has not expired, its old token keeps working for the given grace period, but never past the key's previous expiration
+// While a key has not expired, its old token keeps working for the given grace period, but never past the key's previous expiration.
+//
+// Credentials: `session`. Scope: `account:api-keys:create`.
 //
 // Takes any type of body and a specified content type.
 //
@@ -7910,7 +8566,9 @@ func (c *Client) RenewAPIKeyWithBody(ctx context.Context, id string, contentType
 
 // RenewAPIKey Renew API key
 //
-// # While a key has not expired, its old token keeps working for the given grace period, but never past the key's previous expiration
+// While a key has not expired, its old token keeps working for the given grace period, but never past the key's previous expiration.
+//
+// Credentials: `session`. Scope: `account:api-keys:create`.
 //
 // Takes a body of the `application/json` content type.
 //
@@ -8033,6 +8691,8 @@ func (c *Client) ListPublicApplicationConfigurations(ctx context.Context, reqEdi
 //
 // Get a paginated list of the audit logs about the current user.
 //
+// Credentials: `apiKey`, `oauth2`, `session`. Scope: `account:audit-logs`.
+//
 // Corresponds with GET /api/audit-logs (the `ListAuditLogs` operationId).
 func (c *Client) ListAuditLogs(ctx context.Context, params *ListAuditLogsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewListAuditLogsRequest(c.Server, params)
@@ -8084,6 +8744,8 @@ func (c *Client) ExchangeDeviceLoginRequest(ctx context.Context, id string, para
 //
 // Retrieve the requesting device details for an authenticated user before approval or denial.
 //
+// Credentials: `session`. Scope: `account:session`.
+//
 // Takes any type of body and a specified content type.
 //
 // Corresponds with POST /api/device-login/verification (the `InspectDeviceLoginRequest` operationId).
@@ -8103,6 +8765,8 @@ func (c *Client) InspectDeviceLoginRequestWithBody(ctx context.Context, contentT
 //
 // Retrieve the requesting device details for an authenticated user before approval or denial.
 //
+// Credentials: `session`. Scope: `account:session`.
+//
 // Takes a body of the `application/json` content type.
 //
 // Corresponds with POST /api/device-login/verification (the `InspectDeviceLoginRequest` operationId).
@@ -8120,7 +8784,9 @@ func (c *Client) InspectDeviceLoginRequest(ctx context.Context, body InspectDevi
 
 // DecideDeviceLoginRequestWithBody Decide device login request
 //
-// Approve or deny a device login request; approval requires fresh passkey reauthentication
+// Approve or deny a device login request; approval requires fresh passkey reauthentication.
+//
+// Credentials: `session`. Scope: `account:session`.
 //
 // Takes any type of body and a specified content type.
 //
@@ -8139,7 +8805,9 @@ func (c *Client) DecideDeviceLoginRequestWithBody(ctx context.Context, contentTy
 
 // DecideDeviceLoginRequest Decide device login request
 //
-// Approve or deny a device login request; approval requires fresh passkey reauthentication
+// Approve or deny a device login request; approval requires fresh passkey reauthentication.
+//
+// Credentials: `session`. Scope: `account:session`.
 //
 // Takes a body of the `application/json` content type.
 //
@@ -8158,7 +8826,9 @@ func (c *Client) DecideDeviceLoginRequest(ctx context.Context, body DecideDevice
 
 // ListOptionalFeatures List optional features
 //
-// Get whether each optional feature is on and whether anything uses it; a feature in use is always on
+// Get whether each optional feature is on and whether anything uses it; a feature in use is always on.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`.
 //
 // Corresponds with GET /api/features (the `ListOptionalFeatures` operationId).
 func (c *Client) ListOptionalFeatures(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error) {
@@ -8249,6 +8919,8 @@ func (c *Client) GetUserInformation(ctx context.Context, reqEditors ...RequestEd
 //
 // Get a paginated list of OIDC clients that the current user has authorized.
 //
+// Credentials: `apiKey`, `oauth2`, `session`. Scope: `account:apps`.
+//
 // Corresponds with GET /api/oidc/users/me/authorized-clients (the `ListAuthorizedClientsForCurrentUser` operationId).
 func (c *Client) ListAuthorizedClientsForCurrentUser(ctx context.Context, params *ListAuthorizedClientsForCurrentUserParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewListAuthorizedClientsForCurrentUserRequest(c.Server, params)
@@ -8266,6 +8938,8 @@ func (c *Client) ListAuthorizedClientsForCurrentUser(ctx context.Context, params
 //
 // Revoke the authorization for a specific OIDC client for the current user.
 //
+// Credentials: `apiKey`, `oauth2`, `session`. Scope: `account:apps`.
+//
 // Corresponds with DELETE /api/oidc/users/me/authorized-clients/{clientId} (the `RevokeAuthorizationForOIDCClient` operationId).
 func (c *Client) RevokeAuthorizationForOIDCClient(ctx context.Context, clientID OIDCClientID, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewRevokeAuthorizationForOIDCClientRequest(c.Server, clientID)
@@ -8282,6 +8956,8 @@ func (c *Client) RevokeAuthorizationForOIDCClient(ctx context.Context, clientID 
 // ListAccessibleOIDCClientsForCurrentUser List accessible OIDC clients for current user
 //
 // Get a list of OIDC clients that the current user can access.
+//
+// Credentials: `apiKey`, `oauth2`, `session`. Scope: `account:apps`.
 //
 // Corresponds with GET /api/oidc/users/me/clients (the `ListAccessibleOIDCClientsForCurrentUser` operationId).
 func (c *Client) ListAccessibleOIDCClientsForCurrentUser(ctx context.Context, params *ListAccessibleOIDCClientsForCurrentUserParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
@@ -8376,6 +9052,8 @@ func (c *Client) ExchangeOneTimeAccessToken(ctx context.Context, params *Exchang
 //
 // Sign the current user out of every session except the current one.
 //
+// Credentials: `session`. Scope: `account:session`.
+//
 // Corresponds with DELETE /api/sessions (the `RevokeOtherOwnSessions` operationId).
 func (c *Client) RevokeOtherOwnSessions(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewRevokeOtherOwnSessionsRequest(c.Server)
@@ -8391,7 +9069,9 @@ func (c *Client) RevokeOtherOwnSessions(ctx context.Context, reqEditors ...Reque
 
 // ListOwnSessions List own sessions
 //
-// # Get the browsers in which the current user is signed in, most recently active first
+// Get the browsers in which the current user is signed in, most recently active first.
+//
+// Credentials: `session`. Scope: `account:session`.
 //
 // Corresponds with GET /api/sessions (the `ListOwnSessions` operationId).
 func (c *Client) ListOwnSessions(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error) {
@@ -8408,7 +9088,9 @@ func (c *Client) ListOwnSessions(ctx context.Context, reqEditors ...RequestEdito
 
 // RememberCurrentSession Remember current session
 //
-// # Keep the current session signed in after the browser closes and while it goes unused, for a sign-in that was not remembered
+// Keep the current session signed in after the browser closes and while it goes unused, for a sign-in that was not remembered.
+//
+// Credentials: `session`. Scope: `account:session`.
 //
 // Corresponds with POST /api/sessions/current/remember (the `RememberCurrentSession` operationId).
 func (c *Client) RememberCurrentSession(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error) {
@@ -8426,6 +9108,8 @@ func (c *Client) RememberCurrentSession(ctx context.Context, reqEditors ...Reque
 // RevokeOwnSession Revoke own session
 //
 // Sign the current user out of one of their sessions.
+//
+// Credentials: `session`. Scope: `account:session`.
 //
 // Corresponds with DELETE /api/sessions/{id} (the `RevokeOwnSession` operationId).
 func (c *Client) RevokeOwnSession(ctx context.Context, id string, reqEditors ...RequestEditorFn) (*http.Response, error) {
@@ -8537,6 +9221,8 @@ func (c *Client) SignUpInitialAdminUser(ctx context.Context, body SignUpInitialA
 //
 // Retrieve information about the currently authenticated user.
 //
+// Credentials: `apiKey`, `oauth2`, `session`. Scope: `account:read`.
+//
 // Corresponds with GET /api/users/me (the `GetCurrentUser` operationId).
 func (c *Client) GetCurrentUser(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewGetCurrentUserRequest(c.Server)
@@ -8552,7 +9238,9 @@ func (c *Client) GetCurrentUser(ctx context.Context, reqEditors ...RequestEditor
 
 // PatchCurrentUserWithBody Update current user
 //
-// # Update the currently authenticated user's information, where PATCH changes only the fields in the body
+// Update the currently authenticated user's information, where PATCH changes only the fields in the body.
+//
+// Credentials: `apiKey`, `oauth2`, `session`. Scope: `account:write`.
 //
 // Takes any type of body and a specified content type.
 //
@@ -8571,7 +9259,9 @@ func (c *Client) PatchCurrentUserWithBody(ctx context.Context, contentType strin
 
 // PatchCurrentUser Update current user
 //
-// # Update the currently authenticated user's information, where PATCH changes only the fields in the body
+// Update the currently authenticated user's information, where PATCH changes only the fields in the body.
+//
+// Credentials: `apiKey`, `oauth2`, `session`. Scope: `account:write`.
 //
 // Takes a body of the `application/json` content type.
 //
@@ -8590,7 +9280,9 @@ func (c *Client) PatchCurrentUser(ctx context.Context, body PatchCurrentUserJSON
 
 // UpdateCurrentUserWithBody Update current user
 //
-// # Update the currently authenticated user's information, where PATCH changes only the fields in the body
+// Update the currently authenticated user's information, where PATCH changes only the fields in the body.
+//
+// Credentials: `apiKey`, `oauth2`, `session`. Scope: `account:write`.
 //
 // Takes any type of body and a specified content type.
 //
@@ -8609,7 +9301,9 @@ func (c *Client) UpdateCurrentUserWithBody(ctx context.Context, contentType stri
 
 // UpdateCurrentUser Update current user
 //
-// # Update the currently authenticated user's information, where PATCH changes only the fields in the body
+// Update the currently authenticated user's information, where PATCH changes only the fields in the body.
+//
+// Credentials: `apiKey`, `oauth2`, `session`. Scope: `account:write`.
 //
 // Takes a body of the `application/json` content type.
 //
@@ -8628,7 +9322,9 @@ func (c *Client) UpdateCurrentUser(ctx context.Context, body UpdateCurrentUserJS
 
 // CancelPendingEmailChange Cancel pending email change
 //
-// # Cancel the pending email change of the currently authenticated user, so its verification link stops working
+// Cancel the pending email change of the currently authenticated user, so its verification link stops working.
+//
+// Credentials: `apiKey`, `oauth2`, `session`. Scope: `account:write`.
 //
 // Corresponds with DELETE /api/users/me/email-change (the `CancelPendingEmailChange` operationId).
 func (c *Client) CancelPendingEmailChange(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error) {
@@ -8647,6 +9343,8 @@ func (c *Client) CancelPendingEmailChange(ctx context.Context, reqEditors ...Req
 //
 // Get the email change of the currently authenticated user that still has to be confirmed through the emailed link.
 //
+// Credentials: `apiKey`, `oauth2`, `session`. Scope: `account:read`.
+//
 // Corresponds with GET /api/users/me/email-change (the `GetPendingEmailChange` operationId).
 func (c *Client) GetPendingEmailChange(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewGetPendingEmailChangeRequest(c.Server)
@@ -8664,6 +9362,8 @@ func (c *Client) GetPendingEmailChange(ctx context.Context, reqEditors ...Reques
 //
 // Reset the currently authenticated user's profile picture to the default.
 //
+// Credentials: `apiKey`, `oauth2`, `session`. Scope: `account:write`.
+//
 // Corresponds with DELETE /api/users/me/profile-picture (the `ResetCurrentUserProfilePicture` operationId).
 func (c *Client) ResetCurrentUserProfilePicture(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewResetCurrentUserProfilePictureRequest(c.Server)
@@ -8680,6 +9380,8 @@ func (c *Client) ResetCurrentUserProfilePicture(ctx context.Context, reqEditors 
 // UpdateCurrentUserProfilePictureWithBody Update current user's profile picture
 //
 // Update the currently authenticated user's profile picture.
+//
+// Credentials: `apiKey`, `oauth2`, `session`. Scope: `account:write`.
 //
 // Takes any type of body and a specified content type.
 //
@@ -8700,6 +9402,8 @@ func (c *Client) UpdateCurrentUserProfilePictureWithBody(ctx context.Context, co
 //
 // Send an email verification to the currently authenticated user.
 //
+// Credentials: `apiKey`, `oauth2`, `session`. Scope: `account:write`.
+//
 // Corresponds with POST /api/users/me/send-email-verification (the `SendEmailVerification` operationId).
 func (c *Client) SendEmailVerification(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewSendEmailVerificationRequest(c.Server)
@@ -8716,6 +9420,8 @@ func (c *Client) SendEmailVerification(ctx context.Context, reqEditors ...Reques
 // VerifyEmailWithBody Verify email
 //
 // Verify the currently authenticated user's email using a verification token.
+//
+// Credentials: `apiKey`, `oauth2`, `session`. Scope: `account:write`.
 //
 // Takes any type of body and a specified content type.
 //
@@ -8735,6 +9441,8 @@ func (c *Client) VerifyEmailWithBody(ctx context.Context, contentType string, bo
 // VerifyEmail Verify email
 //
 // Verify the currently authenticated user's email using a verification token.
+//
+// Credentials: `apiKey`, `oauth2`, `session`. Scope: `account:write`.
 //
 // Takes a body of the `application/json` content type.
 //
@@ -8770,6 +9478,8 @@ func (c *Client) GetUserProfilePicture(ctx context.Context, id string, reqEditor
 
 // GetCurrentDeployedVersionOfPocketID Get current deployed version of Pocket ID
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`.
+//
 // Corresponds with GET /api/version/current (the `GetCurrentDeployedVersionOfPocketID` operationId).
 func (c *Client) GetCurrentDeployedVersionOfPocketID(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewGetCurrentDeployedVersionOfPocketIDRequest(c.Server)
@@ -8799,6 +9509,8 @@ func (c *Client) GetLatestAvailableVersionOfPocketID(ctx context.Context, reqEdi
 }
 
 // Logout Log out the current session
+//
+// Credentials: `session`.
 //
 // Corresponds with POST /api/webauthn/logout (the `Logout` operationId).
 func (c *Client) Logout(ctx context.Context, reqEditors ...RequestEditorFn) (*http.Response, error) {
@@ -16827,7 +17539,9 @@ type ClientWithResponsesInterface interface {
 
 	// ListAPIsClientMayAccessWithResponse List APIs a client may access
 	//
-	// Get every API the OIDC client may request tokens for, with its access and permissions split into user-delegated and client (machine-to-machine) access
+	// Get every API the OIDC client may request tokens for, with its access and permissions split into user-delegated and client (machine-to-machine) access.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `apis:read`.
 	//
 	// Returns a wrapper object for the known response body format(s).
 	//
@@ -16838,6 +17552,8 @@ type ClientWithResponsesInterface interface {
 	//
 	// Get a paginated list of APIs the OIDC client cannot already reach.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `apis:read`.
+	//
 	// Returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with GET /api/admin/api-access/{clientId}/assignable-apis (the `ListAPIsClientCanStillBeGrantedAccessTo` operationId).
@@ -16846,6 +17562,8 @@ type ClientWithResponsesInterface interface {
 	// ListAPIsWithResponse List APIs
 	//
 	// Get a paginated list of APIs with optional search and sorting.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `apis:read`.
 	//
 	// Returns a wrapper object for the known response body format(s).
 	//
@@ -16856,6 +17574,8 @@ type ClientWithResponsesInterface interface {
 	//
 	// Create a new API resource server.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `apis:write`.
+	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with POST /api/admin/apis (the `CreateAPI` operationId).
@@ -16864,6 +17584,8 @@ type ClientWithResponsesInterface interface {
 	// CreateAPIWithResponse Create API
 	//
 	// Create a new API resource server.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `apis:write`.
 	//
 	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
@@ -16874,6 +17596,8 @@ type ClientWithResponsesInterface interface {
 	//
 	// Delete an API by ID.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `apis:write`.
+	//
 	// Returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with DELETE /api/admin/apis/{id} (the `DeleteAPI` operationId).
@@ -16883,6 +17607,8 @@ type ClientWithResponsesInterface interface {
 	//
 	// Retrieve a single API including its permissions.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `apis:read`.
+	//
 	// Returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with GET /api/admin/apis/{id} (the `GetAPIByID` operationId).
@@ -16890,7 +17616,9 @@ type ClientWithResponsesInterface interface {
 
 	// PatchAPIWithBodyWithResponse Update API
 	//
-	// Update an existing API by ID, where PATCH changes only the fields in the body
+	// Update an existing API by ID, where PATCH changes only the fields in the body.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `apis:write`.
 	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
@@ -16899,7 +17627,9 @@ type ClientWithResponsesInterface interface {
 
 	// PatchAPIWithResponse Update API
 	//
-	// Update an existing API by ID, where PATCH changes only the fields in the body
+	// Update an existing API by ID, where PATCH changes only the fields in the body.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `apis:write`.
 	//
 	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
@@ -16908,7 +17638,9 @@ type ClientWithResponsesInterface interface {
 
 	// UpdateAPIWithBodyWithResponse Update API
 	//
-	// Update an existing API by ID, where PATCH changes only the fields in the body
+	// Update an existing API by ID, where PATCH changes only the fields in the body.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `apis:write`.
 	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
@@ -16917,7 +17649,9 @@ type ClientWithResponsesInterface interface {
 
 	// UpdateAPIWithResponse Update API
 	//
-	// Update an existing API by ID, where PATCH changes only the fields in the body
+	// Update an existing API by ID, where PATCH changes only the fields in the body.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `apis:write`.
 	//
 	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
@@ -16928,6 +17662,8 @@ type ClientWithResponsesInterface interface {
 	//
 	// Get a paginated list of OIDC clients that have no grant on the API yet.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `apis:read`.
+	//
 	// Returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with GET /api/admin/apis/{id}/assignable-clients (the `ListClientsThatCanStillBeGrantedAccessToAPI` operationId).
@@ -16936,6 +17672,8 @@ type ClientWithResponsesInterface interface {
 	// UpdateMetadataDocumentClientAccessWithBodyWithResponse Update metadata document client access
 	//
 	// Replace which permissions of an API every client registered through a Client ID Metadata Document may request.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `apis:write`.
 	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
@@ -16946,6 +17684,8 @@ type ClientWithResponsesInterface interface {
 	//
 	// Replace which permissions of an API every client registered through a Client ID Metadata Document may request.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `apis:write`.
+	//
 	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with PUT /api/admin/apis/{id}/cimd-access (the `UpdateMetadataDocumentClientAccess` operationId).
@@ -16953,7 +17693,9 @@ type ClientWithResponsesInterface interface {
 
 	// ListClientsWithAccessToAPIWithResponse List clients with access to an API
 	//
-	// Get a paginated list of OIDC clients that may reach the API, with their permissions split into user-delegated and client (machine-to-machine) access
+	// Get a paginated list of OIDC clients that may reach the API, with their permissions split into user-delegated and client (machine-to-machine) access.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `apis:read`.
 	//
 	// Returns a wrapper object for the known response body format(s).
 	//
@@ -16964,6 +17706,8 @@ type ClientWithResponsesInterface interface {
 	//
 	// Remove every permission of this API a single OIDC client was allowed to request.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `apis:write`.
+	//
 	// Returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with DELETE /api/admin/apis/{id}/clients/{clientId} (the `RevokeClientAccessToAPI` operationId).
@@ -16971,7 +17715,9 @@ type ClientWithResponsesInterface interface {
 
 	// UpdateClientAccessToAPIWithBodyWithResponse Update a client's access to an API
 	//
-	// Replace the permissions of this API a single OIDC client may request, leaving its grants on other APIs untouched
+	// Replace the permissions of this API a single OIDC client may request, leaving its grants on other APIs untouched.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `apis:write`.
 	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
@@ -16980,7 +17726,9 @@ type ClientWithResponsesInterface interface {
 
 	// UpdateClientAccessToAPIWithResponse Update a client's access to an API
 	//
-	// Replace the permissions of this API a single OIDC client may request, leaving its grants on other APIs untouched
+	// Replace the permissions of this API a single OIDC client may request, leaving its grants on other APIs untouched.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `apis:write`.
 	//
 	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
@@ -16991,6 +17739,8 @@ type ClientWithResponsesInterface interface {
 	//
 	// Replace the full set of permissions for an API.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `apis:write`.
+	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with PUT /api/admin/apis/{id}/permissions (the `UpdateAPIPermissions` operationId).
@@ -16999,6 +17749,8 @@ type ClientWithResponsesInterface interface {
 	// UpdateAPIPermissionsWithResponse Update API permissions
 	//
 	// Replace the full set of permissions for an API.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `apis:write`.
 	//
 	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
@@ -17009,6 +17761,8 @@ type ClientWithResponsesInterface interface {
 	//
 	// Delete the application background image.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `config:write`.
+	//
 	// Returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with DELETE /api/admin/application-assets/background (the `DeleteBackgroundImage` operationId).
@@ -17017,6 +17771,8 @@ type ClientWithResponsesInterface interface {
 	// UpdateBackgroundImageWithBodyWithResponse Update background image
 	//
 	// Update the application background image.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `config:write`.
 	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
@@ -17027,6 +17783,8 @@ type ClientWithResponsesInterface interface {
 	//
 	// Delete the default profile picture image.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `config:write`.
+	//
 	// Returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with DELETE /api/admin/application-assets/default-profile-picture (the `DeleteDefaultProfilePictureImage` operationId).
@@ -17035,6 +17793,8 @@ type ClientWithResponsesInterface interface {
 	// GetDefaultProfilePictureImageWithResponse Get default profile picture image
 	//
 	// Get the default profile picture image for the application.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `config:read`.
 	//
 	// Returns a wrapper object for the known response body format(s).
 	//
@@ -17045,6 +17805,8 @@ type ClientWithResponsesInterface interface {
 	//
 	// Update the default profile picture image.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `config:write`.
+	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with PUT /api/admin/application-assets/default-profile-picture (the `UpdateDefaultProfilePictureImage` operationId).
@@ -17053,6 +17815,8 @@ type ClientWithResponsesInterface interface {
 	// UpdateEmailLogoWithBodyWithResponse Update email logo
 	//
 	// Update the email logo for use in emails.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `config:write`.
 	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
@@ -17063,6 +17827,8 @@ type ClientWithResponsesInterface interface {
 	//
 	// Update the application favicon.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `config:write`.
+	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with PUT /api/admin/application-assets/favicon (the `UpdateFavicon` operationId).
@@ -17071,6 +17837,8 @@ type ClientWithResponsesInterface interface {
 	// DeleteTitleFontWithResponse Delete title font
 	//
 	// Delete the custom font of page and dialog titles.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `config:write`.
 	//
 	// Returns a wrapper object for the known response body format(s).
 	//
@@ -17081,6 +17849,8 @@ type ClientWithResponsesInterface interface {
 	//
 	// Update the custom font of page and dialog titles.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `config:write`.
+	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with PUT /api/admin/application-assets/font (the `UpdateTitleFont` operationId).
@@ -17089,6 +17859,8 @@ type ClientWithResponsesInterface interface {
 	// DeleteLogoImageWithResponse Delete logo image
 	//
 	// Delete the custom application logo and restore the default logo.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `config:write`.
 	//
 	// Returns a wrapper object for the known response body format(s).
 	//
@@ -17099,6 +17871,8 @@ type ClientWithResponsesInterface interface {
 	//
 	// Update the application logo.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `config:write`.
+	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with PUT /api/admin/application-assets/logo (the `UpdateLogo` operationId).
@@ -17108,6 +17882,8 @@ type ClientWithResponsesInterface interface {
 	//
 	// Get all application configurations including private ones.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `config:read`.
+	//
 	// Returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with GET /api/admin/application-configuration (the `ListAllApplicationConfigurations` operationId).
@@ -17115,7 +17891,9 @@ type ClientWithResponsesInterface interface {
 
 	// PatchApplicationConfigurationsWithBodyWithResponse Update application configurations
 	//
-	// Update application configuration settings, where PATCH changes only the fields in the body
+	// Update application configuration settings, where PATCH changes only the fields in the body.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `config:write`.
 	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
@@ -17124,7 +17902,9 @@ type ClientWithResponsesInterface interface {
 
 	// PatchApplicationConfigurationsWithResponse Update application configurations
 	//
-	// Update application configuration settings, where PATCH changes only the fields in the body
+	// Update application configuration settings, where PATCH changes only the fields in the body.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `config:write`.
 	//
 	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
@@ -17133,7 +17913,9 @@ type ClientWithResponsesInterface interface {
 
 	// UpdateApplicationConfigurationsWithBodyWithResponse Update application configurations
 	//
-	// Update application configuration settings, where PATCH changes only the fields in the body
+	// Update application configuration settings, where PATCH changes only the fields in the body.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `config:write`.
 	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
@@ -17142,7 +17924,9 @@ type ClientWithResponsesInterface interface {
 
 	// UpdateApplicationConfigurationsWithResponse Update application configurations
 	//
-	// Update application configuration settings, where PATCH changes only the fields in the body
+	// Update application configuration settings, where PATCH changes only the fields in the body.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `config:write`.
 	//
 	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
@@ -17153,6 +17937,8 @@ type ClientWithResponsesInterface interface {
 	//
 	// Manually trigger LDAP synchronization.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `config:write`.
+	//
 	// Returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with POST /api/admin/application-configuration/sync-ldap (the `SynchronizeLDAP` operationId).
@@ -17161,6 +17947,8 @@ type ClientWithResponsesInterface interface {
 	// SendTestEmailWithResponse Send test email
 	//
 	// Send a test email to verify email configuration.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `config:write`.
 	//
 	// Returns a wrapper object for the known response body format(s).
 	//
@@ -17171,6 +17959,8 @@ type ClientWithResponsesInterface interface {
 	//
 	// Get a paginated list of all audit logs (admin only).
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `audit-logs:read`.
+	//
 	// Returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with GET /api/admin/audit-logs (the `ListAllAuditLogs` operationId).
@@ -17179,6 +17969,8 @@ type ClientWithResponsesInterface interface {
 	// ListClientNamesWithResponse List client names
 	//
 	// Get a list of all client names for audit log filtering.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `audit-logs:read`.
 	//
 	// Returns a wrapper object for the known response body format(s).
 	//
@@ -17189,6 +17981,8 @@ type ClientWithResponsesInterface interface {
 	//
 	// Get a list of all usernames with their IDs for audit log filtering.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `audit-logs:read`.
+	//
 	// Returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with GET /api/admin/audit-logs/filters/users (the `ListUsersWithIDs` operationId).
@@ -17197,6 +17991,8 @@ type ClientWithResponsesInterface interface {
 	// GetCustomClaimSuggestionsWithResponse Get custom claim suggestions
 	//
 	// Get a list of suggested custom claim names.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:read`.
 	//
 	// Returns a wrapper object for the known response body format(s).
 	//
@@ -17207,6 +18003,8 @@ type ClientWithResponsesInterface interface {
 	//
 	// Update or create custom claims for a specific user group.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `groups:write`.
+	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with PUT /api/admin/custom-claims/user-group/{userGroupId} (the `UpdateCustomClaimsForUserGroup` operationId).
@@ -17215,6 +18013,8 @@ type ClientWithResponsesInterface interface {
 	// UpdateCustomClaimsForUserGroupWithResponse Update custom claims for a user group
 	//
 	// Update or create custom claims for a specific user group.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `groups:write`.
 	//
 	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
@@ -17225,6 +18025,8 @@ type ClientWithResponsesInterface interface {
 	//
 	// Update or create custom claims for a specific user.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:write`.
+	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with PUT /api/admin/custom-claims/user/{userId} (the `UpdateCustomClaimsForUser` operationId).
@@ -17233,6 +18035,8 @@ type ClientWithResponsesInterface interface {
 	// UpdateCustomClaimsForUserWithResponse Update custom claims for a user
 	//
 	// Update or create custom claims for a specific user.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:write`.
 	//
 	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
@@ -17243,6 +18047,8 @@ type ClientWithResponsesInterface interface {
 	//
 	// Get a paginated list of OIDC claim mapping policies with optional search and sorting.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-claim-mapping-policies:read`.
+	//
 	// Returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with GET /api/admin/oidc/claim-mapping-policies (the `ListOIDCClaimMappingPolicies` operationId).
@@ -17251,6 +18057,8 @@ type ClientWithResponsesInterface interface {
 	// CreateOIDCClaimMappingPolicyWithBodyWithResponse Create OIDC claim mapping policy
 	//
 	// Create a new OIDC claim mapping policy.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-claim-mapping-policies:write`.
 	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
@@ -17261,6 +18069,8 @@ type ClientWithResponsesInterface interface {
 	//
 	// Create a new OIDC claim mapping policy.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-claim-mapping-policies:write`.
+	//
 	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with POST /api/admin/oidc/claim-mapping-policies (the `CreateOIDCClaimMappingPolicy` operationId).
@@ -17268,7 +18078,9 @@ type ClientWithResponsesInterface interface {
 
 	// PreviewClaimMappingsWithBodyWithResponse Preview claim mappings
 	//
-	// Get the claims that claim mappings, saved or not, release for a user and set of scopes
+	// Get the claims that claim mappings, saved or not, release for a user and set of scopes.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:read`.
 	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
@@ -17277,7 +18089,9 @@ type ClientWithResponsesInterface interface {
 
 	// PreviewClaimMappingsWithResponse Preview claim mappings
 	//
-	// Get the claims that claim mappings, saved or not, release for a user and set of scopes
+	// Get the claims that claim mappings, saved or not, release for a user and set of scopes.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:read`.
 	//
 	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
@@ -17288,6 +18102,8 @@ type ClientWithResponsesInterface interface {
 	//
 	// Delete an OIDC claim mapping policy by ID.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-claim-mapping-policies:write`.
+	//
 	// Returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with DELETE /api/admin/oidc/claim-mapping-policies/{id} (the `DeleteOIDCClaimMappingPolicy` operationId).
@@ -17297,6 +18113,8 @@ type ClientWithResponsesInterface interface {
 	//
 	// Retrieve an existing OIDC claim mapping policy.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-claim-mapping-policies:read`.
+	//
 	// Returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with GET /api/admin/oidc/claim-mapping-policies/{id} (the `GetOIDCClaimMappingPolicy` operationId).
@@ -17304,7 +18122,9 @@ type ClientWithResponsesInterface interface {
 
 	// PatchOIDCClaimMappingPolicyWithBodyWithResponse Update an OIDC claim mapping policy
 	//
-	// Update an existing OIDC claim mapping policy, where PATCH changes only the fields in the body
+	// Update an existing OIDC claim mapping policy, where PATCH changes only the fields in the body.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-claim-mapping-policies:write`.
 	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
@@ -17313,7 +18133,9 @@ type ClientWithResponsesInterface interface {
 
 	// PatchOIDCClaimMappingPolicyWithResponse Update an OIDC claim mapping policy
 	//
-	// Update an existing OIDC claim mapping policy, where PATCH changes only the fields in the body
+	// Update an existing OIDC claim mapping policy, where PATCH changes only the fields in the body.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-claim-mapping-policies:write`.
 	//
 	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
@@ -17322,7 +18144,9 @@ type ClientWithResponsesInterface interface {
 
 	// UpdateOIDCClaimMappingPolicyWithBodyWithResponse Update an OIDC claim mapping policy
 	//
-	// Update an existing OIDC claim mapping policy, where PATCH changes only the fields in the body
+	// Update an existing OIDC claim mapping policy, where PATCH changes only the fields in the body.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-claim-mapping-policies:write`.
 	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
@@ -17331,7 +18155,9 @@ type ClientWithResponsesInterface interface {
 
 	// UpdateOIDCClaimMappingPolicyWithResponse Update an OIDC claim mapping policy
 	//
-	// Update an existing OIDC claim mapping policy, where PATCH changes only the fields in the body
+	// Update an existing OIDC claim mapping policy, where PATCH changes only the fields in the body.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-claim-mapping-policies:write`.
 	//
 	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
@@ -17342,6 +18168,8 @@ type ClientWithResponsesInterface interface {
 	//
 	// Get a paginated list of the OIDC clients that are not on this claim mapping policy yet.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-claim-mapping-policies:read`.
+	//
 	// Returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with GET /api/admin/oidc/claim-mapping-policies/{id}/assignable-clients (the `ListOIDCClientsThatCanStillBeAssignedToClaimMappingPolicy` operationId).
@@ -17351,6 +18179,8 @@ type ClientWithResponsesInterface interface {
 	//
 	// Get a paginated list of the OIDC clients assigned to a claim mapping policy.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-claim-mapping-policies:read`.
+	//
 	// Returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with GET /api/admin/oidc/claim-mapping-policies/{id}/clients (the `ListOIDCClientsUsingClaimMappingPolicy` operationId).
@@ -17358,7 +18188,9 @@ type ClientWithResponsesInterface interface {
 
 	// DetachOIDCClientFromClaimMappingPolicyWithResponse Detach an OIDC client from a claim mapping policy
 	//
-	// Remove an OIDC client from this claim mapping policy, so it falls back to the default one
+	// Remove an OIDC client from this claim mapping policy, so it falls back to the default one.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-claim-mapping-policies:write`.
 	//
 	// Returns a wrapper object for the known response body format(s).
 	//
@@ -17367,7 +18199,9 @@ type ClientWithResponsesInterface interface {
 
 	// AssignOIDCClientToClaimMappingPolicyWithResponse Assign an OIDC client to a claim mapping policy
 	//
-	// Point an OIDC client at this claim mapping policy, replacing the policy it was on
+	// Point an OIDC client at this claim mapping policy, replacing the policy it was on.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-claim-mapping-policies:write`.
 	//
 	// Returns a wrapper object for the known response body format(s).
 	//
@@ -17378,6 +18212,8 @@ type ClientWithResponsesInterface interface {
 	//
 	// Get a paginated list of OIDC clients with optional search and sorting.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-clients:read`.
+	//
 	// Returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with GET /api/admin/oidc/clients (the `ListOIDCClients` operationId).
@@ -17386,6 +18222,8 @@ type ClientWithResponsesInterface interface {
 	// CreateOIDCClientWithBodyWithResponse Create OIDC client
 	//
 	// Create a new OIDC client.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-clients:write`.
 	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
@@ -17396,6 +18234,8 @@ type ClientWithResponsesInterface interface {
 	//
 	// Create a new OIDC client.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-clients:write`.
+	//
 	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with POST /api/admin/oidc/clients (the `CreateOIDCClient` operationId).
@@ -17404,6 +18244,8 @@ type ClientWithResponsesInterface interface {
 	// DeleteOIDCClientWithResponse Delete OIDC client
 	//
 	// Delete an OIDC client by ID.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-clients:write`.
 	//
 	// Returns a wrapper object for the known response body format(s).
 	//
@@ -17414,6 +18256,8 @@ type ClientWithResponsesInterface interface {
 	//
 	// Get detailed information about an OIDC client.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-clients:read`.
+	//
 	// Returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with GET /api/admin/oidc/clients/{id} (the `GetOIDCClient` operationId).
@@ -17421,7 +18265,9 @@ type ClientWithResponsesInterface interface {
 
 	// PatchOIDCClientWithBodyWithResponse Update OIDC client
 	//
-	// Update an existing OIDC client, where PATCH changes only the fields in the body
+	// Update an existing OIDC client, where PATCH changes only the fields in the body.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-clients:write`.
 	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
@@ -17430,7 +18276,9 @@ type ClientWithResponsesInterface interface {
 
 	// PatchOIDCClientWithResponse Update OIDC client
 	//
-	// Update an existing OIDC client, where PATCH changes only the fields in the body
+	// Update an existing OIDC client, where PATCH changes only the fields in the body.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-clients:write`.
 	//
 	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
@@ -17439,7 +18287,9 @@ type ClientWithResponsesInterface interface {
 
 	// UpdateOIDCClientWithBodyWithResponse Update OIDC client
 	//
-	// Update an existing OIDC client, where PATCH changes only the fields in the body
+	// Update an existing OIDC client, where PATCH changes only the fields in the body.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-clients:write`.
 	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
@@ -17448,7 +18298,9 @@ type ClientWithResponsesInterface interface {
 
 	// UpdateOIDCClientWithResponse Update OIDC client
 	//
-	// Update an existing OIDC client, where PATCH changes only the fields in the body
+	// Update an existing OIDC client, where PATCH changes only the fields in the body.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-clients:write`.
 	//
 	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
@@ -17459,6 +18311,8 @@ type ClientWithResponsesInterface interface {
 	//
 	// Update the user groups allowed to access an OIDC client.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-clients:write`.
+	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with PUT /api/admin/oidc/clients/{id}/allowed-user-groups (the `UpdateAllowedUserGroups` operationId).
@@ -17467,6 +18321,8 @@ type ClientWithResponsesInterface interface {
 	// UpdateAllowedUserGroupsWithResponse Update allowed user groups
 	//
 	// Update the user groups allowed to access an OIDC client.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-clients:write`.
 	//
 	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
@@ -17477,6 +18333,8 @@ type ClientWithResponsesInterface interface {
 	//
 	// Delete the logo for an OIDC client.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-clients:write`.
+	//
 	// Returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with DELETE /api/admin/oidc/clients/{id}/logo (the `DeleteClientLogo` operationId).
@@ -17486,6 +18344,8 @@ type ClientWithResponsesInterface interface {
 	//
 	// Upload or update the logo for an OIDC client.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-clients:write`.
+	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with POST /api/admin/oidc/clients/{id}/logo (the `UpdateClientLogo` operationId).
@@ -17493,7 +18353,9 @@ type ClientWithResponsesInterface interface {
 
 	// PreviewOIDCClientDataForUserWithResponse Preview OIDC client data for user
 	//
-	// Get a preview of the OIDC data (ID token, access token, userinfo) that would be sent to the client for a specific user
+	// Get a preview of the OIDC data (ID token, access token, userinfo) that would be sent to the client for a specific user.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:read`.
 	//
 	// Returns a wrapper object for the known response body format(s).
 	//
@@ -17504,6 +18366,8 @@ type ClientWithResponsesInterface interface {
 	//
 	// Force a re-fetch of the OAuth Client ID Metadata Document for a CIMD client.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-clients:write`.
+	//
 	// Returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with POST /api/admin/oidc/clients/{id}/refresh (the `RefreshClientMetadataDocument` operationId).
@@ -17513,6 +18377,8 @@ type ClientWithResponsesInterface interface {
 	//
 	// Get the SCIM service provider configuration for an OIDC client.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-clients:read`.
+	//
 	// Returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with GET /api/admin/oidc/clients/{id}/scim-service-provider (the `GetSCIMServiceProvider` operationId).
@@ -17520,7 +18386,9 @@ type ClientWithResponsesInterface interface {
 
 	// ListClientSecretsWithResponse List client secrets
 	//
-	// List the secrets of an OIDC client, without disclosing their values
+	// List the secrets of an OIDC client, without disclosing their values.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-clients:read`.
 	//
 	// Returns a wrapper object for the known response body format(s).
 	//
@@ -17531,6 +18399,8 @@ type ClientWithResponsesInterface interface {
 	//
 	// Add a new secret to an OIDC client, leaving the existing ones usable. The value is only returned by this endpoint and cannot be retrieved later.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-clients:write`.
+	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with POST /api/admin/oidc/clients/{id}/secrets (the `CreateClientSecret` operationId).
@@ -17540,6 +18410,8 @@ type ClientWithResponsesInterface interface {
 	//
 	// Add a new secret to an OIDC client, leaving the existing ones usable. The value is only returned by this endpoint and cannot be retrieved later.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-clients:write`.
+	//
 	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with POST /api/admin/oidc/clients/{id}/secrets (the `CreateClientSecret` operationId).
@@ -17547,7 +18419,9 @@ type ClientWithResponsesInterface interface {
 
 	// DeleteClientSecretWithResponse Delete client secret
 	//
-	// Delete a single secret of an OIDC client, making it immediately unusable
+	// Delete a single secret of an OIDC client, making it immediately unusable.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-clients:write`.
 	//
 	// Returns a wrapper object for the known response body format(s).
 	//
@@ -17558,6 +18432,8 @@ type ClientWithResponsesInterface interface {
 	//
 	// Get a paginated list of the custom OIDC scopes with optional search and sorting.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-claim-mapping-policies:read`.
+	//
 	// Returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with GET /api/admin/oidc/custom-scopes (the `ListCustomOIDCScopes` operationId).
@@ -17565,7 +18441,9 @@ type ClientWithResponsesInterface interface {
 
 	// CreateCustomOIDCScopeWithBodyWithResponse Create a custom OIDC scope
 	//
-	// Create a custom OIDC scope, which claim mappings can then be released with
+	// Create a custom OIDC scope, which claim mappings can then be released with.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-claim-mapping-policies:write`.
 	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
@@ -17574,7 +18452,9 @@ type ClientWithResponsesInterface interface {
 
 	// CreateCustomOIDCScopeWithResponse Create a custom OIDC scope
 	//
-	// Create a custom OIDC scope, which claim mappings can then be released with
+	// Create a custom OIDC scope, which claim mappings can then be released with.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-claim-mapping-policies:write`.
 	//
 	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
@@ -17583,7 +18463,9 @@ type ClientWithResponsesInterface interface {
 
 	// ListKeysOfAllCustomOIDCScopesWithResponse List the keys of all custom OIDC scopes
 	//
-	// Get the keys of every custom OIDC scope, sorted, for pickers that offer all of them at once
+	// Get the keys of every custom OIDC scope, sorted, for pickers that offer all of them at once.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-claim-mapping-policies:read`.
 	//
 	// Returns a wrapper object for the known response body format(s).
 	//
@@ -17594,6 +18476,8 @@ type ClientWithResponsesInterface interface {
 	//
 	// Delete a custom OIDC scope that no claim mapping is released with.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-claim-mapping-policies:write`.
+	//
 	// Returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with DELETE /api/admin/oidc/custom-scopes/{id} (the `DeleteCustomOIDCScope` operationId).
@@ -17601,7 +18485,9 @@ type ClientWithResponsesInterface interface {
 
 	// PatchCustomOIDCScopeWithBodyWithResponse Update a custom OIDC scope
 	//
-	// Update the name and description of a custom OIDC scope, whose key can't change, where PATCH changes only the fields in the body
+	// Update the name and description of a custom OIDC scope, whose key can't change, where PATCH changes only the fields in the body.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-claim-mapping-policies:write`.
 	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
@@ -17610,7 +18496,9 @@ type ClientWithResponsesInterface interface {
 
 	// PatchCustomOIDCScopeWithResponse Update a custom OIDC scope
 	//
-	// Update the name and description of a custom OIDC scope, whose key can't change, where PATCH changes only the fields in the body
+	// Update the name and description of a custom OIDC scope, whose key can't change, where PATCH changes only the fields in the body.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-claim-mapping-policies:write`.
 	//
 	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
@@ -17619,7 +18507,9 @@ type ClientWithResponsesInterface interface {
 
 	// UpdateCustomOIDCScopeWithBodyWithResponse Update a custom OIDC scope
 	//
-	// Update the name and description of a custom OIDC scope, whose key can't change, where PATCH changes only the fields in the body
+	// Update the name and description of a custom OIDC scope, whose key can't change, where PATCH changes only the fields in the body.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-claim-mapping-policies:write`.
 	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
@@ -17628,7 +18518,9 @@ type ClientWithResponsesInterface interface {
 
 	// UpdateCustomOIDCScopeWithResponse Update a custom OIDC scope
 	//
-	// Update the name and description of a custom OIDC scope, whose key can't change, where PATCH changes only the fields in the body
+	// Update the name and description of a custom OIDC scope, whose key can't change, where PATCH changes only the fields in the body.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-claim-mapping-policies:write`.
 	//
 	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
@@ -17639,6 +18531,8 @@ type ClientWithResponsesInterface interface {
 	//
 	// Search the icon library for logos that can be used for OIDC clients.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-clients:read`.
+	//
 	// Returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with GET /api/admin/oidc/logo-presets (the `SearchLogoPresets` operationId).
@@ -17647,6 +18541,8 @@ type ClientWithResponsesInterface interface {
 	// ListAuthorizedClientsForUserWithResponse List authorized clients for a user
 	//
 	// Get a paginated list of OIDC clients that a specific user has authorized.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:read`.
 	//
 	// Returns a wrapper object for the known response body format(s).
 	//
@@ -17657,6 +18553,8 @@ type ClientWithResponsesInterface interface {
 	//
 	// Create a new SCIM service provider.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-clients:write`.
+	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with POST /api/admin/scim/service-provider (the `CreateSCIMServiceProvider` operationId).
@@ -17665,6 +18563,8 @@ type ClientWithResponsesInterface interface {
 	// CreateSCIMServiceProviderWithResponse Create SCIM service provider
 	//
 	// Create a new SCIM service provider.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-clients:write`.
 	//
 	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
@@ -17675,6 +18575,8 @@ type ClientWithResponsesInterface interface {
 	//
 	// Delete a SCIM service provider by ID.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-clients:write`.
+	//
 	// Returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with DELETE /api/admin/scim/service-provider/{id} (the `DeleteSCIMServiceProvider` operationId).
@@ -17682,7 +18584,9 @@ type ClientWithResponsesInterface interface {
 
 	// PatchSCIMServiceProviderWithBodyWithResponse Update SCIM service provider
 	//
-	// Update an existing SCIM service provider, where PATCH changes only the fields in the body, an omitted token keeps the stored one, an empty token removes it and a changed endpoint requires the token
+	// Update an existing SCIM service provider, where PATCH changes only the fields in the body, an omitted token keeps the stored one, an empty token removes it and a changed endpoint requires the token.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-clients:write`.
 	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
@@ -17691,7 +18595,9 @@ type ClientWithResponsesInterface interface {
 
 	// PatchSCIMServiceProviderWithResponse Update SCIM service provider
 	//
-	// Update an existing SCIM service provider, where PATCH changes only the fields in the body, an omitted token keeps the stored one, an empty token removes it and a changed endpoint requires the token
+	// Update an existing SCIM service provider, where PATCH changes only the fields in the body, an omitted token keeps the stored one, an empty token removes it and a changed endpoint requires the token.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-clients:write`.
 	//
 	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
@@ -17700,7 +18606,9 @@ type ClientWithResponsesInterface interface {
 
 	// UpdateSCIMServiceProviderWithBodyWithResponse Update SCIM service provider
 	//
-	// Update an existing SCIM service provider, where PATCH changes only the fields in the body, an omitted token keeps the stored one, an empty token removes it and a changed endpoint requires the token
+	// Update an existing SCIM service provider, where PATCH changes only the fields in the body, an omitted token keeps the stored one, an empty token removes it and a changed endpoint requires the token.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-clients:write`.
 	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
@@ -17709,7 +18617,9 @@ type ClientWithResponsesInterface interface {
 
 	// UpdateSCIMServiceProviderWithResponse Update SCIM service provider
 	//
-	// Update an existing SCIM service provider, where PATCH changes only the fields in the body, an omitted token keeps the stored one, an empty token removes it and a changed endpoint requires the token
+	// Update an existing SCIM service provider, where PATCH changes only the fields in the body, an omitted token keeps the stored one, an empty token removes it and a changed endpoint requires the token.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-clients:write`.
 	//
 	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
@@ -17720,6 +18630,8 @@ type ClientWithResponsesInterface interface {
 	//
 	// Trigger synchronization for a SCIM service provider.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-clients:write`.
+	//
 	// Returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with POST /api/admin/scim/service-provider/{id}/sync (the `SyncSCIMServiceProvider` operationId).
@@ -17728,6 +18640,8 @@ type ClientWithResponsesInterface interface {
 	// ListSignupTokensWithResponse List signup tokens
 	//
 	// Get a paginated list of signup tokens.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:invite`.
 	//
 	// Returns a wrapper object for the known response body format(s).
 	//
@@ -17738,6 +18652,8 @@ type ClientWithResponsesInterface interface {
 	//
 	// Create a new signup token that allows user registration.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:invite`.
+	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with POST /api/admin/signup-tokens (the `CreateSignupToken` operationId).
@@ -17746,6 +18662,8 @@ type ClientWithResponsesInterface interface {
 	// CreateSignupTokenWithResponse Create signup token
 	//
 	// Create a new signup token that allows user registration.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:invite`.
 	//
 	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
@@ -17756,6 +18674,8 @@ type ClientWithResponsesInterface interface {
 	//
 	// Delete a signup token by ID.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:invite`.
+	//
 	// Returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with DELETE /api/admin/signup-tokens/{id} (the `DeleteSignupToken` operationId).
@@ -17764,6 +18684,8 @@ type ClientWithResponsesInterface interface {
 	// ListUserGroupsWithResponse List user groups
 	//
 	// Get a paginated list of user groups with optional search and sorting.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `groups:read`.
 	//
 	// Returns a wrapper object for the known response body format(s).
 	//
@@ -17774,6 +18696,8 @@ type ClientWithResponsesInterface interface {
 	//
 	// Create a new user group.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `groups:write`.
+	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with POST /api/admin/user-groups (the `CreateUserGroup` operationId).
@@ -17782,6 +18706,8 @@ type ClientWithResponsesInterface interface {
 	// CreateUserGroupWithResponse Create user group
 	//
 	// Create a new user group.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `groups:write`.
 	//
 	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
@@ -17792,6 +18718,8 @@ type ClientWithResponsesInterface interface {
 	//
 	// Delete a specific user group by ID.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `groups:write`.
+	//
 	// Returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with DELETE /api/admin/user-groups/{id} (the `DeleteUserGroup` operationId).
@@ -17801,6 +18729,8 @@ type ClientWithResponsesInterface interface {
 	//
 	// Retrieve detailed information about a specific user group including its users.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `groups:read`.
+	//
 	// Returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with GET /api/admin/user-groups/{id} (the `GetUserGroupByID` operationId).
@@ -17808,7 +18738,9 @@ type ClientWithResponsesInterface interface {
 
 	// PatchUserGroupWithBodyWithResponse Update user group
 	//
-	// Update an existing user group by ID, where PATCH changes only the fields in the body
+	// Update an existing user group by ID, where PATCH changes only the fields in the body.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `groups:write`.
 	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
@@ -17817,7 +18749,9 @@ type ClientWithResponsesInterface interface {
 
 	// PatchUserGroupWithResponse Update user group
 	//
-	// Update an existing user group by ID, where PATCH changes only the fields in the body
+	// Update an existing user group by ID, where PATCH changes only the fields in the body.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `groups:write`.
 	//
 	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
@@ -17826,7 +18760,9 @@ type ClientWithResponsesInterface interface {
 
 	// UpdateUserGroupWithBodyWithResponse Update user group
 	//
-	// Update an existing user group by ID, where PATCH changes only the fields in the body
+	// Update an existing user group by ID, where PATCH changes only the fields in the body.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `groups:write`.
 	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
@@ -17835,7 +18771,9 @@ type ClientWithResponsesInterface interface {
 
 	// UpdateUserGroupWithResponse Update user group
 	//
-	// Update an existing user group by ID, where PATCH changes only the fields in the body
+	// Update an existing user group by ID, where PATCH changes only the fields in the body.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `groups:write`.
 	//
 	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
@@ -17846,6 +18784,8 @@ type ClientWithResponsesInterface interface {
 	//
 	// Update the OIDC clients allowed for a specific user group.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `groups:write`.
+	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with PUT /api/admin/user-groups/{id}/allowed-oidc-clients (the `UpdateAllowedOIDCClients` operationId).
@@ -17854,6 +18794,8 @@ type ClientWithResponsesInterface interface {
 	// UpdateAllowedOIDCClientsWithResponse Update allowed OIDC clients
 	//
 	// Update the OIDC clients allowed for a specific user group.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `groups:write`.
 	//
 	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
@@ -17864,6 +18806,8 @@ type ClientWithResponsesInterface interface {
 	//
 	// Update the list of users belonging to a specific user group.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `groups:write`.
+	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with PUT /api/admin/user-groups/{id}/users (the `UpdateUsersInGroup` operationId).
@@ -17872,6 +18816,8 @@ type ClientWithResponsesInterface interface {
 	// UpdateUsersInGroupWithResponse Update users in a group
 	//
 	// Update the list of users belonging to a specific user group.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `groups:write`.
 	//
 	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
@@ -17882,6 +18828,8 @@ type ClientWithResponsesInterface interface {
 	//
 	// Get a paginated list of users with optional search and sorting.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:read`.
+	//
 	// Returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with GET /api/admin/users (the `ListUsers` operationId).
@@ -17890,6 +18838,8 @@ type ClientWithResponsesInterface interface {
 	// CreateUserWithBodyWithResponse Create user
 	//
 	// Create a new user.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:write`.
 	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
@@ -17900,6 +18850,8 @@ type ClientWithResponsesInterface interface {
 	//
 	// Create a new user.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:write`.
+	//
 	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with POST /api/admin/users (the `CreateUser` operationId).
@@ -17908,6 +18860,8 @@ type ClientWithResponsesInterface interface {
 	// DeleteUserWithResponse Delete user
 	//
 	// Delete a specific user by ID.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:write`.
 	//
 	// Returns a wrapper object for the known response body format(s).
 	//
@@ -17918,6 +18872,8 @@ type ClientWithResponsesInterface interface {
 	//
 	// Retrieve detailed information about a specific user.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:read`.
+	//
 	// Returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with GET /api/admin/users/{id} (the `GetUserByID` operationId).
@@ -17925,7 +18881,9 @@ type ClientWithResponsesInterface interface {
 
 	// PatchUserWithBodyWithResponse Update user
 	//
-	// Update an existing user by ID, where PATCH changes only the fields in the body
+	// Update an existing user by ID, where PATCH changes only the fields in the body.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:write`.
 	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
@@ -17934,7 +18892,9 @@ type ClientWithResponsesInterface interface {
 
 	// PatchUserWithResponse Update user
 	//
-	// Update an existing user by ID, where PATCH changes only the fields in the body
+	// Update an existing user by ID, where PATCH changes only the fields in the body.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:write`.
 	//
 	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
@@ -17943,7 +18903,9 @@ type ClientWithResponsesInterface interface {
 
 	// UpdateUserWithBodyWithResponse Update user
 	//
-	// Update an existing user by ID, where PATCH changes only the fields in the body
+	// Update an existing user by ID, where PATCH changes only the fields in the body.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:write`.
 	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
@@ -17952,7 +18914,9 @@ type ClientWithResponsesInterface interface {
 
 	// UpdateUserWithResponse Update user
 	//
-	// Update an existing user by ID, where PATCH changes only the fields in the body
+	// Update an existing user by ID, where PATCH changes only the fields in the body.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:write`.
 	//
 	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
@@ -17963,6 +18927,8 @@ type ClientWithResponsesInterface interface {
 	//
 	// Retrieve all groups a specific user belongs to.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:read`.
+	//
 	// Returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with GET /api/admin/users/{id}/groups (the `GetUserGroups` operationId).
@@ -17971,6 +18937,8 @@ type ClientWithResponsesInterface interface {
 	// RequestOneTimeAccessEmailAdminWithBodyWithResponse Request one-time access email (admin)
 	//
 	// Request a one-time access email for a specific user (admin only).
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:login-codes`.
 	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
@@ -17981,6 +18949,8 @@ type ClientWithResponsesInterface interface {
 	//
 	// Request a one-time access email for a specific user (admin only).
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:login-codes`.
+	//
 	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with POST /api/admin/users/{id}/one-time-access-email (the `RequestOneTimeAccessEmailAdmin` operationId).
@@ -17989,6 +18959,8 @@ type ClientWithResponsesInterface interface {
 	// CreateOneTimeAccessTokenForUserAdminWithBodyWithResponse Create one-time access token for user (admin)
 	//
 	// Generate a one-time access token for a specific user (admin only).
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:login-codes`.
 	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
@@ -17999,6 +18971,8 @@ type ClientWithResponsesInterface interface {
 	//
 	// Generate a one-time access token for a specific user (admin only).
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:login-codes`.
+	//
 	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with POST /api/admin/users/{id}/one-time-access-token (the `CreateOneTimeAccessTokenForUserAdmin` operationId).
@@ -18007,6 +18981,8 @@ type ClientWithResponsesInterface interface {
 	// ResetUserProfilePictureWithResponse Reset user profile picture
 	//
 	// Reset a specific user's profile picture to the default.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:write`.
 	//
 	// Returns a wrapper object for the known response body format(s).
 	//
@@ -18017,6 +18993,8 @@ type ClientWithResponsesInterface interface {
 	//
 	// Update a specific user's profile picture.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:write`.
+	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with PUT /api/admin/users/{id}/profile-picture (the `UpdateUserProfilePicture` operationId).
@@ -18024,7 +19002,9 @@ type ClientWithResponsesInterface interface {
 
 	// RevokeAllSessionsOfUserWithResponse Revoke all sessions of a user
 	//
-	// Sign a user out of every session and revoke every grant their apps hold, offline_access ones included
+	// Sign a user out of every session and revoke every grant their apps hold, offline_access ones included.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:write`.
 	//
 	// Returns a wrapper object for the known response body format(s).
 	//
@@ -18033,7 +19013,9 @@ type ClientWithResponsesInterface interface {
 
 	// ListSessionsOfUserWithResponse List sessions of a user
 	//
-	// Get the browsers in which a user is signed in, most recently active first
+	// Get the browsers in which a user is signed in, most recently active first.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:read`.
 	//
 	// Returns a wrapper object for the known response body format(s).
 	//
@@ -18044,6 +19026,8 @@ type ClientWithResponsesInterface interface {
 	//
 	// Sign a user out of one of their sessions.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:write`.
+	//
 	// Returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with DELETE /api/admin/users/{id}/sessions/{sessionId} (the `RevokeSessionOfUser` operationId).
@@ -18052,6 +19036,8 @@ type ClientWithResponsesInterface interface {
 	// UpdateUserGroupsWithBodyWithResponse Update user groups
 	//
 	// Update the groups a specific user belongs to.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:write`.
 	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
@@ -18062,6 +19048,8 @@ type ClientWithResponsesInterface interface {
 	//
 	// Update the groups a specific user belongs to.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:write`.
+	//
 	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with PUT /api/admin/users/{id}/user-groups (the `UpdateUserGroups` operationId).
@@ -18070,6 +19058,8 @@ type ClientWithResponsesInterface interface {
 	// ListUserPasskeysWithResponse List user passkeys
 	//
 	// Retrieve all WebAuthn credentials for a specific user.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:read`.
 	//
 	// Returns a wrapper object for the known response body format(s).
 	//
@@ -18080,6 +19070,8 @@ type ClientWithResponsesInterface interface {
 	//
 	// Delete a specific WebAuthn credential for a user.
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:write`.
+	//
 	// Returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with DELETE /api/admin/users/{id}/webauthn-credentials/{credentialId} (the `DeleteUserPasskey` operationId).
@@ -18087,7 +19079,9 @@ type ClientWithResponsesInterface interface {
 
 	// GetWarningsForAdminsWithResponse Get the warnings for admins
 	//
-	// Lists the problems with this instance that admins should fix, such as a SQLite database on a networked filesystem or a database that a newer Pocket ID version migrated
+	// Lists the problems with this instance that admins should fix, such as a SQLite database on a networked filesystem or a database that a newer Pocket ID version migrated.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `config:read`.
 	//
 	// Returns a wrapper object for the known response body format(s).
 	//
@@ -18098,6 +19092,8 @@ type ClientWithResponsesInterface interface {
 	//
 	// Get a paginated list of API keys belonging to the current user.
 	//
+	// Credentials: `apiKey`, `oauth2`, `session`. Scope: `account:api-keys`.
+	//
 	// Returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with GET /api/api-keys (the `ListAPIKeys` operationId).
@@ -18106,6 +19102,8 @@ type ClientWithResponsesInterface interface {
 	// CreateAPIKeyWithBodyWithResponse Create API key
 	//
 	// Create a new API key for the current user.
+	//
+	// Credentials: `session`. Scope: `account:api-keys:create`.
 	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
@@ -18116,6 +19114,8 @@ type ClientWithResponsesInterface interface {
 	//
 	// Create a new API key for the current user.
 	//
+	// Credentials: `session`. Scope: `account:api-keys:create`.
+	//
 	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with POST /api/api-keys (the `CreateAPIKey` operationId).
@@ -18125,6 +19125,8 @@ type ClientWithResponsesInterface interface {
 	//
 	// Revoke (delete) an existing API key by ID.
 	//
+	// Credentials: `apiKey`, `oauth2`, `session`. Scope: `account:api-keys`.
+	//
 	// Returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with DELETE /api/api-keys/{id} (the `RevokeAPIKey` operationId).
@@ -18132,7 +19134,9 @@ type ClientWithResponsesInterface interface {
 
 	// PatchAPIKeyWithBodyWithResponse Update API key
 	//
-	// Change the name, description and scopes of an existing API key, where PATCH changes only the fields in the body; its token stays the same
+	// Change the name, description and scopes of an existing API key, where PATCH changes only the fields in the body; its token stays the same.
+	//
+	// Credentials: `session`. Scope: `account:api-keys:create`.
 	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
@@ -18141,7 +19145,9 @@ type ClientWithResponsesInterface interface {
 
 	// PatchAPIKeyWithResponse Update API key
 	//
-	// Change the name, description and scopes of an existing API key, where PATCH changes only the fields in the body; its token stays the same
+	// Change the name, description and scopes of an existing API key, where PATCH changes only the fields in the body; its token stays the same.
+	//
+	// Credentials: `session`. Scope: `account:api-keys:create`.
 	//
 	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
@@ -18150,7 +19156,9 @@ type ClientWithResponsesInterface interface {
 
 	// UpdateAPIKeyWithBodyWithResponse Update API key
 	//
-	// Change the name, description and scopes of an existing API key, where PATCH changes only the fields in the body; its token stays the same
+	// Change the name, description and scopes of an existing API key, where PATCH changes only the fields in the body; its token stays the same.
+	//
+	// Credentials: `session`. Scope: `account:api-keys:create`.
 	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
@@ -18159,7 +19167,9 @@ type ClientWithResponsesInterface interface {
 
 	// UpdateAPIKeyWithResponse Update API key
 	//
-	// Change the name, description and scopes of an existing API key, where PATCH changes only the fields in the body; its token stays the same
+	// Change the name, description and scopes of an existing API key, where PATCH changes only the fields in the body; its token stays the same.
+	//
+	// Credentials: `session`. Scope: `account:api-keys:create`.
 	//
 	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
@@ -18168,7 +19178,9 @@ type ClientWithResponsesInterface interface {
 
 	// RenewAPIKeyWithBodyWithResponse Renew API key
 	//
-	// While a key has not expired, its old token keeps working for the given grace period, but never past the key's previous expiration
+	// While a key has not expired, its old token keeps working for the given grace period, but never past the key's previous expiration.
+	//
+	// Credentials: `session`. Scope: `account:api-keys:create`.
 	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
@@ -18177,7 +19189,9 @@ type ClientWithResponsesInterface interface {
 
 	// RenewAPIKeyWithResponse Renew API key
 	//
-	// While a key has not expired, its old token keeps working for the given grace period, but never past the key's previous expiration
+	// While a key has not expired, its old token keeps working for the given grace period, but never past the key's previous expiration.
+	//
+	// Credentials: `session`. Scope: `account:api-keys:create`.
 	//
 	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
@@ -18242,6 +19256,8 @@ type ClientWithResponsesInterface interface {
 	//
 	// Get a paginated list of the audit logs about the current user.
 	//
+	// Credentials: `apiKey`, `oauth2`, `session`. Scope: `account:audit-logs`.
+	//
 	// Returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with GET /api/audit-logs (the `ListAuditLogs` operationId).
@@ -18269,6 +19285,8 @@ type ClientWithResponsesInterface interface {
 	//
 	// Retrieve the requesting device details for an authenticated user before approval or denial.
 	//
+	// Credentials: `session`. Scope: `account:session`.
+	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with POST /api/device-login/verification (the `InspectDeviceLoginRequest` operationId).
@@ -18278,6 +19296,8 @@ type ClientWithResponsesInterface interface {
 	//
 	// Retrieve the requesting device details for an authenticated user before approval or denial.
 	//
+	// Credentials: `session`. Scope: `account:session`.
+	//
 	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with POST /api/device-login/verification (the `InspectDeviceLoginRequest` operationId).
@@ -18285,7 +19305,9 @@ type ClientWithResponsesInterface interface {
 
 	// DecideDeviceLoginRequestWithBodyWithResponse Decide device login request
 	//
-	// Approve or deny a device login request; approval requires fresh passkey reauthentication
+	// Approve or deny a device login request; approval requires fresh passkey reauthentication.
+	//
+	// Credentials: `session`. Scope: `account:session`.
 	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
@@ -18294,7 +19316,9 @@ type ClientWithResponsesInterface interface {
 
 	// DecideDeviceLoginRequestWithResponse Decide device login request
 	//
-	// Approve or deny a device login request; approval requires fresh passkey reauthentication
+	// Approve or deny a device login request; approval requires fresh passkey reauthentication.
+	//
+	// Credentials: `session`. Scope: `account:session`.
 	//
 	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
@@ -18303,7 +19327,9 @@ type ClientWithResponsesInterface interface {
 
 	// ListOptionalFeaturesWithResponse List optional features
 	//
-	// Get whether each optional feature is on and whether anything uses it; a feature in use is always on
+	// Get whether each optional feature is on and whether anything uses it; a feature in use is always on.
+	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`.
 	//
 	// Returns a wrapper object for the known response body format(s).
 	//
@@ -18350,6 +19376,8 @@ type ClientWithResponsesInterface interface {
 	//
 	// Get a paginated list of OIDC clients that the current user has authorized.
 	//
+	// Credentials: `apiKey`, `oauth2`, `session`. Scope: `account:apps`.
+	//
 	// Returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with GET /api/oidc/users/me/authorized-clients (the `ListAuthorizedClientsForCurrentUser` operationId).
@@ -18359,6 +19387,8 @@ type ClientWithResponsesInterface interface {
 	//
 	// Revoke the authorization for a specific OIDC client for the current user.
 	//
+	// Credentials: `apiKey`, `oauth2`, `session`. Scope: `account:apps`.
+	//
 	// Returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with DELETE /api/oidc/users/me/authorized-clients/{clientId} (the `RevokeAuthorizationForOIDCClient` operationId).
@@ -18367,6 +19397,8 @@ type ClientWithResponsesInterface interface {
 	// ListAccessibleOIDCClientsForCurrentUserWithResponse List accessible OIDC clients for current user
 	//
 	// Get a list of OIDC clients that the current user can access.
+	//
+	// Credentials: `apiKey`, `oauth2`, `session`. Scope: `account:apps`.
 	//
 	// Returns a wrapper object for the known response body format(s).
 	//
@@ -18413,6 +19445,8 @@ type ClientWithResponsesInterface interface {
 	//
 	// Sign the current user out of every session except the current one.
 	//
+	// Credentials: `session`. Scope: `account:session`.
+	//
 	// Returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with DELETE /api/sessions (the `RevokeOtherOwnSessions` operationId).
@@ -18420,7 +19454,9 @@ type ClientWithResponsesInterface interface {
 
 	// ListOwnSessionsWithResponse List own sessions
 	//
-	// Get the browsers in which the current user is signed in, most recently active first
+	// Get the browsers in which the current user is signed in, most recently active first.
+	//
+	// Credentials: `session`. Scope: `account:session`.
 	//
 	// Returns a wrapper object for the known response body format(s).
 	//
@@ -18429,7 +19465,9 @@ type ClientWithResponsesInterface interface {
 
 	// RememberCurrentSessionWithResponse Remember current session
 	//
-	// Keep the current session signed in after the browser closes and while it goes unused, for a sign-in that was not remembered
+	// Keep the current session signed in after the browser closes and while it goes unused, for a sign-in that was not remembered.
+	//
+	// Credentials: `session`. Scope: `account:session`.
 	//
 	// Returns a wrapper object for the known response body format(s).
 	//
@@ -18439,6 +19477,8 @@ type ClientWithResponsesInterface interface {
 	// RevokeOwnSessionWithResponse Revoke own session
 	//
 	// Sign the current user out of one of their sessions.
+	//
+	// Credentials: `session`. Scope: `account:session`.
 	//
 	// Returns a wrapper object for the known response body format(s).
 	//
@@ -18494,6 +19534,8 @@ type ClientWithResponsesInterface interface {
 	//
 	// Retrieve information about the currently authenticated user.
 	//
+	// Credentials: `apiKey`, `oauth2`, `session`. Scope: `account:read`.
+	//
 	// Returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with GET /api/users/me (the `GetCurrentUser` operationId).
@@ -18501,7 +19543,9 @@ type ClientWithResponsesInterface interface {
 
 	// PatchCurrentUserWithBodyWithResponse Update current user
 	//
-	// Update the currently authenticated user's information, where PATCH changes only the fields in the body
+	// Update the currently authenticated user's information, where PATCH changes only the fields in the body.
+	//
+	// Credentials: `apiKey`, `oauth2`, `session`. Scope: `account:write`.
 	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
@@ -18510,7 +19554,9 @@ type ClientWithResponsesInterface interface {
 
 	// PatchCurrentUserWithResponse Update current user
 	//
-	// Update the currently authenticated user's information, where PATCH changes only the fields in the body
+	// Update the currently authenticated user's information, where PATCH changes only the fields in the body.
+	//
+	// Credentials: `apiKey`, `oauth2`, `session`. Scope: `account:write`.
 	//
 	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
@@ -18519,7 +19565,9 @@ type ClientWithResponsesInterface interface {
 
 	// UpdateCurrentUserWithBodyWithResponse Update current user
 	//
-	// Update the currently authenticated user's information, where PATCH changes only the fields in the body
+	// Update the currently authenticated user's information, where PATCH changes only the fields in the body.
+	//
+	// Credentials: `apiKey`, `oauth2`, `session`. Scope: `account:write`.
 	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
@@ -18528,7 +19576,9 @@ type ClientWithResponsesInterface interface {
 
 	// UpdateCurrentUserWithResponse Update current user
 	//
-	// Update the currently authenticated user's information, where PATCH changes only the fields in the body
+	// Update the currently authenticated user's information, where PATCH changes only the fields in the body.
+	//
+	// Credentials: `apiKey`, `oauth2`, `session`. Scope: `account:write`.
 	//
 	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
@@ -18537,7 +19587,9 @@ type ClientWithResponsesInterface interface {
 
 	// CancelPendingEmailChangeWithResponse Cancel pending email change
 	//
-	// Cancel the pending email change of the currently authenticated user, so its verification link stops working
+	// Cancel the pending email change of the currently authenticated user, so its verification link stops working.
+	//
+	// Credentials: `apiKey`, `oauth2`, `session`. Scope: `account:write`.
 	//
 	// Returns a wrapper object for the known response body format(s).
 	//
@@ -18548,6 +19600,8 @@ type ClientWithResponsesInterface interface {
 	//
 	// Get the email change of the currently authenticated user that still has to be confirmed through the emailed link.
 	//
+	// Credentials: `apiKey`, `oauth2`, `session`. Scope: `account:read`.
+	//
 	// Returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with GET /api/users/me/email-change (the `GetPendingEmailChange` operationId).
@@ -18556,6 +19610,8 @@ type ClientWithResponsesInterface interface {
 	// ResetCurrentUserProfilePictureWithResponse Reset current user's profile picture
 	//
 	// Reset the currently authenticated user's profile picture to the default.
+	//
+	// Credentials: `apiKey`, `oauth2`, `session`. Scope: `account:write`.
 	//
 	// Returns a wrapper object for the known response body format(s).
 	//
@@ -18566,6 +19622,8 @@ type ClientWithResponsesInterface interface {
 	//
 	// Update the currently authenticated user's profile picture.
 	//
+	// Credentials: `apiKey`, `oauth2`, `session`. Scope: `account:write`.
+	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with PUT /api/users/me/profile-picture (the `UpdateCurrentUserProfilePicture` operationId).
@@ -18574,6 +19632,8 @@ type ClientWithResponsesInterface interface {
 	// SendEmailVerificationWithResponse Send email verification
 	//
 	// Send an email verification to the currently authenticated user.
+	//
+	// Credentials: `apiKey`, `oauth2`, `session`. Scope: `account:write`.
 	//
 	// Returns a wrapper object for the known response body format(s).
 	//
@@ -18584,6 +19644,8 @@ type ClientWithResponsesInterface interface {
 	//
 	// Verify the currently authenticated user's email using a verification token.
 	//
+	// Credentials: `apiKey`, `oauth2`, `session`. Scope: `account:write`.
+	//
 	// Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with POST /api/users/me/verify-email (the `VerifyEmail` operationId).
@@ -18592,6 +19654,8 @@ type ClientWithResponsesInterface interface {
 	// VerifyEmailWithResponse Verify email
 	//
 	// Verify the currently authenticated user's email using a verification token.
+	//
+	// Credentials: `apiKey`, `oauth2`, `session`. Scope: `account:write`.
 	//
 	// Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 	//
@@ -18609,6 +19673,8 @@ type ClientWithResponsesInterface interface {
 
 	// GetCurrentDeployedVersionOfPocketIDWithResponse Get current deployed version of Pocket ID
 	//
+	// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`.
+	//
 	// Returns a wrapper object for the known response body format(s).
 	//
 	// Corresponds with GET /api/version/current (the `GetCurrentDeployedVersionOfPocketID` operationId).
@@ -18622,6 +19688,8 @@ type ClientWithResponsesInterface interface {
 	GetLatestAvailableVersionOfPocketIDWithResponse(ctx context.Context, reqEditors ...RequestEditorFn) (*GetLatestAvailableVersionOfPocketIDResponse, error)
 
 	// LogoutWithResponse Log out the current session
+	//
+	// Credentials: `session`.
 	//
 	// Returns a wrapper object for the known response body format(s).
 	//
@@ -25748,7 +26816,9 @@ func (c *ClientWithResponses) GetOpenIDConnectDiscoveryConfigurationWithResponse
 
 // ListAPIsClientMayAccessWithResponse List APIs a client may access
 //
-// # Get every API the OIDC client may request tokens for, with its access and permissions split into user-delegated and client (machine-to-machine) access
+// Get every API the OIDC client may request tokens for, with its access and permissions split into user-delegated and client (machine-to-machine) access.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `apis:read`.
 //
 // Returns a wrapper object for the known response body format(s).
 //
@@ -25765,6 +26835,8 @@ func (c *ClientWithResponses) ListAPIsClientMayAccessWithResponse(ctx context.Co
 //
 // Get a paginated list of APIs the OIDC client cannot already reach.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `apis:read`.
+//
 // Returns a wrapper object for the known response body format(s).
 //
 // Corresponds with GET /api/admin/api-access/{clientId}/assignable-apis (the `ListAPIsClientCanStillBeGrantedAccessTo` operationId).
@@ -25779,6 +26851,8 @@ func (c *ClientWithResponses) ListAPIsClientCanStillBeGrantedAccessToWithRespons
 // ListAPIsWithResponse List APIs
 //
 // Get a paginated list of APIs with optional search and sorting.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `apis:read`.
 //
 // Returns a wrapper object for the known response body format(s).
 //
@@ -25795,6 +26869,8 @@ func (c *ClientWithResponses) ListAPIsWithResponse(ctx context.Context, params *
 //
 // Create a new API resource server.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `apis:write`.
+//
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
 // Corresponds with POST /api/admin/apis (the `CreateAPI` operationId).
@@ -25809,6 +26885,8 @@ func (c *ClientWithResponses) CreateAPIWithBodyWithResponse(ctx context.Context,
 // CreateAPIWithResponse Create API
 //
 // Create a new API resource server.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `apis:write`.
 //
 // Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //
@@ -25825,6 +26903,8 @@ func (c *ClientWithResponses) CreateAPIWithResponse(ctx context.Context, body Cr
 //
 // Delete an API by ID.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `apis:write`.
+//
 // Returns a wrapper object for the known response body format(s).
 //
 // Corresponds with DELETE /api/admin/apis/{id} (the `DeleteAPI` operationId).
@@ -25840,6 +26920,8 @@ func (c *ClientWithResponses) DeleteAPIWithResponse(ctx context.Context, id stri
 //
 // Retrieve a single API including its permissions.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `apis:read`.
+//
 // Returns a wrapper object for the known response body format(s).
 //
 // Corresponds with GET /api/admin/apis/{id} (the `GetAPIByID` operationId).
@@ -25853,7 +26935,9 @@ func (c *ClientWithResponses) GetAPIByIDWithResponse(ctx context.Context, id str
 
 // PatchAPIWithBodyWithResponse Update API
 //
-// # Update an existing API by ID, where PATCH changes only the fields in the body
+// Update an existing API by ID, where PATCH changes only the fields in the body.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `apis:write`.
 //
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
@@ -25868,7 +26952,9 @@ func (c *ClientWithResponses) PatchAPIWithBodyWithResponse(ctx context.Context, 
 
 // PatchAPIWithResponse Update API
 //
-// # Update an existing API by ID, where PATCH changes only the fields in the body
+// Update an existing API by ID, where PATCH changes only the fields in the body.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `apis:write`.
 //
 // Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //
@@ -25883,7 +26969,9 @@ func (c *ClientWithResponses) PatchAPIWithResponse(ctx context.Context, id strin
 
 // UpdateAPIWithBodyWithResponse Update API
 //
-// # Update an existing API by ID, where PATCH changes only the fields in the body
+// Update an existing API by ID, where PATCH changes only the fields in the body.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `apis:write`.
 //
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
@@ -25898,7 +26986,9 @@ func (c *ClientWithResponses) UpdateAPIWithBodyWithResponse(ctx context.Context,
 
 // UpdateAPIWithResponse Update API
 //
-// # Update an existing API by ID, where PATCH changes only the fields in the body
+// Update an existing API by ID, where PATCH changes only the fields in the body.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `apis:write`.
 //
 // Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //
@@ -25915,6 +27005,8 @@ func (c *ClientWithResponses) UpdateAPIWithResponse(ctx context.Context, id stri
 //
 // Get a paginated list of OIDC clients that have no grant on the API yet.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `apis:read`.
+//
 // Returns a wrapper object for the known response body format(s).
 //
 // Corresponds with GET /api/admin/apis/{id}/assignable-clients (the `ListClientsThatCanStillBeGrantedAccessToAPI` operationId).
@@ -25929,6 +27021,8 @@ func (c *ClientWithResponses) ListClientsThatCanStillBeGrantedAccessToAPIWithRes
 // UpdateMetadataDocumentClientAccessWithBodyWithResponse Update metadata document client access
 //
 // Replace which permissions of an API every client registered through a Client ID Metadata Document may request.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `apis:write`.
 //
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
@@ -25945,6 +27039,8 @@ func (c *ClientWithResponses) UpdateMetadataDocumentClientAccessWithBodyWithResp
 //
 // Replace which permissions of an API every client registered through a Client ID Metadata Document may request.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `apis:write`.
+//
 // Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //
 // Corresponds with PUT /api/admin/apis/{id}/cimd-access (the `UpdateMetadataDocumentClientAccess` operationId).
@@ -25958,7 +27054,9 @@ func (c *ClientWithResponses) UpdateMetadataDocumentClientAccessWithResponse(ctx
 
 // ListClientsWithAccessToAPIWithResponse List clients with access to an API
 //
-// # Get a paginated list of OIDC clients that may reach the API, with their permissions split into user-delegated and client (machine-to-machine) access
+// Get a paginated list of OIDC clients that may reach the API, with their permissions split into user-delegated and client (machine-to-machine) access.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `apis:read`.
 //
 // Returns a wrapper object for the known response body format(s).
 //
@@ -25975,6 +27073,8 @@ func (c *ClientWithResponses) ListClientsWithAccessToAPIWithResponse(ctx context
 //
 // Remove every permission of this API a single OIDC client was allowed to request.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `apis:write`.
+//
 // Returns a wrapper object for the known response body format(s).
 //
 // Corresponds with DELETE /api/admin/apis/{id}/clients/{clientId} (the `RevokeClientAccessToAPI` operationId).
@@ -25988,7 +27088,9 @@ func (c *ClientWithResponses) RevokeClientAccessToAPIWithResponse(ctx context.Co
 
 // UpdateClientAccessToAPIWithBodyWithResponse Update a client's access to an API
 //
-// # Replace the permissions of this API a single OIDC client may request, leaving its grants on other APIs untouched
+// Replace the permissions of this API a single OIDC client may request, leaving its grants on other APIs untouched.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `apis:write`.
 //
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
@@ -26003,7 +27105,9 @@ func (c *ClientWithResponses) UpdateClientAccessToAPIWithBodyWithResponse(ctx co
 
 // UpdateClientAccessToAPIWithResponse Update a client's access to an API
 //
-// # Replace the permissions of this API a single OIDC client may request, leaving its grants on other APIs untouched
+// Replace the permissions of this API a single OIDC client may request, leaving its grants on other APIs untouched.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `apis:write`.
 //
 // Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //
@@ -26020,6 +27124,8 @@ func (c *ClientWithResponses) UpdateClientAccessToAPIWithResponse(ctx context.Co
 //
 // Replace the full set of permissions for an API.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `apis:write`.
+//
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
 // Corresponds with PUT /api/admin/apis/{id}/permissions (the `UpdateAPIPermissions` operationId).
@@ -26034,6 +27140,8 @@ func (c *ClientWithResponses) UpdateAPIPermissionsWithBodyWithResponse(ctx conte
 // UpdateAPIPermissionsWithResponse Update API permissions
 //
 // Replace the full set of permissions for an API.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `apis:write`.
 //
 // Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //
@@ -26050,6 +27158,8 @@ func (c *ClientWithResponses) UpdateAPIPermissionsWithResponse(ctx context.Conte
 //
 // Delete the application background image.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `config:write`.
+//
 // Returns a wrapper object for the known response body format(s).
 //
 // Corresponds with DELETE /api/admin/application-assets/background (the `DeleteBackgroundImage` operationId).
@@ -26064,6 +27174,8 @@ func (c *ClientWithResponses) DeleteBackgroundImageWithResponse(ctx context.Cont
 // UpdateBackgroundImageWithBodyWithResponse Update background image
 //
 // Update the application background image.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `config:write`.
 //
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
@@ -26080,6 +27192,8 @@ func (c *ClientWithResponses) UpdateBackgroundImageWithBodyWithResponse(ctx cont
 //
 // Delete the default profile picture image.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `config:write`.
+//
 // Returns a wrapper object for the known response body format(s).
 //
 // Corresponds with DELETE /api/admin/application-assets/default-profile-picture (the `DeleteDefaultProfilePictureImage` operationId).
@@ -26094,6 +27208,8 @@ func (c *ClientWithResponses) DeleteDefaultProfilePictureImageWithResponse(ctx c
 // GetDefaultProfilePictureImageWithResponse Get default profile picture image
 //
 // Get the default profile picture image for the application.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `config:read`.
 //
 // Returns a wrapper object for the known response body format(s).
 //
@@ -26110,6 +27226,8 @@ func (c *ClientWithResponses) GetDefaultProfilePictureImageWithResponse(ctx cont
 //
 // Update the default profile picture image.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `config:write`.
+//
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
 // Corresponds with PUT /api/admin/application-assets/default-profile-picture (the `UpdateDefaultProfilePictureImage` operationId).
@@ -26124,6 +27242,8 @@ func (c *ClientWithResponses) UpdateDefaultProfilePictureImageWithBodyWithRespon
 // UpdateEmailLogoWithBodyWithResponse Update email logo
 //
 // Update the email logo for use in emails.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `config:write`.
 //
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
@@ -26140,6 +27260,8 @@ func (c *ClientWithResponses) UpdateEmailLogoWithBodyWithResponse(ctx context.Co
 //
 // Update the application favicon.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `config:write`.
+//
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
 // Corresponds with PUT /api/admin/application-assets/favicon (the `UpdateFavicon` operationId).
@@ -26154,6 +27276,8 @@ func (c *ClientWithResponses) UpdateFaviconWithBodyWithResponse(ctx context.Cont
 // DeleteTitleFontWithResponse Delete title font
 //
 // Delete the custom font of page and dialog titles.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `config:write`.
 //
 // Returns a wrapper object for the known response body format(s).
 //
@@ -26170,6 +27294,8 @@ func (c *ClientWithResponses) DeleteTitleFontWithResponse(ctx context.Context, r
 //
 // Update the custom font of page and dialog titles.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `config:write`.
+//
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
 // Corresponds with PUT /api/admin/application-assets/font (the `UpdateTitleFont` operationId).
@@ -26184,6 +27310,8 @@ func (c *ClientWithResponses) UpdateTitleFontWithBodyWithResponse(ctx context.Co
 // DeleteLogoImageWithResponse Delete logo image
 //
 // Delete the custom application logo and restore the default logo.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `config:write`.
 //
 // Returns a wrapper object for the known response body format(s).
 //
@@ -26200,6 +27328,8 @@ func (c *ClientWithResponses) DeleteLogoImageWithResponse(ctx context.Context, p
 //
 // Update the application logo.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `config:write`.
+//
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
 // Corresponds with PUT /api/admin/application-assets/logo (the `UpdateLogo` operationId).
@@ -26215,6 +27345,8 @@ func (c *ClientWithResponses) UpdateLogoWithBodyWithResponse(ctx context.Context
 //
 // Get all application configurations including private ones.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `config:read`.
+//
 // Returns a wrapper object for the known response body format(s).
 //
 // Corresponds with GET /api/admin/application-configuration (the `ListAllApplicationConfigurations` operationId).
@@ -26228,7 +27360,9 @@ func (c *ClientWithResponses) ListAllApplicationConfigurationsWithResponse(ctx c
 
 // PatchApplicationConfigurationsWithBodyWithResponse Update application configurations
 //
-// # Update application configuration settings, where PATCH changes only the fields in the body
+// Update application configuration settings, where PATCH changes only the fields in the body.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `config:write`.
 //
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
@@ -26243,7 +27377,9 @@ func (c *ClientWithResponses) PatchApplicationConfigurationsWithBodyWithResponse
 
 // PatchApplicationConfigurationsWithResponse Update application configurations
 //
-// # Update application configuration settings, where PATCH changes only the fields in the body
+// Update application configuration settings, where PATCH changes only the fields in the body.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `config:write`.
 //
 // Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //
@@ -26258,7 +27394,9 @@ func (c *ClientWithResponses) PatchApplicationConfigurationsWithResponse(ctx con
 
 // UpdateApplicationConfigurationsWithBodyWithResponse Update application configurations
 //
-// # Update application configuration settings, where PATCH changes only the fields in the body
+// Update application configuration settings, where PATCH changes only the fields in the body.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `config:write`.
 //
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
@@ -26273,7 +27411,9 @@ func (c *ClientWithResponses) UpdateApplicationConfigurationsWithBodyWithRespons
 
 // UpdateApplicationConfigurationsWithResponse Update application configurations
 //
-// # Update application configuration settings, where PATCH changes only the fields in the body
+// Update application configuration settings, where PATCH changes only the fields in the body.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `config:write`.
 //
 // Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //
@@ -26290,6 +27430,8 @@ func (c *ClientWithResponses) UpdateApplicationConfigurationsWithResponse(ctx co
 //
 // Manually trigger LDAP synchronization.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `config:write`.
+//
 // Returns a wrapper object for the known response body format(s).
 //
 // Corresponds with POST /api/admin/application-configuration/sync-ldap (the `SynchronizeLDAP` operationId).
@@ -26304,6 +27446,8 @@ func (c *ClientWithResponses) SynchronizeLDAPWithResponse(ctx context.Context, r
 // SendTestEmailWithResponse Send test email
 //
 // Send a test email to verify email configuration.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `config:write`.
 //
 // Returns a wrapper object for the known response body format(s).
 //
@@ -26320,6 +27464,8 @@ func (c *ClientWithResponses) SendTestEmailWithResponse(ctx context.Context, req
 //
 // Get a paginated list of all audit logs (admin only).
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `audit-logs:read`.
+//
 // Returns a wrapper object for the known response body format(s).
 //
 // Corresponds with GET /api/admin/audit-logs (the `ListAllAuditLogs` operationId).
@@ -26334,6 +27480,8 @@ func (c *ClientWithResponses) ListAllAuditLogsWithResponse(ctx context.Context, 
 // ListClientNamesWithResponse List client names
 //
 // Get a list of all client names for audit log filtering.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `audit-logs:read`.
 //
 // Returns a wrapper object for the known response body format(s).
 //
@@ -26350,6 +27498,8 @@ func (c *ClientWithResponses) ListClientNamesWithResponse(ctx context.Context, r
 //
 // Get a list of all usernames with their IDs for audit log filtering.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `audit-logs:read`.
+//
 // Returns a wrapper object for the known response body format(s).
 //
 // Corresponds with GET /api/admin/audit-logs/filters/users (the `ListUsersWithIDs` operationId).
@@ -26364,6 +27514,8 @@ func (c *ClientWithResponses) ListUsersWithIDsWithResponse(ctx context.Context, 
 // GetCustomClaimSuggestionsWithResponse Get custom claim suggestions
 //
 // Get a list of suggested custom claim names.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:read`.
 //
 // Returns a wrapper object for the known response body format(s).
 //
@@ -26380,6 +27532,8 @@ func (c *ClientWithResponses) GetCustomClaimSuggestionsWithResponse(ctx context.
 //
 // Update or create custom claims for a specific user group.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `groups:write`.
+//
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
 // Corresponds with PUT /api/admin/custom-claims/user-group/{userGroupId} (the `UpdateCustomClaimsForUserGroup` operationId).
@@ -26394,6 +27548,8 @@ func (c *ClientWithResponses) UpdateCustomClaimsForUserGroupWithBodyWithResponse
 // UpdateCustomClaimsForUserGroupWithResponse Update custom claims for a user group
 //
 // Update or create custom claims for a specific user group.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `groups:write`.
 //
 // Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //
@@ -26410,6 +27566,8 @@ func (c *ClientWithResponses) UpdateCustomClaimsForUserGroupWithResponse(ctx con
 //
 // Update or create custom claims for a specific user.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:write`.
+//
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
 // Corresponds with PUT /api/admin/custom-claims/user/{userId} (the `UpdateCustomClaimsForUser` operationId).
@@ -26424,6 +27582,8 @@ func (c *ClientWithResponses) UpdateCustomClaimsForUserWithBodyWithResponse(ctx 
 // UpdateCustomClaimsForUserWithResponse Update custom claims for a user
 //
 // Update or create custom claims for a specific user.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:write`.
 //
 // Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //
@@ -26440,6 +27600,8 @@ func (c *ClientWithResponses) UpdateCustomClaimsForUserWithResponse(ctx context.
 //
 // Get a paginated list of OIDC claim mapping policies with optional search and sorting.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-claim-mapping-policies:read`.
+//
 // Returns a wrapper object for the known response body format(s).
 //
 // Corresponds with GET /api/admin/oidc/claim-mapping-policies (the `ListOIDCClaimMappingPolicies` operationId).
@@ -26454,6 +27616,8 @@ func (c *ClientWithResponses) ListOIDCClaimMappingPoliciesWithResponse(ctx conte
 // CreateOIDCClaimMappingPolicyWithBodyWithResponse Create OIDC claim mapping policy
 //
 // Create a new OIDC claim mapping policy.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-claim-mapping-policies:write`.
 //
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
@@ -26470,6 +27634,8 @@ func (c *ClientWithResponses) CreateOIDCClaimMappingPolicyWithBodyWithResponse(c
 //
 // Create a new OIDC claim mapping policy.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-claim-mapping-policies:write`.
+//
 // Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //
 // Corresponds with POST /api/admin/oidc/claim-mapping-policies (the `CreateOIDCClaimMappingPolicy` operationId).
@@ -26483,7 +27649,9 @@ func (c *ClientWithResponses) CreateOIDCClaimMappingPolicyWithResponse(ctx conte
 
 // PreviewClaimMappingsWithBodyWithResponse Preview claim mappings
 //
-// # Get the claims that claim mappings, saved or not, release for a user and set of scopes
+// Get the claims that claim mappings, saved or not, release for a user and set of scopes.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:read`.
 //
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
@@ -26498,7 +27666,9 @@ func (c *ClientWithResponses) PreviewClaimMappingsWithBodyWithResponse(ctx conte
 
 // PreviewClaimMappingsWithResponse Preview claim mappings
 //
-// # Get the claims that claim mappings, saved or not, release for a user and set of scopes
+// Get the claims that claim mappings, saved or not, release for a user and set of scopes.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:read`.
 //
 // Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //
@@ -26515,6 +27685,8 @@ func (c *ClientWithResponses) PreviewClaimMappingsWithResponse(ctx context.Conte
 //
 // Delete an OIDC claim mapping policy by ID.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-claim-mapping-policies:write`.
+//
 // Returns a wrapper object for the known response body format(s).
 //
 // Corresponds with DELETE /api/admin/oidc/claim-mapping-policies/{id} (the `DeleteOIDCClaimMappingPolicy` operationId).
@@ -26530,6 +27702,8 @@ func (c *ClientWithResponses) DeleteOIDCClaimMappingPolicyWithResponse(ctx conte
 //
 // Retrieve an existing OIDC claim mapping policy.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-claim-mapping-policies:read`.
+//
 // Returns a wrapper object for the known response body format(s).
 //
 // Corresponds with GET /api/admin/oidc/claim-mapping-policies/{id} (the `GetOIDCClaimMappingPolicy` operationId).
@@ -26543,7 +27717,9 @@ func (c *ClientWithResponses) GetOIDCClaimMappingPolicyWithResponse(ctx context.
 
 // PatchOIDCClaimMappingPolicyWithBodyWithResponse Update an OIDC claim mapping policy
 //
-// # Update an existing OIDC claim mapping policy, where PATCH changes only the fields in the body
+// Update an existing OIDC claim mapping policy, where PATCH changes only the fields in the body.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-claim-mapping-policies:write`.
 //
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
@@ -26558,7 +27734,9 @@ func (c *ClientWithResponses) PatchOIDCClaimMappingPolicyWithBodyWithResponse(ct
 
 // PatchOIDCClaimMappingPolicyWithResponse Update an OIDC claim mapping policy
 //
-// # Update an existing OIDC claim mapping policy, where PATCH changes only the fields in the body
+// Update an existing OIDC claim mapping policy, where PATCH changes only the fields in the body.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-claim-mapping-policies:write`.
 //
 // Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //
@@ -26573,7 +27751,9 @@ func (c *ClientWithResponses) PatchOIDCClaimMappingPolicyWithResponse(ctx contex
 
 // UpdateOIDCClaimMappingPolicyWithBodyWithResponse Update an OIDC claim mapping policy
 //
-// # Update an existing OIDC claim mapping policy, where PATCH changes only the fields in the body
+// Update an existing OIDC claim mapping policy, where PATCH changes only the fields in the body.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-claim-mapping-policies:write`.
 //
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
@@ -26588,7 +27768,9 @@ func (c *ClientWithResponses) UpdateOIDCClaimMappingPolicyWithBodyWithResponse(c
 
 // UpdateOIDCClaimMappingPolicyWithResponse Update an OIDC claim mapping policy
 //
-// # Update an existing OIDC claim mapping policy, where PATCH changes only the fields in the body
+// Update an existing OIDC claim mapping policy, where PATCH changes only the fields in the body.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-claim-mapping-policies:write`.
 //
 // Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //
@@ -26605,6 +27787,8 @@ func (c *ClientWithResponses) UpdateOIDCClaimMappingPolicyWithResponse(ctx conte
 //
 // Get a paginated list of the OIDC clients that are not on this claim mapping policy yet.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-claim-mapping-policies:read`.
+//
 // Returns a wrapper object for the known response body format(s).
 //
 // Corresponds with GET /api/admin/oidc/claim-mapping-policies/{id}/assignable-clients (the `ListOIDCClientsThatCanStillBeAssignedToClaimMappingPolicy` operationId).
@@ -26620,6 +27804,8 @@ func (c *ClientWithResponses) ListOIDCClientsThatCanStillBeAssignedToClaimMappin
 //
 // Get a paginated list of the OIDC clients assigned to a claim mapping policy.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-claim-mapping-policies:read`.
+//
 // Returns a wrapper object for the known response body format(s).
 //
 // Corresponds with GET /api/admin/oidc/claim-mapping-policies/{id}/clients (the `ListOIDCClientsUsingClaimMappingPolicy` operationId).
@@ -26633,7 +27819,9 @@ func (c *ClientWithResponses) ListOIDCClientsUsingClaimMappingPolicyWithResponse
 
 // DetachOIDCClientFromClaimMappingPolicyWithResponse Detach an OIDC client from a claim mapping policy
 //
-// # Remove an OIDC client from this claim mapping policy, so it falls back to the default one
+// Remove an OIDC client from this claim mapping policy, so it falls back to the default one.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-claim-mapping-policies:write`.
 //
 // Returns a wrapper object for the known response body format(s).
 //
@@ -26648,7 +27836,9 @@ func (c *ClientWithResponses) DetachOIDCClientFromClaimMappingPolicyWithResponse
 
 // AssignOIDCClientToClaimMappingPolicyWithResponse Assign an OIDC client to a claim mapping policy
 //
-// # Point an OIDC client at this claim mapping policy, replacing the policy it was on
+// Point an OIDC client at this claim mapping policy, replacing the policy it was on.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-claim-mapping-policies:write`.
 //
 // Returns a wrapper object for the known response body format(s).
 //
@@ -26665,6 +27855,8 @@ func (c *ClientWithResponses) AssignOIDCClientToClaimMappingPolicyWithResponse(c
 //
 // Get a paginated list of OIDC clients with optional search and sorting.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-clients:read`.
+//
 // Returns a wrapper object for the known response body format(s).
 //
 // Corresponds with GET /api/admin/oidc/clients (the `ListOIDCClients` operationId).
@@ -26679,6 +27871,8 @@ func (c *ClientWithResponses) ListOIDCClientsWithResponse(ctx context.Context, p
 // CreateOIDCClientWithBodyWithResponse Create OIDC client
 //
 // Create a new OIDC client.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-clients:write`.
 //
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
@@ -26695,6 +27889,8 @@ func (c *ClientWithResponses) CreateOIDCClientWithBodyWithResponse(ctx context.C
 //
 // Create a new OIDC client.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-clients:write`.
+//
 // Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //
 // Corresponds with POST /api/admin/oidc/clients (the `CreateOIDCClient` operationId).
@@ -26709,6 +27905,8 @@ func (c *ClientWithResponses) CreateOIDCClientWithResponse(ctx context.Context, 
 // DeleteOIDCClientWithResponse Delete OIDC client
 //
 // Delete an OIDC client by ID.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-clients:write`.
 //
 // Returns a wrapper object for the known response body format(s).
 //
@@ -26725,6 +27923,8 @@ func (c *ClientWithResponses) DeleteOIDCClientWithResponse(ctx context.Context, 
 //
 // Get detailed information about an OIDC client.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-clients:read`.
+//
 // Returns a wrapper object for the known response body format(s).
 //
 // Corresponds with GET /api/admin/oidc/clients/{id} (the `GetOIDCClient` operationId).
@@ -26738,7 +27938,9 @@ func (c *ClientWithResponses) GetOIDCClientWithResponse(ctx context.Context, id 
 
 // PatchOIDCClientWithBodyWithResponse Update OIDC client
 //
-// # Update an existing OIDC client, where PATCH changes only the fields in the body
+// Update an existing OIDC client, where PATCH changes only the fields in the body.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-clients:write`.
 //
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
@@ -26753,7 +27955,9 @@ func (c *ClientWithResponses) PatchOIDCClientWithBodyWithResponse(ctx context.Co
 
 // PatchOIDCClientWithResponse Update OIDC client
 //
-// # Update an existing OIDC client, where PATCH changes only the fields in the body
+// Update an existing OIDC client, where PATCH changes only the fields in the body.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-clients:write`.
 //
 // Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //
@@ -26768,7 +27972,9 @@ func (c *ClientWithResponses) PatchOIDCClientWithResponse(ctx context.Context, i
 
 // UpdateOIDCClientWithBodyWithResponse Update OIDC client
 //
-// # Update an existing OIDC client, where PATCH changes only the fields in the body
+// Update an existing OIDC client, where PATCH changes only the fields in the body.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-clients:write`.
 //
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
@@ -26783,7 +27989,9 @@ func (c *ClientWithResponses) UpdateOIDCClientWithBodyWithResponse(ctx context.C
 
 // UpdateOIDCClientWithResponse Update OIDC client
 //
-// # Update an existing OIDC client, where PATCH changes only the fields in the body
+// Update an existing OIDC client, where PATCH changes only the fields in the body.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-clients:write`.
 //
 // Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //
@@ -26800,6 +28008,8 @@ func (c *ClientWithResponses) UpdateOIDCClientWithResponse(ctx context.Context, 
 //
 // Update the user groups allowed to access an OIDC client.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-clients:write`.
+//
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
 // Corresponds with PUT /api/admin/oidc/clients/{id}/allowed-user-groups (the `UpdateAllowedUserGroups` operationId).
@@ -26814,6 +28024,8 @@ func (c *ClientWithResponses) UpdateAllowedUserGroupsWithBodyWithResponse(ctx co
 // UpdateAllowedUserGroupsWithResponse Update allowed user groups
 //
 // Update the user groups allowed to access an OIDC client.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-clients:write`.
 //
 // Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //
@@ -26830,6 +28042,8 @@ func (c *ClientWithResponses) UpdateAllowedUserGroupsWithResponse(ctx context.Co
 //
 // Delete the logo for an OIDC client.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-clients:write`.
+//
 // Returns a wrapper object for the known response body format(s).
 //
 // Corresponds with DELETE /api/admin/oidc/clients/{id}/logo (the `DeleteClientLogo` operationId).
@@ -26845,6 +28059,8 @@ func (c *ClientWithResponses) DeleteClientLogoWithResponse(ctx context.Context, 
 //
 // Upload or update the logo for an OIDC client.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-clients:write`.
+//
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
 // Corresponds with POST /api/admin/oidc/clients/{id}/logo (the `UpdateClientLogo` operationId).
@@ -26858,7 +28074,9 @@ func (c *ClientWithResponses) UpdateClientLogoWithBodyWithResponse(ctx context.C
 
 // PreviewOIDCClientDataForUserWithResponse Preview OIDC client data for user
 //
-// # Get a preview of the OIDC data (ID token, access token, userinfo) that would be sent to the client for a specific user
+// Get a preview of the OIDC data (ID token, access token, userinfo) that would be sent to the client for a specific user.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:read`.
 //
 // Returns a wrapper object for the known response body format(s).
 //
@@ -26875,6 +28093,8 @@ func (c *ClientWithResponses) PreviewOIDCClientDataForUserWithResponse(ctx conte
 //
 // Force a re-fetch of the OAuth Client ID Metadata Document for a CIMD client.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-clients:write`.
+//
 // Returns a wrapper object for the known response body format(s).
 //
 // Corresponds with POST /api/admin/oidc/clients/{id}/refresh (the `RefreshClientMetadataDocument` operationId).
@@ -26890,6 +28110,8 @@ func (c *ClientWithResponses) RefreshClientMetadataDocumentWithResponse(ctx cont
 //
 // Get the SCIM service provider configuration for an OIDC client.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-clients:read`.
+//
 // Returns a wrapper object for the known response body format(s).
 //
 // Corresponds with GET /api/admin/oidc/clients/{id}/scim-service-provider (the `GetSCIMServiceProvider` operationId).
@@ -26903,7 +28125,9 @@ func (c *ClientWithResponses) GetSCIMServiceProviderWithResponse(ctx context.Con
 
 // ListClientSecretsWithResponse List client secrets
 //
-// # List the secrets of an OIDC client, without disclosing their values
+// List the secrets of an OIDC client, without disclosing their values.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-clients:read`.
 //
 // Returns a wrapper object for the known response body format(s).
 //
@@ -26920,6 +28144,8 @@ func (c *ClientWithResponses) ListClientSecretsWithResponse(ctx context.Context,
 //
 // Add a new secret to an OIDC client, leaving the existing ones usable. The value is only returned by this endpoint and cannot be retrieved later.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-clients:write`.
+//
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
 // Corresponds with POST /api/admin/oidc/clients/{id}/secrets (the `CreateClientSecret` operationId).
@@ -26935,6 +28161,8 @@ func (c *ClientWithResponses) CreateClientSecretWithBodyWithResponse(ctx context
 //
 // Add a new secret to an OIDC client, leaving the existing ones usable. The value is only returned by this endpoint and cannot be retrieved later.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-clients:write`.
+//
 // Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //
 // Corresponds with POST /api/admin/oidc/clients/{id}/secrets (the `CreateClientSecret` operationId).
@@ -26948,7 +28176,9 @@ func (c *ClientWithResponses) CreateClientSecretWithResponse(ctx context.Context
 
 // DeleteClientSecretWithResponse Delete client secret
 //
-// # Delete a single secret of an OIDC client, making it immediately unusable
+// Delete a single secret of an OIDC client, making it immediately unusable.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-clients:write`.
 //
 // Returns a wrapper object for the known response body format(s).
 //
@@ -26965,6 +28195,8 @@ func (c *ClientWithResponses) DeleteClientSecretWithResponse(ctx context.Context
 //
 // Get a paginated list of the custom OIDC scopes with optional search and sorting.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-claim-mapping-policies:read`.
+//
 // Returns a wrapper object for the known response body format(s).
 //
 // Corresponds with GET /api/admin/oidc/custom-scopes (the `ListCustomOIDCScopes` operationId).
@@ -26978,7 +28210,9 @@ func (c *ClientWithResponses) ListCustomOIDCScopesWithResponse(ctx context.Conte
 
 // CreateCustomOIDCScopeWithBodyWithResponse Create a custom OIDC scope
 //
-// # Create a custom OIDC scope, which claim mappings can then be released with
+// Create a custom OIDC scope, which claim mappings can then be released with.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-claim-mapping-policies:write`.
 //
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
@@ -26993,7 +28227,9 @@ func (c *ClientWithResponses) CreateCustomOIDCScopeWithBodyWithResponse(ctx cont
 
 // CreateCustomOIDCScopeWithResponse Create a custom OIDC scope
 //
-// # Create a custom OIDC scope, which claim mappings can then be released with
+// Create a custom OIDC scope, which claim mappings can then be released with.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-claim-mapping-policies:write`.
 //
 // Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //
@@ -27008,7 +28244,9 @@ func (c *ClientWithResponses) CreateCustomOIDCScopeWithResponse(ctx context.Cont
 
 // ListKeysOfAllCustomOIDCScopesWithResponse List the keys of all custom OIDC scopes
 //
-// # Get the keys of every custom OIDC scope, sorted, for pickers that offer all of them at once
+// Get the keys of every custom OIDC scope, sorted, for pickers that offer all of them at once.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-claim-mapping-policies:read`.
 //
 // Returns a wrapper object for the known response body format(s).
 //
@@ -27025,6 +28263,8 @@ func (c *ClientWithResponses) ListKeysOfAllCustomOIDCScopesWithResponse(ctx cont
 //
 // Delete a custom OIDC scope that no claim mapping is released with.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-claim-mapping-policies:write`.
+//
 // Returns a wrapper object for the known response body format(s).
 //
 // Corresponds with DELETE /api/admin/oidc/custom-scopes/{id} (the `DeleteCustomOIDCScope` operationId).
@@ -27038,7 +28278,9 @@ func (c *ClientWithResponses) DeleteCustomOIDCScopeWithResponse(ctx context.Cont
 
 // PatchCustomOIDCScopeWithBodyWithResponse Update a custom OIDC scope
 //
-// Update the name and description of a custom OIDC scope, whose key can't change, where PATCH changes only the fields in the body
+// Update the name and description of a custom OIDC scope, whose key can't change, where PATCH changes only the fields in the body.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-claim-mapping-policies:write`.
 //
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
@@ -27053,7 +28295,9 @@ func (c *ClientWithResponses) PatchCustomOIDCScopeWithBodyWithResponse(ctx conte
 
 // PatchCustomOIDCScopeWithResponse Update a custom OIDC scope
 //
-// Update the name and description of a custom OIDC scope, whose key can't change, where PATCH changes only the fields in the body
+// Update the name and description of a custom OIDC scope, whose key can't change, where PATCH changes only the fields in the body.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-claim-mapping-policies:write`.
 //
 // Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //
@@ -27068,7 +28312,9 @@ func (c *ClientWithResponses) PatchCustomOIDCScopeWithResponse(ctx context.Conte
 
 // UpdateCustomOIDCScopeWithBodyWithResponse Update a custom OIDC scope
 //
-// Update the name and description of a custom OIDC scope, whose key can't change, where PATCH changes only the fields in the body
+// Update the name and description of a custom OIDC scope, whose key can't change, where PATCH changes only the fields in the body.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-claim-mapping-policies:write`.
 //
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
@@ -27083,7 +28329,9 @@ func (c *ClientWithResponses) UpdateCustomOIDCScopeWithBodyWithResponse(ctx cont
 
 // UpdateCustomOIDCScopeWithResponse Update a custom OIDC scope
 //
-// Update the name and description of a custom OIDC scope, whose key can't change, where PATCH changes only the fields in the body
+// Update the name and description of a custom OIDC scope, whose key can't change, where PATCH changes only the fields in the body.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-claim-mapping-policies:write`.
 //
 // Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //
@@ -27100,6 +28348,8 @@ func (c *ClientWithResponses) UpdateCustomOIDCScopeWithResponse(ctx context.Cont
 //
 // Search the icon library for logos that can be used for OIDC clients.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-clients:read`.
+//
 // Returns a wrapper object for the known response body format(s).
 //
 // Corresponds with GET /api/admin/oidc/logo-presets (the `SearchLogoPresets` operationId).
@@ -27114,6 +28364,8 @@ func (c *ClientWithResponses) SearchLogoPresetsWithResponse(ctx context.Context,
 // ListAuthorizedClientsForUserWithResponse List authorized clients for a user
 //
 // Get a paginated list of OIDC clients that a specific user has authorized.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:read`.
 //
 // Returns a wrapper object for the known response body format(s).
 //
@@ -27130,6 +28382,8 @@ func (c *ClientWithResponses) ListAuthorizedClientsForUserWithResponse(ctx conte
 //
 // Create a new SCIM service provider.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-clients:write`.
+//
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
 // Corresponds with POST /api/admin/scim/service-provider (the `CreateSCIMServiceProvider` operationId).
@@ -27144,6 +28398,8 @@ func (c *ClientWithResponses) CreateSCIMServiceProviderWithBodyWithResponse(ctx 
 // CreateSCIMServiceProviderWithResponse Create SCIM service provider
 //
 // Create a new SCIM service provider.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-clients:write`.
 //
 // Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //
@@ -27160,6 +28416,8 @@ func (c *ClientWithResponses) CreateSCIMServiceProviderWithResponse(ctx context.
 //
 // Delete a SCIM service provider by ID.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-clients:write`.
+//
 // Returns a wrapper object for the known response body format(s).
 //
 // Corresponds with DELETE /api/admin/scim/service-provider/{id} (the `DeleteSCIMServiceProvider` operationId).
@@ -27173,7 +28431,9 @@ func (c *ClientWithResponses) DeleteSCIMServiceProviderWithResponse(ctx context.
 
 // PatchSCIMServiceProviderWithBodyWithResponse Update SCIM service provider
 //
-// # Update an existing SCIM service provider, where PATCH changes only the fields in the body, an omitted token keeps the stored one, an empty token removes it and a changed endpoint requires the token
+// Update an existing SCIM service provider, where PATCH changes only the fields in the body, an omitted token keeps the stored one, an empty token removes it and a changed endpoint requires the token.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-clients:write`.
 //
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
@@ -27188,7 +28448,9 @@ func (c *ClientWithResponses) PatchSCIMServiceProviderWithBodyWithResponse(ctx c
 
 // PatchSCIMServiceProviderWithResponse Update SCIM service provider
 //
-// # Update an existing SCIM service provider, where PATCH changes only the fields in the body, an omitted token keeps the stored one, an empty token removes it and a changed endpoint requires the token
+// Update an existing SCIM service provider, where PATCH changes only the fields in the body, an omitted token keeps the stored one, an empty token removes it and a changed endpoint requires the token.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-clients:write`.
 //
 // Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //
@@ -27203,7 +28465,9 @@ func (c *ClientWithResponses) PatchSCIMServiceProviderWithResponse(ctx context.C
 
 // UpdateSCIMServiceProviderWithBodyWithResponse Update SCIM service provider
 //
-// # Update an existing SCIM service provider, where PATCH changes only the fields in the body, an omitted token keeps the stored one, an empty token removes it and a changed endpoint requires the token
+// Update an existing SCIM service provider, where PATCH changes only the fields in the body, an omitted token keeps the stored one, an empty token removes it and a changed endpoint requires the token.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-clients:write`.
 //
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
@@ -27218,7 +28482,9 @@ func (c *ClientWithResponses) UpdateSCIMServiceProviderWithBodyWithResponse(ctx 
 
 // UpdateSCIMServiceProviderWithResponse Update SCIM service provider
 //
-// # Update an existing SCIM service provider, where PATCH changes only the fields in the body, an omitted token keeps the stored one, an empty token removes it and a changed endpoint requires the token
+// Update an existing SCIM service provider, where PATCH changes only the fields in the body, an omitted token keeps the stored one, an empty token removes it and a changed endpoint requires the token.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-clients:write`.
 //
 // Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //
@@ -27235,6 +28501,8 @@ func (c *ClientWithResponses) UpdateSCIMServiceProviderWithResponse(ctx context.
 //
 // Trigger synchronization for a SCIM service provider.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `oidc-clients:write`.
+//
 // Returns a wrapper object for the known response body format(s).
 //
 // Corresponds with POST /api/admin/scim/service-provider/{id}/sync (the `SyncSCIMServiceProvider` operationId).
@@ -27249,6 +28517,8 @@ func (c *ClientWithResponses) SyncSCIMServiceProviderWithResponse(ctx context.Co
 // ListSignupTokensWithResponse List signup tokens
 //
 // Get a paginated list of signup tokens.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:invite`.
 //
 // Returns a wrapper object for the known response body format(s).
 //
@@ -27265,6 +28535,8 @@ func (c *ClientWithResponses) ListSignupTokensWithResponse(ctx context.Context, 
 //
 // Create a new signup token that allows user registration.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:invite`.
+//
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
 // Corresponds with POST /api/admin/signup-tokens (the `CreateSignupToken` operationId).
@@ -27279,6 +28551,8 @@ func (c *ClientWithResponses) CreateSignupTokenWithBodyWithResponse(ctx context.
 // CreateSignupTokenWithResponse Create signup token
 //
 // Create a new signup token that allows user registration.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:invite`.
 //
 // Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //
@@ -27295,6 +28569,8 @@ func (c *ClientWithResponses) CreateSignupTokenWithResponse(ctx context.Context,
 //
 // Delete a signup token by ID.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:invite`.
+//
 // Returns a wrapper object for the known response body format(s).
 //
 // Corresponds with DELETE /api/admin/signup-tokens/{id} (the `DeleteSignupToken` operationId).
@@ -27309,6 +28585,8 @@ func (c *ClientWithResponses) DeleteSignupTokenWithResponse(ctx context.Context,
 // ListUserGroupsWithResponse List user groups
 //
 // Get a paginated list of user groups with optional search and sorting.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `groups:read`.
 //
 // Returns a wrapper object for the known response body format(s).
 //
@@ -27325,6 +28603,8 @@ func (c *ClientWithResponses) ListUserGroupsWithResponse(ctx context.Context, pa
 //
 // Create a new user group.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `groups:write`.
+//
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
 // Corresponds with POST /api/admin/user-groups (the `CreateUserGroup` operationId).
@@ -27339,6 +28619,8 @@ func (c *ClientWithResponses) CreateUserGroupWithBodyWithResponse(ctx context.Co
 // CreateUserGroupWithResponse Create user group
 //
 // Create a new user group.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `groups:write`.
 //
 // Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //
@@ -27355,6 +28637,8 @@ func (c *ClientWithResponses) CreateUserGroupWithResponse(ctx context.Context, b
 //
 // Delete a specific user group by ID.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `groups:write`.
+//
 // Returns a wrapper object for the known response body format(s).
 //
 // Corresponds with DELETE /api/admin/user-groups/{id} (the `DeleteUserGroup` operationId).
@@ -27370,6 +28654,8 @@ func (c *ClientWithResponses) DeleteUserGroupWithResponse(ctx context.Context, i
 //
 // Retrieve detailed information about a specific user group including its users.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `groups:read`.
+//
 // Returns a wrapper object for the known response body format(s).
 //
 // Corresponds with GET /api/admin/user-groups/{id} (the `GetUserGroupByID` operationId).
@@ -27383,7 +28669,9 @@ func (c *ClientWithResponses) GetUserGroupByIDWithResponse(ctx context.Context, 
 
 // PatchUserGroupWithBodyWithResponse Update user group
 //
-// # Update an existing user group by ID, where PATCH changes only the fields in the body
+// Update an existing user group by ID, where PATCH changes only the fields in the body.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `groups:write`.
 //
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
@@ -27398,7 +28686,9 @@ func (c *ClientWithResponses) PatchUserGroupWithBodyWithResponse(ctx context.Con
 
 // PatchUserGroupWithResponse Update user group
 //
-// # Update an existing user group by ID, where PATCH changes only the fields in the body
+// Update an existing user group by ID, where PATCH changes only the fields in the body.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `groups:write`.
 //
 // Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //
@@ -27413,7 +28703,9 @@ func (c *ClientWithResponses) PatchUserGroupWithResponse(ctx context.Context, id
 
 // UpdateUserGroupWithBodyWithResponse Update user group
 //
-// # Update an existing user group by ID, where PATCH changes only the fields in the body
+// Update an existing user group by ID, where PATCH changes only the fields in the body.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `groups:write`.
 //
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
@@ -27428,7 +28720,9 @@ func (c *ClientWithResponses) UpdateUserGroupWithBodyWithResponse(ctx context.Co
 
 // UpdateUserGroupWithResponse Update user group
 //
-// # Update an existing user group by ID, where PATCH changes only the fields in the body
+// Update an existing user group by ID, where PATCH changes only the fields in the body.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `groups:write`.
 //
 // Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //
@@ -27445,6 +28739,8 @@ func (c *ClientWithResponses) UpdateUserGroupWithResponse(ctx context.Context, i
 //
 // Update the OIDC clients allowed for a specific user group.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `groups:write`.
+//
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
 // Corresponds with PUT /api/admin/user-groups/{id}/allowed-oidc-clients (the `UpdateAllowedOIDCClients` operationId).
@@ -27459,6 +28755,8 @@ func (c *ClientWithResponses) UpdateAllowedOIDCClientsWithBodyWithResponse(ctx c
 // UpdateAllowedOIDCClientsWithResponse Update allowed OIDC clients
 //
 // Update the OIDC clients allowed for a specific user group.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `groups:write`.
 //
 // Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //
@@ -27475,6 +28773,8 @@ func (c *ClientWithResponses) UpdateAllowedOIDCClientsWithResponse(ctx context.C
 //
 // Update the list of users belonging to a specific user group.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `groups:write`.
+//
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
 // Corresponds with PUT /api/admin/user-groups/{id}/users (the `UpdateUsersInGroup` operationId).
@@ -27489,6 +28789,8 @@ func (c *ClientWithResponses) UpdateUsersInGroupWithBodyWithResponse(ctx context
 // UpdateUsersInGroupWithResponse Update users in a group
 //
 // Update the list of users belonging to a specific user group.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `groups:write`.
 //
 // Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //
@@ -27505,6 +28807,8 @@ func (c *ClientWithResponses) UpdateUsersInGroupWithResponse(ctx context.Context
 //
 // Get a paginated list of users with optional search and sorting.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:read`.
+//
 // Returns a wrapper object for the known response body format(s).
 //
 // Corresponds with GET /api/admin/users (the `ListUsers` operationId).
@@ -27519,6 +28823,8 @@ func (c *ClientWithResponses) ListUsersWithResponse(ctx context.Context, params 
 // CreateUserWithBodyWithResponse Create user
 //
 // Create a new user.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:write`.
 //
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
@@ -27535,6 +28841,8 @@ func (c *ClientWithResponses) CreateUserWithBodyWithResponse(ctx context.Context
 //
 // Create a new user.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:write`.
+//
 // Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //
 // Corresponds with POST /api/admin/users (the `CreateUser` operationId).
@@ -27549,6 +28857,8 @@ func (c *ClientWithResponses) CreateUserWithResponse(ctx context.Context, body C
 // DeleteUserWithResponse Delete user
 //
 // Delete a specific user by ID.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:write`.
 //
 // Returns a wrapper object for the known response body format(s).
 //
@@ -27565,6 +28875,8 @@ func (c *ClientWithResponses) DeleteUserWithResponse(ctx context.Context, id str
 //
 // Retrieve detailed information about a specific user.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:read`.
+//
 // Returns a wrapper object for the known response body format(s).
 //
 // Corresponds with GET /api/admin/users/{id} (the `GetUserByID` operationId).
@@ -27578,7 +28890,9 @@ func (c *ClientWithResponses) GetUserByIDWithResponse(ctx context.Context, id st
 
 // PatchUserWithBodyWithResponse Update user
 //
-// # Update an existing user by ID, where PATCH changes only the fields in the body
+// Update an existing user by ID, where PATCH changes only the fields in the body.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:write`.
 //
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
@@ -27593,7 +28907,9 @@ func (c *ClientWithResponses) PatchUserWithBodyWithResponse(ctx context.Context,
 
 // PatchUserWithResponse Update user
 //
-// # Update an existing user by ID, where PATCH changes only the fields in the body
+// Update an existing user by ID, where PATCH changes only the fields in the body.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:write`.
 //
 // Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //
@@ -27608,7 +28924,9 @@ func (c *ClientWithResponses) PatchUserWithResponse(ctx context.Context, id stri
 
 // UpdateUserWithBodyWithResponse Update user
 //
-// # Update an existing user by ID, where PATCH changes only the fields in the body
+// Update an existing user by ID, where PATCH changes only the fields in the body.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:write`.
 //
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
@@ -27623,7 +28941,9 @@ func (c *ClientWithResponses) UpdateUserWithBodyWithResponse(ctx context.Context
 
 // UpdateUserWithResponse Update user
 //
-// # Update an existing user by ID, where PATCH changes only the fields in the body
+// Update an existing user by ID, where PATCH changes only the fields in the body.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:write`.
 //
 // Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //
@@ -27640,6 +28960,8 @@ func (c *ClientWithResponses) UpdateUserWithResponse(ctx context.Context, id str
 //
 // Retrieve all groups a specific user belongs to.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:read`.
+//
 // Returns a wrapper object for the known response body format(s).
 //
 // Corresponds with GET /api/admin/users/{id}/groups (the `GetUserGroups` operationId).
@@ -27654,6 +28976,8 @@ func (c *ClientWithResponses) GetUserGroupsWithResponse(ctx context.Context, id 
 // RequestOneTimeAccessEmailAdminWithBodyWithResponse Request one-time access email (admin)
 //
 // Request a one-time access email for a specific user (admin only).
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:login-codes`.
 //
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
@@ -27670,6 +28994,8 @@ func (c *ClientWithResponses) RequestOneTimeAccessEmailAdminWithBodyWithResponse
 //
 // Request a one-time access email for a specific user (admin only).
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:login-codes`.
+//
 // Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //
 // Corresponds with POST /api/admin/users/{id}/one-time-access-email (the `RequestOneTimeAccessEmailAdmin` operationId).
@@ -27684,6 +29010,8 @@ func (c *ClientWithResponses) RequestOneTimeAccessEmailAdminWithResponse(ctx con
 // CreateOneTimeAccessTokenForUserAdminWithBodyWithResponse Create one-time access token for user (admin)
 //
 // Generate a one-time access token for a specific user (admin only).
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:login-codes`.
 //
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
@@ -27700,6 +29028,8 @@ func (c *ClientWithResponses) CreateOneTimeAccessTokenForUserAdminWithBodyWithRe
 //
 // Generate a one-time access token for a specific user (admin only).
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:login-codes`.
+//
 // Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //
 // Corresponds with POST /api/admin/users/{id}/one-time-access-token (the `CreateOneTimeAccessTokenForUserAdmin` operationId).
@@ -27714,6 +29044,8 @@ func (c *ClientWithResponses) CreateOneTimeAccessTokenForUserAdminWithResponse(c
 // ResetUserProfilePictureWithResponse Reset user profile picture
 //
 // Reset a specific user's profile picture to the default.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:write`.
 //
 // Returns a wrapper object for the known response body format(s).
 //
@@ -27730,6 +29062,8 @@ func (c *ClientWithResponses) ResetUserProfilePictureWithResponse(ctx context.Co
 //
 // Update a specific user's profile picture.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:write`.
+//
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
 // Corresponds with PUT /api/admin/users/{id}/profile-picture (the `UpdateUserProfilePicture` operationId).
@@ -27743,7 +29077,9 @@ func (c *ClientWithResponses) UpdateUserProfilePictureWithBodyWithResponse(ctx c
 
 // RevokeAllSessionsOfUserWithResponse Revoke all sessions of a user
 //
-// Sign a user out of every session and revoke every grant their apps hold, offline_access ones included
+// Sign a user out of every session and revoke every grant their apps hold, offline_access ones included.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:write`.
 //
 // Returns a wrapper object for the known response body format(s).
 //
@@ -27758,7 +29094,9 @@ func (c *ClientWithResponses) RevokeAllSessionsOfUserWithResponse(ctx context.Co
 
 // ListSessionsOfUserWithResponse List sessions of a user
 //
-// # Get the browsers in which a user is signed in, most recently active first
+// Get the browsers in which a user is signed in, most recently active first.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:read`.
 //
 // Returns a wrapper object for the known response body format(s).
 //
@@ -27775,6 +29113,8 @@ func (c *ClientWithResponses) ListSessionsOfUserWithResponse(ctx context.Context
 //
 // Sign a user out of one of their sessions.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:write`.
+//
 // Returns a wrapper object for the known response body format(s).
 //
 // Corresponds with DELETE /api/admin/users/{id}/sessions/{sessionId} (the `RevokeSessionOfUser` operationId).
@@ -27789,6 +29129,8 @@ func (c *ClientWithResponses) RevokeSessionOfUserWithResponse(ctx context.Contex
 // UpdateUserGroupsWithBodyWithResponse Update user groups
 //
 // Update the groups a specific user belongs to.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:write`.
 //
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
@@ -27805,6 +29147,8 @@ func (c *ClientWithResponses) UpdateUserGroupsWithBodyWithResponse(ctx context.C
 //
 // Update the groups a specific user belongs to.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:write`.
+//
 // Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //
 // Corresponds with PUT /api/admin/users/{id}/user-groups (the `UpdateUserGroups` operationId).
@@ -27819,6 +29163,8 @@ func (c *ClientWithResponses) UpdateUserGroupsWithResponse(ctx context.Context, 
 // ListUserPasskeysWithResponse List user passkeys
 //
 // Retrieve all WebAuthn credentials for a specific user.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:read`.
 //
 // Returns a wrapper object for the known response body format(s).
 //
@@ -27835,6 +29181,8 @@ func (c *ClientWithResponses) ListUserPasskeysWithResponse(ctx context.Context, 
 //
 // Delete a specific WebAuthn credential for a user.
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `users:write`.
+//
 // Returns a wrapper object for the known response body format(s).
 //
 // Corresponds with DELETE /api/admin/users/{id}/webauthn-credentials/{credentialId} (the `DeleteUserPasskey` operationId).
@@ -27848,7 +29196,9 @@ func (c *ClientWithResponses) DeleteUserPasskeyWithResponse(ctx context.Context,
 
 // GetWarningsForAdminsWithResponse Get the warnings for admins
 //
-// # Lists the problems with this instance that admins should fix, such as a SQLite database on a networked filesystem or a database that a newer Pocket ID version migrated
+// Lists the problems with this instance that admins should fix, such as a SQLite database on a networked filesystem or a database that a newer Pocket ID version migrated.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`. Scope: `config:read`.
 //
 // Returns a wrapper object for the known response body format(s).
 //
@@ -27865,6 +29215,8 @@ func (c *ClientWithResponses) GetWarningsForAdminsWithResponse(ctx context.Conte
 //
 // Get a paginated list of API keys belonging to the current user.
 //
+// Credentials: `apiKey`, `oauth2`, `session`. Scope: `account:api-keys`.
+//
 // Returns a wrapper object for the known response body format(s).
 //
 // Corresponds with GET /api/api-keys (the `ListAPIKeys` operationId).
@@ -27879,6 +29231,8 @@ func (c *ClientWithResponses) ListAPIKeysWithResponse(ctx context.Context, param
 // CreateAPIKeyWithBodyWithResponse Create API key
 //
 // Create a new API key for the current user.
+//
+// Credentials: `session`. Scope: `account:api-keys:create`.
 //
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
@@ -27895,6 +29249,8 @@ func (c *ClientWithResponses) CreateAPIKeyWithBodyWithResponse(ctx context.Conte
 //
 // Create a new API key for the current user.
 //
+// Credentials: `session`. Scope: `account:api-keys:create`.
+//
 // Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //
 // Corresponds with POST /api/api-keys (the `CreateAPIKey` operationId).
@@ -27910,6 +29266,8 @@ func (c *ClientWithResponses) CreateAPIKeyWithResponse(ctx context.Context, body
 //
 // Revoke (delete) an existing API key by ID.
 //
+// Credentials: `apiKey`, `oauth2`, `session`. Scope: `account:api-keys`.
+//
 // Returns a wrapper object for the known response body format(s).
 //
 // Corresponds with DELETE /api/api-keys/{id} (the `RevokeAPIKey` operationId).
@@ -27923,7 +29281,9 @@ func (c *ClientWithResponses) RevokeAPIKeyWithResponse(ctx context.Context, id s
 
 // PatchAPIKeyWithBodyWithResponse Update API key
 //
-// Change the name, description and scopes of an existing API key, where PATCH changes only the fields in the body; its token stays the same
+// Change the name, description and scopes of an existing API key, where PATCH changes only the fields in the body; its token stays the same.
+//
+// Credentials: `session`. Scope: `account:api-keys:create`.
 //
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
@@ -27938,7 +29298,9 @@ func (c *ClientWithResponses) PatchAPIKeyWithBodyWithResponse(ctx context.Contex
 
 // PatchAPIKeyWithResponse Update API key
 //
-// Change the name, description and scopes of an existing API key, where PATCH changes only the fields in the body; its token stays the same
+// Change the name, description and scopes of an existing API key, where PATCH changes only the fields in the body; its token stays the same.
+//
+// Credentials: `session`. Scope: `account:api-keys:create`.
 //
 // Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //
@@ -27953,7 +29315,9 @@ func (c *ClientWithResponses) PatchAPIKeyWithResponse(ctx context.Context, id st
 
 // UpdateAPIKeyWithBodyWithResponse Update API key
 //
-// Change the name, description and scopes of an existing API key, where PATCH changes only the fields in the body; its token stays the same
+// Change the name, description and scopes of an existing API key, where PATCH changes only the fields in the body; its token stays the same.
+//
+// Credentials: `session`. Scope: `account:api-keys:create`.
 //
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
@@ -27968,7 +29332,9 @@ func (c *ClientWithResponses) UpdateAPIKeyWithBodyWithResponse(ctx context.Conte
 
 // UpdateAPIKeyWithResponse Update API key
 //
-// Change the name, description and scopes of an existing API key, where PATCH changes only the fields in the body; its token stays the same
+// Change the name, description and scopes of an existing API key, where PATCH changes only the fields in the body; its token stays the same.
+//
+// Credentials: `session`. Scope: `account:api-keys:create`.
 //
 // Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //
@@ -27983,7 +29349,9 @@ func (c *ClientWithResponses) UpdateAPIKeyWithResponse(ctx context.Context, id s
 
 // RenewAPIKeyWithBodyWithResponse Renew API key
 //
-// # While a key has not expired, its old token keeps working for the given grace period, but never past the key's previous expiration
+// While a key has not expired, its old token keeps working for the given grace period, but never past the key's previous expiration.
+//
+// Credentials: `session`. Scope: `account:api-keys:create`.
 //
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
@@ -27998,7 +29366,9 @@ func (c *ClientWithResponses) RenewAPIKeyWithBodyWithResponse(ctx context.Contex
 
 // RenewAPIKeyWithResponse Renew API key
 //
-// # While a key has not expired, its old token keeps working for the given grace period, but never past the key's previous expiration
+// While a key has not expired, its old token keeps working for the given grace period, but never past the key's previous expiration.
+//
+// Credentials: `session`. Scope: `account:api-keys:create`.
 //
 // Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //
@@ -28105,6 +29475,8 @@ func (c *ClientWithResponses) ListPublicApplicationConfigurationsWithResponse(ct
 //
 // Get a paginated list of the audit logs about the current user.
 //
+// Credentials: `apiKey`, `oauth2`, `session`. Scope: `account:audit-logs`.
+//
 // Returns a wrapper object for the known response body format(s).
 //
 // Corresponds with GET /api/audit-logs (the `ListAuditLogs` operationId).
@@ -28150,6 +29522,8 @@ func (c *ClientWithResponses) ExchangeDeviceLoginRequestWithResponse(ctx context
 //
 // Retrieve the requesting device details for an authenticated user before approval or denial.
 //
+// Credentials: `session`. Scope: `account:session`.
+//
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
 // Corresponds with POST /api/device-login/verification (the `InspectDeviceLoginRequest` operationId).
@@ -28165,6 +29539,8 @@ func (c *ClientWithResponses) InspectDeviceLoginRequestWithBodyWithResponse(ctx 
 //
 // Retrieve the requesting device details for an authenticated user before approval or denial.
 //
+// Credentials: `session`. Scope: `account:session`.
+//
 // Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //
 // Corresponds with POST /api/device-login/verification (the `InspectDeviceLoginRequest` operationId).
@@ -28178,7 +29554,9 @@ func (c *ClientWithResponses) InspectDeviceLoginRequestWithResponse(ctx context.
 
 // DecideDeviceLoginRequestWithBodyWithResponse Decide device login request
 //
-// Approve or deny a device login request; approval requires fresh passkey reauthentication
+// Approve or deny a device login request; approval requires fresh passkey reauthentication.
+//
+// Credentials: `session`. Scope: `account:session`.
 //
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
@@ -28193,7 +29571,9 @@ func (c *ClientWithResponses) DecideDeviceLoginRequestWithBodyWithResponse(ctx c
 
 // DecideDeviceLoginRequestWithResponse Decide device login request
 //
-// Approve or deny a device login request; approval requires fresh passkey reauthentication
+// Approve or deny a device login request; approval requires fresh passkey reauthentication.
+//
+// Credentials: `session`. Scope: `account:session`.
 //
 // Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //
@@ -28208,7 +29588,9 @@ func (c *ClientWithResponses) DecideDeviceLoginRequestWithResponse(ctx context.C
 
 // ListOptionalFeaturesWithResponse List optional features
 //
-// Get whether each optional feature is on and whether anything uses it; a feature in use is always on
+// Get whether each optional feature is on and whether anything uses it; a feature in use is always on.
+//
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`.
 //
 // Returns a wrapper object for the known response body format(s).
 //
@@ -28285,6 +29667,8 @@ func (c *ClientWithResponses) GetUserInformationWithResponse(ctx context.Context
 //
 // Get a paginated list of OIDC clients that the current user has authorized.
 //
+// Credentials: `apiKey`, `oauth2`, `session`. Scope: `account:apps`.
+//
 // Returns a wrapper object for the known response body format(s).
 //
 // Corresponds with GET /api/oidc/users/me/authorized-clients (the `ListAuthorizedClientsForCurrentUser` operationId).
@@ -28300,6 +29684,8 @@ func (c *ClientWithResponses) ListAuthorizedClientsForCurrentUserWithResponse(ct
 //
 // Revoke the authorization for a specific OIDC client for the current user.
 //
+// Credentials: `apiKey`, `oauth2`, `session`. Scope: `account:apps`.
+//
 // Returns a wrapper object for the known response body format(s).
 //
 // Corresponds with DELETE /api/oidc/users/me/authorized-clients/{clientId} (the `RevokeAuthorizationForOIDCClient` operationId).
@@ -28314,6 +29700,8 @@ func (c *ClientWithResponses) RevokeAuthorizationForOIDCClientWithResponse(ctx c
 // ListAccessibleOIDCClientsForCurrentUserWithResponse List accessible OIDC clients for current user
 //
 // Get a list of OIDC clients that the current user can access.
+//
+// Credentials: `apiKey`, `oauth2`, `session`. Scope: `account:apps`.
 //
 // Returns a wrapper object for the known response body format(s).
 //
@@ -28390,6 +29778,8 @@ func (c *ClientWithResponses) ExchangeOneTimeAccessTokenWithResponse(ctx context
 //
 // Sign the current user out of every session except the current one.
 //
+// Credentials: `session`. Scope: `account:session`.
+//
 // Returns a wrapper object for the known response body format(s).
 //
 // Corresponds with DELETE /api/sessions (the `RevokeOtherOwnSessions` operationId).
@@ -28403,7 +29793,9 @@ func (c *ClientWithResponses) RevokeOtherOwnSessionsWithResponse(ctx context.Con
 
 // ListOwnSessionsWithResponse List own sessions
 //
-// # Get the browsers in which the current user is signed in, most recently active first
+// Get the browsers in which the current user is signed in, most recently active first.
+//
+// Credentials: `session`. Scope: `account:session`.
 //
 // Returns a wrapper object for the known response body format(s).
 //
@@ -28418,7 +29810,9 @@ func (c *ClientWithResponses) ListOwnSessionsWithResponse(ctx context.Context, r
 
 // RememberCurrentSessionWithResponse Remember current session
 //
-// # Keep the current session signed in after the browser closes and while it goes unused, for a sign-in that was not remembered
+// Keep the current session signed in after the browser closes and while it goes unused, for a sign-in that was not remembered.
+//
+// Credentials: `session`. Scope: `account:session`.
 //
 // Returns a wrapper object for the known response body format(s).
 //
@@ -28434,6 +29828,8 @@ func (c *ClientWithResponses) RememberCurrentSessionWithResponse(ctx context.Con
 // RevokeOwnSessionWithResponse Revoke own session
 //
 // Sign the current user out of one of their sessions.
+//
+// Credentials: `session`. Scope: `account:session`.
 //
 // Returns a wrapper object for the known response body format(s).
 //
@@ -28525,6 +29921,8 @@ func (c *ClientWithResponses) SignUpInitialAdminUserWithResponse(ctx context.Con
 //
 // Retrieve information about the currently authenticated user.
 //
+// Credentials: `apiKey`, `oauth2`, `session`. Scope: `account:read`.
+//
 // Returns a wrapper object for the known response body format(s).
 //
 // Corresponds with GET /api/users/me (the `GetCurrentUser` operationId).
@@ -28538,7 +29936,9 @@ func (c *ClientWithResponses) GetCurrentUserWithResponse(ctx context.Context, re
 
 // PatchCurrentUserWithBodyWithResponse Update current user
 //
-// # Update the currently authenticated user's information, where PATCH changes only the fields in the body
+// Update the currently authenticated user's information, where PATCH changes only the fields in the body.
+//
+// Credentials: `apiKey`, `oauth2`, `session`. Scope: `account:write`.
 //
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
@@ -28553,7 +29953,9 @@ func (c *ClientWithResponses) PatchCurrentUserWithBodyWithResponse(ctx context.C
 
 // PatchCurrentUserWithResponse Update current user
 //
-// # Update the currently authenticated user's information, where PATCH changes only the fields in the body
+// Update the currently authenticated user's information, where PATCH changes only the fields in the body.
+//
+// Credentials: `apiKey`, `oauth2`, `session`. Scope: `account:write`.
 //
 // Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //
@@ -28568,7 +29970,9 @@ func (c *ClientWithResponses) PatchCurrentUserWithResponse(ctx context.Context, 
 
 // UpdateCurrentUserWithBodyWithResponse Update current user
 //
-// # Update the currently authenticated user's information, where PATCH changes only the fields in the body
+// Update the currently authenticated user's information, where PATCH changes only the fields in the body.
+//
+// Credentials: `apiKey`, `oauth2`, `session`. Scope: `account:write`.
 //
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
@@ -28583,7 +29987,9 @@ func (c *ClientWithResponses) UpdateCurrentUserWithBodyWithResponse(ctx context.
 
 // UpdateCurrentUserWithResponse Update current user
 //
-// # Update the currently authenticated user's information, where PATCH changes only the fields in the body
+// Update the currently authenticated user's information, where PATCH changes only the fields in the body.
+//
+// Credentials: `apiKey`, `oauth2`, `session`. Scope: `account:write`.
 //
 // Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //
@@ -28598,7 +30004,9 @@ func (c *ClientWithResponses) UpdateCurrentUserWithResponse(ctx context.Context,
 
 // CancelPendingEmailChangeWithResponse Cancel pending email change
 //
-// # Cancel the pending email change of the currently authenticated user, so its verification link stops working
+// Cancel the pending email change of the currently authenticated user, so its verification link stops working.
+//
+// Credentials: `apiKey`, `oauth2`, `session`. Scope: `account:write`.
 //
 // Returns a wrapper object for the known response body format(s).
 //
@@ -28615,6 +30023,8 @@ func (c *ClientWithResponses) CancelPendingEmailChangeWithResponse(ctx context.C
 //
 // Get the email change of the currently authenticated user that still has to be confirmed through the emailed link.
 //
+// Credentials: `apiKey`, `oauth2`, `session`. Scope: `account:read`.
+//
 // Returns a wrapper object for the known response body format(s).
 //
 // Corresponds with GET /api/users/me/email-change (the `GetPendingEmailChange` operationId).
@@ -28629,6 +30039,8 @@ func (c *ClientWithResponses) GetPendingEmailChangeWithResponse(ctx context.Cont
 // ResetCurrentUserProfilePictureWithResponse Reset current user's profile picture
 //
 // Reset the currently authenticated user's profile picture to the default.
+//
+// Credentials: `apiKey`, `oauth2`, `session`. Scope: `account:write`.
 //
 // Returns a wrapper object for the known response body format(s).
 //
@@ -28645,6 +30057,8 @@ func (c *ClientWithResponses) ResetCurrentUserProfilePictureWithResponse(ctx con
 //
 // Update the currently authenticated user's profile picture.
 //
+// Credentials: `apiKey`, `oauth2`, `session`. Scope: `account:write`.
+//
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
 // Corresponds with PUT /api/users/me/profile-picture (the `UpdateCurrentUserProfilePicture` operationId).
@@ -28659,6 +30073,8 @@ func (c *ClientWithResponses) UpdateCurrentUserProfilePictureWithBodyWithRespons
 // SendEmailVerificationWithResponse Send email verification
 //
 // Send an email verification to the currently authenticated user.
+//
+// Credentials: `apiKey`, `oauth2`, `session`. Scope: `account:write`.
 //
 // Returns a wrapper object for the known response body format(s).
 //
@@ -28675,6 +30091,8 @@ func (c *ClientWithResponses) SendEmailVerificationWithResponse(ctx context.Cont
 //
 // Verify the currently authenticated user's email using a verification token.
 //
+// Credentials: `apiKey`, `oauth2`, `session`. Scope: `account:write`.
+//
 // Takes any type of body and a specified content type, and returns a wrapper object for the known response body format(s).
 //
 // Corresponds with POST /api/users/me/verify-email (the `VerifyEmail` operationId).
@@ -28689,6 +30107,8 @@ func (c *ClientWithResponses) VerifyEmailWithBodyWithResponse(ctx context.Contex
 // VerifyEmailWithResponse Verify email
 //
 // Verify the currently authenticated user's email using a verification token.
+//
+// Credentials: `apiKey`, `oauth2`, `session`. Scope: `account:write`.
 //
 // Takes a body of the `application/json` content type, and returns a wrapper object for the known response body format(s).
 //
@@ -28718,6 +30138,8 @@ func (c *ClientWithResponses) GetUserProfilePictureWithResponse(ctx context.Cont
 
 // GetCurrentDeployedVersionOfPocketIDWithResponse Get current deployed version of Pocket ID
 //
+// Credentials: `apiKey`, `oauth2`, `oauth2ClientCredentials`, `session`.
+//
 // Returns a wrapper object for the known response body format(s).
 //
 // Corresponds with GET /api/version/current (the `GetCurrentDeployedVersionOfPocketID` operationId).
@@ -28743,6 +30165,8 @@ func (c *ClientWithResponses) GetLatestAvailableVersionOfPocketIDWithResponse(ct
 }
 
 // LogoutWithResponse Log out the current session
+//
+// Credentials: `session`.
 //
 // Returns a wrapper object for the known response body format(s).
 //

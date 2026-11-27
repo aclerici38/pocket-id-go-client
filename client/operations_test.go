@@ -4,7 +4,6 @@ import (
 	"maps"
 	"net/http"
 	"reflect"
-	"regexp"
 	"slices"
 	"testing"
 )
@@ -30,11 +29,12 @@ func TestOperationName(t *testing.T) {
 // comments it is read from change.
 func TestOperationsCoverClient(t *testing.T) {
 	names := slices.Collect(maps.Values(operations))
-	// Operations with a body also get variants such as CreateAPIWithBody.
-	variant := regexp.MustCompile(`With[A-Za-z]*Body$`)
-	for m := range reflect.TypeFor[ClientInterface]().Methods() {
-		if name := variant.ReplaceAllString(m.Name, ""); !slices.Contains(names, name) {
-			t.Errorf("no route for %s", name)
+	// Checking both interfaces also checks that methodVariant strips every variant suffix.
+	for _, iface := range []reflect.Type{reflect.TypeFor[ClientInterface](), reflect.TypeFor[ClientWithResponsesInterface]()} {
+		for m := range iface.Methods() {
+			if name := methodVariant.ReplaceAllString(m.Name, ""); !slices.Contains(names, name) {
+				t.Errorf("no route for %s", m.Name)
+			}
 		}
 	}
 }
