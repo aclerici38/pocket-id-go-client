@@ -16,7 +16,14 @@ Pass an API key with `WithAPIKey`, which sends it in the `X-API-Key` header:
 c, err := client.NewClient("https://id.example.com", client.WithAPIKey(key))
 ```
 
-For OAuth access tokens, give `WithHTTPClient` an `*http.Client` from `golang.org/x/oauth2`.
+To authenticate as an OIDC client granted access to the Pocket ID API on its own behalf, use the client credentials grant:
+
+```go
+cc := client.NewClientCredentials("https://id.example.com", clientID, secret, nil)
+c, err := client.NewClient("https://id.example.com", client.WithClientCredentials(cc))
+```
+
+Tokens hold every scope the client is granted unless you pass scopes after the `*http.Client`, such as from `client.Scopes(client.SchemeOAuth2ClientCredentials, ...)`; asking for one it isn't granted fails every request. Clients built with the same `cc` share its cached token, which is renewed when it expires. A token request Pocket ID rejects fails with an `*APIError`, as other error responses do. Tokens keep the scopes they were issued with and are rejected with a 401 once the client loses one, so call `cc.Invalidate()` after changing the client's grants or on a 401.
 
 For temporary access as a user, exchange a one-time access token with `NewSession`:
 
