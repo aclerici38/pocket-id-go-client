@@ -2,6 +2,7 @@ package client
 
 import (
 	"bytes"
+	"cmp"
 	"context"
 	"errors"
 	"fmt"
@@ -32,7 +33,7 @@ type ClientCredentials struct {
 	server string
 	hc     *http.Client
 	cfg    clientcredentials.Config
-	lock   chan struct{} // a mutex whose waiters can give up
+	lock   chan struct{} // see acquire
 	tok    *oauth2.Token
 }
 
@@ -52,34 +53,65 @@ func NewClientCredentials(server, clientID, secret string, httpClient *http.Clie
 	}}
 }
 
-// Invalidate drops the cached token. Tokens keep the scopes they were issued with and are
-// rejected with a 401 once the client loses one, so call it after the client's grants change
-// or on a 401.
+// Invalidate drops the cached token. Tokens keep the scopes they were issued with, so call it
+// after widening the client's grants. A token rejected with a 401, such as once the client
+// loses a scope it carries, is dropped without it.
 func (cc *ClientCredentials) Invalidate() {
 	cc.lock <- struct{}{}
 	cc.tok = nil
 	<-cc.lock
 }
 
-// WithClientCredentials authenticates every request with a token from cc.
+// WithClientCredentials authenticates every request with a token from cc. Pass it after
+// WithHTTPClient: it wraps the client's doer, or else cc's http.Client, to drop the token when
+// Pocket ID rejects it.
 func WithClientCredentials(cc *ClientCredentials) ClientOption {
-	return WithRequestEditorFn(func(ctx context.Context, req *http.Request) error {
-		select {
-		case cc.lock <- struct{}{}:
-		case <-ctx.Done():
-			return ctx.Err()
-		}
-		defer func() { <-cc.lock }()
-		if !cc.tok.Valid() {
-			tok, err := cc.fetch(ctx)
-			if err != nil {
-				return fmt.Errorf("client credentials token: %w", err)
-			}
-			cc.tok = tok
-		}
-		cc.tok.SetAuthHeader(req)
+	return func(c *Client) error {
+		c.Client = rejectedTokens{cmp.Or[HttpRequestDoer](c.Client, cc.hc), cc}
+		return WithRequestEditorFn(cc.authorize)(c)
+	}
+}
+
+// rejectedTokens drops cc's token when a request gets a 401. A request still carrying an older
+// token may drop a newer one, which costs only an extra token request.
+type rejectedTokens struct {
+	next HttpRequestDoer
+	cc   *ClientCredentials
+}
+
+func (d rejectedTokens) Do(req *http.Request) (*http.Response, error) {
+	rsp, err := d.next.Do(req)
+	if err == nil && rsp.StatusCode == http.StatusUnauthorized && d.cc.acquire(req.Context()) == nil {
+		d.cc.tok = nil
+		<-d.cc.lock
+	}
+	return rsp, err
+}
+
+// acquire takes cc's lock, a mutex whose waiters give up when ctx ends.
+func (cc *ClientCredentials) acquire(ctx context.Context) error {
+	select {
+	case cc.lock <- struct{}{}:
 		return nil
-	})
+	case <-ctx.Done():
+		return ctx.Err()
+	}
+}
+
+func (cc *ClientCredentials) authorize(ctx context.Context, req *http.Request) error {
+	if err := cc.acquire(ctx); err != nil {
+		return err
+	}
+	defer func() { <-cc.lock }()
+	if !cc.tok.Valid() {
+		tok, err := cc.fetch(ctx)
+		if err != nil {
+			return fmt.Errorf("client credentials token: %w", err)
+		}
+		cc.tok = tok
+	}
+	cc.tok.SetAuthHeader(req)
+	return nil
 }
 
 // fetch requests a token for the issuer's API, its audience even if server is internal.

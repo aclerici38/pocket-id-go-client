@@ -23,7 +23,7 @@ cc := client.NewClientCredentials("https://id.example.com", clientID, secret, ni
 c, err := client.NewClient("https://id.example.com", client.WithClientCredentials(cc))
 ```
 
-Tokens hold every scope the client is granted unless you pass scopes after the `*http.Client`, such as from `client.Scopes(client.SchemeOAuth2ClientCredentials, ...)`; asking for one it isn't granted fails every request. Clients built with the same `cc` share its cached token, which is renewed when it expires. A token request Pocket ID rejects fails with an `*APIError`, as other error responses do. Tokens keep the scopes they were issued with and are rejected with a 401 once the client loses one, so call `cc.Invalidate()` after changing the client's grants or on a 401.
+Tokens hold every scope the client is granted unless you pass scopes after the `*http.Client`, such as from `client.Scopes(client.SchemeOAuth2ClientCredentials, ...)`; asking for one it isn't granted fails every request. Clients built with the same `cc` share its cached token, which is renewed when it expires. A token request Pocket ID rejects fails with an `*APIError`, as other error responses do. A token Pocket ID rejects with a 401, such as once the client loses a scope it carries, is dropped and replaced on the next request; pass `WithClientCredentials` after `WithHTTPClient`, whose doer it wraps. Tokens keep the scopes they were issued with, so call `cc.Invalidate()` after widening the client's grants.
 
 For temporary access as a user, exchange a one-time access token with `NewSession`:
 

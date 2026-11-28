@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"net/http"
 	"net/http/httptest"
+	"strings"
 	"sync/atomic"
 	"testing"
 )
@@ -28,6 +29,9 @@ func TestClientCredentials(t *testing.T) {
 			}
 			fmt.Fprintf(w, `{"access_token":"t%d","token_type":"Bearer","expires_in":3600}`, exchanges.Add(1))
 		default:
+			if strings.HasSuffix(r.URL.Path, "/revoked") {
+				w.WriteHeader(http.StatusUnauthorized)
+			}
 			if got, want := r.Header.Get("Authorization"), fmt.Sprintf("Bearer t%d", exchanges.Load()); got != want {
 				t.Errorf("Authorization = %q, want %q", got, want)
 			}
@@ -53,7 +57,16 @@ func TestClientCredentials(t *testing.T) {
 		t.Errorf("%d token exchanges, want 3", n)
 	}
 
-	c, _ := NewClient(srv.URL, WithClientCredentials(NewClientCredentials(srv.URL, "id", "wrong", nil)))
+	// A rejected token is dropped, also when wrapping a client's own doer.
+	c, _ := NewClient(srv.URL, WithHTTPClient(srv.Client()), WithClientCredentials(cc))
+	if err := Check(c.GetUserByID(t.Context(), "revoked")); AsAPIError(err) == nil {
+		t.Fatalf("revoked token: %v, want an *APIError", err)
+	}
+	if err := Check(c.GetUserByID(t.Context(), "u")); err != nil || exchanges.Load() != 4 {
+		t.Errorf("after a 401: %v, %d token exchanges, want 4", err, exchanges.Load())
+	}
+
+	c, _ = NewClient(srv.URL, WithClientCredentials(NewClientCredentials(srv.URL, "id", "wrong", nil)))
 	if err := Check(c.GetUserByID(t.Context(), "u")); AsAPIError(err) == nil || AsAPIError(err).StatusCode != http.StatusUnauthorized {
 		t.Errorf("wrong secret: %v, want a 401 *APIError", err)
 	}
